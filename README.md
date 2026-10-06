@@ -75,6 +75,7 @@ This design utilizes a fully open-source verification flow (Xschem, ngspice, Pyt
 *   **Statistical & Drift:** Monte Carlo simulations for CMRR, PSRR, and Offset Voltage Temperature Drift. DC Sweeps for Gain Linearity.
 ## Shortcuts
 Below are the shortcuts to see each core specs.
+
 Layout:
 - [Top level and Cells](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/gds/pgia_top)
 
