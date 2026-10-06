@@ -79,7 +79,7 @@ value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*( @w - 0.04e
 }
 C {sg13cmos5l_pr/rhigh.sym} 1180 -290 0 0 {name=R3
 w=0.5e-6
-l=8*2.1e-6
+l=8*2.23e-6
 model=rhigh
 body=sub!
 spiceprefix=X
@@ -90,7 +90,7 @@ value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*( @w - 0.04e
 }
 C {sg13cmos5l_pr/rhigh.sym} 1250 -940 3 0 {name=R4
 w=0.5e-6
-l=8*2.1e-6
+l=8*2.23e-6
 model=rhigh
 body=sub!
 spiceprefix=X

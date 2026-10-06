@@ -146,7 +146,7 @@ C {lab_wire.sym} 380 -480 0 0 {name=p12 sig_type=std_logic lab=vinn}
 C {lab_wire.sym} 580 -330 2 0 {name=p13 sig_type=std_logic lab=vinp}
 C {lab_wire.sym} 580 -430 2 0 {name=p14 sig_type=std_logic lab=vinn}
 C {gnd.sym} 960 -260 0 0 {name=l5 lab=0}
-C {/foss/designs/Programmable-Instrumentation-Amplifier-IP/designs/libs/core_analog/instramp_cmos5l/instramp_cmos5l.sym} 770 -380 0 0 {name=x1}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym} 770 -380 0 0 {name=x1}
 C {lab_wire.sym} 580 -380 2 0 {name=p3 sig_type=std_logic lab=vcm}
 C {vsource.sym} 480 -410 0 0 {name=V5 value=0.75 savecurrent=false}
 C {lab_wire.sym} 480 -480 0 0 {name=p6 sig_type=std_logic lab=vcm}

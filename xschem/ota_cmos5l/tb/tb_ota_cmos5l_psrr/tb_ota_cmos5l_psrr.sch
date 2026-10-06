@@ -144,7 +144,7 @@ xschem netlist
 simulate
 "}
 C {title.sym} 160 -30 0 0 {name=l4 author="James Patrick"}
-C {/foss/designs/Programmable-Instrumentation-Amplifier-IP/designs/libs/core_analog/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
 C {vdd.sym} 720 -560 0 0 {name=l1 lab=VDD}
 C {lab_wire.sym} 760 -560 0 0 {name=p1 sig_type=std_logic lab=vss}
 C {lab_wire.sym} 800 -560 0 0 {name=p2 sig_type=std_logic lab=ibias}
