@@ -1,15 +1,15 @@
 # Layout
 
-## Top-Level View
+## Top-Level
 Insert image
 
-## Physical Spec
+### Physical Spec
 ```bash
 W = ...
 L = ...
 ```
 
-## Post-Layout Metrics
+### Post-Layout Metrics
 - Insert metrics
   
 ## Cells
@@ -34,6 +34,12 @@ L = 37.41um
 ```
 
 ### Decoder
+Insert image
+
+Dimension:
+Insert dimension
+
+### Buffer
 Insert image
 
 Dimension:
