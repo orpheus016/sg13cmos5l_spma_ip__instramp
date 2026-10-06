@@ -76,6 +76,9 @@ This design utilizes a fully open-source verification flow (Xschem, ngspice, Pyt
 ## Shortcuts
 Below are the shortcuts to see each core specs.
 
+Layout:
+- [Top level and Cells](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/gds/pgia_top)
+
 Core:
 - [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_analog/ota_cmos5l)
 - [Instrumentation Amplifier](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_analog/instramp_cmos5l)
