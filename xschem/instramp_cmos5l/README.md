@@ -14,7 +14,9 @@
 ```
 
 ## Metrics
-- TBA
+- Offset: 118.4uV
+- Closed Loop Gain: 18.0645dB
+- Gain Offset: 0.52%
 
 ## Plots
 
