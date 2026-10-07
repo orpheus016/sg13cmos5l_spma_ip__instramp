@@ -15,13 +15,12 @@ L = ...
 ## Cells
 
 ### Static Instrumentation Amplifier
-<img width="972" height="751" alt="image" src="https://github.com/user-attachments/assets/0469176c-d876-44c7-bd1e-8dc73de1e118" />
+<img width="691" height="622" alt="image" src="https://github.com/user-attachments/assets/a5e48664-ed3d-4707-8399-d1cd57470147" />
 
 Dimension:
 ```bash
-ESTIMATION
-W = 120um
-L = 120um
+W = 124.25um
+L = 122.79um
 ```
 
 ### OTA_CMOS5L
