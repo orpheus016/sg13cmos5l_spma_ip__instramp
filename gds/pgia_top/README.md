@@ -1,4 +1,4 @@
-<img width="1326" height="467" alt="image" src="https://github.com/user-attachments/assets/890be427-38dd-416b-b549-14bf510c0e02" /># Layout
+# Layout
 
 ## Top-Level
 Insert image
