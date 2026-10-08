@@ -17,6 +17,7 @@
 - P = 29.57uW
 - Gain ($A_{ol}$) = 57.21 dB
 - Phase Margin (PM) = 64.88 deg
+- Gain Margin = 17.82 dB
 - $f_3{dB}$ or fc = 4.02kHz
 - UGB ft = 2.78 MHz
 - PSD noise at 1mHz = $189.56 nV/\sqrt{Hz}$
