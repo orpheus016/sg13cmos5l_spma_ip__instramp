@@ -16,6 +16,7 @@
 ## Metrics
 - P = 29.57uW
 - Gain ($A_{ol}$) = 57.21 dB
+- Gain error = 0.138%
 - Phase Margin (PM) = 64.88 deg
 - Gain Margin = 17.82 dB
 - $f_3{dB}$ or fc = 4.02kHz
