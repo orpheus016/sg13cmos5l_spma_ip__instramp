@@ -195,7 +195,7 @@ write output_buffer_tb_dc.raw
 C {launcher.sym} 220 410 0 0 {name=h5
 descr="Load Transient waves" 
 tclcommand="xschem raw_read $netlist_dir/output_buffer_tb_tran.raw tran"}
-C {output_buffer.sym} 160 30 0 0 {name=x1}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym} 160 30 0 0 {name=x1}
 C {res.sym} 140 100 0 0 {name=RLOAD
 value=100M
 footprint=1206
