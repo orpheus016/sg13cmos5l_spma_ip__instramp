@@ -106,8 +106,11 @@ let gain_3db = DC_gain-3
 meas ac f_3db WHEN gain_db=$&gain_3db
 meas ac f_0db WHEN gain_db=0
 meas ac phase_0db FIND phase_deg WHEN gain_db=0
+meas ac gain_0db FIND gain_db WHEN phase_deg=-180
 let phase_margin = 180 + phase_0db
+let gain_margin = -gain_0db
 print phase_margin
+print gain_margin
 
 write tb_ota_cmos5l_ac.raw
 
@@ -150,7 +153,7 @@ xschem netlist
 simulate
 "}
 C {title.sym} 160 -30 0 0 {name=l4 author="James Patrick"}
-C {/foss/designs/Programmable-Instrumentation-Amplifier-IP/designs/libs/core_analog/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
 C {vdd.sym} 720 -560 0 0 {name=l1 lab=VDD}
 C {lab_wire.sym} 760 -560 0 0 {name=p1 sig_type=std_logic lab=vss}
 C {lab_wire.sym} 800 -560 0 0 {name=p2 sig_type=std_logic lab=ibias}

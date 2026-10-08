@@ -1,0 +1,107 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/tb/tb_ota_cmos5l_ac/tb_ota_cmos5l_ac.sch
+**.subckt tb_ota_cmos5l_ac
+x1 vss ibias VDD vinn vinp out ota_cmos5l
+C1 out 0 3p
+I0 ibias vss 1.4u
+V1 VDD vss 1.5
+V2 vss 0 0
+V3 vinp vss 0.75
+V4 vinn vss 0.75
+**** begin user architecture code
+
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+.ac DEC
+
+.control
+save all
+
+** Set sources
+alter @V3[AC] = 1
+
+** Simulations
+ac dec 100 1 10G
+
+** Plots
+setplot ac1
+let gain_db = db(v(out))
+plot gain_db
+let phase_deg = cph(v(out))*180/pi
+plot phase_deg
+
+** Measurements
+meas ac DC_gain FIND gain_db AT=1Hz
+let gain_3db = DC_gain-3
+meas ac f_3db WHEN gain_db=$&gain_3db
+meas ac f_0db WHEN gain_db=0
+meas ac phase_0db FIND phase_deg WHEN gain_db=0
+meas ac gain_0db FIND gain_db WHEN phase_deg=-180
+let phase_margin = 180 + phase_0db
+let gain_margin = -gain_0db
+print phase_margin
+print gain_margin
+
+write tb_ota_cmos5l_ac.raw
+
+.endc
+* ngspice commands
+
+
+
+
+
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.iopin IBIAS
+*.iopin VDD
+*.iopin VSS
+*.iopin VOUT
+*.iopin VINP
+*.iopin VINN
+XM6 net1 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6} mm_ok=1
+XM7 net5 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7} mm_ok=1
+XM8 net6 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8} mm_ok=1
+XM1 net7 VINN net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM2 net8 VINP net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM3 net3 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM4 net4 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM5 net9 net4 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1 m=1 mm_ok=1
+C1 net10 net9 {Cc}
+XR1 net4 net10 sub! rhigh w=0.5e-6 l=1.95e-6 m=1 b=0 mm_ok=1
+VIBIAS net1 IBIAS 0
+.save i(vibias)
+VID7 net5 net2 0
+.save i(vid7)
+VID8 net6 VOUT 0
+.save i(vid8)
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+VID1 net7 net3 0
+.save i(vid1)
+VID2 net8 net4 0
+.save i(vid2)
+VID5 VOUT net9 0
+.save i(vid5)
+.ends
+
+.GLOBAL VDD
+.end
