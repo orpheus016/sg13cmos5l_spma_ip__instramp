@@ -1,6 +1,10 @@
-PDK=ihp-sg13cmos5l
-PDK_ROOT=/foss/designs/IHP-Open-PDK
-PDKPATH=$PDK_ROOT/$PDK
-STD_CELL_LIBRARY=$PDKPATH/libs.ref/sg13cmos5l_stdcell
-SPICE_USERINIT_DIR=$PDKPATH/libs.tech/ngspice
-KLAYOUT_PATH=$PDKPATH/libs.tech/klayout
+# PDKs and subdirectories
+export PDK=ihp-sg13cmos5l
+export PDK_ROOT=/foss/designs/IHP-Open-PDK
+export PDKPATH=$PDK_ROOT/$PDK
+export STD_CELL_LIBRARY=sg13cmos5l_stdcell
+export SPICE_USERINIT_DIR=$PDKPATH/libs.tech/ngspice
+export KLAYOUT_PATH=$PDKPATH/libs.tech/klayout
+
+# PyCell & Python integration for layouting
+export KLAYOUT_PYTHONPATH=$KLAYOUT_PATH/python
