@@ -5,6 +5,20 @@
 [![Technology](https://img.shields.io/badge/Technology-IHP_SG13CMOS5L-green)](#)
 [![Status](https://img.shields.io/badge/Status-Active_Development-orange)](#)
 
+## Shortcuts
+Below are the shortcuts to see each core specs.
+
+Layout:
+- [Top level and Cells](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/gds/pgia_top)
+
+Core:
+- [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/ota_cmos5l)
+- [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/instramp_cmos5l)
+- [Fine-Gain Stage](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/fine_gain)
+- [Coarse-Gain Stage](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/coarse_gain)
+- [Digital Decoder](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/decoder_top_10b)
+- [Output Buffer](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/output_buffer)
+
 ## Overview
 This repository contains the open-source IC design for a Programmable Gain Instrumentation Amplifier (PGIA) tailored for precision, low-frequency sensor interfaces in mixed-signal SoCs. Designed specifically for the IHP SG13CMOS5L technology node, this IP is optimized for measuring weak differential biosignals (such as EEG, ECG, EMG, and EOG) with high input impedance, low offset, and low noise. 
 
@@ -73,17 +87,3 @@ This design utilizes a fully open-source verification flow (Xschem, ngspice, Pyt
 *   **Transient Analysis:** Gain switching transient response, repeatability, Maximum Output Voltage vs Frequency.
 *   **Noise & Distortion:** Voltage noise density, THD + Noise vs Frequency.
 *   **Statistical & Drift:** Monte Carlo simulations for CMRR, PSRR, and Offset Voltage Temperature Drift. DC Sweeps for Gain Linearity.
-## Shortcuts
-Below are the shortcuts to see each core specs.
-
-Layout:
-- [Top level and Cells](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/gds/pgia_top)
-
-Core:
-- [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/ota_cmos5l)
-- [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/instramp_cmos5l)
-- [Fine-Gain Stage](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/fine_gain)
-- [Coarse-Gain Stage](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/coarse_gain)
-- [Digital Decoder](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/decoder_top_10b)
-- [Output Buffer](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/output_buffer)
-
