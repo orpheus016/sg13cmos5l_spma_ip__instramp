@@ -80,10 +80,10 @@ Layout:
 - [Top level and Cells](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/gds/pgia_top)
 
 Core:
-- [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_analog/ota_cmos5l)
-- [Instrumentation Amplifier](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_analog/instramp_cmos5l)
-- [Fine-Gain Stage](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_analog/fine_gain)
-- [Coarse-Gain Stage](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_analog/coarse_gain)
-- [Digital Decoder](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_digital/decoder_top_10b)
-- [Output Buffer](https://github.com/orpheus016/Programmable-Instrumentation-Amplifier-IP/tree/main/designs/libs/core_analog/output_buffer)
+- [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/ota_cmos5l)
+- [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/instramp_cmos5l)
+- [Fine-Gain Stage](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/fine_gain)
+- [Coarse-Gain Stage](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/coarse_gain)
+- [Digital Decoder](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/decoder_top_10b)
+- [Output Buffer](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/output_buffer)
 
