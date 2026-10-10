@@ -14,85 +14,45 @@ N -190 -410 -190 -400 {lab=VSS}
 N 70 -180 70 -160 {lab=I_B}
 N 50 -180 70 -180 {lab=I_B}
 N 90 -180 90 -160 {lab=VDD}
-N 230 -10 230 10 {lab=VSS}
-N 230 10 240 10 {lab=VSS}
+N 140 -10 140 10 {lab=VSS}
+N 140 10 150 10 {lab=VSS}
 N 10 -330 10 -310 {lab=VSS
 }
 N 10 -420 20 -420 {lab=VCM
 }
 N 10 -420 10 -390 {lab=VCM
 }
-N -140 -80 -120 -80 {lab=VCM}
-N -140 -100 -120 -100 {lab=IN2}
-N 260 -90 280 -90 {lab=OUT2}
+N -60 -80 -40 -80 {lab=VCM}
+N -60 -100 -40 -100 {lab=IN2}
+N 200 -90 220 -90 {lab=OUT2}
 N 100 -310 100 -300 {lab=VSS
 }
 N 100 -390 100 -370 {lab=OUT2
 }
-N -90 -10 -90 20 {lab=S15}
-N -70 -10 -70 20 {lab=S14}
-N -50 -10 -50 20 {lab=S13}
-N -30 -10 -30 20 {lab=S12}
-N -10 -10 -10 20 {lab=S11}
-N 10 -10 10 20 {lab=S10}
-N 30 -10 30 20 {lab=S9}
-N 50 -10 50 20 {lab=S8}
-N 70 -10 70 20 {lab=S7}
-N 90 -10 90 20 {lab=S6}
-N 110 -10 110 20 {lab=S5}
-N 130 -10 130 20 {lab=S4}
-N 150 -10 150 20 {lab=S3}
-N 170 -10 170 20 {lab=S2}
-N 190 -10 190 20 {lab=S1}
-N 210 -10 210 20 {lab=S0}
-N -480 -70 -480 -60 {lab=VSS}
-N -360 -60 -300 -60 {lab=VSS}
-N -300 -70 -300 -60 {lab=VSS}
-N -360 -70 -360 -60 {lab=VSS}
-N -420 -60 -360 -60 {lab=VSS}
-N -420 -70 -420 -60 {lab=VSS}
-N -480 -60 -420 -60 {lab=VSS}
-N -480 -170 -480 -160 {lab=VSS}
-N -360 -160 -300 -160 {lab=VSS}
-N -300 -170 -300 -160 {lab=VSS}
-N -420 -170 -420 -160 {lab=VSS}
-N -480 -160 -420 -160 {lab=VSS}
-N -360 -170 -360 -160 {lab=VSS}
-N -420 -160 -360 -160 {lab=VSS}
-N -480 30 -480 40 {lab=VSS}
-N -360 40 -300 40 {lab=VSS}
-N -300 30 -300 40 {lab=VSS}
-N -360 30 -360 40 {lab=VSS}
-N -420 40 -360 40 {lab=VSS}
-N -420 30 -420 40 {lab=VSS}
-N -480 40 -420 40 {lab=VSS}
-N -480 130 -480 140 {lab=VSS}
-N -360 140 -300 140 {lab=VSS}
-N -300 130 -300 140 {lab=VSS}
-N -360 130 -360 140 {lab=VSS}
-N -420 140 -360 140 {lab=VSS}
-N -420 130 -420 140 {lab=VSS}
-N -480 140 -420 140 {lab=VSS}
-N -300 -160 -280 -160 {lab=VSS}
-N -300 -60 -280 -60 {lab=VSS}
-N -300 40 -280 40 {lab=VSS}
-N -300 140 -280 140 {lab=VSS}
-N -480 -250 -480 -230 {lab=S0}
-N -420 -250 -420 -230 {lab=S1}
-N -360 -250 -360 -230 {lab=S2}
-N -300 -250 -300 -230 {lab=S3}
-N -480 -150 -480 -130 {lab=S4}
-N -420 -150 -420 -130 {lab=S5}
-N -360 -150 -360 -130 {lab=S6}
-N -300 -150 -300 -130 {lab=S7}
-N -480 -50 -480 -30 {lab=S8}
-N -420 -50 -420 -30 {lab=S9}
-N -360 -50 -360 -30 {lab=S10}
-N -300 -50 -300 -30 {lab=S11}
-N -300 50 -300 70 {lab=S15}
-N -360 50 -360 70 {lab=S14}
-N -420 50 -420 70 {lab=S13}
-N -480 50 -480 70 {lab=S12}
+N 20 -10 20 20 {lab=S5}
+N 40 -10 40 20 {lab=S4}
+N 60 -10 60 20 {lab=S3}
+N 80 -10 80 20 {lab=S2}
+N 100 -10 100 20 {lab=S1}
+N 120 -10 120 20 {lab=S0}
+N -370 -70 -370 -60 {lab=VSS}
+N -310 -70 -310 -60 {lab=VSS}
+N -370 -60 -310 -60 {lab=VSS}
+N -370 -170 -370 -160 {lab=VSS}
+N -250 -160 -190 -160 {lab=VSS}
+N -190 -170 -190 -160 {lab=VSS}
+N -310 -170 -310 -160 {lab=VSS}
+N -370 -160 -310 -160 {lab=VSS}
+N -250 -170 -250 -160 {lab=VSS}
+N -310 -160 -250 -160 {lab=VSS}
+N -190 -160 -170 -160 {lab=VSS}
+N -310 -60 -290 -60 {lab=VSS}
+N -370 -250 -370 -230 {lab=S0}
+N -310 -250 -310 -230 {lab=S1}
+N -250 -250 -250 -230 {lab=S2}
+N -190 -250 -190 -230 {lab=S3}
+N -370 -150 -370 -130 {lab=S4}
+N -310 -150 -310 -130 {lab=S5}
 N 180 -320 180 -300 {lab=VSS
 }
 N 180 -410 190 -410 {lab=IN2
@@ -134,7 +94,7 @@ value="tcleval(
       }
 C {lab_pin.sym} 50 -180 0 0 {name=p1 sig_type=std_logic lab=I_B}
 C {vdd.sym} 90 -180 0 0 {name=l2 lab=VDD}
-C {lab_pin.sym} 240 10 2 0 {name=p2 sig_type=std_logic lab=VSS
+C {lab_pin.sym} 150 10 2 0 {name=p2 sig_type=std_logic lab=VSS
 }
 C {vsource.sym} 10 -360 0 0 {name=V1 value=\{vicm\} savecurrent=false
 }
@@ -142,55 +102,47 @@ C {lab_pin.sym} 20 -420 2 0 {name=p10 sig_type=std_logic lab=VCM
 }
 C {lab_pin.sym} 10 -310 3 0 {name=p8 sig_type=std_logic lab=VSS
 }
-C {lab_pin.sym} -140 -80 0 0 {name=p4 sig_type=std_logic lab=VCM
+C {lab_pin.sym} -60 -80 0 0 {name=p4 sig_type=std_logic lab=VCM
 }
-C {lab_pin.sym} -140 -100 0 0 {name=p5 sig_type=std_logic lab=IN2}
-C {lab_pin.sym} 280 -90 2 0 {name=p6 sig_type=std_logic lab=OUT2}
-C {simulator_commands.sym} 290 -400 0 0 {name=16_LEVELS_SWEEP
+C {lab_pin.sym} -60 -100 0 0 {name=p5 sig_type=std_logic lab=IN2}
+C {lab_pin.sym} 220 -90 2 0 {name=p6 sig_type=std_logic lab=OUT2}
+C {simulator_commands.sym} 290 -400 0 0 {name=5_LEVELS_SWEEP
 simulator=ngspice
 only_toplevel=false 
-value=".control
-* ==============================================================================
-* COARSE-GAIN NETWORK (PGA) 16-TAP AUTOMATED TELEMETRY & ACCURACY CHARACTERIZATION
-* Topology  : Inverting Closed-Loop Logarithmic Resistor Ladder (R to 649R)
+value="* ==============================================================================
+* BINARY GAIN-STAGE NETWORK (PGA) 6-TAP AC & DC TELEMETRY CHARACTERIZATION
+* Topology  : Inverting Switched-Resistor Feedback Ladder (R to 32R)
+* Step Size : Pure Binary Stepping (+6.0206 dB / 2x Gain per Step)
 * Technology: IHP SG13CMOS5L (130nm BiCMOS)
 * ==============================================================================
 
+.control
 destroy all
 save all
 shell mkdir -p result
 shell rm -f ./result/tb_cg_network_summary.txt
 
-echo \\"==================================================================================================================================================\\" >> ./result/tb_cg_network_summary.txt
-echo \\" Tap   Code   Target(dB)   Meas(dB)   Err(dB)    Err(Step)   Acc_FS(%)    -3dB BW(Hz)    Vos_out(mV)   V_vg_err(mV)   P_dc(uW) \\" >> ./result/tb_cg_network_summary.txt
-echo \\"==================================================================================================================================================\\" >> ./result/tb_cg_network_summary.txt
+* Initialize summary report table header
+echo \\"==================================================================================================================================\\" >> ./result/tb_cg_network_summary.txt
+echo \\" Tap   Code   Target(dB)   Meas(dB)   Err(dB)    Err(Step)   Acc_FS(%)   -3dB BW(kHz)   Vos_out(mV)   V_vg_err(mV)   P_dc(uW) \\" >> ./result/tb_cg_network_summary.txt
+echo \\"==================================================================================================================================\\" >> ./result/tb_cg_network_summary.txt
 
-echo \\"==================================================================================================================================================\\"
-echo \\" STARTING AUTOMATED 16-TAP PGA AC & DC TELEMETRY CHARACTERIZATION (DB-BASED ERROR)                                                                \\"
-echo \\"==================================================================================================================================================\\"
+echo \\"==================================================================================================================================\\"
+echo \\" STARTING BINARY GAIN-STAGE AC & DC CHARACTERIZATION (R TO 32R, S0 TO S5)                                                        \\"
+echo \\"==================================================================================================================================\\"
 
 * ------------------------------------------------------------------------------
-* STEP 0: DC OFFSET PRE-CALIBRATION
+* STEP 0: DC OFFSET PRE-CALIBRATION (NOMINAL TAP S0 AT 0 dB)
 * ------------------------------------------------------------------------------
-alter @vs1[dc]  = 1.2
-alter @vs2[dc]  = 0
-alter @vs3[dc]  = 0
-alter @vs4[dc]  = 0
-alter @vs5[dc]  = 0
-alter @vs6[dc]  = 0
-alter @vs7[dc]  = 0
-alter @vs8[dc]  = 0
-alter @vs9[dc]  = 0
-alter @vs10[dc] = 0
-alter @vs11[dc] = 0
-alter @vs12[dc] = 0
-alter @vs13[dc] = 0
-alter @vs14[dc] = 0
-alter @vs15[dc] = 0
-alter @vs16[dc] = 0
+alter @vs1[dc] = 1.2
+alter @vs2[dc] = 0
+alter @vs3[dc] = 0
+alter @vs4[dc] = 0
+alter @vs5[dc] = 0
+alter @vs6[dc] = 0
 
 op
-let v_vg_nominal = v(x1.net17)
+let v_vg_nominal = v(x1.net7)
 echo \\" Calibrated Input DC Bias to Virtual Ground: \\" $&v_vg_nominal \\" V\\"
 
 alter @v4[dc] = $&v_vg_nominal
@@ -198,29 +150,19 @@ alter @v4[dc] = $&v_vg_nominal
 set appendwrite
 
 * ------------------------------------------------------------------------------
-* STEP 1: SEQUENTIAL 16-TAP EVALUATION LOOP
+* STEP 1: SEQUENTIAL 6-TAP BINARY EVALUATION LOOP (S0 TO S5)
 * ------------------------------------------------------------------------------
-foreach tap 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+foreach tap 0 1 2 3 4 5
 
-  * Reset all switch voltages
-  alter @vs1[dc]  = 0
-  alter @vs2[dc]  = 0
-  alter @vs3[dc]  = 0
-  alter @vs4[dc]  = 0
-  alter @vs5[dc]  = 0
-  alter @vs6[dc]  = 0
-  alter @vs7[dc]  = 0
-  alter @vs8[dc]  = 0
-  alter @vs9[dc]  = 0
-  alter @vs10[dc] = 0
-  alter @vs11[dc] = 0
-  alter @vs12[dc] = 0
-  alter @vs13[dc] = 0
-  alter @vs14[dc] = 0
-  alter @vs15[dc] = 0
-  alter @vs16[dc] = 0
+  * 1. Reset all 6 control switch gate voltages to 0V (OFF state)
+  alter @vs1[dc] = 0
+  alter @vs2[dc] = 0
+  alter @vs3[dc] = 0
+  alter @vs4[dc] = 0
+  alter @vs5[dc] = 0
+  alter @vs6[dc] = 0
 
-  * Assert active tap
+  * 2. Assert active binary tap
   if ($tap = 0)
     alter @vs1[dc] = 1.2
   end
@@ -239,80 +181,64 @@ foreach tap 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
   if ($tap = 5)
     alter @vs6[dc] = 1.2
   end
-  if ($tap = 6)
-    alter @vs7[dc] = 1.2
-  end
-  if ($tap = 7)
-    alter @vs8[dc] = 1.2
-  end
-  if ($tap = 8)
-    alter @vs9[dc] = 1.2
-  end
-  if ($tap = 9)
-    alter @vs10[dc] = 1.2
-  end
-  if ($tap = 10)
-    alter @vs11[dc] = 1.2
-  end
-  if ($tap = 11)
-    alter @vs12[dc] = 1.2
-  end
-  if ($tap = 12)
-    alter @vs13[dc] = 1.2
-  end
-  if ($tap = 13)
-    alter @vs14[dc] = 1.2
-  end
-  if ($tap = 14)
-    alter @vs15[dc] = 1.2
-  end
-  if ($tap = 15)
-    alter @vs16[dc] = 1.2
-  end
 
-  * Run DC Operating Point
+  * 3. DC Operating Point Analysis
   op
-  let cur_vos_mv  = (v(out2) - v(vcm)) * 1e3
-  let cur_vvg_mv  = (v(x1.net17) - v(vcm)) * 1e3
-  let cur_pdc_uw  = -i(v2) * 1.2 * 1e6
+  let cur_vos_mv = (v(out2) - v(vcm)) * 1e3
+  let cur_vvg_mv = (v(x1.net7) - v(vcm)) * 1e3
+  let cur_pdc_uw = -i(v2) * 1.2 * 1e6
 
+  * Lock DC variables to shell environment BEFORE plot context switches to AC
   set s_vos = \\"$&cur_vos_mv\\"
   set s_vvg = \\"$&cur_vvg_mv\\"
   set s_pdc = \\"$&cur_pdc_uw\\"
 
-  * Run AC Analysis
+  * 4. Small-Signal AC Frequency Response Analysis
   ac dec 30 10 100MEG
 
   let gain_db = db(v(out2))
   let ph_deg  = cph(v(out2)) * 180 / pi
 
-  * Measure midband gain at 1 kHz flatband
+  * Measure midband flatband gain at 1 kHz
   meas ac g_meas_db find gain_db at=1k
 
-  * Measure -3 dB bandwidth
+  * Measure -3 dB cutoff bandwidth
   let target_3db = g_meas_db - 3
   meas ac f_3db when gain_db=target_3db
+  let f_3db_khz = f_3db / 1e3
 
-  * Calculate theoretical gain and dB-based error metrics
-  let ideal_db   = $tap * 3.75
-  let err_db     = g_meas_db - ideal_db
-  let err_step   = err_db / 3.75
-  let acc_fs     = 100 - (abs(err_db) / 56.25 * 100)
+  * 5. Binary Gain Metrics & dB-Based Error Computation
+  let ideal_lin = 2^($tap)
+  let ideal_db  = db(ideal_lin)
+  let err_db    = g_meas_db - ideal_db
+  let err_step  = err_db / 6.0206
+  let acc_fs    = 100 - (abs(err_db) / 30.103 * 100)
 
+  * Save curves into consolidated multi-run rawfile
   write ./result/tb_cg_network_all_taps.raw gain_db ph_deg
 
-  * Telemetry Output
-  echo \\" S$tap | Target: $&ideal_db dB | Meas: $&g_meas_db dB | Err: $&err_db dB ($&err_step Step) | Acc_FS: $&acc_fs % | -3dB BW: $&f_3db Hz | Vos: $s_vos mV\\"
+  * Lock remaining AC variables to shell environment
+  set s_ideal = \\"$&ideal_db\\"
+  set s_meas  = \\"$&g_meas_db\\"
+  set s_err   = \\"$&err_db\\"
+  set s_step  = \\"$&err_step\\"
+  set s_acc   = \\"$&acc_fs\\"
+  set s_f3db  = \\"$&f_3db_khz\\"
 
-  echo \\" S$tap  |  $tap  |  $&ideal_db  |  $&g_meas_db  |  $&err_db  |  $&err_step  |  $&acc_fs  |  $&f_3db  |  $s_vos  |  $s_vvg  |  $s_pdc\\" >> ./result/tb_cg_network_summary.txt
+  * Print progress to terminal
+  echo \\" S$tap | Target: $s_ideal dB | Meas: $s_meas dB | Err: $s_err dB ($s_step LSB) | BW: $s_f3db kHz | Vos: $s_vos mV\\"
+
+  * Append telemetry row to text report
+  echo \\" S$tap   | $tap    | $s_ideal       | $s_meas       | $s_err     | $s_step     | $s_acc    | $s_f3db        | $s_vos       | $s_vvg       | $s_pdc\\" >> ./result/tb_cg_network_summary.txt
 
 end
 
 unset appendwrite
-echo \\"==================================================================================================================================================\\"
-echo \\" CHARACTERIZATION COMPLETED! Full telemetry log is exported to:                                                                                   \\"
-echo \\" ./result/tb_cg_network_summary.txt                                                                                                              \\"
-echo \\"==================================================================================================================================================\\"
+echo \\"==================================================================================================================================\\"
+echo \\" CHARACTERIZATION COMPLETED! Full telemetry log is exported to:                                                                 \\"
+echo \\" ./result/tb_cg_network_summary.txt                                                                                             \\"
+echo \\" Frequency response waveforms saved to: ./result/tb_cg_network_all_taps.raw                                                     \\"
+echo \\"==================================================================================================================================\\"
 .endc"}
 C {capa.sym} 100 -340 0 0 {name=C1
 m=1
@@ -324,93 +250,39 @@ C {lab_pin.sym} 100 -300 3 0 {name=p12 sig_type=std_logic lab=VSS
 }
 C {lab_pin.sym} 100 -390 1 0 {name=p13 sig_type=std_logic lab=OUT2
 }
-C {lab_pin.sym} -90 20 3 0 {name=p9 sig_type=std_logic lab=S15
+C {lab_pin.sym} 20 20 3 0 {name=p22 sig_type=std_logic lab=S5
 }
-C {lab_pin.sym} -70 20 3 0 {name=p11 sig_type=std_logic lab=S14
+C {lab_pin.sym} 40 20 3 0 {name=p23 sig_type=std_logic lab=S4
 }
-C {lab_pin.sym} -50 20 3 0 {name=p14 sig_type=std_logic lab=S13
+C {lab_pin.sym} 60 20 3 0 {name=p24 sig_type=std_logic lab=S3
 }
-C {lab_pin.sym} -30 20 3 0 {name=p15 sig_type=std_logic lab=S12
+C {lab_pin.sym} 80 20 3 0 {name=p25 sig_type=std_logic lab=S2
 }
-C {lab_pin.sym} -10 20 3 0 {name=p16 sig_type=std_logic lab=S11
+C {lab_pin.sym} 100 20 3 0 {name=p26 sig_type=std_logic lab=S1
 }
-C {lab_pin.sym} 10 20 3 0 {name=p17 sig_type=std_logic lab=S10
+C {lab_pin.sym} 120 20 3 0 {name=p27 sig_type=std_logic lab=S0
 }
-C {lab_pin.sym} 30 20 3 0 {name=p18 sig_type=std_logic lab=S9
+C {vsource.sym} -370 -200 0 0 {name=VS1 value=0 savecurrent=false}
+C {vsource.sym} -310 -200 0 0 {name=VS2 value=0 savecurrent=false}
+C {vsource.sym} -250 -200 0 0 {name=VS3 value=0 savecurrent=false}
+C {vsource.sym} -190 -200 0 0 {name=VS4 value=0 savecurrent=false}
+C {vsource.sym} -370 -100 0 0 {name=VS5 value=0 savecurrent=false}
+C {vsource.sym} -310 -100 0 0 {name=VS6 value=0 savecurrent=false}
+C {lab_pin.sym} -170 -160 2 0 {name=p28 sig_type=std_logic lab=VSS
 }
-C {lab_pin.sym} 50 20 3 0 {name=p19 sig_type=std_logic lab=S8
+C {lab_pin.sym} -290 -60 2 0 {name=p29 sig_type=std_logic lab=VSS
 }
-C {lab_pin.sym} 70 20 3 0 {name=p20 sig_type=std_logic lab=S7
+C {lab_pin.sym} -370 -250 1 0 {name=p32 sig_type=std_logic lab=S0
 }
-C {lab_pin.sym} 90 20 3 0 {name=p21 sig_type=std_logic lab=S6
+C {lab_pin.sym} -310 -250 1 0 {name=p33 sig_type=std_logic lab=S1
 }
-C {lab_pin.sym} 110 20 3 0 {name=p22 sig_type=std_logic lab=S5
+C {lab_pin.sym} -250 -250 1 0 {name=p34 sig_type=std_logic lab=S2
 }
-C {lab_pin.sym} 130 20 3 0 {name=p23 sig_type=std_logic lab=S4
+C {lab_pin.sym} -190 -250 1 0 {name=p35 sig_type=std_logic lab=S3
 }
-C {lab_pin.sym} 150 20 3 0 {name=p24 sig_type=std_logic lab=S3
+C {lab_pin.sym} -370 -150 0 0 {name=p36 sig_type=std_logic lab=S4
 }
-C {lab_pin.sym} 170 20 3 0 {name=p25 sig_type=std_logic lab=S2
-}
-C {lab_pin.sym} 190 20 3 0 {name=p26 sig_type=std_logic lab=S1
-}
-C {lab_pin.sym} 210 20 3 0 {name=p27 sig_type=std_logic lab=S0
-}
-C {vsource.sym} -480 -200 0 0 {name=VS1 value=0 savecurrent=false}
-C {vsource.sym} -420 -200 0 0 {name=VS2 value=0 savecurrent=false}
-C {vsource.sym} -360 -200 0 0 {name=VS3 value=0 savecurrent=false}
-C {vsource.sym} -300 -200 0 0 {name=VS4 value=0 savecurrent=false}
-C {vsource.sym} -480 -100 0 0 {name=VS5 value=0 savecurrent=false}
-C {vsource.sym} -420 -100 0 0 {name=VS6 value=0 savecurrent=false}
-C {vsource.sym} -360 -100 0 0 {name=VS7 value=0 savecurrent=false}
-C {vsource.sym} -300 -100 0 0 {name=VS8 value=0 savecurrent=false}
-C {vsource.sym} -480 0 0 0 {name=VS9 value=0 savecurrent=false}
-C {vsource.sym} -420 0 0 0 {name=VS10 value=0 savecurrent=false}
-C {vsource.sym} -360 0 0 0 {name=VS11 value=0 savecurrent=false}
-C {vsource.sym} -300 0 0 0 {name=VS12 value=0 savecurrent=false}
-C {vsource.sym} -480 100 0 0 {name=VS13 value=0 savecurrent=false}
-C {vsource.sym} -420 100 0 0 {name=VS14 value=0 savecurrent=false}
-C {vsource.sym} -360 100 0 0 {name=VS15 value=0 savecurrent=false}
-C {vsource.sym} -300 100 0 0 {name=VS16 value=0 savecurrent=false}
-C {lab_pin.sym} -280 -160 2 0 {name=p28 sig_type=std_logic lab=VSS
-}
-C {lab_pin.sym} -280 -60 2 0 {name=p29 sig_type=std_logic lab=VSS
-}
-C {lab_pin.sym} -280 40 2 0 {name=p30 sig_type=std_logic lab=VSS
-}
-C {lab_pin.sym} -280 140 2 0 {name=p31 sig_type=std_logic lab=VSS
-}
-C {lab_pin.sym} -480 -250 1 0 {name=p32 sig_type=std_logic lab=S0
-}
-C {lab_pin.sym} -420 -250 1 0 {name=p33 sig_type=std_logic lab=S1
-}
-C {lab_pin.sym} -360 -250 1 0 {name=p34 sig_type=std_logic lab=S2
-}
-C {lab_pin.sym} -300 -250 1 0 {name=p35 sig_type=std_logic lab=S3
-}
-C {lab_pin.sym} -480 -150 0 0 {name=p36 sig_type=std_logic lab=S4
-}
-C {lab_pin.sym} -420 -150 0 0 {name=p37 sig_type=std_logic lab=S5
-}
-C {lab_pin.sym} -360 -150 0 0 {name=p38 sig_type=std_logic lab=S6
-}
-C {lab_pin.sym} -300 -150 0 0 {name=p39 sig_type=std_logic lab=S7
-}
-C {lab_pin.sym} -480 -50 0 0 {name=p40 sig_type=std_logic lab=S8
-}
-C {lab_pin.sym} -420 -50 0 0 {name=p41 sig_type=std_logic lab=S9
-}
-C {lab_pin.sym} -360 -50 0 0 {name=p42 sig_type=std_logic lab=S10
-}
-C {lab_pin.sym} -300 -50 0 0 {name=p43 sig_type=std_logic lab=S11
-}
-C {lab_pin.sym} -480 50 0 0 {name=p44 sig_type=std_logic lab=S12
-}
-C {lab_pin.sym} -420 50 0 0 {name=p45 sig_type=std_logic lab=S13
-}
-C {lab_pin.sym} -360 50 0 0 {name=p46 sig_type=std_logic lab=S14
-}
-C {lab_pin.sym} -300 50 0 0 {name=p47 sig_type=std_logic lab=S15
+C {lab_pin.sym} -310 -150 0 0 {name=p37 sig_type=std_logic lab=S5
 }
 C {vsource.sym} 180 -350 0 0 {name=V4 value="DC 0.6 AC 1" savecurrent=false
 }

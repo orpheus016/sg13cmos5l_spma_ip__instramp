@@ -1,58 +1,5 @@
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_network.sch
-**.subckt cg_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
-*.ipin I_BIAS
-*.ipin V_IN2
-*.ipin V_CM
-*.ipin AVSS
-*.ipin AVDD
-*.opin V_OUT2
-*.ipin S5
-*.ipin S4
-*.ipin S3
-*.ipin S2
-*.ipin S1
-*.ipin S0
-XR7 net6 net5 AVSS rhigh w=0.5e-6 l=10.72e-6 m=1 b=0 mm_ok=1
-XR3 net2 net1 AVSS rppd w=2e-6 l=15.16e-6 m=1 b=0 mm_ok=1
-XR2 net1 V_OUT2 AVSS rppd w=2e-6 l=7e-6 m=1 b=0 mm_ok=1
-XR1 net7 V_IN2 AVSS rppd w=2e-6 l=15.16e-6 m=1 b=0 mm_ok=1
-x13 net8 S5 AVDD AVSS sg13cmos5l_inv_1
-x12 net9 S4 AVDD AVSS sg13cmos5l_inv_1
-x11 net10 S3 AVDD AVSS sg13cmos5l_inv_1
-x10 net11 S2 AVDD AVSS sg13cmos5l_inv_1
-x9 net12 S1 AVDD AVSS sg13cmos5l_inv_1
-x8 net13 S0 AVDD AVSS sg13cmos5l_inv_1
-x7 net7 AVSS AVDD S5 net8 net6 tgate l=0.13e-6 wn=0.9e-6 wp=2.7e-6
-x6 net7 AVSS AVDD S4 net9 net5 tgate l=0.13e-6 wn=1.5e-6 wp=4.5e-6
-x5 net7 AVSS AVDD S3 net10 net4 tgate l=0.13e-6 wn=2.2e-6 wp=6.6e-6
-x4 net7 AVSS AVDD S2 net11 net3 tgate l=0.13e-6 wn=2.6e-6 wp=7.8e-6
-x3 net7 AVSS AVDD S1 net12 net2 tgate l=0.13e-6 wn=2.9e-6 wp=8.7e-6
-x2 net7 AVSS AVDD S0 net13 net1 tgate l=0.13e-6 wn=3e-6 wp=9e-6
-XR6 net5 net4 AVSS rhigh w=0.5e-6 l=5.3e-6 m=1 b=0 mm_ok=1
-XR5 net4 net3 AVSS rhigh w=0.5e-6 l=2.6e-6 m=1 b=0 mm_ok=1
-XR4 net3 net2 AVSS rhigh w=0.5e-6 l=1.25e-6 m=1 b=0 mm_ok=1
-x1 AVDD V_CM net7 V_OUT2 I_BIAS AVSS cg_ota
-**.ends
-
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sch
-.subckt tgate IN AVSS AVDD EN ENB OUT  l=0.13e-6 wn=1e-6 wp=3e-6
-*.iopin AVDD
-*.iopin AVSS
-*.iopin IN
-*.iopin OUT
-*.ipin EN
-*.ipin ENB
-XM1 IN EN OUT AVSS sg13_lv_nmos w=wn l=l ng=1 m=1 mm_ok=1
-XM2 OUT ENB IN AVDD sg13_lv_pmos w=wp l=l ng=1 m=1 mm_ok=1
-.ends
-
-
-* expanding   symbol:  cg_ota.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_ota.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_ota.sch
-.subckt cg_ota VDD V_inp V_inn V_out I_bias VSS
+**.subckt cg_ota VDD V_inp V_inn V_out I_bias VSS
 *.ipin V_inn
 *.ipin VDD
 *.ipin VSS
@@ -93,6 +40,5 @@ XM_rep_outp net4 net4 VDD VDD sg13_lv_pmos w=5.55u l=0.5u ng=1 m=1 mm_ok=1
 XM_rep_ctrlp V_ctrlp V_ctrlp net4 VDD sg13_lv_pmos w=2.20u l=0.50u ng=1 m=1 mm_ok=1
 XM_mp5 N_A net1 VDD VDD sg13_lv_pmos w=9.21u l=2u ng=1 m=1 mm_ok=1
 XR2 N_A net7 VSS rhigh w=0.5e-6 l=4e-6 m=1 b=0 mm_ok=1
-.ends
-
+**.ends
 .end

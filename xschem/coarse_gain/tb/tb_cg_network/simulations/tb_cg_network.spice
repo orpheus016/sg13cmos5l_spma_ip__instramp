@@ -11,18 +11,8 @@ VS3 S2 VSS 0
 VS4 S3 VSS 0
 VS5 S4 VSS 0
 VS6 S5 VSS 0
-VS7 S6 VSS 0
-VS8 S7 VSS 0
-VS9 S8 VSS 0
-VS10 S9 VSS 0
-VS11 S10 VSS 0
-VS12 S11 VSS 0
-VS13 S12 VSS 0
-VS14 S13 VSS 0
-VS15 S14 VSS 0
-VS16 S15 VSS 0
 V4 IN2 VSS DC 0.6 AC 1
-x1 S4 S5 S0 S2 S1 S3 S14 S13 S12 S11 S10 S9 S8 S7 S6 S15 VDD VCM IN2 OUT2 I_B VSS cg_network
+x1 S4 S5 S0 S2 S1 S3 VDD VCM IN2 OUT2 I_B VSS cg_network
 **** begin user architecture code
 
 
@@ -47,48 +37,40 @@ x1 S4 S5 S0 S2 S1 S3 S14 S13 S12 S11 S10 S9 S8 S7 S6 S15 VDD VCM IN2 OUT2 I_B VS
 
 
 
-.control
 * ==============================================================================
-* COARSE-GAIN NETWORK (PGA) 16-TAP AUTOMATED TELEMETRY & ACCURACY CHARACTERIZATION
-* Topology  : Inverting Closed-Loop Logarithmic Resistor Ladder (R to 649R)
+* BINARY GAIN-STAGE NETWORK (PGA) 6-TAP AC & DC TELEMETRY CHARACTERIZATION
+* Topology  : Inverting Switched-Resistor Feedback Ladder (R to 32R)
+* Step Size : Pure Binary Stepping (+6.0206 dB / 2x Gain per Step)
 * Technology: IHP SG13CMOS5L (130nm BiCMOS)
 * ==============================================================================
 
+.control
 destroy all
 save all
 shell mkdir -p result
 shell rm -f ./result/tb_cg_network_summary.txt
 
-echo "==================================================================================================================================================" >> ./result/tb_cg_network_summary.txt
-echo " Tap   Code   Target(dB)   Meas(dB)   Err(dB)    Err(Step)   Acc_FS(%)    -3dB BW(Hz)    Vos_out(mV)   V_vg_err(mV)   P_dc(uW) " >> ./result/tb_cg_network_summary.txt
-echo "==================================================================================================================================================" >> ./result/tb_cg_network_summary.txt
+* Initialize summary report table header
+echo "==================================================================================================================================" >> ./result/tb_cg_network_summary.txt
+echo " Tap   Code   Target(dB)   Meas(dB)   Err(dB)    Err(Step)   Acc_FS(%)   -3dB BW(kHz)   Vos_out(mV)   V_vg_err(mV)   P_dc(uW) " >> ./result/tb_cg_network_summary.txt
+echo "==================================================================================================================================" >> ./result/tb_cg_network_summary.txt
 
-echo "=================================================================================================================================================="
-echo " STARTING AUTOMATED 16-TAP PGA AC & DC TELEMETRY CHARACTERIZATION (DB-BASED ERROR)                                                                "
-echo "=================================================================================================================================================="
+echo "=================================================================================================================================="
+echo " STARTING BINARY GAIN-STAGE AC & DC CHARACTERIZATION (R TO 32R, S0 TO S5)                                                        "
+echo "=================================================================================================================================="
 
 * ------------------------------------------------------------------------------
-* STEP 0: DC OFFSET PRE-CALIBRATION
+* STEP 0: DC OFFSET PRE-CALIBRATION (NOMINAL TAP S0 AT 0 dB)
 * ------------------------------------------------------------------------------
-alter @vs1[dc]  = 1.2
-alter @vs2[dc]  = 0
-alter @vs3[dc]  = 0
-alter @vs4[dc]  = 0
-alter @vs5[dc]  = 0
-alter @vs6[dc]  = 0
-alter @vs7[dc]  = 0
-alter @vs8[dc]  = 0
-alter @vs9[dc]  = 0
-alter @vs10[dc] = 0
-alter @vs11[dc] = 0
-alter @vs12[dc] = 0
-alter @vs13[dc] = 0
-alter @vs14[dc] = 0
-alter @vs15[dc] = 0
-alter @vs16[dc] = 0
+alter @vs1[dc] = 1.2
+alter @vs2[dc] = 0
+alter @vs3[dc] = 0
+alter @vs4[dc] = 0
+alter @vs5[dc] = 0
+alter @vs6[dc] = 0
 
 op
-let v_vg_nominal = v(x1.net17)
+let v_vg_nominal = v(x1.net7)
 echo " Calibrated Input DC Bias to Virtual Ground: " $&v_vg_nominal " V"
 
 alter @v4[dc] = $&v_vg_nominal
@@ -96,29 +78,19 @@ alter @v4[dc] = $&v_vg_nominal
 set appendwrite
 
 * ------------------------------------------------------------------------------
-* STEP 1: SEQUENTIAL 16-TAP EVALUATION LOOP
+* STEP 1: SEQUENTIAL 6-TAP BINARY EVALUATION LOOP (S0 TO S5)
 * ------------------------------------------------------------------------------
-foreach tap 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+foreach tap 0 1 2 3 4 5
 
-  * Reset all switch voltages
-  alter @vs1[dc]  = 0
-  alter @vs2[dc]  = 0
-  alter @vs3[dc]  = 0
-  alter @vs4[dc]  = 0
-  alter @vs5[dc]  = 0
-  alter @vs6[dc]  = 0
-  alter @vs7[dc]  = 0
-  alter @vs8[dc]  = 0
-  alter @vs9[dc]  = 0
-  alter @vs10[dc] = 0
-  alter @vs11[dc] = 0
-  alter @vs12[dc] = 0
-  alter @vs13[dc] = 0
-  alter @vs14[dc] = 0
-  alter @vs15[dc] = 0
-  alter @vs16[dc] = 0
+  * 1. Reset all 6 control switch gate voltages to 0V (OFF state)
+  alter @vs1[dc] = 0
+  alter @vs2[dc] = 0
+  alter @vs3[dc] = 0
+  alter @vs4[dc] = 0
+  alter @vs5[dc] = 0
+  alter @vs6[dc] = 0
 
-  * Assert active tap
+  * 2. Assert active binary tap
   if ($tap = 0)
     alter @vs1[dc] = 1.2
   end
@@ -137,80 +109,64 @@ foreach tap 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
   if ($tap = 5)
     alter @vs6[dc] = 1.2
   end
-  if ($tap = 6)
-    alter @vs7[dc] = 1.2
-  end
-  if ($tap = 7)
-    alter @vs8[dc] = 1.2
-  end
-  if ($tap = 8)
-    alter @vs9[dc] = 1.2
-  end
-  if ($tap = 9)
-    alter @vs10[dc] = 1.2
-  end
-  if ($tap = 10)
-    alter @vs11[dc] = 1.2
-  end
-  if ($tap = 11)
-    alter @vs12[dc] = 1.2
-  end
-  if ($tap = 12)
-    alter @vs13[dc] = 1.2
-  end
-  if ($tap = 13)
-    alter @vs14[dc] = 1.2
-  end
-  if ($tap = 14)
-    alter @vs15[dc] = 1.2
-  end
-  if ($tap = 15)
-    alter @vs16[dc] = 1.2
-  end
 
-  * Run DC Operating Point
+  * 3. DC Operating Point Analysis
   op
-  let cur_vos_mv  = (v(out2) - v(vcm)) * 1e3
-  let cur_vvg_mv  = (v(x1.net17) - v(vcm)) * 1e3
-  let cur_pdc_uw  = -i(v2) * 1.2 * 1e6
+  let cur_vos_mv = (v(out2) - v(vcm)) * 1e3
+  let cur_vvg_mv = (v(x1.net7) - v(vcm)) * 1e3
+  let cur_pdc_uw = -i(v2) * 1.2 * 1e6
 
+  * Lock DC variables to shell environment BEFORE plot context switches to AC
   set s_vos = "$&cur_vos_mv"
   set s_vvg = "$&cur_vvg_mv"
   set s_pdc = "$&cur_pdc_uw"
 
-  * Run AC Analysis
+  * 4. Small-Signal AC Frequency Response Analysis
   ac dec 30 10 100MEG
 
   let gain_db = db(v(out2))
   let ph_deg  = cph(v(out2)) * 180 / pi
 
-  * Measure midband gain at 1 kHz flatband
+  * Measure midband flatband gain at 1 kHz
   meas ac g_meas_db find gain_db at=1k
 
-  * Measure -3 dB bandwidth
+  * Measure -3 dB cutoff bandwidth
   let target_3db = g_meas_db - 3
   meas ac f_3db when gain_db=target_3db
+  let f_3db_khz = f_3db / 1e3
 
-  * Calculate theoretical gain and dB-based error metrics
-  let ideal_db   = $tap * 3.75
-  let err_db     = g_meas_db - ideal_db
-  let err_step   = err_db / 3.75
-  let acc_fs     = 100 - (abs(err_db) / 56.25 * 100)
+  * 5. Binary Gain Metrics & dB-Based Error Computation
+  let ideal_lin = 2^($tap)
+  let ideal_db  = db(ideal_lin)
+  let err_db    = g_meas_db - ideal_db
+  let err_step  = err_db / 6.0206
+  let acc_fs    = 100 - (abs(err_db) / 30.103 * 100)
 
+  * Save curves into consolidated multi-run rawfile
   write ./result/tb_cg_network_all_taps.raw gain_db ph_deg
 
-  * Telemetry Output
-  echo " S$tap | Target: $&ideal_db dB | Meas: $&g_meas_db dB | Err: $&err_db dB ($&err_step Step) | Acc_FS: $&acc_fs % | -3dB BW: $&f_3db Hz | Vos: $s_vos mV"
+  * Lock remaining AC variables to shell environment
+  set s_ideal = "$&ideal_db"
+  set s_meas  = "$&g_meas_db"
+  set s_err   = "$&err_db"
+  set s_step  = "$&err_step"
+  set s_acc   = "$&acc_fs"
+  set s_f3db  = "$&f_3db_khz"
 
-  echo " S$tap  |  $tap  |  $&ideal_db  |  $&g_meas_db  |  $&err_db  |  $&err_step  |  $&acc_fs  |  $&f_3db  |  $s_vos  |  $s_vvg  |  $s_pdc" >> ./result/tb_cg_network_summary.txt
+  * Print progress to terminal
+  echo " S$tap | Target: $s_ideal dB | Meas: $s_meas dB | Err: $s_err dB ($s_step LSB) | BW: $s_f3db kHz | Vos: $s_vos mV"
+
+  * Append telemetry row to text report
+  echo " S$tap   | $tap    | $s_ideal       | $s_meas       | $s_err     | $s_step     | $s_acc    | $s_f3db        | $s_vos       | $s_vvg       | $s_pdc" >> ./result/tb_cg_network_summary.txt
 
 end
 
 unset appendwrite
-echo "=================================================================================================================================================="
-echo " CHARACTERIZATION COMPLETED! Full telemetry log is exported to:                                                                                   "
-echo " ./result/tb_cg_network_summary.txt                                                                                                              "
-echo "=================================================================================================================================================="
+echo "=================================================================================================================================="
+echo " CHARACTERIZATION COMPLETED! Full telemetry log is exported to:                                                                 "
+echo " ./result/tb_cg_network_summary.txt                                                                                             "
+echo " Frequency response waveforms saved to: ./result/tb_cg_network_all_taps.raw                                                     "
+echo "=================================================================================================================================="
 .endc
 
 
@@ -221,82 +177,42 @@ echo "==========================================================================
 **** end user architecture code
 **.ends
 
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_network.sym # of pins=22
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_network.sym # of pins=12
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_network.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_network.sch
-.subckt cg_network S4 S5 S0 S2 S1 S3 S14 S13 S12 S11 S10 S9 S8 S7 S6 S15 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
+.subckt cg_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
 *.ipin I_BIAS
 *.ipin V_IN2
 *.ipin V_CM
 *.ipin AVSS
 *.ipin AVDD
 *.opin V_OUT2
-*.ipin S15
-*.ipin S14
-*.ipin S13
-*.ipin S12
-*.ipin S11
-*.ipin S10
-*.ipin S9
-*.ipin S8
-*.ipin S7
-*.ipin S6
 *.ipin S5
 *.ipin S4
 *.ipin S3
 *.ipin S2
 *.ipin S1
 *.ipin S0
-XR2 net12 net13 AVSS rhigh w=0.5e-6 l=9.6e-6 m=1 b=32 mm_ok=1
-XR3 net13 net14 AVSS rhigh w=0.5e-6 l=4.5e-6 m=1 b=32 mm_ok=1
-XR4 net14 net15 AVSS rhigh w=0.5e-6 l=5e-6 m=1 b=16 mm_ok=1
-XR5 net15 net16 AVSS rhigh w=0.5e-6 l=5.5e-6 m=1 b=8 mm_ok=1
-XR6 net16 net11 AVSS rhigh w=0.5e-6 l=4.7e-6 m=1 b=4 mm_ok=1
-XR7 net11 net10 AVSS rhigh w=0.5e-6 l=5.41e-6 m=1 b=2 mm_ok=1
-XR8 net10 net9 AVSS rhigh w=0.5e-6 l=3.34e-6 m=1 b=2 mm_ok=1
-XR9 net9 net8 AVSS rhigh w=0.5e-6 l=7.39e-6 m=1 b=0 mm_ok=1
-XR10 net8 net7 AVSS rhigh w=0.5e-6 l=4.76e-6 m=1 b=0 mm_ok=1
-XR11 net7 net6 AVSS rhigh w=0.5e-6 l=3.06e-6 m=1 b=0 mm_ok=1
-XR12 net6 net5 AVSS rhigh w=0.5e-6 l=1.94e-6 m=1 b=0 mm_ok=1
-XR16 net2 net1 AVSS rppd w=2e-6 l=8.08e-6 m=1 b=0 mm_ok=1
-XR17 net3 net2 AVSS rppd w=2e-6 l=5.1e-6 m=1 b=1 mm_ok=1
-XR15 net1 V_OUT2 AVSS rppd w=2e-6 l=7.6e-6 m=1 b=0 mm_ok=1
-XR18 net17 V_IN2 AVSS rppd w=0.5e-6 l=3.62e-6 m=1 b=0 mm_ok=1
-XR1 net4 net3 AVSS rppd w=2e-6 l=8.65e-6 m=1 b=1 mm_ok=1
-XR13 net5 net4 AVSS rppd w=2e-6 l=8.5e-6 m=1 b=2 mm_ok=1
-x18 net18 S15 AVDD AVSS sg13cmos5l_inv_1
-x19 net19 S14 AVDD AVSS sg13cmos5l_inv_1
-x20 net20 S13 AVDD AVSS sg13cmos5l_inv_1
-x21 net21 S12 AVDD AVSS sg13cmos5l_inv_1
-x22 net22 S11 AVDD AVSS sg13cmos5l_inv_1
-x23 net23 S10 AVDD AVSS sg13cmos5l_inv_1
-x24 net24 S9 AVDD AVSS sg13cmos5l_inv_1
-x25 net25 S8 AVDD AVSS sg13cmos5l_inv_1
-x26 net26 S7 AVDD AVSS sg13cmos5l_inv_1
-x27 net27 S6 AVDD AVSS sg13cmos5l_inv_1
-x28 net28 S5 AVDD AVSS sg13cmos5l_inv_1
-x29 net29 S4 AVDD AVSS sg13cmos5l_inv_1
-x30 net30 S3 AVDD AVSS sg13cmos5l_inv_1
-x31 net31 S2 AVDD AVSS sg13cmos5l_inv_1
-x32 net32 S1 AVDD AVSS sg13cmos5l_inv_1
-x33 net33 S0 AVDD AVSS sg13cmos5l_inv_1
-x2 net17 AVSS AVDD S15 net18 net12 tgate l=0.13e-6 wn=0.15e-6 wp=0.45e-6
-x3 net17 AVSS AVDD S14 net19 net13 tgate l=0.13e-6 wn=0.15e-6 wp=0.45e-6
-x4 net17 AVSS AVDD S13 net20 net14 tgate l=0.13e-6 wn=0.15e-6 wp=0.45e-6
-x5 net17 AVSS AVDD S12 net21 net15 tgate l=0.13e-6 wn=0.15e-6 wp=0.45e-6
-x6 net17 AVSS AVDD S11 net22 net16 tgate l=0.13e-6 wn=0.15e-6 wp=0.45e-6
-x7 net17 AVSS AVDD S10 net23 net11 tgate l=0.13e-6 wn=0.2e-6 wp=0.6e-6
-x8 net17 AVSS AVDD S9 net24 net10 tgate l=0.13e-6 wn=0.5e-6 wp=1.5e-6
-x9 net17 AVSS AVDD S8 net25 net9 tgate l=0.13e-6 wn=1e-6 wp=3e-6
-x10 net17 AVSS AVDD S7 net26 net8 tgate l=0.13e-6 wn=1e-6 wp=3e-6
-x11 net17 AVSS AVDD S6 net27 net7 tgate l=0.13e-6 wn=1.5e-6 wp=4.5e-6
-x12 net17 AVSS AVDD S5 net28 net6 tgate l=0.13e-6 wn=2e-6 wp=6e-6
-x13 net17 AVSS AVDD S4 net29 net5 tgate l=0.13e-6 wn=3e-6 wp=9e-6
-x14 net17 AVSS AVDD S3 net30 net4 tgate l=0.13e-6 wn=3e-6 wp=9e-6
-x15 net17 AVSS AVDD S2 net31 net3 tgate l=0.13e-6 wn=3e-6 wp=9e-6
-x16 net17 AVSS AVDD S1 net32 net2 tgate l=0.13e-6 wn=3e-6 wp=9e-6
-x17 net17 AVSS AVDD S0 net33 net1 tgate l=0.13e-6 wn=3e-6 wp=9e-6
-x1 AVDD V_CM net17 V_OUT2 I_BIAS AVSS cg_ota
+XR7 net6 net5 AVSS rhigh w=0.5e-6 l=10.72e-6 m=1 b=0 mm_ok=1
+XR3 net2 net1 AVSS rppd w=2e-6 l=15.16e-6 m=1 b=0 mm_ok=1
+XR2 net1 V_OUT2 AVSS rppd w=2e-6 l=7e-6 m=1 b=0 mm_ok=1
+XR1 net7 V_IN2 AVSS rppd w=2e-6 l=15.16e-6 m=1 b=0 mm_ok=1
+x13 net8 S5 AVDD AVSS sg13cmos5l_inv_1
+x12 net9 S4 AVDD AVSS sg13cmos5l_inv_1
+x11 net10 S3 AVDD AVSS sg13cmos5l_inv_1
+x10 net11 S2 AVDD AVSS sg13cmos5l_inv_1
+x9 net12 S1 AVDD AVSS sg13cmos5l_inv_1
+x8 net13 S0 AVDD AVSS sg13cmos5l_inv_1
+x7 net7 AVSS AVDD S5 net8 net6 tgate l=0.13e-6 wn=0.9e-6 wp=2.7e-6
+x6 net7 AVSS AVDD S4 net9 net5 tgate l=0.13e-6 wn=1.5e-6 wp=4.5e-6
+x5 net7 AVSS AVDD S3 net10 net4 tgate l=0.13e-6 wn=2.2e-6 wp=6.6e-6
+x4 net7 AVSS AVDD S2 net11 net3 tgate l=0.13e-6 wn=2.6e-6 wp=7.8e-6
+x3 net7 AVSS AVDD S1 net12 net2 tgate l=0.13e-6 wn=2.9e-6 wp=8.7e-6
+x2 net7 AVSS AVDD S0 net13 net1 tgate l=0.13e-6 wn=3e-6 wp=9e-6
+XR6 net5 net4 AVSS rhigh w=0.5e-6 l=5.3e-6 m=1 b=0 mm_ok=1
+XR5 net4 net3 AVSS rhigh w=0.5e-6 l=2.6e-6 m=1 b=0 mm_ok=1
+XR4 net3 net2 AVSS rhigh w=0.5e-6 l=1.25e-6 m=1 b=0 mm_ok=1
+x1 AVDD V_CM net7 V_OUT2 I_BIAS AVSS cg_ota
 .ends
 
 
