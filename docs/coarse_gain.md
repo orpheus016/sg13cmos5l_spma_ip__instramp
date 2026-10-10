@@ -1,57 +1,47 @@
-# Coarse-Gain Stage
+# Gain Stage
 
 ## Overview & Architecture
-This block implements the coarse-gain configuration (Stage 2) of the Programmable Gain Instrumentation Amplifier (PGIA). It provides a programmable gain interface using an operational transconductance amplifier (OTA) and a digitally switched resistor ladder:
+This block implements the gain configuration of the Programmable Gain Instrumentation Amplifier (PGIA). It provides a programmable gain interface using an operational transconductance amplifier (OTA) and a digitally switched resistor ladder:
 * **OTA Core**: A two-stage topology consisting of a PMOS folded-cascode input stage (fully-differential input, single-ended output) driving a common-source Class-AB push-pull output stage with split-capacitor active Miller compensation.
-* **Feedback Attenuation Network**: A 4-bit digitally switched logarithmic feedback-resistor string providing 16 programmable gain settings ranging from 0 dB to +56.25 dB in +3.75 dB/step increments.
-* **Control Interface**: Controlled via active-high select lines (`S0`–`S15`), requiring a 4-to-16 one-hot decoding scheme so that exactly one gain setting is enabled at any time.
+* **Feedback Attenuation Network**: An one-hot encoded 5-bit digitally switched logarithmic feedback-resistor string providing 5 programmable gain settings ranging from 0 dB to +30.103 dB in +6.02 dB/step increments.
+* **Control Interface**: Controlled via active-high select lines (`S0`–`S5`)
 
 ## Pin Description
 | Pin Name | Type | Description |
 | :--- | :--- | :--- |
 | `VIN2` | Analog Input | Signal input from the preceding Stage 1. |
 | `VCM` | Analog Input | Common-mode reference voltage ($V_{DD}/2 = 0.6\text{ V}$). |
-| `S0` – `S15` | Digital Input | 16-bit one-hot control bus decoded from a 4-bit gain word (only one bit active HIGH). |
+| `S0` – `S5` | Digital Input | 5-bit one-hot control bus decoded |
 | `VOUT` | Analog Output | Amplified single-ended output signal. |
 | `AVDD` / `AVSS` | Power | Analog positive power supply ($1.2\text{ V}$ nominal) and ground. |
 
 ## Schematics & Circuit Diagrams
 
-### Coarse-Gain OTA Core
-![Coarse-Gain OTA Core](https://github.com/user-attachments/assets/9c3f0ce1-58f2-49aa-9a54-50f53a957621)
+### Gain Stage OTA Core
+![Gain Stage OTA Core](https://github.com/user-attachments/assets/9c3f0ce1-58f2-49aa-9a54-50f53a957621)
 
-### Coarse-Gain OTA Testbench
-![Coarse-Gain OTA Testbench](https://github.com/user-attachments/assets/465ea932-eed0-470c-baef-6a1eef441d5e)
+### Gain Stage OTA Testbench
+![Gain Stage OTA Testbench](https://github.com/user-attachments/assets/465ea932-eed0-470c-baef-6a1eef441d5e)
 
-### Coarse-Gain Network Core
-![Coarse-Gain Network](https://github.com/user-attachments/assets/0d7a6c4e-8c96-4fba-b9fe-4f393bcd8e8c)
+### Gain Stage Network Core
+![Gain Stage Network](https://github.com/user-attachments/assets/8aa8213d-75cf-4b4b-8130-7e429d81107f)
 
-### Coarse-Gain Network Core Testbench
-![Coarse-Gain Network Testbench](https://github.com/user-attachments/assets/d5f2b35c-63ed-4f7e-ad53-eec0fa8e7cff)
+### Gain Stage Network Core Testbench
+![Gain Stage Network Testbench](https://github.com/user-attachments/assets/ba9a5028-7001-4ac0-8654-9393b73c888c)
 
 ## Specifications & Pre-Layout Performance Summary
 
-### Coarse-Gain Network
-Characterization of the complete coarse-gain stage across all 16 gain states (`S0` through `S15`) under nominal operating conditions ($V_{DD} = 1.2\text{ V}$, $V_{ICM} = 0.6\text{ V}$, $T = 27^\circ\text{C}$):
+### Gain Stage Network
+Characterization of the complete gain stage across all 16 gain states (`S0` through `S5`) under nominal operating conditions ($V_{DD} = 1.2\text{ V}$, $V_{ICM} = 0.6\text{ V}$, $T = 27^\circ\text{C}$):
 
 | Tap | Code | Target (dB) | Meas (dB) | Err (dB) | Err (Step) | Acc_FS (%) | -3dB BW (Hz) | Vos_out (mV) | V_vg_err (mV) | P_dc ($\mu\text{W}$) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| `S0` | 0 | 0.00 | 0.391 | +0.391 | +0.104 | 99.31% | 8.12 MHz | 0.013 | 0.012 | 88.60 |
-| `S1` | 1 | 3.75 | 3.913 | +0.163 | +0.043 | 99.71% | 5.42 MHz | 0.013 | 0.012 | 88.60 |
-| `S2` | 2 | 7.50 | 7.499 | -0.001 | -0.000 | 100.00% | 3.93 MHz | 0.013 | 0.012 | 88.60 |
-| `S3` | 3 | 11.25 | 11.163 | -0.087 | -0.023 | 99.85% | 2.84 MHz | 0.013 | 0.012 | 88.60 |
-| `S4` | 4 | 15.00 | 14.830 | -0.170 | -0.045 | 99.70% | 2.01 MHz | 0.014 | 0.012 | 88.60 |
-| `S5` | 5 | 18.75 | 18.834 | +0.084 | +0.022 | 99.85% | 1.35 MHz | 0.015 | 0.012 | 88.60 |
-| `S6` | 6 | 22.50 | 22.632 | +0.132 | +0.035 | 99.76% | 907.3 kHz | 0.016 | 0.012 | 88.60 |
-| `S7` | 7 | 26.25 | 26.451 | +0.201 | +0.053 | 99.64% | 600.5 kHz | 0.018 | 0.012 | 88.60 |
-| `S8` | 8 | 30.00 | 29.926 | -0.074 | -0.020 | 99.87% | 409.0 kHz | 0.021 | 0.012 | 88.60 |
-| `S9` | 9 | 33.75 | 33.807 | +0.057 | +0.015 | 99.90% | 264.9 kHz | 0.025 | 0.012 | 88.60 |
-| `S10` | 10 | 37.50 | 37.799 | +0.299 | +0.080 | 99.47% | 168.6 kHz | 0.033 | 0.012 | 88.60 |
-| `S11` | 11 | 41.25 | 40.928 | -0.322 | -0.086 | 99.43% | 118.1 kHz | 0.041 | 0.012 | 88.60 |
-| `S12` | 12 | 45.00 | 44.869 | -0.131 | -0.035 | 99.77% | 75.24 kHz | 0.058 | 0.012 | 88.60 |
-| `S13` | 13 | 48.75 | 48.716 | -0.034 | -0.009 | 99.94% | 48.43 kHz | 0.084 | 0.012 | 88.60 |
-| `S14` | 14 | 52.50 | 52.311 | -0.189 | -0.050 | 99.66% | 32.07 kHz | 0.121 | 0.012 | 88.60 |
-| `S15` | 15 | 56.25 | 55.671 | -0.579 | -0.154 | 98.97% | 21.83 kHz | 0.172 | 0.012 | 88.60 |
+| S0   | 0    | 0       | 0.0735754       | 0.0735754     | 0.0122206     | 99.7556    | 8498.71        | 0.0126336       | 0.0123349       | 88.6027 |
+| S1   | 1    | 6.0206       | 6.00887       | -0.0117289     | -0.00194813     | 99.961    | 4462.37        | 0.0129185       | 0.0123346       | 88.6027 |
+| S2   | 2    | 12.0412       | 12.0658       | 0.0246002     | 0.004086     | 99.9183    | 2603.07        | 0.0134976       | 0.0123345       | 88.6027 |
+| S3   | 3    | 18.0618       | 18.0544       | -0.00739974     | -0.00122907     | 99.9754    | 1456.45        | 0.0146333       | 0.0123337       | 88.6027 |
+| S4   | 4    | 24.0824       | 24.0966       | 0.0141803     | 0.0023553     | 99.9529    | 773.465        | 0.0168682       | 0.0123324       | 88.6027 |
+| S5   | 5    | 30.103       | 30.0761       | -0.0268896     | -0.00446626     | 99.9107    | 401.539        | 0.0212303       | 0.0123296       | 88.6028 |
 
 #### Key Observations
 * **Step Monotonicity & Accuracy**: High linearity across all 16 gain states with full-scale accuracy exceeding 98.97% across all codes (peaking at 99.997% at `S2` with an error of only $-0.0015\text{ dB}$). Positive error is strictly bounded within $+0.391\text{ dB}$ (at `S0`), and the worst-case negative deviation is $-0.579\text{ dB}$ (at `S15`).
@@ -60,7 +50,7 @@ Characterization of the complete coarse-gain stage across all 16 gain states (`S
 * **Ultra-Low Output DC Offset**: Output DC offset ($V_{os,out}$) remains below $0.18\text{ mV}$ across all steps (scaling from $12.6\,\mu\text{V}$ at `S0` to $172.0\,\mu\text{V}$ at `S15`), preserving optimal dynamic headroom.
 * **Static Power Stability**: Total core DC power dissipation remains practically invariant at $88.60\,\mu\text{W}$ across all gain tap selections.
 
-### Coarse-Gain OTA
+### Gain Stage OTA
 Evaluated at nominal conditions: $V_{DD} = 1.2\text{ V}$, $V_{ICM} = 0.6\text{ V}$, $T = 27^\circ\text{C}$, TT corner:
 
 | Figure of Merit (FOM) | Target Specification | Simulated (Pre-Layout) | Status |
@@ -128,57 +118,33 @@ Simulated across all process corners (`tt`, `ss`, `ff`, `sf`, `fs`), operating t
 Across all 90 PVT operating conditions, Phase Margin remains comfortably above $59^\circ$ (worst-case $59.12^\circ$ under extreme low-temperature SS conditions at $-40^\circ\text{C}$, $1.0\text{ V}$), guaranteeing stability and eliminating the risk of closed-loop ringing.
 
 ## Sizings
-### Coarse-Gain Network
+### Gain Stage Network
 #### 1. Feedback Resistor String
-Switched logarithmic resistor ladder topology providing 16 gain configurations (0 dB to +56.25 dB). All resistor bulk terminals are tied to analog ground (`AVSS`):
+Switched resistor ladder topology providing 6 gain settings (`S0` through `S5`). All substrate/bulk pins are tied to analog ground (`AVSS`):
 
 | Instance | Device Type | W (µm) | L (µm) | Bends ($b$) | Node Connections (+ / -) | Segment / Circuit Role |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `XR18` | `rppd` | 0.50 | 3.62 | 0 | net17 to `V_IN2` | Base input resistor ($R_{in} \approx 2\,\text{k}\Omega$) |
-| `XR15` | `rppd` | 2.00 | 7.60 | 0 | net1 to `V_OUT2` | Feedback base segment (Tap S0) |
-| `XR16` | `rppd` | 2.00 | 8.08 | 0 | net2 to net1 | Ladder segment between Tap S0 and S1 |
-| `XR17` | `rppd` | 2.00 | 5.10 | 1 | net3 to net2 | Ladder segment between Tap S1 and S2 |
-| `XR1` | `rppd` | 2.00 | 8.65 | 1 | net4 to net3 | Ladder segment between Tap S2 and S3 |
-| `XR13` | `rppd` | 2.00 | 8.50 | 2 | net5 to net4 | Ladder segment between Tap S3 and S4 |
-| `XR12` | `rhigh` | 0.50 | 1.94 | 0 | net6 to net5 | Ladder segment between Tap S4 and S5 |
-| `XR11` | `rhigh` | 0.50 | 3.06 | 0 | net7 to net6 | Ladder segment between Tap S5 and S6 |
-| `XR10` | `rhigh` | 0.50 | 4.76 | 0 | net8 to net7 | Ladder segment between Tap S6 and S7 |
-| `XR9` | `rhigh` | 0.50 | 7.39 | 0 | net9 to net8 | Ladder segment between Tap S7 and S8 |
-| `XR8` | `rhigh` | 0.50 | 3.34 | 2 | net10 to net9 | Ladder segment between Tap S8 and S9 |
-| `XR7` | `rhigh` | 0.50 | 5.41 | 2 | net11 to net10 | Ladder segment between Tap S9 and S10 |
-| `XR6` | `rhigh` | 0.50 | 4.88 | 4 | net16 to net11 | Ladder segment between Tap S10 and S11 |
-| `XR5` | `rhigh` | 0.50 | 5.50 | 8 | net15 to net16 | Ladder segment between Tap S11 and S12 |
-| `XR4` | `rhigh` | 0.50 | 5.00 | 16 | net14 to net15 | Ladder segment between Tap S12 and S13 |
-| `XR3` | `rhigh` | 0.50 | 4.50 | 32 | net13 to net14 | Ladder segment between Tap S13 and S14 |
-| `XR2` | `rhigh` | 0.50 | 9.60 | 32 | net12 to net13 | Ladder segment between Tap S14 and S15 |
+| `XR1` | `rppd` | 2.00 | 15.16 | 0 | net7 to `V_IN2` | Base input resistor ($R_{in}$) |
+| `XR2` | `rppd` | 2.00 | 7.00 | 0 | net1 to `V_OUT2` | Base feedback segment (Tap S0) |
+| `XR3` | `rppd` | 2.00 | 15.16 | 0 | net2 to net1 | Ladder segment between Tap S0 and S1 |
+| `XR4` | `rhigh` | 0.50 | 1.25 | 0 | net3 to net2 | Ladder segment between Tap S1 and S2 |
+| `XR5` | `rhigh` | 0.50 | 2.60 | 0 | net4 to net3 | Ladder segment between Tap S2 and S3 |
+| `XR6` | `rhigh` | 0.50 | 5.30 | 0 | net5 to net4 | Ladder segment between Tap S3 and S4 |
+| `XR7` | `rhigh` | 0.50 | 10.72 | 0 | net6 to net5 | Ladder segment between Tap S4 and S5 |
 
 #### 2. Digitally Controlled Transmission Gate Switches (`tgate`)
-Progressively tapered transmission gates routing the selected resistor tap back to the summing node (`net17` / virtual ground). All switches use $L = 0.13\,\mu\text{m}$:
+Progressively tapered transmission gates routing the selected resistor ladder tap to the summing junction / virtual ground node (`net7`). All switches use channel length $L = 0.13\,\mu\text{m}$:
 
-| Switch Tier | Instance | Associated Tap | Ladder Node | $W_n$ (µm) | $W_p$ (µm) | Design Rationale |
+| Switch Tier | Instance | Associated Tap | Connected Tap Node | $W_n$ (µm) | $W_p$ (µm) | Design Rationale |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Low-Gain Tier** | `x17` | S0 | net1 | 3.00 | 9.00 | Low switch $R_{on} \approx 200\,\Omega$ to prevent gain error on small resistor values |
-| | `x16` | S1 | net2 | 3.00 | 9.00 | Low switch $R_{on}$ |
-| | `x15` | S2 | net3 | 3.00 | 9.00 | Low switch $R_{on}$ |
-| | `x14` | S3 | net4 | 3.00 | 9.00 | Low switch $R_{on}$ |
-| | `x13` | S4 | net5 | 3.00 | 9.00 | Low switch $R_{on}$ |
-| **Mid-Gain Transition** | `x12` | S5 | net6 | 2.00 | 6.00 | Intermediate sizing balancing $R_{on}$ vs parasitic capacitance ($C_{par}$) |
-| | `x11` | S6 | net7 | 1.50 | 4.50 | Intermediate sizing balancing $R_{on}$ vs $C_{par}$ |
-| | `x10` | S7 | net8 | 1.00 | 3.00 | Standard transmission gate sizing |
-| | `x9` | S8 | net9 | 1.00 | 3.00 | Standard transmission gate sizing |
-| | `x8` | S9 | net10 | 0.50 | 1.50 | Scaled switch reducing capacitive loading at summing junction |
-| | `x7` | S10 | net11 | 0.20 | 0.60 | Scaled switch reducing capacitive loading at summing junction |
-| **High-Gain Tier** | `x6` | S11 | net16 | 0.15 | 0.45 | Minimum junction capacitance to preserve phase margin at high closed-loop gain |
-| | `x5` | S12 | net15 | 0.15 | 0.45 | Minimum junction capacitance |
-| | `x4` | S13 | net14 | 0.15 | 0.45 | Minimum junction capacitance |
-| | `x3` | S14 | net13 | 0.15 | 0.45 | Minimum junction capacitance |
-| | `x2` | S15 | net12 | 0.15 | 0.45 | Minimum junction capacitance |
+| **Low-Gain Tier** | `x2` | S0 | net1 | 3.00 | 9.00 | Minimum $R_{on}$ to minimize gain error on small ladder resistances |
+| | `x3` | S1 | net2 | 2.90 | 8.70 | Low $R_{on}$ tracking base ladder segment |
+| | `x4` | S2 | net3 | 2.60 | 7.80 | Tapered $R_{on}$ transition |
+| **Mid-to-High Gain** | `x5` | S3 | net4 | 2.20 | 6.60 | Balanced trade-off between $R_{on}$ and junction capacitance |
+| | `x6` | S4 | net5 | 1.50 | 4.50 | Reduced switch area and capacitive loading |
+| | `x7` | S5 | net6 | 0.90 | 2.70 | Minimum parasitic capacitance to preserve phase margin at peak gain |
 
-##### Digital Control Drivers
-* **Inverter Buffer Array**: 16 dedicated standard logic inverters (`sg13cmos5l_inv_1`, instances `x18` through `x33`) generate inverted control signals (`ENB`) from select inputs `S0`–`S15`.
-* **Power Domain**: All inverter cells are powered between `AVDD` ($1.2\text{ V}$) and `AVSS` ($0\text{ V}$) to match analog voltage levels and maximize gate overdrive.
-
-### Coarse-Gain OTA
+### Gain Stage OTA
 #### 1. Main Core Transistors (OTA Core)
 Fully-differential PMOS folded-cascode input stage driving a common-source Class-AB push-pull output stage:
 
