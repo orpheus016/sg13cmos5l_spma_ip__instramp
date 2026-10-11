@@ -34,14 +34,14 @@ This block implements the gain configuration of the Programmable Gain Instrument
 ### Gain Stage Network
 Characterization of the complete gain stage across all 16 gain states (`S0` through `S5`) under nominal operating conditions ($V_{DD} = 1.2\text{ V}$, $V_{ICM} = 0.6\text{ V}$, $T = 27^\circ\text{C}$):
 
-| Tap | Code | Target (dB) | Meas (dB) | Err (dB) | Err (Step) | Acc_FS (%) | -3dB BW (Hz) | Vos_out (mV) | V_vg_err (mV) | P_dc ($\mu\text{W}$) |
+| Tap | Code | Target (dB) | Meas (dB) | Err (dB) | Err (Step) | Acc_FS (%) | -3dB BW (MHz) | Vos_out (mV) | V_vg_err (mV) | P_dc ($\mu\text{W}$) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S0   | 0    | 0       | 0.0735754       | 0.0735754     | 0.0122206     | 99.7556    | 8498.71        | 0.0126336       | 0.0123349       | 88.6027 |
-| S1   | 1    | 6.0206       | 6.00887       | -0.0117289     | -0.00194813     | 99.961    | 4462.37        | 0.0129185       | 0.0123346       | 88.6027 |
-| S2   | 2    | 12.0412       | 12.0658       | 0.0246002     | 0.004086     | 99.9183    | 2603.07        | 0.0134976       | 0.0123345       | 88.6027 |
-| S3   | 3    | 18.0618       | 18.0544       | -0.00739974     | -0.00122907     | 99.9754    | 1456.45        | 0.0146333       | 0.0123337       | 88.6027 |
-| S4   | 4    | 24.0824       | 24.0966       | 0.0141803     | 0.0023553     | 99.9529    | 773.465        | 0.0168682       | 0.0123324       | 88.6027 |
-| S5   | 5    | 30.103       | 30.0761       | -0.0268896     | -0.00446626     | 99.9107    | 401.539        | 0.0212303       | 0.0123296       | 88.6028 |
+| S0   | 0    | 0       | 0.0735754       | 0.0735754     | 0.0122206     | 99.7556    | 8.49871        | 0.0126336       | 0.0123349       | 88.6027 |
+| S1   | 1    | 6.0206       | 6.00887       | -0.0117289     | -0.00194813     | 99.961    | 4.46237        | 0.0129185       | 0.0123346       | 88.6027 |
+| S2   | 2    | 12.0412       | 12.0658       | 0.0246002     | 0.004086     | 99.9183    | 2.60307        | 0.0134976       | 0.0123345       | 88.6027 |
+| S3   | 3    | 18.0618       | 18.0544       | -0.00739974     | -0.00122907     | 99.9754    | 1.45645        | 0.0146333       | 0.0123337       | 88.6027 |
+| S4   | 4    | 24.0824       | 24.0966       | 0.0141803     | 0.0023553     | 99.9529    | 0.773465        | 0.0168682       | 0.0123324       | 88.6027 |
+| S5   | 5    | 30.103       | 30.0761       | -0.0268896     | -0.00446626     | 99.9107    | 0.401539        | 0.0212303       | 0.0123296       | 88.6028 |
 
 #### Key Observations
 * **Step Monotonicity & Accuracy**: High linearity across all 16 gain states with full-scale accuracy exceeding 98.97% across all codes (peaking at 99.997% at `S2` with an error of only $-0.0015\text{ dB}$). Positive error is strictly bounded within $+0.391\text{ dB}$ (at `S0`), and the worst-case negative deviation is $-0.579\text{ dB}$ (at `S15`).
