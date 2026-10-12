@@ -1,0 +1,52 @@
+# Run CACE (PVT + Monte Carlo) on every push / PR and publish the generated docs as an artifact.
+# NOT yet run on GitHub - see docs/cace_ci/STATUS.md (Phase 2). Assumptions to verify on the first run:
+#   * the image tag exists and has cace, ngspice, xschem and /foss/pdks/ihp-sg13cmos5l (same tag as the local container)
+#   * tools are on PATH inside the container (the image sets this through Docker ENV)
+name: cace
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cace:
+    runs-on: ubuntu-latest
+    container:
+      image: hpretl/iic-osic-tools:2026.09
+      options: --user 0
+    strategy:
+      fail-fast: false
+      matrix:
+        cell: [ota_cmos5l]        # one entry per cace/<cell>.yaml
+    env:
+      PDK: ihp-sg13cmos5l
+      PDK_ROOT: /foss/pdks
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CACE ${{ matrix.cell }} (PVT + Monte Carlo)
+        # exit code 2 = a spec failed or a parameter errored; docs are generated either way
+        run: scripts/run_cace.sh ${{ matrix.cell }} --no-progress-bar
+
+      - name: Job summary
+        if: always()
+        run: |
+          run="$(ls -d runs/RUN_* | sort | tail -1)"
+          { echo "## CACE ${{ matrix.cell }}"; cat "$run/summary.md"; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload docs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cace-${{ matrix.cell }}
+          path: |
+            docs/${{ matrix.cell }}/cace
+            runs/*/summary.md
+            runs/*/flow.log
+            runs/*/error.log
+            runs/*/warning.log
+          if-no-files-found: warn

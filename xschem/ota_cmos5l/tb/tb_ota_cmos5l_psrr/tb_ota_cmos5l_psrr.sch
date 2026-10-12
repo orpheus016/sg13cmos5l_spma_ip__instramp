@@ -111,7 +111,7 @@ C {lab_wire.sym} 940 -390 0 0 {name=p4 sig_type=std_logic lab=OUT3}
 C {lab_wire.sym} 280 -480 0 0 {name=p5 sig_type=std_logic lab=I_B}
 C {isource.sym} 280 -410 0 0 {name=I0 value=1.4u}
 C {vdd.sym} 180 -480 0 0 {name=l2 lab=VDD}
-C {vsource.sym} 180 -410 0 0 {name=V1 value=1.2 savecurrent=false}
+C {vsource.sym} 180 -410 0 0 {name=V1 value=1.35 savecurrent=false}
 C {lab_wire.sym} 180 -340 0 0 {name=p7 sig_type=std_logic lab=VSS}
 C {vsource.sym} 180 -270 0 0 {name=V2 value=0 savecurrent=false}
 C {gnd.sym} 180 -200 0 0 {name=l3 lab=0}

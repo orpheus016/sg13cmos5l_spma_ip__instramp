@@ -16,9 +16,8 @@ authorship:
 paths:
   root:             ..
   schematic:        xschem/ota_cmos5l
-  layout:           xschem/ota_cmos5l
   netlist:          netlist/ota_cmos5l
-  documentation:    docs/cace_ci/generated
+  documentation:    docs/ota_cmos5l/cace
   templates:        cace/templates/ota_cmos5l
 
 pins:
@@ -149,6 +148,27 @@ parameters:
         format: ascii
         suffix: .data
         variables: [A0, F3DB, UGF, PM, GM, GBW]
+    plot:
+      ac_response_A0_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: A0
+        limits: auto
+      ac_response_UGF_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: UGF
+        limits: auto
+      ac_response_PM_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: PM
+        limits: auto
+      ac_response_PM_vs_vdd:
+        type: xyplot
+        xaxis: vdd
+        yaxis: PM
+        limits: auto
     conditions:
       corner:
         enumerate: [tt, ss, ff, sf, fs]
@@ -399,6 +419,12 @@ parameters:
         format: ascii
         suffix: .data
         variables: [CMRR_DC, CMRR_100K, CMRR_1M]
+    plot:
+      cmrr_CMRR_DC_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: CMRR_DC
+        limits: auto
     conditions:
       corner:
         enumerate: [tt, ss, ff, sf, fs]
@@ -448,6 +474,12 @@ parameters:
         format: ascii
         suffix: .data
         variables: [PSRR_DC, PSRR_100K, PSRR_1M]
+    plot:
+      psrr_PSRR_DC_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: PSRR_DC
+        limits: auto
     conditions:
       corner:
         enumerate: [tt, ss, ff, sf, fs]
@@ -497,6 +529,12 @@ parameters:
         format: ascii
         suffix: .data
         variables: [ICMR_MIN, ICMR_MAX, ICMR_SPAN]
+    plot:
+      icmr_ICMR_SPAN_vs_vdd:
+        type: xyplot
+        xaxis: vdd
+        yaxis: ICMR_SPAN
+        limits: auto
     conditions:
       corner:
         enumerate: [tt, ss, ff, sf, fs]
@@ -654,7 +692,7 @@ parameters:
 
   mc_vos:
     display: MC input offset
-    description: Monte Carlo (local mismatch, 50 seeds x 5 corners, vdd 1.2 V, 27 °C)
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners x 3 temperatures, vdd 1.2 V)
     spec:
       VOS:
         display: Input offset voltage
@@ -672,11 +710,6 @@ parameters:
         format: ascii
         suffix: .data
         variables: [VOS, null, null, null, null]
-    plot:
-      mc_vos_hist:
-        type: histogram
-        xaxis: VOS
-        limits: auto
     conditions:
       corner:
         enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
@@ -685,7 +718,9 @@ parameters:
       vdd:
         typical: 1.2
       temperature:
+        minimum: -40
         typical: 27
+        maximum: 85
       iterations:
         description: Monte Carlo iterations (mismatch seeds)
         display: Iterations
@@ -696,7 +731,7 @@ parameters:
 
   mc_cmrr:
     display: MC CMRR
-    description: Monte Carlo (local mismatch, 50 seeds x 5 corners, vdd 1.2 V, 27 °C)
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners x 3 temperatures, vdd 1.2 V)
     spec:
       CMRR_DC:
         display: CMRR @10 Hz
@@ -714,11 +749,6 @@ parameters:
         format: ascii
         suffix: .data
         variables: [CMRR_DC, null, null]
-    plot:
-      mc_cmrr_hist:
-        type: histogram
-        xaxis: CMRR_DC
-        limits: auto
     conditions:
       corner:
         enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
@@ -727,7 +757,9 @@ parameters:
       vdd:
         typical: 1.2
       temperature:
+        minimum: -40
         typical: 27
+        maximum: 85
       iterations:
         description: Monte Carlo iterations (mismatch seeds)
         display: Iterations
@@ -738,7 +770,7 @@ parameters:
 
   mc_psrr:
     display: MC PSRR
-    description: Monte Carlo (local mismatch, 50 seeds x 5 corners, vdd 1.2 V, 27 °C)
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners x 3 temperatures, vdd 1.2 V)
     spec:
       PSRR_DC:
         display: PSRR @10 Hz
@@ -756,11 +788,6 @@ parameters:
         format: ascii
         suffix: .data
         variables: [PSRR_DC, null, null]
-    plot:
-      mc_psrr_hist:
-        type: histogram
-        xaxis: PSRR_DC
-        limits: auto
     conditions:
       corner:
         enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
@@ -769,7 +796,9 @@ parameters:
       vdd:
         typical: 1.2
       temperature:
+        minimum: -40
         typical: 27
+        maximum: 85
       iterations:
         description: Monte Carlo iterations (mismatch seeds)
         display: Iterations

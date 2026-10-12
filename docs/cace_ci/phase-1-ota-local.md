@@ -4,13 +4,13 @@
 ```bash
 cd /foss/designs/sg13cmos5l_spma_ip__instramp
 source .designinit_osic                # PDK=ihp-sg13cmos5l, PDK_ROOT=/foss/pdks (default shell has sg13g2!)
-scripts/run_cace.sh ota_cmos5l         # full sweep: 5 corners x 3 temps x 3 vdd per parameter (~90 s, ~1100 simulations incl. Monte Carlo)
-scripts/run_cace.sh ota_cmos5l -p dc_op cmrr           # only these parameters (names from the yaml; wildcards ok: -p 'mc_*')
-scripts/run_cace.sh ota_cmos5l --nofail                # do not exit non-zero on failing specs
-scripts/summarize_cace.py ota_cmos5l > /tmp/summary.md # PVT min/max + MC mean/sigma from the latest run (SI -> display units)
-scripts/run_cace.sh ota_cmos5l --no-progress-bar       # for logs / CI
+scripts/run_cace.sh ota_cmos5l         # full run (~6 min: PVT 45 sims/param + Monte Carlo 3 x 750 sims), builds the README
+scripts/run_cace.sh ota_cmos5l -p dc_op cmrr      # only these parameters (names from the yaml; wildcards ok: -p 'mc_*')
+NO_README=1 scripts/run_cace.sh ota_cmos5l -p ac_response   # skip the README step
+python3 scripts/make_readme.py ota_cmos5l          # rebuild only the README from the latest run (5 s)
 ```
-(`scripts/run_cace.sh` = `cd cace && cace -s schematic <cell>.yaml`.
+Exit code: 0 = all parameters pass, 2 = a spec failed or a parameter errored (docs are generated in both cases).
+(`scripts/run_cace.sh` = `cd cace && HOME=<tmp> cace -s schematic <cell>.yaml --nofail`, then `make_readme.py`, then the exit code from `summary.md`.
 `-s schematic` is required: otherwise CACE tries the (non-existent) extracted layout netlist, which has different pins.)
 
 Where things land:
@@ -20,8 +20,9 @@ Where things land:
 | Per-run files: generated `*.spice`, `conditions.yaml`, `*.data`, `ngspice_stderr.out` | inside each `run_NN/` |
 | DUT netlist generated from schematic | `netlist/ota_cmos5l/schematic/ota_cmos5l.spice` (git-ignored) |
 | CACE datasheet | `cace/ota_cmos5l.yaml` |
+| Generated docs | `docs/ota_cmos5l/cace/README.md` (+ images, CACE md/svg) |
 | Templates | `cace/templates/ota_cmos5l/*.sch` (+ `loopgainprobe.sym`) |
-| MC histograms (CACE) | `runs/RUN_*/parameters/mc_*/mc_*_hist.png`, per-corner tables `simulation_summary.csv` |
+| Per-parameter tables | `runs/RUN_*/parameters/<param>/simulation_summary.{csv,md}` |
 
 Debugging a failing parameter: open `runs/RUN_*/parameters/<param>/run_00/ngspice_stderr.out` and the generated `<name>.spice`; run it by hand with `ngspice -b <name>.spice`.
 
@@ -52,8 +53,8 @@ Debugging a failing parameter: open `runs/RUN_*/parameters/<param>/run_00/ngspic
 
 ### Monte Carlo recipe (IHP sg13cmos5l)
 - MOS: lib section `mos_<corner>_mismatch`; resistors: `res_typ_mismatch`; capacitors: `cap_typ` (the `cap_*_mismatch` sections have no spread). The netlist already carries `mm_ok=1` on every device, so switching the lib section activates `agauss()` per instance.
-- Each iteration gets `.option SEED = 12345 + iteration` (verified: different seeds → different VOS).
-- yaml: MC parameters use the *same template* as the PVT parameter and override conditions: `corner: enumerate [tt_mismatch,...]`, `rcorner: typical: typ_mismatch`, `iterations 1..50`, `collate: iterations`. That is why the resistor corner is its own condition (`rcorner`).
+- Each iteration gets `.option SEED = 12345 + iteration` (verified: different seeds → different VOS). The seed does **not** depend on corner/temperature, so all 15 corner×T combinations see the same 50 mismatch realisations (paired comparison; ≈ 50 independent samples in total).
+- yaml: MC parameters use the *same template* as the PVT parameter and override conditions: `corner: enumerate [tt_mismatch,...]`, `rcorner: typical: typ_mismatch`, `vdd: 1.2`, `temperature −40/27/85`, `iterations 1..50`, `collate: iterations`. That is why the resistor corner is its own condition (`rcorner`).
 - Global process spread (`*_stat` libs) is not used: only mismatch.
 
 ## Gotchas found (so you don't re-discover them)
@@ -72,10 +73,14 @@ Debugging a failing parameter: open `runs/RUN_*/parameters/<param>/run_00/ngspic
 12. **ngspice vectors are case-insensitive**: `let VOUT = vout[1]` silently overwrote the `vout` vector (and `IQ` vs `iq`). Intermediate vectors are named `v_in`, `v_out`, `i_q`, ...
 13. **`-p` swallows the yaml name**: `cace -p a b file.yaml` treats `file.yaml` as a parameter name. `run_cace.sh` now puts the yaml first.
 14. CACE units: `%` and `ppm` are SI-like prefixes (data 0.01 = 1 %, data 1e-6 = 1 ppm); GAIN_TC is stored in 1/°C and shown as ppm (= ppm/°C). `V/s`, `V/V` have no prefix handling and are shown raw. YAML needs `unit: "%"` quoted.
-15. `docs/cace_ci/generated/` is written by CACE's documentation step (partial datasheet md/svg; fails at the klayout step) – git-ignored.
+15. **CACE writes its documentation only if all parameters pass or `--nofail`** (`cace_cli.py`). Earlier "generated" docs that only showed the MC row were leftovers of a partial `-p mc_vos` run that happened to pass. `run_cace.sh` therefore always passes `--nofail` and computes the exit code itself.
+16. **xschem + parallel CACE = corrupted `~/.xschem/recent_files`**: every headless xschem rewrites it; 16 in parallel interleave writes, the next xschem segfaults (`error code -11`, `Tcl_AppInit() error`, `can't read ::c_toolbar::...`) and ~70 % of the simulations never start. `run_cace.sh` sets a private `HOME` for the CACE process.
+17. **CACE's own plots are raw SI values with display-unit axis labels** (a VOS histogram of ±0.002 labelled "mV"; limit lines in display units end up off-scale), and its histograms overlay all corners. Only unprefixed units (dB, °, Hz, V) are plotted natively (yaml `plot:` on PVT parameters); MC spread is drawn by `make_readme.py`.
+18. **CACE's layout PNG** needs `<PDK>.lyp`: PDK dir is `ihp-sg13cmos5l` but the file is `sg13cmos5l.lyp` → klayout error. `paths.layout` is therefore not set in the yaml for now.
+19. `spice_unit_unconvert` (CACE's SI → display conversion) is regex-heavy: calling it per sample took minutes; `make_readme.py` calls it once per unit.
 
 ## Corner results
-See [results_ota_cmos5l.md](results_ota_cmos5l.md) (PVT min/max with worst-case conditions, Monte Carlo mean/σ per corner).
+Generated: [docs/ota_cmos5l/cace/README.md](../ota_cmos5l/cace/README.md) (CACE results table, PVT min/max with worst-case conditions, Monte Carlo mean/σ per corner × temperature + spread images).
 
 ## Not done yet in phase 1
 - Physical checks (DRC/LVS vs `ota_cmos5l.gds`).

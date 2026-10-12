@@ -239,5 +239,3 @@ runs/
 cace/runs/
 netlist/
 
-# CACE auto-generated datasheet/svg output (partial: klayout step fails, sg13g2.lyp missing)
-docs/cace_ci/generated/
