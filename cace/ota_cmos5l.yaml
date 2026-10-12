@@ -1,0 +1,779 @@
+#--------------------------------------------------------------
+# CACE datasheet: ota_cmos5l (two-stage Miller OTA, PMOS input)
+#--------------------------------------------------------------
+
+name:           ota_cmos5l
+description:    PMOS-input two-stage Miller OTA
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         SPMA
+  creation_date:    October 9, 2026
+  license:          MIT
+
+paths:
+  root:             ..
+  schematic:        xschem/ota_cmos5l
+  layout:           xschem/ota_cmos5l
+  netlist:          netlist/ota_cmos5l
+  documentation:    docs/cace_ci/generated
+  templates:        cace/templates/ota_cmos5l
+
+pins:
+  VDD:
+    description: Positive analog power supply
+    type: power
+    direction: inout
+    Vmin: 1.2
+    Vmax: 1.5
+  VSS:
+    description: Analog ground
+    type: ground
+    direction: inout
+  IBIAS:
+    description: Bias current input
+    type: signal
+    direction: input
+  VINP:
+    description: Non-inverting input
+    type: signal
+    direction: input
+  VINN:
+    description: Inverting input
+    type: signal
+    direction: input
+  VOUT:
+    description: Output
+    type: signal
+    direction: output
+
+default_conditions:
+  vdd:
+    description: Analog power supply voltage
+    display: Vdd
+    unit: V
+    typical: 1.2
+  vcm:
+    description: Input common mode voltage
+    display: Vcm
+    unit: V
+    typical: 0.6
+  ib:
+    description: Bias current
+    display: Ib
+    unit: uA
+    typical: 1.4
+  cl:
+    description: Output load capacitance
+    display: CLoad
+    unit: pF
+    typical: 3
+  corner:
+    description: Process corner
+    display: Corner
+    typical: tt
+  rcorner:
+    description: Resistor corner (res_<rcorner> section of cornerRES.lib)
+    display: Rcorner
+    typical: typ
+  temperature:
+    description: Ambient temperature
+    display: Temp
+    unit: °C
+    typical: 27
+
+parameters:
+  ac_response:
+    display: AC response (Tian loop gain)
+    description: Loop gain of the OTA in the unity-feedback loop (Tian probe)
+    spec:
+      A0:
+        display: DC gain
+        unit: "dB"
+        minimum:
+          value: 50
+        typical:
+          value: any
+        maximum:
+          value: any
+      F3DB:
+        display: -3 dB frequency
+        unit: "Hz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      UGF:
+        display: Unity-gain frequency
+        unit: "Hz"
+        minimum:
+          value: 1000000.0
+        typical:
+          value: any
+        maximum:
+          value: any
+      PM:
+        display: Phase margin
+        unit: "°"
+        minimum:
+          value: 60
+        typical:
+          value: any
+        maximum:
+          value: any
+      GM:
+        display: Gain margin
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      GBW:
+        display: Gain-bandwidth product (A0 x f3dB)
+        unit: "Hz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: ac.sch
+        format: ascii
+        suffix: .data
+        variables: [A0, F3DB, UGF, PM, GM, GBW]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  noise:
+    display: Noise
+    description: Input-referred noise density (referred to the vicm input source) and integrated noise, 10 Hz–100 MHz
+    spec:
+      IRN_100:
+        display: Input noise @100 Hz
+        unit: "nV/rtHz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      IRN_1K:
+        display: Input noise @1 kHz
+        unit: "nV/rtHz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      IRN_10K:
+        display: Input noise @10 kHz
+        unit: "nV/rtHz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      IRN_1M:
+        display: Input noise @1 MHz
+        unit: "nV/rtHz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      ORN_1K:
+        display: Output noise @1 kHz
+        unit: "nV/rtHz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      INOISE_TOT:
+        display: Integrated input noise
+        unit: "uV-rms"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      ONOISE_TOT:
+        display: Integrated output noise
+        unit: "uV-rms"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: noise.sch
+        format: ascii
+        suffix: .data
+        variables: [IRN_100, IRN_1K, IRN_10K, IRN_1M, ORN_1K, INOISE_TOT, ONOISE_TOT]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  dc_op:
+    display: DC operating point (follower)
+    description: Offset, quiescent current/power and DC gain error of the unity-gain follower
+    spec:
+      VOS:
+        display: Input offset voltage
+        unit: "mV"
+        minimum:
+          value: -1
+        typical:
+          value: any
+        maximum:
+          value: 1
+      IQ:
+        display: Quiescent current
+        unit: "uA"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PWR:
+        display: Quiescent power
+        unit: "uW"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      VOUT:
+        display: Output voltage
+        unit: "V"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      GAIN_ERR:
+        display: Gain error (1 - dVout/dVin)
+        unit: "%"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: dc_op.sch
+        format: ascii
+        suffix: .data
+        variables: [VOS, IQ, PWR, VOUT, GAIN_ERR]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  gain_tc:
+    display: Gain temperature coefficient
+    description: Follower gain tempco, box method over Tmin..Tmax (swept inside ngspice)
+    spec:
+      GAIN_TC:
+        display: Gain tempco (ppm per °C)
+        description: (Gmax-Gmin)/(Gmean*(Tmax-Tmin)); data in 1/°C
+        unit: "ppm"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      G_MEAN:
+        display: Mean follower gain
+        unit: "V/V"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: gain_tc.sch
+        format: ascii
+        suffix: .data
+        variables: [GAIN_TC, G_MEAN]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      tmin:
+        display: Tmin
+        unit: °C
+        typical: -40
+      tmax:
+        display: Tmax
+        unit: °C
+        typical: 85
+      tstep:
+        display: Tstep
+        unit: °C
+        typical: 5
+
+  cmrr:
+    display: CMRR
+    description: Common-mode rejection of the unity-gain follower
+    spec:
+      CMRR_DC:
+        display: CMRR @10 Hz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      CMRR_100K:
+        display: CMRR @100 kHz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      CMRR_1M:
+        display: CMRR @1 MHz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: cmrr.sch
+        format: ascii
+        suffix: .data
+        variables: [CMRR_DC, CMRR_100K, CMRR_1M]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  psrr:
+    display: PSRR
+    description: Supply rejection of the unity-gain follower
+    spec:
+      PSRR_DC:
+        display: PSRR @10 Hz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PSRR_100K:
+        display: PSRR @100 kHz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PSRR_1M:
+        display: PSRR @1 MHz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: psrr.sch
+        format: ascii
+        suffix: .data
+        variables: [PSRR_DC, PSRR_100K, PSRR_1M]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  icmr:
+    display: Input common-mode range
+    description: Follower gain > 0.98 window, DC sweep 0..Vdd
+    spec:
+      ICMR_MIN:
+        display: Lower ICMR bound
+        unit: "V"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      ICMR_MAX:
+        display: Upper ICMR bound
+        unit: "V"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      ICMR_SPAN:
+        display: ICMR span
+        unit: "V"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: icmr.sch
+        format: ascii
+        suffix: .data
+        variables: [ICMR_MIN, ICMR_MAX, ICMR_SPAN]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  tran_small:
+    display: Small-signal step (100 mV)
+    description: Follower delay, rise time, overshoot and settling
+    spec:
+      T_DELAY:
+        display: Delay (50 %)
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      T_RISE:
+        display: Rise time (10-90 %)
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      OVERSHOOT:
+        display: Overshoot
+        unit: "%"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      TS_1PCT:
+        display: Settling time 1 %
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      TS_01PCT:
+        display: Settling time 0.1 %
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: tran_small.sch
+        format: ascii
+        suffix: .data
+        variables: [T_DELAY, T_RISE, OVERSHOOT, TS_1PCT, TS_01PCT]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  tran_large:
+    display: Large-signal step (0.8 V)
+    description: Follower slew rate, rise/fall time and propagation delays
+    spec:
+      SR_POS:
+        display: Positive slew rate
+        unit: "V/s"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      SR_NEG:
+        display: Negative slew rate
+        unit: "V/s"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      T_RISE:
+        display: Rise time (10-90 %)
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      T_FALL:
+        display: Fall time (90-10 %)
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      T_PLH:
+        display: Propagation delay tpLH
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      T_PHL:
+        display: Propagation delay tpHL
+        unit: "ns"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: tran_large.sch
+        format: ascii
+        suffix: .data
+        variables: [SR_POS, SR_NEG, T_RISE, T_FALL, T_PLH, T_PHL]
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  mc_vos:
+    display: MC input offset
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners, vdd 1.2 V, 27 °C)
+    spec:
+      VOS:
+        display: Input offset voltage
+        unit: "mV"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: dc_op.sch
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [VOS, null, null, null, null]
+    plot:
+      mc_vos_hist:
+        type: histogram
+        xaxis: VOS
+        limits: auto
+    conditions:
+      corner:
+        enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
+      rcorner:
+        typical: typ_mismatch
+      vdd:
+        typical: 1.2
+      temperature:
+        typical: 27
+      iterations:
+        description: Monte Carlo iterations (mismatch seeds)
+        display: Iterations
+        minimum: 1
+        maximum: 50
+        step: linear
+        stepsize: 1
+
+  mc_cmrr:
+    display: MC CMRR
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners, vdd 1.2 V, 27 °C)
+    spec:
+      CMRR_DC:
+        display: CMRR @10 Hz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: cmrr.sch
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [CMRR_DC, null, null]
+    plot:
+      mc_cmrr_hist:
+        type: histogram
+        xaxis: CMRR_DC
+        limits: auto
+    conditions:
+      corner:
+        enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
+      rcorner:
+        typical: typ_mismatch
+      vdd:
+        typical: 1.2
+      temperature:
+        typical: 27
+      iterations:
+        description: Monte Carlo iterations (mismatch seeds)
+        display: Iterations
+        minimum: 1
+        maximum: 50
+        step: linear
+        stepsize: 1
+
+  mc_psrr:
+    display: MC PSRR
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners, vdd 1.2 V, 27 °C)
+    spec:
+      PSRR_DC:
+        display: PSRR @10 Hz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: psrr.sch
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [PSRR_DC, null, null]
+    plot:
+      mc_psrr_hist:
+        type: histogram
+        xaxis: PSRR_DC
+        limits: auto
+    conditions:
+      corner:
+        enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
+      rcorner:
+        typical: typ_mismatch
+      vdd:
+        typical: 1.2
+      temperature:
+        typical: 27
+      iterations:
+        description: Monte Carlo iterations (mismatch seeds)
+        display: Iterations
+        minimum: 1
+        maximum: 50
+        step: linear
+        stepsize: 1

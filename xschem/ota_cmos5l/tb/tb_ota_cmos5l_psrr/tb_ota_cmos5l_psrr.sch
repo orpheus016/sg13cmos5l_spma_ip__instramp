@@ -50,75 +50,29 @@ logx=0
 logy=0
 }
 N 720 -560 720 -520 {lab=VDD}
-N 760 -560 760 -520 {lab=vss}
-N 800 -560 800 -520 {lab=ibias}
-N 920 -390 940 -390 {lab=out}
-N 920 -390 920 -360 {lab=out}
-N 880 -390 920 -390 {lab=out}
+N 760 -560 760 -520 {lab=VSS}
+N 800 -560 800 -520 {lab=I_B}
+N 920 -390 940 -390 {lab=OUT3}
+N 920 -390 920 -360 {lab=OUT3}
+N 900 -390 920 -390 {lab=OUT3}
 N 920 -300 920 -270 {lab=0}
-N 280 -480 280 -440 {lab=ibias}
-N 280 -380 280 -340 {lab=vss}
-N 180 -340 180 -300 {lab=vss}
+N 280 -480 280 -440 {lab=I_B}
+N 280 -380 280 -340 {lab=VSS}
+N 180 -340 180 -300 {lab=VSS}
 N 180 -480 180 -440 {lab=VDD}
 N 180 -240 180 -200 {lab=0}
-N 380 -480 380 -440 {lab=vinp}
-N 380 -380 380 -340 {lab=vss}
-N 480 -380 480 -340 {lab=vss}
-N 480 -480 480 -440 {lab=vinn}
-N 600 -430 640 -430 {lab=vinp}
-N 600 -350 640 -350 {lab=vinn}
-N 380 -340 480 -340 {lab=vss}
-N 180 -340 280 -340 {lab=vss}
-N 280 -340 380 -340 {lab=vss}
-N 180 -380 180 -340 {lab=vss}
-C {simulator_commands_shown.sym} 1050 -830 0 0 {name=SimulatorNGSPICE
-simulator=ngspice
-only_toplevel=false 
-value="
-.param temp=27
-.param lbias=0.15u wbias=0.15u
-.param m6=1 m7=4 m8=8
-.param linpair=3u winpair=20u
-.param lload=5u wload=10u
-.param lcs=3u wcs=20u
-.param Cc=2p
-.ac dec
-
-.control
-save all
-
-** Set sources
-alter @V1[AC] = 1
-
-** Simulations
-ac dec 100 1 10G
-
-** Plots
-setplot ac1
-let psrr_db = db(v(out))
-plot psrr_db
-
-** Measurements
-meas ac PSRR_gain FIND psrr_db AT=1Hz
-let psrr_3db = PSRR_gain + 3
-meas ac f_3db WHEN psrr_db=$&psrr_3db
-
-write tb_ota_cmos5l_psrr.raw
-
-.endc
-* ngspice commands
-"}
-C {simulator_commands_shown.sym} 1580 -320 0 0 {
-name=Libs_Ngspice
-simulator=ngspice
-only_toplevel=false
-value="
-.lib cornerMOSlv.lib mos_tt
-.lib cornerMOShv.lib mos_tt
-.lib cornerRES.lib res_typ
-.lib cornerDIO.lib dio_tt
-"
-      }
+N 380 -480 380 -440 {lab=VINP3}
+N 380 -380 380 -340 {lab=VSS}
+N 600 -430 640 -430 {lab=VINP3}
+N 600 -350 640 -350 {lab=OUT3
+}
+N 180 -340 280 -340 {lab=VSS}
+N 280 -340 380 -340 {lab=VSS}
+N 180 -380 180 -340 {lab=VSS}
+N 600 -350 600 -240 {lab=OUT3}
+N 600 -240 900 -240 {lab=OUT3}
+N 900 -390 900 -240 {lab=OUT3}
+N 880 -390 900 -390 {lab=OUT3}
 C {launcher.sym} 1140 -160 0 0 {name=h4
 descr=SimulateNGSPICE
 tclcommand="
@@ -146,19 +100,19 @@ simulate
 C {title.sym} 160 -30 0 0 {name=l4 author="James Patrick"}
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
 C {vdd.sym} 720 -560 0 0 {name=l1 lab=VDD}
-C {lab_wire.sym} 760 -560 0 0 {name=p1 sig_type=std_logic lab=vss}
-C {lab_wire.sym} 800 -560 0 0 {name=p2 sig_type=std_logic lab=ibias}
+C {lab_wire.sym} 760 -560 0 0 {name=p1 sig_type=std_logic lab=VSS}
+C {lab_wire.sym} 800 -560 0 0 {name=p2 sig_type=std_logic lab=I_B}
 C {capa.sym} 920 -330 0 0 {name=C1
 m=1
 value=3p
 footprint=1206
 device="ceramic capacitor"}
-C {lab_wire.sym} 940 -390 0 0 {name=p4 sig_type=std_logic lab=out}
-C {lab_wire.sym} 280 -480 0 0 {name=p5 sig_type=std_logic lab=ibias}
+C {lab_wire.sym} 940 -390 0 0 {name=p4 sig_type=std_logic lab=OUT3}
+C {lab_wire.sym} 280 -480 0 0 {name=p5 sig_type=std_logic lab=I_B}
 C {isource.sym} 280 -410 0 0 {name=I0 value=1.4u}
 C {vdd.sym} 180 -480 0 0 {name=l2 lab=VDD}
-C {vsource.sym} 180 -410 0 0 {name=V1 value=1.5 savecurrent=false}
-C {lab_wire.sym} 180 -340 0 0 {name=p7 sig_type=std_logic lab=vss}
+C {vsource.sym} 180 -410 0 0 {name=V1 value=1.2 savecurrent=false}
+C {lab_wire.sym} 180 -340 0 0 {name=p7 sig_type=std_logic lab=VSS}
 C {vsource.sym} 180 -270 0 0 {name=V2 value=0 savecurrent=false}
 C {gnd.sym} 180 -200 0 0 {name=l3 lab=0}
 C {devices/launcher.sym} 1140 -110 0 0 {name=h2
@@ -172,10 +126,73 @@ xschem raw_read $netlist_dir/[file rootname [file tail [xschem get current_name]
 xschem setprop rect 2 0 fullxzoom
 "
 }
-C {lab_wire.sym} 380 -480 0 0 {name=p9 sig_type=std_logic lab=vinp}
-C {vsource.sym} 380 -410 0 0 {name=V3 value=0.75 savecurrent=false}
-C {vsource.sym} 480 -410 0 0 {name=V4 value=0.75 savecurrent=false}
-C {lab_wire.sym} 480 -480 0 0 {name=p12 sig_type=std_logic lab=vinn}
-C {lab_wire.sym} 600 -430 2 0 {name=p13 sig_type=std_logic lab=vinp}
-C {lab_wire.sym} 600 -350 2 0 {name=p14 sig_type=std_logic lab=vinn}
+C {lab_wire.sym} 380 -480 0 0 {name=p9 sig_type=std_logic lab=VINP3}
+C {vsource.sym} 380 -410 0 0 {name=V3 value=0.6 savecurrent=false}
+C {lab_wire.sym} 600 -430 2 0 {name=p13 sig_type=std_logic lab=VINP3}
 C {gnd.sym} 920 -270 0 0 {name=l5 lab=0}
+C {simulator_commands_shown.sym} 1410 -580 0 0 {
+name=Libs_Ngspice1
+simulator=ngspice
+only_toplevel=false
+value="
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
+"
+      }
+C {simulator_commands_shown.sym} 1080 -580 0 0 {name=General_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=27
+.param cl=3p
+.param ib=1.4u
+.param vdd=1.2
+.param vicm=vdd/2
+.param vid=0
+"
+      }
+C {simulator_commands_shown.sym} 1080 -390 0 0 {name=OTA_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+"
+      }
+C {simulator_commands.sym} 1460 -380 0 0 {name=PSRR
+simulator=ngspice
+only_toplevel="false" 
+value=".control
+save all
+shell mkdir -p result
+
+* PSRR
+alter @v1[acmag]=1
+alter @v3[acmag]=0
+
+ac dec 20 1 10G
+
+let psrr_curve = db(1 / (v(OUT3) + 1e-15))
+
+meas ac psrr_dc find psrr_curve at=10
+meas ac psrr_100k find psrr_curve at=100k
+meas ac psrr_1meg find psrr_curve at=1MEG
+
+write ./result/tb_cg_ota_psrr.raw psrr_curve
+
+echo \\"=======================================================\\"
+echo \\"  PSRR @ DC / 10 Hz        : \\" $&psrr_dc   \\" dB (Target: > 60 dB)\\"
+echo \\"  PSRR @ 100 kHz           : \\" $&psrr_100k \\" dB\\"
+echo \\"  PSRR @ 1 MHz             : \\" $&psrr_1meg \\" dB\\"
+echo \\"=======================================================\\"
+
+plot psrr_curve xlog
+.endc"
+}

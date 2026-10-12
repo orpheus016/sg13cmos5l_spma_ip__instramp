@@ -5,7 +5,7 @@ V {}
 S {}
 F {}
 E {}
-N 380 -700 420 -700 {lab=VDD}
+N 380 -700 420 -700 {lab=vdd}
 N 180 -640 180 -610 {lab=vdd}
 N 420 -640 420 -610 {lab=vdd}
 N 720 -640 720 -610 {lab=vdd}
@@ -71,7 +71,7 @@ N 510 -280 510 -260 {lab=#net4}
 N 510 -380 510 -340 {lab=#net8}
 N 720 -280 720 -240 {lab=#net9}
 N 720 -410 720 -340 {lab=VOUT}
-N 420 -700 420 -640 {lab=VDD}
+N 420 -700 420 -640 {lab=vdd}
 N 510 -160 720 -160 {lab=VSS}
 N 340 -160 510 -160 {lab=VSS}
 N 340 -180 340 -160 {lab=VSS}
@@ -149,16 +149,11 @@ mm_ok=1
 model=sg13_lv_nmos
 spiceprefix=X
 }
-C {capa.sym} 690 -260 3 0 {name=C1
-m=1
-value=\{Cc\}
-footprint=1206
-device="ceramic capacitor"}
 C {sg13cmos5l_pr/rhigh.sym} 630 -260 3 0 {name=R1
 w=0.5e-6
 l=1.95e-6
 model=rhigh
-body=sub!
+body=vss
 spiceprefix=X
 b=0
  m=1
@@ -181,3 +176,15 @@ C {spice_probe.sym} 760 -410 2 1 {name=p17 attrs=""}
 C {ammeter.sym} 340 -310 0 0 {name=VID1 savecurrent=true spice_ignore=0}
 C {ammeter.sym} 510 -310 0 0 {name=VID2 savecurrent=true spice_ignore=0}
 C {ammeter.sym} 720 -310 0 0 {name=VID5 savecurrent=true spice_ignore=0}
+C {sg13cmos5l_pr/cap_cmomi.sym} 690 -260 1 1 {name=C2
+model=cap_cmomi
+w=15e-6
+l=15e-6
+mmin=1
+mmax=4
+feed=double
+subblock=0
+m=9
+mm_ok=1
+spiceprefix=X
+}

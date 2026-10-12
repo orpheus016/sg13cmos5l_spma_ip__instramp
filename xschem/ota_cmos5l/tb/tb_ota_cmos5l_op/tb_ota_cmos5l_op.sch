@@ -58,17 +58,6 @@ write tb_ota_cmos5l_op.raw
 .endc
 * ngspice commands
 "}
-C {simulator_commands_shown.sym} 1410 -320 0 0 {
-name=Libs_Ngspice
-simulator=ngspice
-only_toplevel=false
-value="
-.lib cornerMOSlv.lib mos_tt
-.lib cornerMOShv.lib mos_tt
-.lib cornerRES.lib res_typ
-.lib cornerDIO.lib dio_tt
-"
-      }
 C {launcher.sym} 1140 -160 0 0 {name=h4
 descr=SimulateNGSPICE
 tclcommand="
@@ -94,7 +83,7 @@ xschem netlist
 simulate
 "}
 C {title.sym} 160 -30 0 0 {name=l4 author="James Patrick"}
-C {/foss/designs/Programmable-Instrumentation-Amplifier-IP/designs/libs/core_analog/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
 C {vdd.sym} 720 -560 0 0 {name=l1 lab=VDD}
 C {lab_wire.sym} 760 -560 0 0 {name=p1 sig_type=std_logic lab=vss}
 C {lab_wire.sym} 800 -560 0 0 {name=p2 sig_type=std_logic lab=ibias}
@@ -131,3 +120,16 @@ C {lab_wire.sym} 600 -350 2 0 {name=p14 sig_type=std_logic lab=vinn}
 C {gnd.sym} 920 -270 0 0 {name=l5 lab=0}
 C {devices/ngspice_get_value.sym} 1420 -520 0 0 {name=r1 node=v(@n.x1.xm5.nsg13_lv_nmos[vsat])
 descr="VDS-Vov M5="}
+C {simulator_commands_shown.sym} 1370 -370 0 0 {
+name=Libs_Ngspice1
+simulator=ngspice
+only_toplevel=false
+value="
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
+"
+      }

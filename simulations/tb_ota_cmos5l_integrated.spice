@@ -1,0 +1,136 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/tb/tb_ota_cmos5l_integrated/tb_ota_cmos5l_integrated.sch
+**.subckt tb_ota_cmos5l_integrated
+I0 I_B VSS {ib}
+V2 VDD 0 {vdd}
+V5 VINP3 VSS {vicm}
+V3 VSS 0 0
+x2 VSS I_B VDD OUT3 VINP3 OUT3 ota_cmos5l
+C4 OUT3 VSS {cl}
+**** begin user architecture code
+
+
+.param temp=27
+.param cl=3p
+.param ib=1.4u
+.param vdd=1.2
+.param vicm=vdd/2
+.param vid=0
+
+
+
+
+
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib dio_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+
+
+
+
+.subckt loopgainprobe a b
+Ii 0 x DC 0 AC 0
+Vi x a DC 0 AC 1
+Vnodebuffer b x 0
+.ends loopgainprobe
+
+.func tian_loop() {1/(1/(2*(ac1.i(v.x999.Vi)*ac2.v(x999.x)-ac1.v(x999.x)*ac2.i(v.x999.Vi))+ac1.v(x999.x)+ac2.i(v.x999.Vi))-1)}
+
+
+
+
+.control
+destroy all
+save all
+shell mkdir -p result
+
+alter @v5[acmag] = 0
+
+dc v5 0 1.2 2m
+
+let v_in  = v(vinp3)
+let v_out = v(out3)
+
+let track_error_mv = abs(v_out - v_in) * 1000
+
+let buffer_gain = deriv(v_out)
+
+* Extract linear ICMR boundary points
+* Threshold set at buffer gain > 0.98 (2% gain error margin)
+meas dc icmr_min when buffer_gain=0.98 rise=1
+meas dc icmr_max when buffer_gain=0.98 fall=1
+let icmr_span = icmr_max - icmr_min
+
+write ./result/tb_cg_ota_icmr.raw v_in v_out buffer_gain track_error_mv
+
+* Print summary report to ngspice terminal console
+echo "======================================================="
+echo "       INPUT COMMON-MODE RANGE (ICMR) RESULTS          "
+echo "======================================================="
+echo "  Lower ICMR Bound (Vmin, Gain > 0.98) : " $&icmr_min " V"
+echo "  Upper ICMR Bound (Vmax, Gain > 0.98) : " $&icmr_max " V"
+echo "  Total Linear ICMR Span               : " $&icmr_span " V"
+echo "======================================================="
+
+* Display transfer characteristics and tracking performance curves
+plot v_out vs v_in
+plot buffer_gain vs v_in
+plot track_error_mv vs v_in
+
+.endc
+
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.iopin IBIAS
+*.iopin VDD
+*.iopin VSS
+*.iopin VOUT
+*.iopin VINP
+*.iopin VINN
+XM6 net1 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6} mm_ok=1
+XM7 net5 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7} mm_ok=1
+XM8 net6 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8} mm_ok=1
+XM1 net7 VINN net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM2 net8 VINP net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM3 net3 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM4 net4 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM5 net9 net4 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1 m=1 mm_ok=1
+XR1 net4 net10 vss rhigh w=0.5e-6 l=1.95e-6 m=1 b=0 mm_ok=1
+VIBIAS net1 IBIAS 0
+.save i(vibias)
+VID7 net5 net2 0
+.save i(vid7)
+VID8 net6 VOUT 0
+.save i(vid8)
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+VID1 net7 net3 0
+.save i(vid1)
+VID2 net8 net4 0
+.save i(vid2)
+VID5 VOUT net9 0
+.save i(vid5)
+XC2 net9 net10 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=9 mm_ok=1
+.ends
+
+.GLOBAL VDD
+.end

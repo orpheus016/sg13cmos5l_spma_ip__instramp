@@ -1,0 +1,13 @@
+# xschemrc for opening the CACE templates in the xschem GUI
+# (CACE itself builds its own search path; this is only so the DUT symbol is visible when you edit a template)
+# Run from this dir:  cd cace/templates/ota_cmos5l && xschem --rcfile ../xschemrc ac.sch
+
+# Source the PDK xschemrc file
+if {![info exists PDK]} {
+    source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
+}
+
+# Templates dir + the OTA symbol (xschem/ota_cmos5l/ota_cmos5l.sym)
+set _here [file dirname [file normalize [info script]]]
+append XSCHEM_LIBRARY_PATH :$_here
+append XSCHEM_LIBRARY_PATH :$_here/../../xschem/ota_cmos5l

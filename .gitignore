@@ -231,3 +231,13 @@ __marimo__/
 .venv
 .ipynb_checkpoints
 designs/libs/core_digital/dec2to4/backups/dec2to4_backup_2026-09-23_09h57m25_482.gds
+
+# CACE run outputs
+cace/runs/
+cace/**/*.raw
+runs/
+cace/runs/
+netlist/
+
+# CACE auto-generated datasheet/svg output (partial: klayout step fails, sg13g2.lyp missing)
+docs/cace_ci/generated/

@@ -1,0 +1,154 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/tb/tb_ota_cmos5l_noise/tb_ota_cmos5l_noise.sch
+**.subckt tb_ota_cmos5l_noise
+I1 I_B VSS {ib}
+V5 VDD 0 {vdd}
+V6 VSS 0 0
+V4 VINP2 VSS {vicm}
+C3 OUT2 VSS {cl}
+x2 VSS I_B VDD VINN2 VINP2 OUT2 ota_cmos5l
+X3 OUT2 VINN2 loopgainprobe
+**** begin user architecture code
+
+
+
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
+
+
+
+
+.subckt loopgainprobe a b
+Ii 0 x DC 0 AC 0
+Vi x a DC 0 AC 1
+Vnodebuffer b x 0
+.ends loopgainprobe
+
+.func tian_loop() {1/(1/(2*(ac1.i(v.x999.Vi)*ac2.v(x999.x)-ac1.v(x999.x)*ac2.i(v.x999.Vi))+ac1.v(x999.x)+ac2.i(v.x999.Vi))-1)}
+
+
+
+
+.param temp=27
+.param cl=3p
+.param ib=1.4u
+.param vdd=1.2
+.param vicm=vdd/2
+.param vid=0
+
+
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+
+
+
+
+.control
+save all
+destroy all
+shell mkdir -p result
+
+* Tian probe idled
+alter i.x999.ii acmag=0
+alter v.x999.vi acmag=0
+
+* Add AC 1 to Vicm
+alter @v6[acmag]=1
+
+* Noise simulation
+noise v(out2) v6 dec 20 10 100MEG
+
+* Return to initial condition
+alter @v6[acmag]=0
+
+setplot noise1
+
+* Parameters #1
+let inoise_total_uv = noise2.inoise_total * 1e6
+let onoise_total_uv = noise2.onoise_total * 1e6
+let irn_nv = noise1.inoise_spectrum * 1e9
+let orn_nv = noise1.onoise_spectrum * 1e9
+
+* IRN extraction at certain frequencies
+let irn_10 = irn_nv[0]
+let irn_100 = irn_nv[20]
+let irn_1k = irn_nv[40]
+let irn_10k = irn_nv[60]
+let irn_100k = irn_nv[80]
+let irn_1meg = irn_nv[100]
+* meas noise irn_10 find irn_nv at=10
+* meas noise irn_100 find irn_nv at=100
+* meas noise irn_1k find irn_nv at=1k
+* meas noise irn_10k find irn_nv at=10k
+* meas noise irn_100k find irn_nv at=100k
+* meas noise irn_1meg find irn_nv at=1MEG
+
+write ./result/tb_cg_ota_noise.raw irn_nv orn_nv inoise_spectrum onoise_spectrum
+
+echo "======================================================="
+echo " Total Output Noise (10 Hz - 100 MHz): " $&onoise_total_uv " uV_rms"
+echo " Total Input Noise (10 Hz - 100 MHz): " $&inoise_total_uv " uV_rms"
+echo "-------------------------------------------------------"
+echo " IRN @ 10 Hz (Flicker Noise): " $&irn_10 " nV/sqrt(Hz)"
+echo " IRN @ 100 Hz: " $&irn_100 " nV/sqrt(Hz)"
+echo " IRN @ 1 kHz: " $&irn_1k " nV/sqrt(Hz)"
+echo " IRN @ 10 kHz: " $&irn_10k " nV/sqrt(Hz)"
+echo " IRN @ 100 kHz: " $&irn_100k " nV/sqrt(Hz)"
+echo " IRN @ 1 MHz (Thermal Noise Floor): " $&irn_1meg " nV/sqrt(Hz)"
+echo "======================================================="
+
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.iopin IBIAS
+*.iopin VDD
+*.iopin VSS
+*.iopin VOUT
+*.iopin VINP
+*.iopin VINN
+XM6 net1 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6} mm_ok=1
+XM7 net5 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7} mm_ok=1
+XM8 net6 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8} mm_ok=1
+XM1 net7 VINN net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM2 net8 VINP net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM3 net3 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM4 net4 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM5 net9 net4 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1 m=1 mm_ok=1
+XR1 net4 net10 vss rhigh w=0.5e-6 l=1.95e-6 m=1 b=0 mm_ok=1
+VIBIAS net1 IBIAS 0
+.save i(vibias)
+VID7 net5 net2 0
+.save i(vid7)
+VID8 net6 VOUT 0
+.save i(vid8)
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+VID1 net7 net3 0
+.save i(vid1)
+VID2 net8 net4 0
+.save i(vid2)
+VID5 VOUT net9 0
+.save i(vid5)
+XC2 net9 net10 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=9 mm_ok=1
+.ends
+
+.GLOBAL VDD
+.end

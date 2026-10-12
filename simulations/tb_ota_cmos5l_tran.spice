@@ -1,0 +1,147 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/tb/tb_ota_cmos5l_tran/tb_ota_cmos5l_tran.sch
+**.subckt tb_ota_cmos5l_tran
+I1 I_B VSS {ib}
+V5 VDD 0 {vdd}
+V6 VSS 0 0
+V1 VINP3 VSS {vicm}
+x2 VSS I_B VDD OUT3 VINP3 OUT3 ota_cmos5l
+C4 OUT3 VSS {cl}
+**** begin user architecture code
+
+
+
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
+
+
+
+
+.param temp=27
+.param cl=3p
+.param ib=1.4u
+.param vdd=1.2
+.param vicm=vdd/2
+.param vid=0
+
+
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+
+
+
+
+.control
+shell mkdir -p result
+
+* LARGE-SIGNAL STEP RESPONSE (SLEW RATE & PROPAGATION DELAYS)
+* Stimulus: Pulse swing 0.2 V to 1.0 V (Delta V = 0.8 V, Vcm = 0.6 V)
+alter @v5[pulse] = [ 0.2 1.0 20n 1n 1n 2u 5u ]
+
+tran 0.2n 5u
+run
+
+let v_inl  = v(vinp3)
+let v_outl = v(out3)
+
+* --- Rising Edge Analysis ---
+* Input 50% crossing (0.60 V)
+meas tran t_in_r50  when v_inl=0.60 rise=1
+
+* Output 10% (0.28 V), 50% (0.60 V), and 90% (0.92 V) crossings
+meas tran t_out_r10 when v_outl=0.28 rise=1
+meas tran t_out_r50 when v_outl=0.60 rise=1
+meas tran t_out_r90 when v_outl=0.92 rise=1
+
+* Compute Rise Time, Positive Slew Rate (SR+), and Propagation Delay (tpLH)
+let t_rise_ns = (t_out_r90 - t_out_r10) * 1e9
+let sr_pos    = (0.92 - 0.28) / (t_out_r90 - t_out_r10) / 1e6
+let t_plh_ns  = (t_out_r50 - t_in_r50) * 1e9
+
+* --- Falling Edge Analysis ---
+* Input 50% crossing (0.60 V)
+meas tran t_in_f50  when v_inl=0.60 fall=1
+
+* Output 90% (0.92 V), 50% (0.60 V), and 10% (0.28 V) crossings
+meas tran t_out_f90 when v_outl=0.92 fall=1
+meas tran t_out_f50 when v_outl=0.60 fall=1
+meas tran t_out_f10 when v_outl=0.28 fall=1
+
+* Compute Fall Time, Negative Slew Rate (SR-), and Propagation Delay (tpHL)
+let t_fall_ns = (t_out_f10 - t_out_f90) * 1e9
+let sr_neg    = (0.92 - 0.28) / (t_out_f10 - t_out_f90) / 1e6
+let t_phl_ns  = (t_out_f50 - t_in_f50) * 1e9
+
+* Save output waveforms to the specified rawfile
+write ./result/tb_cg_ota_tran_large.raw v_inl v_outl
+
+* Print execution summary
+echo "======================================================="
+echo "   OTA LARGE-SIGNAL TRANSIENT SIMULATION RESULTS       "
+echo "======================================================="
+echo " Positive Slew Rate (SR+)  : " $&sr_pos    " V/us"
+echo " Negative Slew Rate (SR-)  : " $&sr_neg    " V/us"
+echo " Rise Time 10% - 90% (tr)  : " $&t_rise_ns " ns"
+echo " Fall Time 90% - 10% (tf)  : " $&t_fall_ns " ns"
+echo " Propagation Delay (tpLH)  : " $&t_plh_ns  " ns"
+echo " Propagation Delay (tpHL)  : " $&t_phl_ns  " ns"
+echo "======================================================="
+
+* Reset v5 source back to clean DC operating point
+alter @v5[pulse] = [ 0.6 0.6 0 0 0 1u 2u ]
+
+plot v_outl v_inl
+.endc
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.iopin IBIAS
+*.iopin VDD
+*.iopin VSS
+*.iopin VOUT
+*.iopin VINP
+*.iopin VINN
+XM6 net1 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6} mm_ok=1
+XM7 net5 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7} mm_ok=1
+XM8 net6 net1 vdd vdd sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8} mm_ok=1
+XM1 net7 VINN net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM2 net8 VINP net2 vdd sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM3 net3 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM4 net4 net3 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM5 net9 net4 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1 m=1 mm_ok=1
+XR1 net4 net10 vss rhigh w=0.5e-6 l=1.95e-6 m=1 b=0 mm_ok=1
+VIBIAS net1 IBIAS 0
+.save i(vibias)
+VID7 net5 net2 0
+.save i(vid7)
+VID8 net6 VOUT 0
+.save i(vid8)
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+VID1 net7 net3 0
+.save i(vid1)
+VID2 net8 net4 0
+.save i(vid2)
+VID5 VOUT net9 0
+.save i(vid5)
+XC2 net9 net10 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=9 mm_ok=1
+.ends
+
+.GLOBAL VDD
+.end

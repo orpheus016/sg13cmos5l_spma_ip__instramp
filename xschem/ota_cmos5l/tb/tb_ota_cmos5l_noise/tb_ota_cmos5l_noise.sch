@@ -13,8 +13,8 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=5e-07
-x2=1.05e-05
+x1=-5e-07
+x2=9.5e-06
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -35,8 +35,8 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=5e-07
-x2=1.05e-05
+x1=0
+x2=10e-6
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -49,67 +49,39 @@ unitx=1
 logx=0
 logy=0
 }
-N 720 -560 720 -520 {lab=VDD}
-N 760 -560 760 -520 {lab=vss}
-N 800 -560 800 -520 {lab=ibias}
-N 920 -390 940 -390 {lab=out}
-N 920 -390 920 -360 {lab=out}
-N 880 -390 920 -390 {lab=out}
-N 920 -300 920 -270 {lab=0}
-N 280 -480 280 -440 {lab=ibias}
-N 280 -380 280 -340 {lab=vss}
-N 180 -340 180 -300 {lab=vss}
-N 180 -480 180 -440 {lab=VDD}
-N 180 -240 180 -200 {lab=0}
-N 380 -480 380 -440 {lab=vinp}
-N 380 -380 380 -340 {lab=vss}
-N 480 -380 480 -340 {lab=vss}
-N 480 -480 480 -440 {lab=vinn}
-N 600 -430 640 -430 {lab=vinp}
-N 600 -350 640 -350 {lab=vinn}
-N 380 -340 480 -340 {lab=vss}
-N 180 -340 280 -340 {lab=vss}
-N 280 -340 380 -340 {lab=vss}
-N 180 -380 180 -340 {lab=vss}
-C {simulator_commands_shown.sym} 1060 -880 0 0 {name=SimulatorNGSPICE
-simulator=ngspice
-only_toplevel=false 
-value="
-.param temp=27
-.param lbias=0.15u wbias=0.15u
-.param m6=1 m7=4 m8=8
-.param linpair=3u winpair=20u
-.param lload=5u wload=10u
-.param lcs=3u wcs=20u
-.param Cc=2p
-.op
-
-.control
-save all
-
-** Set sources
-alter @V3[AC] = 1
-
-** Simulation
-op
-noise v(out) V3 dec 100 1 10G
-
-** Plots
-setplot noise1
-plot onoise_spectrum
-plot inoise_spectrum
-
-** Measurements
-let output_noise_at_1MHz = onoise_spectrum[600]
-print output_noise_at_1MHz
-
-write tb_ota_cmos5l_noise.raw
-
-.endc
-* ngspice commands
-"}
-C {simulator_commands_shown.sym} 1580 -320 0 0 {
-name=Libs_Ngspice
+T {POWER & BIASING} 80 -550 0 0 0.3 0.3 {}
+N 130 -470 130 -460 {lab=VDD}
+N 210 -480 210 -460 {lab=I_B}
+N 210 -400 210 -380 {lab=VSS}
+N 130 -400 130 -380 {lab=0}
+N 50 -400 50 -380 {lab=0}
+N 50 -470 50 -460 {lab=VSS}
+N 290 -480 290 -460 {lab=VINP2
+}
+N 290 -400 290 -380 {lab=VSS
+}
+N 370 -400 370 -390 {lab=VSS
+}
+N 370 -480 370 -460 {lab=OUT2
+}
+N 100 -180 120 -180 {lab=OUT2
+}
+N 280 -180 300 -180 {lab=VINN2
+}
+N 690 -450 690 -420 {lab=VSS
+}
+N 810 -290 830 -290 {lab=OUT2
+}
+N 650 -450 650 -420 {lab=VDD
+}
+N 550 -330 570 -330 {lab=VINP2
+}
+N 730 -440 730 -420 {lab=I_B
+}
+N 550 -250 570 -250 {lab=VINN2
+}
+C {simulator_commands_shown.sym} 1410 -810 0 0 {
+name=Libs_Ngspice1
 simulator=ngspice
 only_toplevel=false
 value="
@@ -117,9 +89,11 @@ value="
 .lib cornerMOShv.lib mos_tt
 .lib cornerRES.lib res_typ
 .lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
 "
       }
-C {launcher.sym} 1140 -160 0 0 {name=h4
+C {launcher.sym} 1140 -160 0 0 {name=h1
 descr=SimulateNGSPICE
 tclcommand="
 # Setup the default simulation commands if not already set up
@@ -143,39 +117,157 @@ write_data [save_params] $netlist_dir/[file rootname [file tail [xschem get curr
 xschem netlist
 simulate
 "}
-C {title.sym} 160 -30 0 0 {name=l4 author="James Patrick"}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 760 -390 0 0 {name=x1}
-C {vdd.sym} 720 -560 0 0 {name=l1 lab=VDD}
-C {lab_wire.sym} 760 -560 0 0 {name=p1 sig_type=std_logic lab=vss}
-C {lab_wire.sym} 800 -560 0 0 {name=p2 sig_type=std_logic lab=ibias}
-C {capa.sym} 920 -330 0 0 {name=C1
-m=1
-value=3p
-footprint=1206
-device="ceramic capacitor"}
-C {lab_wire.sym} 940 -390 0 0 {name=p4 sig_type=std_logic lab=out}
-C {lab_wire.sym} 280 -480 0 0 {name=p5 sig_type=std_logic lab=ibias}
-C {isource.sym} 280 -410 0 0 {name=I0 value=1.4u}
-C {vdd.sym} 180 -480 0 0 {name=l2 lab=VDD}
-C {vsource.sym} 180 -410 0 0 {name=V1 value=1.5 savecurrent=false}
-C {lab_wire.sym} 180 -340 0 0 {name=p7 sig_type=std_logic lab=vss}
-C {vsource.sym} 180 -270 0 0 {name=V2 value=0 savecurrent=false}
-C {gnd.sym} 180 -200 0 0 {name=l3 lab=0}
-C {devices/launcher.sym} 1140 -110 0 0 {name=h2
+C {title.sym} 160 -30 0 0 {name=l6 author="James Patrick"}
+C {devices/launcher.sym} 1140 -110 0 0 {name=h5
 descr="OP annotate" 
 tclcommand="xschem annotate_op"
 }
-C {devices/launcher.sym} 1440 -160 0 0 {name=h3
+C {devices/launcher.sym} 1440 -160 0 0 {name=h6
 descr="Load waves" 
 tclcommand="
 xschem raw_read $netlist_dir/[file rootname [file tail [xschem get current_name]]].raw dc
 xschem setprop rect 2 0 fullxzoom
 "
 }
-C {lab_wire.sym} 380 -480 0 0 {name=p9 sig_type=std_logic lab=vinp}
-C {vsource.sym} 380 -410 0 0 {name=V3 value=0.75 savecurrent=false}
-C {vsource.sym} 480 -410 0 0 {name=V4 value=0.75 savecurrent=false}
-C {lab_wire.sym} 480 -480 0 0 {name=p12 sig_type=std_logic lab=vinn}
-C {lab_wire.sym} 600 -430 2 0 {name=p13 sig_type=std_logic lab=vinp}
-C {lab_wire.sym} 600 -350 2 0 {name=p14 sig_type=std_logic lab=vinn}
-C {gnd.sym} 920 -270 0 0 {name=l5 lab=0}
+C {simulator_commands_shown.sym} 1080 -410 0 0 {name=loopgainprobe1
+simulator=ngspice
+only_toplevel=false
+value=".subckt loopgainprobe a b
+Ii 0 x DC 0 AC 0
+Vi x a DC 0 AC 1
+Vnodebuffer b x 0
+.ends loopgainprobe
+
+.func tian_loop() \{1/(1/(2*(ac1.i(v.x999.Vi)*ac2.v(x999.x)-ac1.v(x999.x)*ac2.i(v.x999.Vi))+ac1.v(x999.x)+ac2.i(v.x999.Vi))-1)\}
+"
+      }
+C {simulator_commands_shown.sym} 1080 -810 0 0 {name=General_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=27
+.param cl=3p
+.param ib=1.4u
+.param vdd=1.2
+.param vicm=vdd/2
+.param vid=0
+"
+      }
+C {simulator_commands_shown.sym} 1080 -620 0 0 {name=OTA_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+"
+      }
+C {isource.sym} 210 -430 0 0 {name=I1 value=\{ib\}}
+C {vsource.sym} 130 -430 0 0 {name=V5 value=\{vdd\} savecurrent=false}
+C {gnd.sym} 130 -380 0 0 {name=l7 lab=0}
+C {vdd.sym} 130 -470 0 0 {name=l8 lab=VDD}
+C {lab_pin.sym} 210 -480 1 0 {name=p3 sig_type=std_logic lab=I_B}
+C {vsource.sym} 50 -430 0 0 {name=V6 value=0 savecurrent=false}
+C {gnd.sym} 50 -380 0 0 {name=l9 lab=0}
+C {lab_pin.sym} 50 -470 1 0 {name=p6 sig_type=std_logic lab=VSS
+}
+C {lab_pin.sym} 210 -380 3 0 {name=p11 sig_type=std_logic lab=VSS
+}
+C {vsource.sym} 290 -430 0 0 {name=V4 value=\{vicm\} savecurrent=false
+}
+C {lab_pin.sym} 290 -480 1 0 {name=p20 sig_type=std_logic lab=VINP2
+}
+C {lab_pin.sym} 290 -380 3 0 {name=p21 sig_type=std_logic lab=VSS
+}
+C {capa.sym} 370 -430 0 0 {name=C3
+m=1
+value=\{cl\}
+footprint=1206
+device="ceramic capacitor"
+}
+C {lab_pin.sym} 370 -390 3 0 {name=p25 sig_type=std_logic lab=VSS
+}
+C {lab_pin.sym} 370 -480 1 0 {name=p26 sig_type=std_logic lab=OUT2
+}
+C {lab_pin.sym} 100 -180 0 0 {name=p8 sig_type=std_logic lab=OUT2
+}
+C {lab_pin.sym} 300 -180 2 0 {name=p10 sig_type=std_logic lab=VINN2
+}
+C {lab_pin.sym} 550 -250 0 0 {name=p12 sig_type=std_logic lab=VINN2
+}
+C {lab_pin.sym} 690 -450 1 0 {name=p15 sig_type=std_logic lab=VSS
+}
+C {lab_pin.sym} 550 -330 0 0 {name=p16 sig_type=std_logic lab=VINP2
+}
+C {lab_pin.sym} 830 -290 2 0 {name=p17 sig_type=std_logic lab=OUT2
+}
+C {vdd.sym} 650 -450 0 0 {name=l10 lab=VDD
+}
+C {lab_pin.sym} 730 -440 1 0 {name=p18 sig_type=std_logic lab=I_B
+}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 690 -290 0 0 {name=x2
+}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/tb/tb_cg_ota/loopgainprobe.sym} 200 -180 0 0 {name=X3 device=loopgainprobe
+}
+C {simulator_commands.sym} 1400 -560 0 0 {name=Noise
+simulator=ngspice
+only_toplevel=false 
+value=".control
+save all
+destroy all
+shell mkdir -p result
+
+* Tian probe idled
+alter i.x999.ii acmag=0
+alter v.x999.vi acmag=0
+
+* Add AC 1 to Vicm
+alter @v4[acmag]=1
+
+* Noise simulation
+noise v(out2) v4 dec 20 10 100MEG
+
+* Return to initial condition
+alter @v4[acmag]=0
+
+setplot noise1
+
+* Parameters #1
+let inoise_total_uv = noise2.inoise_total * 1e6
+let onoise_total_uv = noise2.onoise_total * 1e6
+let irn_nv = noise1.inoise_spectrum * 1e9
+let orn_nv = noise1.onoise_spectrum * 1e9
+
+* IRN extraction at certain frequencies
+let irn_10 = irn_nv[0]
+let irn_100 = irn_nv[20]
+let irn_1k = irn_nv[40]
+let irn_10k = irn_nv[60]
+let irn_100k = irn_nv[80]
+let irn_1meg = irn_nv[100]
+* meas noise irn_10 find irn_nv at=10
+* meas noise irn_100 find irn_nv at=100
+* meas noise irn_1k find irn_nv at=1k
+* meas noise irn_10k find irn_nv at=10k
+* meas noise irn_100k find irn_nv at=100k
+* meas noise irn_1meg find irn_nv at=1MEG
+
+write ./result/tb_cg_ota_noise.raw irn_nv orn_nv inoise_spectrum onoise_spectrum
+
+echo \\"=======================================================\\"
+echo \\" Total Output Noise (10 Hz - 100 MHz): \\" $&onoise_total_uv \\" uV_rms\\"
+echo \\" Total Input Noise (10 Hz - 100 MHz): \\" $&inoise_total_uv \\" uV_rms\\"
+echo \\"-------------------------------------------------------\\"
+echo \\" IRN @ 10 Hz (Flicker Noise): \\" $&irn_10 \\" nV/sqrt(Hz)\\"
+echo \\" IRN @ 100 Hz: \\" $&irn_100 \\" nV/sqrt(Hz)\\"
+echo \\" IRN @ 1 kHz: \\" $&irn_1k \\" nV/sqrt(Hz)\\"
+echo \\" IRN @ 10 kHz: \\" $&irn_10k \\" nV/sqrt(Hz)\\"
+echo \\" IRN @ 100 kHz: \\" $&irn_100k \\" nV/sqrt(Hz)\\"
+echo \\" IRN @ 1 MHz (Thermal Noise Floor): \\" $&irn_1meg \\" nV/sqrt(Hz)\\"
+echo \\"=======================================================\\"
+
+.endc
+"
+}

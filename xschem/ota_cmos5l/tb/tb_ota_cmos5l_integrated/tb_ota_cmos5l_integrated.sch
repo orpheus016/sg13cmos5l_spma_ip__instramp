@@ -437,8 +437,8 @@ spice_ignore=true}
 N 160 -370 160 -340 {lab=VDD
 spice_ignore=true}
 N 730 -930 730 -920 {lab=VDD}
-N 810 -930 810 -910 {lab=VDD}
-N 810 -850 810 -830 {lab=I_B}
+N 810 -930 810 -910 {lab=I_B}
+N 810 -850 810 -830 {lab=VSS}
 N 60 -250 80 -250 {lab=VINP1
 spice_ignore=true}
 N 240 -360 240 -340 {lab=I_B
@@ -452,23 +452,19 @@ spice_ignore=true}
 N 150 -560 150 -540 {lab=OUT1
 spice_ignore=true}
 N 620 -590 620 -570 {lab=VINP2
-spice_ignore=true}
+}
 N 620 -510 620 -490 {lab=VSS
-spice_ignore=true}
+}
 N 700 -510 700 -500 {lab=VSS
-spice_ignore=true}
+}
 N 700 -590 700 -570 {lab=OUT2
-spice_ignore=true}
+}
 N 40 -670 40 -650 {lab=VINP1
 spice_ignore=true}
-N 240 -570 240 -550 {lab=OUT1
-spice_ignore=true}
-N 240 -490 240 -460 {lab=VSS
-spice_ignore=true}
 N 810 -540 830 -540 {lab=OUT2
-spice_ignore=true}
+}
 N 990 -540 1010 -540 {lab=VINN2
-spice_ignore=true}
+}
 N 1340 -580 1340 -560 {lab=VINP3
 spice_ignore=true}
 N 1340 -500 1340 -480 {lab=VSS
@@ -487,17 +483,17 @@ spice_ignore=true}
 N 900 -880 900 -850 {lab=0
 spice_ignore=true}
 N 840 -370 840 -340 {lab=VSS
-spice_ignore=true}
-N 960 -210 980 -210 {lab=OUT1
-spice_ignore=true}
+}
+N 960 -210 980 -210 {lab=OUT2
+}
 N 800 -370 800 -340 {lab=VDD
-spice_ignore=true}
-N 700 -250 720 -250 {lab=VINP1
-spice_ignore=true}
+}
+N 700 -250 720 -250 {lab=VINP2
+}
 N 880 -360 880 -340 {lab=I_B
-spice_ignore=true}
-N 700 -170 720 -170 {lab=VINN1
-spice_ignore=true}
+}
+N 700 -170 720 -170 {lab=VINN2
+}
 N 1350 -180 1370 -180 {lab=VINP3
 spice_ignore=true}
 N 1360 -100 1370 -100 {lab=OUT3
@@ -506,9 +502,7 @@ N 1360 -360 1360 -100 {lab=OUT3
 spice_ignore=true}
 N 1450 -300 1450 -270 {lab=VDD
 spice_ignore=true}
-N 1490 -300 1490 -290 {lab=VSS
-spice_ignore=true}
-N 1490 -290 1490 -270 {lab=VSS
+N 1490 -300 1490 -270 {lab=VSS
 spice_ignore=true}
 N 1530 -290 1530 -270 {lab=I_B
 spice_ignore=true}
@@ -518,11 +512,11 @@ N 1650 -360 1650 -140 {lab=OUT3
 spice_ignore=true}
 N 1660 -140 1700 -140 {lab=OUT3
 spice_ignore=true}
-N 1610 -140 1620 -140 {lab=OUT3
+N 1610 -140 1650 -140 {lab=OUT3
 spice_ignore=true}
 N 1660 -140 1660 -110 {lab=OUT3
 spice_ignore=true}
-N 1620 -140 1660 -140 {lab=OUT3
+N 1650 -140 1660 -140 {lab=OUT3
 spice_ignore=true}
 C {lab_pin.sym} 60 -170 0 0 {name=p2 sig_type=std_logic lab=VINN1
 spice_ignore=true}
@@ -546,7 +540,7 @@ only_toplevel=false
 value=".param temp=27
 .param cl=3p
 .param ib=1.4u
-.param vdd=1.5
+.param vdd=1.2
 .param vicm=vdd/2
 .param vid=0
 "
@@ -559,10 +553,9 @@ C {gnd.sym} 730 -840 0 0 {name=l1 lab=0}
 C {vdd.sym} 160 -370 0 0 {name=l2 lab=VDD
 spice_ignore=true}
 C {vdd.sym} 730 -930 0 0 {name=l3 lab=VDD}
-C {vdd.sym} 810 -930 0 0 {name=l4 lab=VDD}
 C {lab_pin.sym} 240 -360 1 0 {name=p4 sig_type=std_logic lab=I_B
 spice_ignore=true}
-C {lab_pin.sym} 810 -830 3 0 {name=p7 sig_type=std_logic lab=I_B}
+C {lab_pin.sym} 810 -930 1 0 {name=p7 sig_type=std_logic lab=I_B}
 C {lab_pin.sym} 40 -670 1 0 {name=p9 sig_type=std_logic lab=VINP1
 spice_ignore=true}
 C {lab_pin.sym} 50 -560 2 0 {name=p10 sig_type=std_logic lab=VINN1
@@ -728,21 +721,21 @@ spice_ignore=true}
 C {lab_pin.sym} 40 -450 3 0 {name=p8 sig_type=std_logic lab=VSS
 spice_ignore=true}
 C {vsource.sym} 620 -540 0 0 {name=V6 value=\{vicm\} savecurrent=false
-spice_ignore=true}
+}
 C {lab_pin.sym} 620 -590 1 0 {name=p20 sig_type=std_logic lab=VINP2
-spice_ignore=true}
+}
 C {lab_pin.sym} 620 -490 3 0 {name=p21 sig_type=std_logic lab=VSS
-spice_ignore=true}
+}
 C {capa.sym} 700 -540 0 0 {name=C3
 m=1
 value=\{cl\}
 footprint=1206
 device="ceramic capacitor"
-spice_ignore=true}
+}
 C {lab_pin.sym} 700 -500 3 0 {name=p25 sig_type=std_logic lab=VSS
-spice_ignore=true}
+}
 C {lab_pin.sym} 700 -590 1 0 {name=p26 sig_type=std_logic lab=OUT2
-spice_ignore=true}
+}
 C {vsource.sym} 40 -620 0 0 {name=V4 value=\{vid\} savecurrent=false
 spice_ignore=true}
 C {simulator_commands.sym} 1100 -570 0 0 {name=AC
@@ -801,7 +794,7 @@ echo \\" GBW Product (PM): \\" $&gbw_calc \\" Hz\\"
 plot re(loop_mag) re(loop_ph) xlog
 
 .endc"
-spice_ignore=true}
+}
 C {simulator_commands.sym} 1100 -390 0 0 {name=Noise
 simulator=ngspice
 only_toplevel=false 
@@ -862,17 +855,10 @@ echo \\"=======================================================\\"
 .endc
 "
 spice_ignore=true}
-C {vsource.sym} 240 -520 0 0 {name=V7 value=\{vicm\} savecurrent=false
-spice_ignore=true}
-C {lab_pin.sym} 240 -570 1 0 {name=p11 sig_type=std_logic lab=OUT1
-spice_ignore=true}
-C {lab_pin.sym} 240 -460 3 0 {name=p27 sig_type=std_logic lab=VSS
-spice_ignore=true}
-C {loopgainprobe.sym} 910 -540 0 0 {spice_ignore=true}
 C {lab_pin.sym} 810 -540 0 0 {name=p19 sig_type=std_logic lab=OUT2
-spice_ignore=true}
+}
 C {lab_pin.sym} 1010 -540 2 0 {name=p22 sig_type=std_logic lab=VINN2
-spice_ignore=true}
+}
 C {simulator_commands_shown.sym} 870 -1220 0 0 {name=loopgainprobe
 simulator=ngspice
 only_toplevel=false
@@ -992,9 +978,9 @@ shell mkdir -p result
 
 * LARGE-SIGNAL STEP RESPONSE (SLEW RATE & PROPAGATION DELAYS)
 * Stimulus: Pulse swing 0.2 V to 1.0 V (Delta V = 0.8 V, Vcm = 0.6 V)
-alter @v5[pulse] = [ 0.2 1.0 20n 1n 1n 1u 2.5u ]
+alter @v5[pulse] = [ 0.2 1.0 20n 1n 1n 2u 5u ]
 
-tran 0.2n 2.5u
+tran 0.2n 5u
 run
 
 let v_inl  = v(vinp3)
@@ -1277,13 +1263,13 @@ shell mkdir -p result
 
 * 2. Active process corner configuration (Update both per corner run)
 *    Available corners: \\"tt\\", \\"ss\\", \\"ff\\", \\"sf\\", \\"fs\\"
-set corner_name = \\"fs\\"
-set raw_file    = \\"./result/tb_cg_ota_pvt_fs.raw\\"
-set txt_file    = \\"./result/tb_cg_ota_pvt.txt\\"
+set corner_name = \\"tt\\"
+set raw_file    = \\"../../../../../simulations/result/tb_cg_ota_pvt_tt.raw\\"
+set txt_file    = \\"../../../../../foss/designs/simulations/result/tb_cg_ota_pvt.txt\\"
 
 * 3. Initialize table header safely without ngspice redirection truncation
 *    Uses python to create the file and header ONLY if it does not exist yet
-shell python3 -c 'import os; f=\\"./result/tb_cg_ota_pvt_all.txt\\"; os.path.exists(f) or open(f,\\"w\\").write(\\"==========================================================================================\\\\n Corner | Temp(C) | VDD(V) | Vicm(V) | Av0(dB)  | Av0(V/V)  | UGBW(MHz) | PM(deg)  | GM(dB)   \\\\n==========================================================================================\\\\n\\")'
+shell python3 -c 'import os; f=\\"foss/designs/simulations/result/tb_cg_ota_pvt_all.txt\\"; os.path.exists(f) or open(f,\\"w\\").write(\\"==========================================================================================\\\\n Corner | Temp(C) | VDD(V) | Vicm(V) | Av0(dB)  | Av0(V/V)  | UGBW(MHz) | PM(deg)  | GM(dB)   \\\\n==========================================================================================\\\\n\\")'
 
 * Enable sequential dataset appending for the per-corner rawfile
 set appendwrite
@@ -1377,7 +1363,7 @@ foreach c_temp -40 27 125
 
     * Export Bode curves to dedicated per-corner rawfile
     write $raw_file loop_magnitude loop_phase
-    write ./result/tb_cg_ota_pvt_all.raw loop_magnitude loop_phase
+    write ../../../../../simulations/result/tb_cg_ota_pvt_all.raw loop_magnitude loop_phase
   end
 end
 
@@ -1542,21 +1528,24 @@ C {lab_pin.sym} 900 -970 2 0 {name=p23 sig_type=std_logic lab=OUT3
 spice_ignore=true}
 C {gnd.sym} 900 -850 0 0 {name=l8 lab=0
 spice_ignore=true}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 200 -210 0 0 {name=x4}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 200 -210 0 0 {name=x4
+spice_ignore=true}
 C {lab_pin.sym} 700 -170 0 0 {name=p14 sig_type=std_logic lab=VINN2
-spice_ignore=true}
+}
 C {lab_pin.sym} 840 -370 1 0 {name=p15 sig_type=std_logic lab=VSS
-spice_ignore=true}
+}
 C {lab_pin.sym} 700 -250 0 0 {name=p16 sig_type=std_logic lab=VINP2
-spice_ignore=true}
+}
 C {lab_pin.sym} 980 -210 2 0 {name=p17 sig_type=std_logic lab=OUT2
-spice_ignore=true}
+}
 C {vdd.sym} 800 -370 0 0 {name=l5 lab=VDD
-spice_ignore=true}
+}
 C {lab_pin.sym} 880 -360 1 0 {name=p18 sig_type=std_logic lab=I_B
+}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 840 -210 0 0 {name=x1
+}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 1490 -140 0 0 {name=x2
 spice_ignore=true}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 840 -210 0 0 {name=x1}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 1490 -140 0 0 {name=x2}
 C {lab_pin.sym} 1350 -180 0 0 {name=p33 sig_type=std_logic lab=VINP3
 spice_ignore=true}
 C {vdd.sym} 1450 -300 0 0 {name=l9 lab=VDD
@@ -1575,3 +1564,19 @@ device="ceramic capacitor"
 spice_ignore=true}
 C {lab_pin.sym} 1660 -50 3 0 {name=p37 sig_type=std_logic lab=VSS
 spice_ignore=true}
+C {simulator_commands_shown.sym} 340 -1190 0 0 {name=OTA_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+"
+      }
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/tb/tb_cg_ota/loopgainprobe.sym} 910 -540 0 0 {name=X999 device=loopgainprobe
+}
+C {lab_pin.sym} 810 -830 3 0 {name=p11 sig_type=std_logic lab=VSS
+}
