@@ -16,7 +16,7 @@
 ## Metrics
 - Offset: 118.4uV
 - Closed Loop Gain: 18.0645dB
-- Gain Offset: 0.52%
+- Gain Offset: 0.03%
 
 ## Plots
 
