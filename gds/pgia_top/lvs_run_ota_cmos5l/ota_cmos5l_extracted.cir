@@ -1,0 +1,23 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 13/10/2026 12:09
+
+.SUBCKT ota_cmos5l IBIAS VDD VINN VINP VOUT VSS
+M$1 VSS \$74 VOUT VSS sg13_lv_nmos L=3u W=20u AS=4.65p AD=4.55p PS=26.86u
++ PD=26.82u rfmode=0
+M$5 VSS \$73 \$73 VSS sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p PS=16.06u
++ PD=16.1u rfmode=0
+M$7 VSS \$73 \$74 VSS sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p PS=16.1u
++ PD=16.06u rfmode=0
+M$9 \$182 VINN \$73 VDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p PS=26.82u
++ PD=26.82u rfmode=0
+M$13 \$182 VINP \$74 VDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p PS=26.82u
++ PD=26.82u rfmode=0
+M$17 IBIAS IBIAS VDD VDD sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$18 \$182 IBIAS VDD VDD sg13_lv_pmos L=0.15u W=0.6u AS=0.402p AD=0.618p
++ PS=5.36u PD=6.8u rfmode=0
+M$22 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15u W=1.2u AS=0.804p AD=1.236p
++ PS=10.72u PD=13.6u rfmode=0
+R$30 \$74 \$94 VSS rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+C$31 \$94 VOUT cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$35 VOUT \$94 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+.ENDS ota_cmos5l

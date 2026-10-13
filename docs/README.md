@@ -7,6 +7,7 @@
 | [cace_ci/STATUS.md](cace_ci/STATUS.md) | CACE / CI roadmap: what is done, what is not |
 | [cace_ci/phase-1-ota-local.md](cace_ci/phase-1-ota-local.md) | Notes and gotchas collected while building the OTA flow |
 | [cace_ci/00_overview.md](cace_ci/00_overview.md) | CACE / CI architecture overview |
+| [LVS guide](#lvs-guide-klayout) (below) | Layout vs schematic with KLayout: GUI loop, `scripts/run_lvs.sh`, pitfalls |
 
 ---
 
@@ -230,3 +231,106 @@ Assumptions in the script: corner names `tt/ss/ff/sf/fs` (+ `_mismatch` in MC), 
 ## 9. CI
 
 `.github/workflows/cace.yml` runs `scripts/run_cace.sh <cell>` for every entry of its `matrix.cell` on push and pull request inside the iic-osic-tools container, fails the job on a spec violation and uploads `docs/<cell>/cace` and the CACE logs as an artifact. It has **not been run on GitHub yet** (see Phase 2 in [cace_ci/STATUS.md](cace_ci/STATUS.md)); committing the regenerated report from CI is a later item.
+
+---
+
+# LVS guide (KLayout)
+
+How to check that a layout matches its xschem schematic, with the IHP SG13CMOS5L KLayout LVS deck. Everything is done from KLayout; `scripts/run_lvs.sh` does the same from a terminal and is the fastest way to find out *why* a run fails.
+Worked example: **`ota_cmos5l`** (`gds/pgia_top/ota_cmos5l.gds` vs `xschem/ota_cmos5l/ota_cmos5l.sch`).
+
+```
+xschem/<cell>/<cell>.sch               schematic (pins = iopin/ipin, symbol type subcircuit)
+netlist/<cell>/lvs/<cell>.spice        LVS netlist generated from it   (git-ignored)
+gds/<dir>/<cell>.gds                   layout, top cell named <cell>
+scripts/run_lvs.sh <cell>              netlist -> label check -> LVS -> readable report
+scripts/lvs_tools.py                   the helpers it uses (netlist-fix | labels | report)
+runs/lvs/<cell>/                       <cell>.lvsdb, <cell>_extracted.cir, logs         (git-ignored)
+```
+
+## L1. The three things LVS needs to agree on
+
+1. **Top cell name = schematic `.subckt` name** (case does not matter, KLayout upper-cases the schematic side). Otherwise: `Can't find a schematic counterpart for the top cell`.
+2. **A schematic netlist in LVS form** (section L2), not the simulation netlist.
+3. **Net names in the layout as text labels on the layer the deck reads** (section L3). Without them the extracted subckt has no ports and every net is called `$12`.
+
+## L2. Schematic side: make an LVS netlist
+
+A simulation netlist (what CACE / the testbenches use) has `**.subckt` commented out and `X...` device lines. KLayout needs the netlist the PDK symbols produce with their `lvs_format` attribute (`M...`, `R... $SUB=`, `C...`) inside a real `.subckt`.
+
+- **Terminal:** `scripts/run_lvs.sh <cell> --netlist-only` writes `netlist/<cell>/lvs/<cell>.spice`.
+- **xschem GUI:** menu *Simulation → LVS → "LVS netlist + Top level is a .subckt"* (tick it), then *Netlist*. Do this with `PDK=ihp-sg13cmos5l`; the image default is `ihp-sg13g2`, with which every device comes out as `IS MISSING`.
+- The script also moves `.param` lines from the user-code block **inside** the `.subckt` (params after the devices make the KLayout reader crash with `TypeError ... NetlistSpiceReaderDelegate::element`) and drops `.save`.
+
+Schematic hygiene that LVS cares about:
+
+- Every external net is an `iopin`/`ipin`/`opin`. Their names become the subckt ports and must be the same as the layout labels (case-sensitive).
+- No measurement-only parts in the signal path (ammeters / `vsource 0` probes become extra devices or extra nets). Put them in the testbench.
+- Use one spelling per net (`vdd` and `VDD` on one sheet are the same net for xschem but are a warning, and a different net for you later).
+- Parameters used in `w=`, `l=`, `m=` must be defined (`.param` in the user-code block is fine). Dummy and bias devices count: LVS sees every transistor.
+
+## L3. Layout side: label the nets on the right layer
+
+The deck reads net names **only** from text on `<layer>/25`:
+
+| Metal | Label layer | | Metal | Label layer |
+|---|---|---|---|---|
+| Metal1 | `8/25` | | Metal4 | `50/25` |
+| Metal2 | `10/25` | | TopMetal1 | `126/25` |
+| Metal3 | `30/25` | | nwell | `31/25` |
+
+Text on the pin layer (`30/2`, `50/2`) or on drawing (`8/0`, `30/0`) is **ignored**. Put the label on the `/25` layer, on top of a shape of that same metal that belongs to the net, at the top cell. Keep the pin-purpose shapes if you use them for P&R; they do not hurt.
+`scripts/run_lvs.sh` checks this first and tells you which port has no label or a label on the wrong layer; `--fix-labels` runs on a scratch copy with the labels moved so you can see the rest of the result before fixing them in KLayout.
+
+## L4. Running LVS in KLayout (the loop you will use)
+
+One-time: KLayout must use the SG13CMOS5L technology (the PDK menu *SG13CMOS5L PDK* has to exist; start with `klayout -l /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/sg13cmos5l.lyp <gds>` or pick the tech in the File-open dialog).
+
+1. Open the layout (editable mode `-e` if you want to fix things in the same session).
+2. *SG13CMOS5L PDK → SG13CMOS5L LVS Options* (settings are kept in `~/.ihp_pdk/ihp_sg13cmos5l_lvs_options.yml`):
+   - **Top Cell:** `<cell>` (empty = the cell active in the view)
+   - **Netlist Path:** `.../netlist/<cell>/lvs/<cell>.spice` (from L2). Leave *Layout Netlist Path* empty, the extraction-only checkbox off (with an empty netlist path the macro silently switches to extraction only and nothing is compared).
+   - **Output Run Directory** (*Advanced Settings* tab, *Runtime*): `../../runs/lvs/%top_cell%` (relative paths are resolved against the GDS folder, `%top_cell%` is replaced); otherwise every run creates a new `lvs_run_<cell>_<timestamp>` next to the GDS.
+   - Leave *Ignore Top-Port Mismatches* **off**; it hides exactly the missing-label problem.
+3. **Save the layout (Ctrl+S).** The macro hands the file on disk to `run_lvs.py`, not the unsaved view.
+4. *SG13CMOS5L PDK → Run Klayout LVS*. A log window shows progress; at the end the result is loaded and the **Netlist Browser** opens on top of the layout view.
+5. Fix, save, run again (2-3 s for the OTA).
+
+Reading the Netlist Browser: the left tree lists circuits, then Pins / Nets / Devices as *layout ⟷ schematic* pairs. The icons tell match / matched-with-warning (parameter differences) / mismatch or no partner. Clicking a net or device highlights its shapes in the layout view, which is how you find a short: select the suspicious net (e.g. `VDD`) and look at which shapes light up. Entries that exist only on the schematic side (empty layout column) are nets the layout merged into another one, or left open.
+
+Terminal equivalent, handy when a run fails before there is anything to browse, and for CI later:
+
+```bash
+scripts/run_lvs.sh ota_cmos5l                  # prints per device / per net status with layout coordinates
+scripts/run_lvs.sh ota_cmos5l --fix-labels     # same, labels temporarily copied to the /25 layers
+scripts/run_lvs.sh ota_cmos5l --view           # afterwards open KLayout with the result loaded
+scripts/run_lvs.sh <cell> --gds gds/x/y.gds --top <topcell>   # GDS in another folder / other top name
+scripts/run_lvs.sh <cell> -- --combine_devices # everything after -- goes to run_lvs.py
+```
+
+Exit code 0 = match, 1 = mismatch, 2 = setup problem.
+
+## L5. Reading a failure
+
+`scripts/run_lvs.sh` output on a mismatch lists every layout device (with its position in µm, so you can find them in the layout view) next to its schematic partner. Typical patterns:
+
+| What you see | Meaning |
+|---|---|
+| `ports layout: (none ...)` and nets named `$12` | no labels on `/25` layers (L3) |
+| `Can't find a schematic counterpart for the top cell` | netlist without `.subckt` (L2), or top cell name differs |
+| a net listed as *only in schematic* and 2-3 devices `Mismatch` around it | that net is **shorted** to another (or open) in the layout; the devices on the listed coordinates are the ones touching it |
+| almost every net `Mismatch` although the device list looks right | one short/open propagates to all nets that touch the affected devices; find that one first (the net *only in schematic*, or the device whose terminals sit on the wrong net in `<cell>_extracted.cir`) |
+| device `MatchWithWarning` | topology fine, parameters differ (`w`, `l`, `m`, cap area) |
+| a MOM cap is two devices in the layout (`m=4` and `m=5`) | the fingers are drawn with opposite orientation; KLayout does not merge them; redraw as one orientation or mirror it in the schematic |
+| `TypeError ... NetlistSpiceReaderDelegate::element` | `.param` lines after the devices or unresolved `{expr}` (L2) |
+| devices `IS MISSING` in the netlist | wrong `PDK` in the environment (L2) |
+
+Parallel MOS fingers are merged by KLayout (4 x `W=5u` = one `W=20u`), and the schematic's `m=` is multiplied in, so fingers vs. `m` does not matter.
+
+## L6. Checklist for a new cell
+
+- [ ] schematic pins are `iopin`/`ipin`, no probes, params defined; LVS netlist generated (`--netlist-only`)
+- [ ] GDS top cell named `<cell>`; every pin has a label on `<metal>/25`
+- [ ] `scripts/run_lvs.sh <cell>` ends with `RESULT: MATCH` (or the GUI browser is all green)
+- [ ] `runs/lvs/<cell>/<cell>.lvsdb` kept until the layout is signed off; DRC (*SG13CMOS5L PDK → DRC*) is clean as well
+- [ ] if the layout was changed to pass LVS, rerun DRC and, if devices changed, the CACE report
