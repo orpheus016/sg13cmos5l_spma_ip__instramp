@@ -42,7 +42,9 @@ fi
 # 1. LVS netlist from the schematic. Private HOME: xschem rewrites ~/.xschem/recent_files.
 nl_dir="$root/netlist/$cell/lvs"; mkdir -p "$nl_dir"
 raw="$(mktemp -d)"; xhome="$(mktemp -d)"; trap 'rm -rf "$raw" "$xhome"' EXIT
-( cd "$root/xschem/$cell" && HOME="$xhome" xschem -q -n -s -x --rcfile xschemrc --tcl "set lvs_netlist 1" -o "$raw" "$cell.sch" ) >"$raw/xschem.log" 2>&1
+rc="xschemrc"; [ -f "$root/xschem/$cell/xschemrc" ] || rc="$PDK_ROOT/$PDK/libs.tech/xschem/xschemrc"   # cells without their own rc
+# lvs_ignore: parts with the instance attribute lvs_ignore=true (simulation-only resistors, probes) are left out
+( cd "$root/xschem/$cell" && HOME="$xhome" xschem -q -n -s -x --rcfile "$rc" --tcl "set lvs_netlist 1; set lvs_ignore 1" -o "$raw" "$cell.sch" ) >"$raw/xschem.log" 2>&1
 [ -f "$raw/$cell.spice" ] || { echo "run_lvs.sh: xschem produced no netlist"; cat "$raw/xschem.log"; exit 2; }
 if grep -q "IS MISSING" "$raw/$cell.spice"; then
   echo "run_lvs.sh: xschem could not find PDK symbols (IS MISSING). PDK=$PDK PDK_ROOT=$PDK_ROOT"; grep "IS MISSING" "$raw/$cell.spice"; exit 2

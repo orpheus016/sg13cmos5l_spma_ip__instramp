@@ -18,10 +18,13 @@ import sys
 
 
 # ----------------------------------------------------------------------------- netlist
-def subckt_ports(text):
+def subckt_ports(text, name=None):
+    """(name, ports) of the `.subckt` called `name` (default: the first one)."""
     for line in text.splitlines():
         if line.lower().startswith(".subckt"):
             toks = line.split()
+            if name and toks[1].lower() != name.lower():
+                continue
             ports = []
             for t in toks[2:]:
                 if "=" in t:
@@ -46,9 +49,9 @@ def mom_orientation_groups(gds, top, model):
 
     ly = db.Layout()
     ly.read(gds)
-    topc = ly.cell(top)
+    topc = ly.cell(top) or next((c for c in ly.each_cell() if c.name.lower() == top.lower()), None)
     if topc is None:
-        sys.exit(f"netlist-fix: cell '{top}' not in {gds}")
+        return None
     mk = ly.find_layer(*MOM_MARKER[model])
     if mk is None:
         return {}
@@ -98,7 +101,14 @@ def expand_mom_caps(lines, gds, top):
             for i, _, n in mine:
                 plan[i] = [(n, False)]
             continue
-        g = sorted(mom_orientation_groups(gds, top, model).items(), key=lambda kv: (-kv[1], kv[0]))
+        groups = mom_orientation_groups(gds, top, model)
+        if groups is None:
+            print(f"netlist-fix: WARNING no layout cell '{top}' for the {model} in this subckt; "
+                  "keeping the orientation split of the schematic lines (m is still expanded)")
+            for k, (i, _, n) in enumerate(mine):
+                plan[i] = [(n, k % 2 == 1)]
+            continue
+        g = sorted(groups.items(), key=lambda kv: (-kv[1], kv[0]))
         counts = [c for _, c in g]
         if sum(counts) != total:
             sys.exit(f"netlist-fix: schematic has {total} x {model} (sum of m) but the layout has {sum(counts)}")
@@ -132,25 +142,30 @@ def cmd_netlist_fix(args):
     if name is None:
         sys.exit("netlist-fix: no '.subckt' line. The netlist was not generated with lvs_netlist=1 "
                  "(a simulation netlist has '**.subckt' commented out).")
-    out, params, hoisted = [], [], False
+    # Walk the file subckt by subckt: `.param` lines (user code block, usually after the devices) move to just
+    # below their own `.subckt` line, `.save`/stray `.end` are dropped, MoM caps are expanded per subckt.
+    out, block, nparam, nsub, opened = [], None, 0, 0, False
     for line in text.splitlines():
         low = line.lower()
-        if low.startswith(".param"):
-            params.append(line)
+        if low.startswith(".subckt") and block is None:
+            block = {"head": line, "params": [], "body": [], "cell": line.split()[1]}
+            nsub += 1
             continue
-        if low.startswith(".save") or low.startswith(".end") and not low.startswith(".ends"):
+        if block is None:
+            if not (low.startswith(".save") or low.startswith(".end") and not low.startswith(".ends")):
+                out.append(line)
             continue
-        out.append(line)
-        if low.startswith(".subckt") and not hoisted:
-            out.append("*PARAMS_HOISTED")
-            hoisted = True
-    i = out.index("*PARAMS_HOISTED")
-    out[i:i + 1] = params
-    if not any(l.lower().startswith(".ends") for l in out):
-        sys.exit("netlist-fix: no '.ends' line")
-    out = expand_mom_caps(out, args.gds, args.top)
+        if low.startswith(".ends"):
+            body = expand_mom_caps(block["body"], args.gds, block["cell"] if args.gds else None)
+            out += [block["head"]] + block["params"] + body + [line]
+            nparam += len(block["params"])
+            block = None
+        elif low.startswith(".param"):
+            block["params"].append(line)
+        elif not low.startswith(".save"):
+            block["body"].append(line)
     open(args.out, "w").write("\n".join(out) + "\n")
-    print(f"netlist-fix: {args.out}  (subckt {name}, {len(params)} .param lines moved inside)")
+    print(f"netlist-fix: {args.out}  ({nsub} subckt(s), {nparam} .param lines moved inside)")
 
 
 # ----------------------------------------------------------------------------- labels
@@ -161,7 +176,7 @@ TEXT_LAYERS = {8: "Metal1", 10: "Metal2", 30: "Metal3", 50: "Metal4", 67: "Metal
 def cmd_labels(args):
     import klayout.db as db
 
-    _, ports = subckt_ports(open(args.netlist).read())
+    _, ports = subckt_ports(open(args.netlist).read(), args.topcell)
     if not ports:
         sys.exit("labels: no subckt ports found in " + args.netlist)
     ly = db.Layout()

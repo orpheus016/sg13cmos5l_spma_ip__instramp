@@ -265,6 +265,8 @@ A simulation netlist (what CACE / the testbenches use) has `**.subckt` commented
 
 Schematic hygiene that LVS cares about:
 
+- Parts that exist only for simulation and have no layout counterpart (bias/CM resistors such as `10MEG`, probes) get the instance attribute `lvs_ignore=true`; they are dropped from the LVS netlist (the script sets xschem's `lvs_ignore`; in the GUI tick *Simulation → LVS → Set 'lvs_ignore' variable*). Without it LVS reports them as unmatched devices.
+- Hierarchy is fine: the schematic subckts are flattened to match the flat layout; `.param` lines are moved per subckt and MoM caps are expanded per subckt using the layout cell of the same name.
 - Every external net is an `iopin`/`ipin`/`opin`. Their names become the subckt ports and must be the same as the layout labels (case-sensitive).
 - No measurement-only parts in the signal path (ammeters / `vsource 0` probes become extra devices or extra nets). Put them in the testbench.
 - Use one spelling per net (`vdd` and `VDD` on one sheet are the same net for xschem but are a warning, and a different net for you later).
