@@ -69,6 +69,7 @@ N 420 -700 420 -640 {lab=VDD}
 N 510 -160 720 -160 {lab=VSS}
 N 340 -160 510 -160 {lab=VSS}
 N 340 -180 340 -160 {lab=VSS}
+N 660 -360 660 -260 {lab=#net4}
 C {sg13cmos5l_pr/sg13_lv_pmos.sym} 200 -580 0 1 {name=M6
 l=\{lbias\}
 w=\{wbias\}
@@ -172,7 +173,7 @@ mmin=1
 mmax=4
 feed=double
 subblock=0
-m=9
+m=5
 mm_ok=1
 spiceprefix=X
 }
@@ -188,3 +189,15 @@ value=".param temp=27
 .param Cc=2p
 "
       }
+C {sg13cmos5l_pr/cap_cmomi.sym} 690 -360 1 1 {name=C1
+model=cap_cmomi
+w=15e-6
+l=15e-6
+mmin=1
+mmax=4
+feed=double
+subblock=0
+m=4
+mm_ok=1
+spiceprefix=X
+}

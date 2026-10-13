@@ -8,6 +8,7 @@
 | [cace_ci/phase-1-ota-local.md](cace_ci/phase-1-ota-local.md) | Notes and gotchas collected while building the OTA flow |
 | [cace_ci/00_overview.md](cace_ci/00_overview.md) | CACE / CI architecture overview |
 | [LVS guide](#lvs-guide-klayout) (below) | Layout vs schematic with KLayout: GUI loop, `scripts/run_lvs.sh`, pitfalls |
+| [lvs_upstream_issues.md](lvs_upstream_issues.md) | Draft IHP-Open-PDK issues for the MoM-cap LVS limitations (not posted) |
 
 ---
 
@@ -258,7 +259,7 @@ runs/lvs/<cell>/                       <cell>.lvsdb, <cell>_extracted.cir, logs 
 
 A simulation netlist (what CACE / the testbenches use) has `**.subckt` commented out and `X...` device lines. KLayout needs the netlist the PDK symbols produce with their `lvs_format` attribute (`M...`, `R... $SUB=`, `C...`) inside a real `.subckt`.
 
-- **Terminal:** `scripts/run_lvs.sh <cell> --netlist-only` writes `netlist/<cell>/lvs/<cell>.spice`.
+- **Terminal:** `scripts/run_lvs.sh <cell> --netlist-only` (add `--gds <file>` if the GDS is not `gds/*/<cell>.gds`) writes `netlist/<cell>/lvs/<cell>.spice`.
 - **xschem GUI:** menu *Simulation → LVS → "LVS netlist + Top level is a .subckt"* (tick it), then *Netlist*. Do this with `PDK=ihp-sg13cmos5l`; the image default is `ihp-sg13g2`, with which every device comes out as `IS MISSING`.
 - The script also moves `.param` lines from the user-code block **inside** the `.subckt` (params after the devices make the KLayout reader crash with `TypeError ... NetlistSpiceReaderDelegate::element`) and drops `.save`.
 
@@ -321,11 +322,24 @@ Exit code 0 = match, 1 = mismatch, 2 = setup problem.
 | a net listed as *only in schematic* and 2-3 devices `Mismatch` around it | that net is **shorted** to another (or open) in the layout; the devices on the listed coordinates are the ones touching it |
 | almost every net `Mismatch` although the device list looks right | one short/open propagates to all nets that touch the affected devices; find that one first (the net *only in schematic*, or the device whose terminals sit on the wrong net in `<cell>_extracted.cir`) |
 | device `MatchWithWarning` | topology fine, parameters differ (`w`, `l`, `m`, cap area) |
-| a MOM cap is two devices in the layout (`m=4` and `m=5`) | the fingers are drawn with opposite orientation; KLayout does not merge them; redraw as one orientation or mirror it in the schematic |
+| `cap_cmomi` shows as two layout devices (`m=5`, `m=4`) and the nets `VOUT` / the cap node mismatch | known deck limitations, see L5a; handled by `netlist-fix`, regenerate the netlist after moving caps |
+| `expected exactly 2 port regions under its recognition marker, found 8` | the `recog_mom` markers of neighbouring caps touch or overlap; keep a gap between caps. The run **aborts**, see the stale-result row |
+| LVS "still shows the old layout" after a layout change | the run failed before writing a new `.lvsdb` (check the log window / `*.log` for `ERROR`) and the macro opened the older `.lvsdb` that is still in the run directory. Delete the old `.lvsdb` or use a fresh run directory to be sure |
 | `TypeError ... NetlistSpiceReaderDelegate::element` | `.param` lines after the devices or unresolved `{expr}` (L2) |
 | devices `IS MISSING` in the netlist | wrong `PDK` in the environment (L2) |
 
-Parallel MOS fingers are merged by KLayout (4 x `W=5u` = one `W=20u`), and the schematic's `m=` is multiplied in, so fingers vs. `m` does not matter.
+Parallel MOS fingers are merged by KLayout (4 x `W=5u` = one `W=20u`), and the schematic's `m=` is multiplied in, so fingers vs. `m` does not matter. **This does not hold for MoM caps**, see next section.
+
+### L5a. MoM caps (`cap_cmomi`, `cap_cmomf`) with `m > 1`
+
+Two limitations of the IHP deck (present in the 2026.09 image and in IHP-Open-PDK `main` at the time of writing):
+
+1. `custom_reader.lvs` reads `m` (and `A`, `P`) of a capacitor only when the model name contains `mim`. `cap_cmomi` does not, so a schematic `m=9` arrives in KLayout as `m=1` (visible in the `.lvsdb`: schematic device `m = 1.0`).
+2. The layout extractor orders the two cap terminals by geometry, and the parallel-cap combiner only merges caps whose terminals sit on the same nets *in the same order*, although the deck declares the terminals interchangeable. A cap array drawn in two orientations (e.g. a row of `r90` caps and a mirrored row around a shared bus) therefore extracts as two devices (`m=5` and `m=4`), electrically identical.
+
+What `scripts/run_lvs.sh` / `lvs_tools.py netlist-fix` does about it, without touching the schematic or the GDS: every `cap_cmomi`/`cap_cmomf` line with `m=N` is written as N single caps (the deck then combines them again), and the terminal order is taken from the layout's orientation groups. Either keep one schematic cap with `m=9` (script splits it 5+4 as drawn) or draw it as two caps `m=5` / `m=4` like the layout (script maps line to group by size). The total must equal the number of caps in the GDS and the group sizes must be consistent, otherwise the script stops with a message. Connectivity is still fully checked by LVS (a cap wired to the wrong net fails).
+The GUI run uses whatever file is in *Netlist Path*, so after moving or adding caps rerun `scripts/run_lvs.sh <cell> --netlist-only` before *Run Klayout LVS*.
+Keep a gap between neighbouring caps: touching `recog_mom` markers merge and the extraction aborts.
 
 ## L6. Checklist for a new cell
 

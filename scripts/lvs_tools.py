@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Helpers for the SG13CMOS5L KLayout LVS flow (used by scripts/run_lvs.sh, usable on their own).
 
-  lvs_tools.py netlist-fix <in.spice> <out.spice>
-      xschem LVS netlist -> netlist the KLayout reader accepts (.param hoisted into the .subckt, .save dropped)
+  lvs_tools.py netlist-fix <in.spice> <out.spice> [--gds <layout.gds> --top <cell>]
+      xschem LVS netlist -> netlist the KLayout reader accepts (.param hoisted into the .subckt, .save dropped,
+      cap_cmomi/cap_cmomf with m=N written as N single caps, see expand_mom_caps)
   lvs_tools.py labels <layout.gds> <topcell> <netlist.spice> [--write <out.gds>]
       check that every subckt port has a label on a text layer the LVS deck reads (<metal>/25);
       with --write also save a scratch copy of the GDS where the missing ones are copied from the pin/drawing layer
@@ -30,6 +31,101 @@ def subckt_ports(text):
     return None, []
 
 
+# MoM caps. The LVS deck ignores `m` on cap_cmomi/cap_cmomf (custom_reader.lvs only reads it when the model name
+# contains "mim"), and its cap combiner only merges parallel caps whose terminals are on the same nets in the same
+# order, while the extractor orders the two terminals by geometry. So the layout shows one device per orientation group
+# (e.g. m=5 and m=4) and the schematic must be written as the same number of single caps. The deck declares the two
+# terminals interchangeable, so the order is only bookkeeping; the total is checked against the schematic's m.
+MOM_MARKER = {"cap_cmomi": (99, 39), "cap_cmomf": (99, 40)}
+PIN_LAYERS = (8, 10, 30, 50, 67)  # Metal1..5 pin purpose (dt 2): the extractor's terminal ports
+
+
+def mom_orientation_groups(gds, top, model):
+    """{local first-port key: count} for every `model` cap in the layout, following CapMomExtractor's port order."""
+    import klayout.db as db
+
+    ly = db.Layout()
+    ly.read(gds)
+    topc = ly.cell(top)
+    if topc is None:
+        sys.exit(f"netlist-fix: cell '{top}' not in {gds}")
+    mk = ly.find_layer(*MOM_MARKER[model])
+    if mk is None:
+        return {}
+    groups = {}
+    it = db.RecursiveShapeIterator(ly, topc, mk)
+    while not it.at_end():
+        sh = it.shape()
+        trans = it.trans()
+        box = sh.bbox().transformed(trans)
+        ports = []
+        for layer in PIN_LAYERS:
+            li = ly.find_layer(layer, 2)
+            if li is None:
+                continue
+            pit = db.RecursiveShapeIterator(ly, topc, li, box)
+            while not pit.at_end():
+                c = pit.shape().bbox().transformed(pit.trans()).center()
+                if box.contains(c):
+                    ports.append((c.x, c.y, layer))
+                pit.next()
+        if len(ports) != 2:
+            sys.exit(f"netlist-fix: a {model} marker at {box} has {len(ports)} port shapes under it, expected 2")
+        first = sorted(ports)[0]
+        local = trans.inverted() * db.Point(first[0], first[1])
+        key = (local.x, local.y)
+        groups[key] = groups.get(key, 0) + 1
+        it.next()
+    return groups
+
+
+def expand_mom_caps(lines, gds, top):
+    caps = []  # (line index, tokens, n)
+    for i, line in enumerate(lines):
+        tok = line.split()
+        if len(tok) >= 4 and tok[0][0] in "Cc" and tok[3].lower() in MOM_MARKER:
+            m = [t for t in tok[4:] if t.lower().startswith("m=")]
+            caps.append((i, tok, int(float(m[0].split("=", 1)[1])) if m else 1))
+    if not caps:
+        return lines
+
+    # per model: the layout's orientation groups, biggest first (at most two: the cap has two ends)
+    plan = {}  # line index -> [(count, swapped)]
+    for model in sorted({tok[3].lower() for _, tok, _ in caps}):
+        mine = sorted([c for c in caps if c[1][3].lower() == model], key=lambda c: -c[2])
+        total = sum(c[2] for c in mine)
+        if not gds:
+            for i, _, n in mine:
+                plan[i] = [(n, False)]
+            continue
+        g = sorted(mom_orientation_groups(gds, top, model).items(), key=lambda kv: (-kv[1], kv[0]))
+        counts = [c for _, c in g]
+        if sum(counts) != total:
+            sys.exit(f"netlist-fix: schematic has {total} x {model} (sum of m) but the layout has {sum(counts)}")
+        if len(mine) == 1:
+            plan[mine[0][0]] = [(c, k % 2 == 1) for k, c in enumerate(counts)]
+        elif sorted(counts, reverse=True) == [c[2] for c in mine]:
+            # the schematic already split the cap like the layout (e.g. m=5 and m=4): line k <-> group k
+            for k, (i, _, n) in enumerate(mine):
+                plan[i] = [(n, k % 2 == 1)]
+        else:
+            sys.exit(f"netlist-fix: {model} lines in the schematic have m={[c[2] for c in mine]} but the layout caps "
+                     f"fall into orientation groups of {counts}. Make the schematic m values match the groups, or use one line.")
+    out = list(lines)
+    for i, tok, n in caps:
+        rest = [t for t in tok[4:] if not t.lower().startswith("m=")]
+        new, idx = [], 0
+        for cnt, swapped in plan[i]:
+            a, b = (tok[2], tok[1]) if swapped else (tok[1], tok[2])
+            for _ in range(cnt):
+                idx += 1
+                new.append(" ".join([f"{tok[0]}_{idx}", a, b, tok[3]] + rest + ["m=1"]))
+        out[i] = "\n".join(new)
+        desc = "+".join(f"{c}{'(terminals swapped)' if s else ''}" for c, s in plan[i])
+        print(f"netlist-fix: {tok[0]} {tok[3]} m={n} -> {n} single caps ({desc})")
+    return "\n".join(out).split("\n")
+
+
 def cmd_netlist_fix(args):
     text = open(args.inp).read()
     name, _ = subckt_ports(text)
@@ -52,6 +148,7 @@ def cmd_netlist_fix(args):
     out[i:i + 1] = params
     if not any(l.lower().startswith(".ends") for l in out):
         sys.exit("netlist-fix: no '.ends' line")
+    out = expand_mom_caps(out, args.gds, args.top)
     open(args.out, "w").write("\n".join(out) + "\n")
     print(f"netlist-fix: {args.out}  (subckt {name}, {len(params)} .param lines moved inside)")
 
@@ -154,6 +251,15 @@ def cmd_report(args):
             tag = "ok " if dp.status() in good else "!! "
             cls = (a or b).device_class().name
             print(f"   {tag}{(a.expanded_name() if a else '-'):6s} {cls:14s} <-> {(b.expanded_name() if b else '-'):6s} {st(dp.status()):16s} {loc(a) if a else ''}")
+        lnet = l.netlist().circuit_by_name(lay.name) or lay   # the xref's circuit handle does not resolve nets
+        caps = [d for d in lnet.each_device() if "cmom" in d.device_class().name.lower()]
+        if caps:
+            tot = sum(d.parameter("m") for d in caps)
+            def nn(d, tname):
+                net = d.net_for_terminal(d.device_class().terminal_id(tname))
+                return net.expanded_name() if net is not None else "-"
+            parts = ", ".join(f"m={d.parameter('m'):g} {nn(d, 'mim_top')}/{nn(d, 'mim_btm')}" for d in caps)
+            print(f"  MoM caps in layout: {len(caps)} device(s), total m={tot:g}  [{parts}]")
         bad_nets = []
         for n in x.each_net_pair(cp):
             a, b = n.first(), n.second()
@@ -175,7 +281,8 @@ def cmd_report(args):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    p = sub.add_parser("netlist-fix"); p.add_argument("inp"); p.add_argument("out"); p.set_defaults(f=cmd_netlist_fix)
+    p = sub.add_parser("netlist-fix"); p.add_argument("inp"); p.add_argument("out")
+    p.add_argument("--gds"); p.add_argument("--top"); p.set_defaults(f=cmd_netlist_fix)
     p = sub.add_parser("labels"); p.add_argument("gds"); p.add_argument("topcell"); p.add_argument("netlist")
     p.add_argument("--write"); p.set_defaults(f=cmd_labels)
     p = sub.add_parser("report"); p.add_argument("lvsdb"); p.set_defaults(f=cmd_report)

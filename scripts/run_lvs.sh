@@ -3,7 +3,8 @@
 #
 #   --gds <file>      layout (default: the only gds/*/<cell>.gds)
 #   --top <cell>      top cell in the GDS (default: <cell>)
-#   --netlist-only    only write netlist/<cell>/lvs/<cell>.spice (for the KLayout GUI "Netlist Path"), then stop
+#   --netlist-only    only write netlist/<cell>/lvs/<cell>.spice (for the KLayout GUI "Netlist Path"), then stop.
+#                     Rerun it (with --gds if the GDS is not gds/*/<cell>.gds) after moving MoM caps.
 #   --fix-labels      run on a scratch copy of the GDS where missing /25 net labels are copied from the pin/drawing
 #                     layer. The real GDS is never touched; fix the labels in KLayout afterwards.
 #   --view            open KLayout with the GDS and the result database afterwards
@@ -32,10 +33,10 @@ done
 
 sch="$root/xschem/$cell/$cell.sch"
 [ -f "$sch" ] || { echo "run_lvs.sh: $sch not found"; exit 2; }
-if [ -z "$netlist_only" ] && [ -z "$gds" ]; then
+if [ -z "$gds" ]; then
   mapfile -t found < <(ls "$root"/gds/*/"$cell.gds" 2>/dev/null)
-  [ "${#found[@]}" -eq 1 ] || { echo "run_lvs.sh: pass --gds (found ${#found[@]} candidates: ${found[*]:-none})"; exit 2; }
-  gds="${found[0]}"
+  if [ "${#found[@]}" -eq 1 ]; then gds="${found[0]}"
+  elif [ -z "$netlist_only" ]; then echo "run_lvs.sh: pass --gds (found ${#found[@]} candidates: ${found[*]:-none})"; exit 2; fi
 fi
 
 # 1. LVS netlist from the schematic. Private HOME: xschem rewrites ~/.xschem/recent_files.
@@ -46,7 +47,8 @@ raw="$(mktemp -d)"; xhome="$(mktemp -d)"; trap 'rm -rf "$raw" "$xhome"' EXIT
 if grep -q "IS MISSING" "$raw/$cell.spice"; then
   echo "run_lvs.sh: xschem could not find PDK symbols (IS MISSING). PDK=$PDK PDK_ROOT=$PDK_ROOT"; grep "IS MISSING" "$raw/$cell.spice"; exit 2
 fi
-python3 -I "$tools" netlist-fix "$raw/$cell.spice" "$nl_dir/$cell.spice" || exit 2
+gds_args=(); [ -n "$gds" ] && gds_args=(--gds "$gds" --top "$top")   # MoM cap orientation is taken from the layout
+python3 -I "$tools" netlist-fix "$raw/$cell.spice" "$nl_dir/$cell.spice" "${gds_args[@]}" || exit 2
 [ -n "$netlist_only" ] && { echo "run_lvs.sh: use this as 'Netlist Path' in the KLayout LVS options: $nl_dir/$cell.spice"; exit 0; }
 
 # 2. labels
