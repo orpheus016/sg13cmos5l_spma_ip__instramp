@@ -40,11 +40,13 @@ Legend: [x] done · [ ] not yet · [~] in progress. Update at the end of every c
 ## Phase 3 – Centralize OTA params
 - [ ] `xschem/ota_cmos5l/ota_params.spice` (or symbol defaults)
 - [ ] Duplicated `.param` blocks removed; R1/C2 parameterised
+- [ ] Make this scalable for dataset generation and optimization by changing params
 
 ## Phase 3.5 - THD
 - [ ] Add THD testbench on OTA
 
 ## Phase 4 – Other cells
+auto build scaffolding but later move to phase 5 first
 | Cell | yaml | templates | CI |
 |---|---|---|---|
 | ota_cmos5l | [x] | [x] | [ ] |
@@ -60,4 +62,5 @@ Legend: [x] done · [ ] not yet · [~] in progress. Update at the end of every c
 - [ ] `plotly`, `pandas` in `tools/requirements.txt`
 
 ## Phase 6 - Future Usge for Optimization
-- [ ] CACE loop with optimizers or even ANN
+- [ ] CACE loop with optimizers or even ANN check feasibility
+- [ ] Notebook for inverse design with ALIGN and C/ID Optimization, using ANN in the loop for sync and optimize layout (bridging design framework with auto layout generation, scaling to system level)
