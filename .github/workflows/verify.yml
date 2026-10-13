@@ -1,0 +1,83 @@
+# Physical verification on every push / PR: KLayout DRC and LVS (layout vs xschem schematic) per cell.
+# Same container as cace.yml. NOT yet run on GitHub (see docs/cace_ci/STATUS.md); the commands are the ones run locally:
+#   scripts/run_drc.sh <cell>   (exit 0 clean)     scripts/run_lvs.sh <cell>   (exit 0 match)
+name: verify
+
+on:
+  push:
+    paths:
+      - "gds/**"
+      - "xschem/**"
+      - "scripts/run_drc.sh"
+      - "scripts/run_lvs.sh"
+      - "scripts/lvs_tools.py"
+      - ".github/workflows/verify.yml"
+  pull_request:
+    paths:
+      - "gds/**"
+      - "xschem/**"
+      - "scripts/run_drc.sh"
+      - "scripts/run_lvs.sh"
+      - "scripts/lvs_tools.py"
+      - ".github/workflows/verify.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    container:
+      image: hpretl/iic-osic-tools:2026.09
+      options: --user 0
+    strategy:
+      fail-fast: false
+      matrix:
+        cell: [ota_cmos5l, instramp_cmos5l]    # needs gds/*/<cell>.gds and xschem/<cell>/<cell>.sch
+    env:
+      PDK: ihp-sg13cmos5l
+      PDK_ROOT: /foss/pdks
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make the absolute symbol paths in the schematics resolve
+        # instramp_cmos5l.sch references /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+        # (verified: from any other path xschem reports 'ota_cmos5l IS MISSING'). Proper fix: relative references.
+        run: |
+          mkdir -p /foss/designs
+          ln -sfn "$GITHUB_WORKSPACE" /foss/designs/sg13cmos5l_spma_ip__instramp
+
+      - name: DRC ${{ matrix.cell }}
+        id: drc
+        continue-on-error: true
+        run: scripts/run_drc.sh ${{ matrix.cell }} | tee drc.txt
+
+      - name: LVS ${{ matrix.cell }}
+        id: lvs
+        continue-on-error: true
+        run: scripts/run_lvs.sh ${{ matrix.cell }} | tee lvs.txt
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## ${{ matrix.cell }}"
+            echo "### DRC (${{ steps.drc.outcome }})"; echo '```'; tail -20 drc.txt; echo '```'
+            echo "### LVS (${{ steps.lvs.outcome }})"; echo '```'; tail -40 lvs.txt; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-${{ matrix.cell }}
+          path: |
+            runs/drc/${{ matrix.cell }}
+            runs/lvs/${{ matrix.cell }}
+            netlist/${{ matrix.cell }}/lvs
+          if-no-files-found: warn
+
+      - name: Fail on DRC / LVS errors
+        if: steps.drc.outcome == 'failure' || steps.lvs.outcome == 'failure'
+        run: exit 1

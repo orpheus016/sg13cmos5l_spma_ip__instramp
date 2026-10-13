@@ -1,0 +1,13 @@
+#!/bin/sh
+# Wrapper put first on PATH by scripts/run_cace.sh / run_postlayout.sh: every xschem call gets its own throw-away HOME.
+# xschem rewrites ~/.xschem/recent_files on every start; with 16 CACE jobs sharing one HOME the file is corrupted by
+# interleaved writes and later instances die with "Tcl_AppInit() error ... (error code -11)". The project / PDK
+# xschemrc are passed explicitly by CACE, so nothing is lost with an empty HOME.
+here="$(cd "$(dirname "$0")" && pwd)"
+real="$(PATH="$(printf %s "$PATH" | tr : "\n" | grep -vxF "$here" | paste -sd:)" command -v xschem)"
+[ -n "$real" ] || { echo "xschem wrapper: no real xschem on PATH" >&2; exit 127; }
+h="$(mktemp -d)"
+HOME="$h" "$real" "$@"
+rc=$?
+rm -rf "$h"
+exit $rc

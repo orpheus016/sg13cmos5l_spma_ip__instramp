@@ -156,12 +156,6 @@ C {simulator_commands_shown.sym} 1080 -620 0 0 {name=OTA_Params
 simulator=ngspice
 only_toplevel=false
 value=".param temp=27
-.param lbias=0.15u wbias=0.15u
-.param m6=1 m7=4 m8=8
-.param linpair=3u winpair=20u
-.param lload=5u wload=10u
-.param lcs=3u wcs=20u
-.param Cc=2p
 "
       }
 C {isource.sym} 210 -430 0 0 {name=I1 value=\{ib\}}

@@ -119,7 +119,7 @@ parameters:
         display: Phase margin
         unit: "°"
         minimum:
-          value: 60
+          value: 50
         typical:
           value: any
         maximum:

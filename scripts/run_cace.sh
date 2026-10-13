@@ -10,6 +10,11 @@ cell="${1:?usage: run_cace.sh <cell> [cace args]}"; shift || true
 root="$(cd "$(dirname "$0")/.." && pwd)"
 export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
 
+# Headless: with DISPLAY set every parallel xschem first tries the X server ("Authorization required ...") and some of them
+# segfault (error code -11, "tran_large.spice: No such file"). Verified: 3/3 full OTA runs clean without DISPLAY, flaky with it.
+unset DISPLAY
+export PATH="$root/scripts/bin:$PATH"   # xschem wrapper: one HOME per call (see scripts/bin/xschem)
+
 # CACE starts one headless xschem per simulation, and every xschem rewrites ~/.xschem/recent_files.
 # With 16 in parallel the file gets corrupted (interleaved writes) and the next xschem segfaults, and it also
 # floods the user's real recent-file list. So run CACE with a private HOME (the project/PDK xschemrc are passed

@@ -21,12 +21,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cell: [ota_cmos5l]        # one entry per cace/<cell>.yaml
+        cell: [ota_cmos5l, instramp_cmos5l]        # one entry per cace/<cell>.yaml
     env:
       PDK: ihp-sg13cmos5l
       PDK_ROOT: /foss/pdks
     steps:
       - uses: actions/checkout@v4
+
+      - name: Make the absolute symbol paths in the schematics resolve
+        # instramp_cmos5l.sch references /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+        run: |
+          mkdir -p /foss/designs
+          ln -sfn "$GITHUB_WORKSPACE" /foss/designs/sg13cmos5l_spma_ip__instramp
 
       - name: CACE ${{ matrix.cell }} (PVT + Monte Carlo)
         # exit code 2 = a spec failed or a parameter errored; docs are generated either way

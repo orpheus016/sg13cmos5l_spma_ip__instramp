@@ -1,0 +1,255 @@
+#--------------------------------------------------------------
+# CACE datasheet: instramp_cmos5l (3-OTA instrumentation amplifier, closed-loop gain 8 V/V)
+#--------------------------------------------------------------
+
+name:           instramp_cmos5l
+description:    Three-OTA instrumentation amplifier, closed-loop gain 8 V/V (18.0618 dB)
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         SPMA
+  creation_date:    October 13, 2026
+  license:          MIT
+
+paths:
+  root:             ..
+  schematic:        xschem/instramp_cmos5l
+  netlist:          netlist/instramp_cmos5l
+  documentation:    docs/instramp_cmos5l/cace
+  templates:        cace/templates/instramp_cmos5l
+
+pins:
+  VDD:
+    description: Positive analog power supply
+    type: power
+    direction: inout
+    Vmin: 1.2
+    Vmax: 1.5
+  VSS:
+    description: Analog ground
+    type: ground
+    direction: inout
+  IBIAS:
+    description: Bias current input (shared by the three OTAs, 1.4 uA each)
+    type: signal
+    direction: input
+  VINP:
+    description: Non-inverting input
+    type: signal
+    direction: input
+  VINN:
+    description: Inverting input
+    type: signal
+    direction: input
+  CM:
+    description: Common-mode reference (input resistor divider centre)
+    type: signal
+    direction: input
+  VOUT:
+    description: Output
+    type: signal
+    direction: output
+
+default_conditions:
+  vdd:
+    description: Analog power supply voltage
+    display: Vdd
+    unit: V
+    typical: 1.2
+  vcm:
+    description: Input and CM pin common-mode voltage
+    display: Vcm
+    unit: V
+    typical: 0.6
+  ib:
+    description: Total bias current (three OTAs)
+    display: Ib
+    unit: uA
+    typical: 4.2
+  fin:
+    description: Input sine frequency for THD
+    display: Fin
+    unit: kHz
+    typical: 1
+  vin_amp:
+    description: Differential input sine amplitude (peak) for THD
+    display: Vin amp
+    unit: mV
+    typical: 25
+  cl:
+    description: Output load capacitance
+    display: CLoad
+    unit: pF
+    typical: 3
+  corner:
+    description: Process corner
+    display: Corner
+    typical: tt
+  rcorner:
+    description: Resistor corner (res_<rcorner> section of cornerRES.lib)
+    display: Rcorner
+    typical: typ
+  temperature:
+    description: Ambient temperature
+    display: Temp
+    unit: °C
+    typical: 27
+
+parameters:
+  ac_gain:
+    display: Closed-loop AC gain
+    description: Differential closed-loop gain (VINP ac=1 V, VINN and CM at DC), gain target 8 V/V = 18.0618 dB
+    spec:
+      A_CL:
+        display: Closed-loop gain at 1 Hz
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: 18.0618
+        maximum:
+          value: any
+      A_ERR:
+        display: Gain error vs 8 V/V
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      F3DB:
+        display: -3 dB bandwidth
+        unit: "Hz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      F0DB:
+        display: 0 dB frequency
+        unit: "Hz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PH0:
+        display: Closed-loop phase at 0 dB
+        unit: "°"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: ac.sch
+        format: ascii
+        suffix: .data
+        variables: [A_CL, A_ERR, F3DB, F0DB, PH0]
+    plot:
+      ac_gain_A_CL_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: A_CL
+        limits: auto
+      ac_gain_F3DB_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: F3DB
+        limits: auto
+      ac_gain_A_CL_vs_vdd:
+        type: xyplot
+        xaxis: vdd
+        yaxis: A_CL
+        limits: auto
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  thd:
+    display: Total harmonic distortion
+    description: THD (harmonics 2..9) of the closed-loop output for a sine on VINP, coherent FFT over 8 periods (128 points per period)
+    spec:
+      THD_DB:
+        display: THD
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      THD_PCT:
+        display: THD
+        unit: "%"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      HD2_DB:
+        display: 2nd harmonic
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      HD3_DB:
+        display: 3rd harmonic
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      VO1:
+        display: Output fundamental amplitude
+        unit: "V"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: thd.sch
+        format: ascii
+        suffix: .data
+        variables: [THD_DB, THD_PCT, HD2_DB, HD3_DB, VO1]
+    plot:
+      thd_THD_DB_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: THD_DB
+        limits: auto
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85

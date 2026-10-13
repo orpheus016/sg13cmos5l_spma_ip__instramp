@@ -1,7 +1,7 @@
 # ota_cmos5l - CACE characterisation
 
-- Generated: 2026-10-12 10:02 by `scripts/make_readme.py` from `runs/RUN_2026-10-12_09-59-32`
-- Commit: `64fa8b3` (working tree dirty)
+- Generated: 2026-10-13 19:35 by `scripts/make_readme.py` from `runs/RUN_2026-10-13_19-33-20`
+- Commit: `3b31128` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/ota_cmos5l.yaml`; reproduce with `scripts/run_cace.sh ota_cmos5l`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 
@@ -103,7 +103,7 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 | DC gain              | ngspice              | A0                   |           50 dB |  55.594 dB |          any |  57.873 dB |          any |  59.484 dB |   Pass ✅    |
 | -3 dB frequency      | ngspice              | F3DB                 |             any | 3075.780 Hz |          any | 3697.540 Hz |          any | 4351.160 Hz |   Pass ✅    |
 | Unity-gain frequency | ngspice              | UGF                  |    1000000.0 Hz | 2109530.000 Hz |          any | 2699830.000 Hz |          any | 3445080.000 Hz |   Pass ✅    |
-| Phase margin         | ngspice              | PM                   |            60 ° |   55.635 ° |          any |   60.647 ° |          any |   66.901 ° |   Fail ❌    |
+| Phase margin         | ngspice              | PM                   |            50 ° |   55.635 ° |          any |   60.647 ° |          any |   66.901 ° |   Pass ✅    |
 | Gain margin          | ngspice              | GM                   |             any |  14.131 dB |          any |  17.161 dB |          any |  21.660 dB |   Pass ✅    |
 | Gain-bandwidth product (A0 x f3dB) | ngspice              | GBW                  |             any | 2259320.000 Hz |          any | 2861650.000 Hz |          any | 3610750.000 Hz |   Pass ✅    |
 | Input noise @100 Hz  | ngspice              | IRN_100              |             any | 505.113 nV/rtHz |          any | 610.251 nV/rtHz |          any | 708.507 nV/rtHz |   Pass ✅    |
@@ -114,11 +114,11 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 | Integrated input noise | ngspice              | INOISE_TOT           |             any | 2675.580 uV-rms |          any | 2863.530 uV-rms |          any | 3030.460 uV-rms |   Pass ✅    |
 | Integrated output noise | ngspice              | ONOISE_TOT           |             any | 224.287 uV-rms |          any | 290.224 uV-rms |          any | 357.332 uV-rms |   Pass ✅    |
 | Input offset voltage | ngspice              | VOS                  |           -1 mV |  -0.553 mV |          any |  -0.213 mV |         1 mV |  -0.046 mV |   Pass ✅    |
-| Quiescent current    | ngspice              | IQ                   |             any |  16.008 uA |          any |  18.293 uA |          any |  19.919 uA |   Pass ✅    |
-| Quiescent power      | ngspice              | PWR                  |             any |  19.209 uW |          any |  24.696 uW |        50 uW |  29.878 uW |   Pass ✅    |
+| Quiescent current    | ngspice              | IQ                   |             any |  16.008 uA |          any |  18.300 uA |          any |  19.919 uA |   Pass ✅    |
+| Quiescent power      | ngspice              | PWR                  |             any |  19.209 uW |          any |  24.705 uW |        50 uW |  29.878 uW |   Pass ✅    |
 | Output voltage       | ngspice              | VOUT                 |             any |    0.600 V |          any |    0.600 V |          any |    0.601 V |   Pass ✅    |
-| Gain error (1 - dVout/dVin) | ngspice              | GAIN_ERR             |             any |   -0.218 % |          any |    0.044 % |          any |    0.084 % |   Pass ✅    |
-| Gain tempco (ppm per °C) | ngspice              | GAIN_TC              |             any |  0.249 ppm |          any |  1.301 ppm |          any |  2.043 ppm |   Pass ✅    |
+| Gain error (1 - dVout/dVin) | ngspice              | GAIN_ERR             |             any |   -0.218 % |          any |    0.048 % |          any |    0.084 % |   Pass ✅    |
+| Gain tempco (ppm per °C) | ngspice              | GAIN_TC              |             any |  0.480 ppm |          any |  1.301 ppm |          any |  2.043 ppm |   Pass ✅    |
 | Mean follower gain   | ngspice              | G_MEAN               |             any |  0.999 V/V |          any |  1.000 V/V |          any |  1.002 V/V |   Pass ✅    |
 | CMRR @10 Hz          | ngspice              | CMRR_DC              |             any |  53.977 dB |          any |  64.868 dB |          any |  84.357 dB |   Pass ✅    |
 | CMRR @100 kHz        | ngspice              | CMRR_100K            |             any |  27.317 dB |          any |  29.294 dB |          any |  31.224 dB |   Pass ✅    |
@@ -134,12 +134,12 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 | Overshoot            | ngspice              | OVERSHOOT            |             any |    4.413 % |          any |    9.871 % |          any |   14.731 % |   Pass ✅    |
 | Settling time 1 %    | ngspice              | TS_1PCT              |             any | 100.072 ns |          any | 123.057 ns |          any | 388.205 ns |   Pass ✅    |
 | Settling time 0.1 %  | ngspice              | TS_01PCT             |             any | 102.145 ns |          any | 365.746 ns |          any | 455.678 ns |   Pass ✅    |
-| Positive slew rate   | ngspice              | SR_POS               |             any | 314969.000 V/s |          any | 1945790.000 V/s |          any | 2239030.000 V/s |   Pass ✅    |
-| Negative slew rate   | ngspice              | SR_NEG               |             any | 2151780.000 V/s |          any | 2430660.000 V/s |          any | 2678770.000 V/s |   Pass ✅    |
+| Positive slew rate   | ngspice              | SR_POS               |             any | 314969.000 V/s |          any | 1945800.000 V/s |          any | 2239030.000 V/s |   Pass ✅    |
+| Negative slew rate   | ngspice              | SR_NEG               |             any | 2151750.000 V/s |          any | 2430550.000 V/s |          any | 2678630.000 V/s |   Pass ✅    |
 | Rise time (10-90 %)  | ngspice              | T_RISE               |             any | 214.378 ns |          any | 246.686 ns |          any | 1523.960 ns |   Pass ✅    |
-| Fall time (90-10 %)  | ngspice              | T_FALL               |             any | 179.187 ns |          any | 197.477 ns |          any | 223.071 ns |   Pass ✅    |
-| Propagation delay tpLH | ngspice              | T_PLH                |             any | 153.229 ns |          any | 182.424 ns |          any | 208.093 ns |   Pass ✅    |
-| Propagation delay tpHL | ngspice              | T_PHL                |             any | 121.768 ns |          any | 141.929 ns |          any | 161.907 ns |   Pass ✅    |
+| Fall time (90-10 %)  | ngspice              | T_FALL               |             any | 179.196 ns |          any | 197.486 ns |          any | 223.074 ns |   Pass ✅    |
+| Propagation delay tpLH | ngspice              | T_PLH                |             any | 153.223 ns |          any | 182.425 ns |          any | 208.091 ns |   Pass ✅    |
+| Propagation delay tpHL | ngspice              | T_PHL                |             any | 121.785 ns |          any | 141.944 ns |          any | 161.902 ns |   Pass ✅    |
 | Input offset voltage | ngspice              | VOS                  |             any |  -1.867 mV |          any |  -0.066 mV |          any |   2.551 mV |   Pass ✅    |
 | CMRR @10 Hz          | ngspice              | CMRR_DC              |             any |  48.051 dB |          any |  63.006 dB |          any | 108.395 dB |   Pass ✅    |
 | PSRR @10 Hz          | ngspice              | PSRR_DC              |             any |  46.691 dB |          any |  57.302 dB |          any |  75.805 dB |   Pass ✅    |
@@ -191,7 +191,7 @@ Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the dis
 | A0 [dB] | 55.59 | ff, 1.2 V, 85 C | 59.48 | ss, 1.5 V, -40 C | >= 50 | 0 |
 | F3DB [Hz] | 3076 | ss, 1.2 V, -40 C | 4351 | ff, 1.5 V, 85 C | any | - |
 | UGF [Hz] | 2.11e+06 | ss, 1.2 V, 85 C | 3.445e+06 | ff, 1.5 V, -40 C | >= 1e+06 | 0 |
-| PM [°] | 55.64 | sf, 1.35 V, 85 C | 66.9 | fs, 1.5 V, -40 C | >= 60 | **15/45** |
+| PM [°] | 55.64 | sf, 1.35 V, 85 C | 66.9 | fs, 1.5 V, -40 C | >= 50 | 0 |
 | GM [dB] | 14.13 | sf, 1.2 V, 85 C | 21.66 | fs, 1.5 V, -40 C | any | - |
 | GBW [Hz] | 2.259e+06 | ss, 1.2 V, 85 C | 3.611e+06 | ff, 1.5 V, -40 C | any | - |
 
@@ -230,7 +230,7 @@ Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the dis
 
 | metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
 |---|---|---|---|---|---|---|
-| GAIN_TC [ppm] | 0.2493 | ss, 1.35 V, 27 C | 2.043 | ff, 1.5 V, 27 C | any | - |
+| GAIN_TC [ppm] | 0.4803 | ff, 1.2 V, 27 C | 2.043 | ff, 1.5 V, 27 C | any | - |
 | G_MEAN [V/V] | 0.9993 | ff, 1.5 V, 27 C | 1.002 | ss, 1.2 V, 27 C | any | - |
 
 
@@ -309,24 +309,24 @@ Monte Carlo (local mismatch, 50 seeds x 5 corners x 3 temperatures, vdd 1.2 V)
 
 | corner | T [C] | N | mean | sigma | min | max | mean-3sigma | mean+3sigma |
 |---|---|---|---|---|---|---|---|---|
-| tt | -40 | 50 | -0.1026 | 0.8236 | -1.662 | 2.264 | -2.573 | 2.368 |
-| tt | 27 | 50 | -0.1713 | 0.8004 | -1.641 | 2.195 | -2.573 | 2.23 |
+| tt | -40 | 50 | -0.1025 | 0.8236 | -1.662 | 2.264 | -2.573 | 2.368 |
+| tt | 27 | 50 | -0.1711 | 0.8005 | -1.641 | 2.195 | -2.573 | 2.23 |
 | tt | 85 | 50 | -0.2255 | 0.7806 | -1.608 | 2.15 | -2.567 | 2.116 |
 | ss | -40 | 50 | -0.2751 | 0.7989 | -1.842 | 1.935 | -2.672 | 2.122 |
 | ss | 27 | 50 | -0.3731 | 0.7807 | -1.867 | 1.854 | -2.715 | 1.969 |
 | ss | 85 | 50 | -0.4391 | 0.7617 | -1.862 | 1.795 | -2.724 | 1.846 |
-| ff | -40 | 50 | 0.03537 | 0.8473 | -1.528 | 2.526 | -2.507 | 2.577 |
-| ff | 27 | 50 | -0.01439 | 0.8245 | -1.47 | 2.481 | -2.488 | 2.459 |
-| ff | 85 | 50 | -0.06178 | 0.8209 | -1.421 | 2.551 | -2.524 | 2.401 |
-| sf | -40 | 50 | -0.11 | 0.8264 | -1.652 | 2.288 | -2.589 | 2.369 |
-| sf | 27 | 50 | -0.1795 | 0.8045 | -1.623 | 2.225 | -2.593 | 2.234 |
-| sf | 85 | 50 | -0.2332 | 0.7839 | -1.588 | 2.173 | -2.585 | 2.119 |
-| fs | -40 | 50 | -0.1053 | 0.8172 | -1.689 | 2.208 | -2.557 | 2.346 |
+| ff | -40 | 50 | 0.03684 | 0.8472 | -1.528 | 2.526 | -2.505 | 2.578 |
+| ff | 27 | 50 | -0.01305 | 0.8245 | -1.47 | 2.481 | -2.487 | 2.46 |
+| ff | 85 | 50 | -0.0613 | 0.8209 | -1.421 | 2.551 | -2.524 | 2.401 |
+| sf | -40 | 50 | -0.1095 | 0.8265 | -1.652 | 2.288 | -2.589 | 2.37 |
+| sf | 27 | 50 | -0.179 | 0.8046 | -1.623 | 2.225 | -2.593 | 2.235 |
+| sf | 85 | 50 | -0.2328 | 0.784 | -1.588 | 2.173 | -2.585 | 2.119 |
+| fs | -40 | 50 | -0.1052 | 0.8173 | -1.689 | 2.208 | -2.557 | 2.347 |
 | fs | 27 | 50 | -0.177 | 0.7965 | -1.677 | 2.143 | -2.566 | 2.212 |
 | fs | 85 | 50 | -0.2391 | 0.7797 | -1.654 | 2.114 | -2.578 | 2.1 |
-| **all** | | 750 | -0.1781 | 0.8053 | -1.867 | 2.551 | -2.594 | 2.238 |
+| **all** | | 750 | -0.1778 | 0.8054 | -1.867 | 2.551 | -2.594 | 2.238 |
 
-_pooled sigma 0.8053 mV - 72 % of all samples inside [-1, 1] mV_
+_pooled sigma 0.8054 mV - 72 % of all samples inside [-1, 1] mV_
 
 
 ### mc_cmrr - MC CMRR

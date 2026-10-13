@@ -36,12 +36,6 @@ simulator=ngspice
 only_toplevel=false 
 value="
 .param temp=27
-.param lbias=0.15u wbias=0.15u
-.param m6=1 m7=4 m8=8
-.param linpair=3u winpair=20u
-.param lload=5u wload=10u
-.param lcs=3u wcs=20u
-.param Cc=2p
 .ac DEC
 
 .control
@@ -74,17 +68,6 @@ write tb_instramp_cmos5l_ac.raw
 .endc
 * ngspice commands
 "}
-C {simulator_commands_shown.sym} 1560 -300 0 0 {
-name=Libs_Ngspice
-simulator=ngspice
-only_toplevel=false
-value="
-.lib cornerMOSlv.lib mos_tt
-.lib cornerMOShv.lib mos_tt
-.lib cornerRES.lib res_typ
-.lib cornerDIO.lib dio_tt
-"
-      }
 C {launcher.sym} 1140 -160 0 0 {name=h4
 descr=SimulateNGSPICE
 tclcommand="
@@ -122,7 +105,7 @@ C {lab_wire.sym} 1000 -380 0 0 {name=p4 sig_type=std_logic lab=out}
 C {lab_wire.sym} 180 -480 0 0 {name=p5 sig_type=std_logic lab=ibias}
 C {isource.sym} 180 -410 0 0 {name=I0 value=4.2u}
 C {vdd.sym} 80 -480 0 0 {name=l2 lab=VDD}
-C {vsource.sym} 80 -410 0 0 {name=V1 value=1.5 savecurrent=false}
+C {vsource.sym} 80 -410 0 0 {name=V1 value=1.2 savecurrent=false}
 C {lab_wire.sym} 80 -340 0 0 {name=p7 sig_type=std_logic lab=vss}
 C {vsource.sym} 80 -270 0 0 {name=V2 value=0 savecurrent=false}
 C {gnd.sym} 80 -200 0 0 {name=l3 lab=0}
@@ -138,13 +121,26 @@ xschem setprop rect 2 0 fullxzoom
 "
 }
 C {lab_wire.sym} 280 -480 0 0 {name=p9 sig_type=std_logic lab=vinp}
-C {vsource.sym} 280 -410 0 0 {name=V3 value=0.75 savecurrent=false}
-C {vsource.sym} 380 -410 0 0 {name=V4 value=0.75 savecurrent=false}
+C {vsource.sym} 280 -410 0 0 {name=V3 value=0.6 savecurrent=false}
+C {vsource.sym} 380 -410 0 0 {name=V4 value=0.6 savecurrent=false}
 C {lab_wire.sym} 380 -480 0 0 {name=p12 sig_type=std_logic lab=vinn}
 C {lab_wire.sym} 580 -330 2 0 {name=p13 sig_type=std_logic lab=vinp}
 C {lab_wire.sym} 580 -430 2 0 {name=p14 sig_type=std_logic lab=vinn}
 C {gnd.sym} 960 -260 0 0 {name=l5 lab=0}
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym} 770 -380 0 0 {name=x1}
 C {lab_wire.sym} 580 -380 2 0 {name=p3 sig_type=std_logic lab=vcm}
-C {vsource.sym} 480 -410 0 0 {name=V5 value=0.75 savecurrent=false}
+C {vsource.sym} 480 -410 0 0 {name=V5 value=0.6 savecurrent=false}
 C {lab_wire.sym} 480 -480 0 0 {name=p6 sig_type=std_logic lab=vcm}
+C {simulator_commands_shown.sym} 1540 -640 0 0 {
+name=Libs_Ngspice1
+simulator=ngspice
+only_toplevel=false
+value="
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
+"
+      }
