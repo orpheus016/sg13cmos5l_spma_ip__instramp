@@ -1,0 +1,56 @@
+{
+ "cell": "ota_cmos5l",
+ "generated": "2026-10-14T14:14:26",
+ "commit": "932cd28",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/pgia_top/ota_cmos5l.gds",
+  "sha1": "d27c68f60025"
+ },
+ "schematic": {
+  "path": "xschem/ota_cmos5l/ota_cmos5l.sch",
+  "sha1": "98f97e2e52a6"
+ },
+ "stages": [
+  {
+   "name": "cace",
+   "status": "pass",
+   "seconds": 0,
+   "detail": "reused RUN_2026-10-13_19-33-20: 43 rows, 0 failing"
+  },
+  {
+   "name": "drc",
+   "status": "pass",
+   "seconds": 23,
+   "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level];"
+  },
+  {
+   "name": "lvs",
+   "status": "pass",
+   "seconds": 5,
+   "detail": "RESULT: MATCH"
+  },
+  {
+   "name": "pex",
+   "status": "pass",
+   "seconds": 5,
+   "detail": "ota_cmos5l.c.spice: ports VSS IBIAS VDD VINN VINP VOUT; M=29, Rpoly=1, Rext=0, Cdev=9, Cext=48;ota_cmos5l.rc.spice: ports VSS IBIAS VDD VINN VINP VOUT; X=30, R=269, C=117, Cdev=9;"
+  },
+  {
+   "name": "post_c",
+   "status": "pass",
+   "seconds": 14,
+   "detail": "40 parameters with a % delta, 5 flagged"
+  },
+  {
+   "name": "post_rc",
+   "status": "pass",
+   "seconds": 18,
+   "detail": "40 parameters with a % delta, 7 flagged"
+  }
+ ],
+ "postlayout": {
+  "c": "docs/ota_cmos5l/cace/postlayout.json",
+  "rc": "docs/ota_cmos5l/cace/postlayout_rc.json"
+ }
+}

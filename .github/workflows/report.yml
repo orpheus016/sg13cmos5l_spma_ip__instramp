@@ -1,0 +1,116 @@
+# Interactive HTML report per cell, rebuilt whenever something it depends on changes (schematic, CACE datasheet/templates, layout,
+# registry, scripts, notebook): scripts/flow.sh <cell> (schematic CACE, DRC/antenna, LVS, PEX, post-layout CACE) then
+# scripts/build_report.sh <cell>. Pull requests: profile typ (fast). main: profile pvt. The reports are published to GitHub Pages from main.
+# NOT yet run on GitHub - the same assumptions as cace.yml apply (image tag, PATH inside the container); Pages must be enabled
+# in the repository settings (Source: GitHub Actions). netlist/ is git-ignored, so the netlists themselves are never the trigger:
+# they are generated from xschem/** by the flow.
+name: report
+
+on:
+  push:
+    paths:
+      - "xschem/**"
+      - "cace/**"
+      - "gds/**"
+      - "cells.yaml"
+      - "scripts/**"
+      - "tools/report.ipynb"
+      - ".github/workflows/report.yml"
+  pull_request:
+    paths:
+      - "xschem/**"
+      - "cace/**"
+      - "gds/**"
+      - "cells.yaml"
+      - "scripts/**"
+      - "tools/report.ipynb"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      cells: ${{ steps.m.outputs.cells }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install --quiet pyyaml || true
+      - id: m
+        run: echo "cells=$(python3 scripts/cellinfo.py --matrix cace)" >> "$GITHUB_OUTPUT"
+
+  report:
+    needs: plan
+    runs-on: ubuntu-latest
+    container:
+      image: hpretl/iic-osic-tools:2026.09
+      options: --user 0
+    strategy:
+      fail-fast: false
+      matrix:
+        cell: ${{ fromJSON(needs.plan.outputs.cells) }}
+    env:
+      PDK: ihp-sg13cmos5l
+      PDK_ROOT: /foss/pdks
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make the absolute symbol paths in the schematics resolve
+        run: |
+          mkdir -p /foss/designs
+          ln -sfn "$GITHUB_WORKSPACE" /foss/designs/sg13cmos5l_spma_ip__instramp
+
+      - name: Python deps
+        run: python3 -m pip install --quiet plotly pandas nbformat || true
+
+      - name: Flow ${{ matrix.cell }}
+        id: flow
+        continue-on-error: true      # a failing check must not stop the report: the report shows it
+        run: scripts/flow.sh ${{ matrix.cell }} --profile ${{ github.ref == 'refs/heads/main' && 'pvt' || 'typ' }}
+
+      - name: Build report
+        run: scripts/build_report.sh ${{ matrix.cell }}
+
+      - name: Job summary
+        if: always()
+        run: |
+          { echo "## ${{ matrix.cell }}"; cat docs/${{ matrix.cell }}/status.md 2>/dev/null; } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-${{ matrix.cell }}
+          path: |
+            docs/${{ matrix.cell }}/report.html
+            docs/${{ matrix.cell }}/status.*
+            docs/${{ matrix.cell }}/cace/postlayout*
+            runs/flow/${{ matrix.cell }}
+          if-no-files-found: warn
+
+  pages:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: report
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: report-*
+          path: site
+      - name: Index
+        run: |
+          cd site
+          { echo "<!doctype html><meta charset=utf-8><title>Cell reports</title><h1>Cell reports</h1><ul>"
+            for d in report-*; do c="${d#report-}"; echo "<li><a href='$d/docs/$c/report.html'>$c</a></li>"; done
+            echo "</ul>"; } > index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4

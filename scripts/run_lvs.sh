@@ -34,7 +34,7 @@ done
 sch="$root/xschem/$cell/$cell.sch"
 [ -f "$sch" ] || { echo "run_lvs.sh: $sch not found"; exit 2; }
 if [ -z "$gds" ]; then
-  mapfile -t found < <(ls "$root"/gds/*/"$cell.gds" 2>/dev/null)
+  mapfile -t found < <(python3 -I "$root/scripts/cellinfo.py" "$cell" gds 2>/dev/null || ls "$root"/gds/*/"$cell.gds" 2>/dev/null)
   if [ "${#found[@]}" -eq 1 ]; then gds="${found[0]}"
   elif [ -z "$netlist_only" ]; then echo "run_lvs.sh: pass --gds (found ${#found[@]} candidates: ${found[*]:-none})"; exit 2; fi
 fi

@@ -1,0 +1,809 @@
+{
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-13_19-33-20",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace/ota_cmos5l/RUN_2026-10-14_14-13-55",
+ "schematic_source": "schematic",
+ "postlayout_source": "pex",
+ "threshold_pct": 5.0,
+ "rows": [
+  {
+   "var": "A0",
+   "name": "DC gain",
+   "unit": "dB",
+   "schematic": {
+    "min": 55.594,
+    "typ": 57.873,
+    "max": 59.484,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 57.904,
+    "typ": 57.904,
+    "max": 57.904,
+    "status": "Pass"
+   },
+   "delta": 0.03100000000000591,
+   "delta_pct": 0.05356556598069206,
+   "flag": ""
+  },
+  {
+   "var": "F3DB",
+   "name": "-3 dB frequency",
+   "unit": "Hz",
+   "schematic": {
+    "min": 3075.78,
+    "typ": 3697.54,
+    "max": 4351.16,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 3742.86,
+    "typ": 3742.86,
+    "max": 3742.86,
+    "status": "Pass"
+   },
+   "delta": 45.320000000000164,
+   "delta_pct": 1.2256797762836957,
+   "flag": ""
+  },
+  {
+   "var": "UGF",
+   "name": "Unity-gain frequency",
+   "unit": "Hz",
+   "schematic": {
+    "min": 2109530.0,
+    "typ": 2699830.0,
+    "max": 3445080.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 2732380.0,
+    "typ": 2732380.0,
+    "max": 2732380.0,
+    "status": "Pass"
+   },
+   "delta": 32550.0,
+   "delta_pct": 1.2056314656848766,
+   "flag": ""
+  },
+  {
+   "var": "PM",
+   "name": "Phase margin",
+   "unit": "\u00b0",
+   "schematic": {
+    "min": 55.635,
+    "typ": 60.647,
+    "max": 66.901,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 58.963,
+    "typ": 58.963,
+    "max": 58.963,
+    "status": "Pass"
+   },
+   "delta": -1.6839999999999975,
+   "delta_pct": -2.7767243227199985,
+   "flag": ""
+  },
+  {
+   "var": "GM",
+   "name": "Gain margin",
+   "unit": "dB",
+   "schematic": {
+    "min": 14.131,
+    "typ": 17.161,
+    "max": 21.66,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 16.507,
+    "typ": 16.507,
+    "max": 16.507,
+    "status": "Pass"
+   },
+   "delta": -0.6539999999999999,
+   "delta_pct": -3.810966726880717,
+   "flag": ""
+  },
+  {
+   "var": "GBW",
+   "name": "Gain-bandwidth product (A0 x f3dB)",
+   "unit": "Hz",
+   "schematic": {
+    "min": 2259320.0,
+    "typ": 2861650.0,
+    "max": 3610750.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 2940380.0,
+    "typ": 2940380.0,
+    "max": 2940380.0,
+    "status": "Pass"
+   },
+   "delta": 78730.0,
+   "delta_pct": 2.7512099662781964,
+   "flag": ""
+  },
+  {
+   "var": "IRN_100",
+   "name": "Input noise @100 Hz",
+   "unit": "nV/rtHz",
+   "schematic": {
+    "min": 505.113,
+    "typ": 610.251,
+    "max": 708.507,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 604.307,
+    "typ": 604.307,
+    "max": 604.307,
+    "status": "Pass"
+   },
+   "delta": -5.94399999999996,
+   "delta_pct": -0.9740254419902565,
+   "flag": ""
+  },
+  {
+   "var": "IRN_1K",
+   "name": "Input noise @1 kHz",
+   "unit": "nV/rtHz",
+   "schematic": {
+    "min": 163.111,
+    "typ": 197.006,
+    "max": 228.6,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 195.068,
+    "typ": 195.068,
+    "max": 195.068,
+    "status": "Pass"
+   },
+   "delta": -1.9379999999999882,
+   "delta_pct": -0.9837263839679949,
+   "flag": ""
+  },
+  {
+   "var": "IRN_10K",
+   "name": "Input noise @10 kHz",
+   "unit": "nV/rtHz",
+   "schematic": {
+    "min": 61.334,
+    "typ": 74.134,
+    "max": 86.597,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 73.211,
+    "typ": 73.211,
+    "max": 73.211,
+    "status": "Pass"
+   },
+   "delta": -0.9230000000000018,
+   "delta_pct": -1.2450427604068333,
+   "flag": ""
+  },
+  {
+   "var": "IRN_1M",
+   "name": "Input noise @1 MHz",
+   "unit": "nV/rtHz",
+   "schematic": {
+    "min": 45.977,
+    "typ": 66.977,
+    "max": 98.969,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 66.043,
+    "typ": 66.043,
+    "max": 66.043,
+    "status": "Pass"
+   },
+   "delta": -0.9339999999999975,
+   "delta_pct": -1.3945085626409028,
+   "flag": ""
+  },
+  {
+   "var": "ORN_1K",
+   "name": "Output noise @1 kHz",
+   "unit": "nV/rtHz",
+   "schematic": {
+    "min": 163.121,
+    "typ": 197.268,
+    "max": 228.444,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 194.959,
+    "typ": 194.959,
+    "max": 194.959,
+    "status": "Pass"
+   },
+   "delta": -2.3089999999999975,
+   "delta_pct": -1.1704888780744964,
+   "flag": ""
+  },
+  {
+   "var": "INOISE_TOT",
+   "name": "Integrated input noise",
+   "unit": "uV-rms",
+   "schematic": {
+    "min": 2675.58,
+    "typ": 2863.53,
+    "max": 3030.46,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 2853.9,
+    "typ": 2853.9,
+    "max": 2853.9,
+    "status": "Pass"
+   },
+   "delta": -9.63000000000011,
+   "delta_pct": -0.33629820536191724,
+   "flag": ""
+  },
+  {
+   "var": "ONOISE_TOT",
+   "name": "Integrated output noise",
+   "unit": "uV-rms",
+   "schematic": {
+    "min": 224.287,
+    "typ": 290.224,
+    "max": 357.332,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 291.576,
+    "typ": 291.576,
+    "max": 291.576,
+    "status": "Pass"
+   },
+   "delta": 1.3520000000000323,
+   "delta_pct": 0.4658470698495067,
+   "flag": ""
+  },
+  {
+   "var": "VOS",
+   "name": "Input offset voltage",
+   "unit": "mV",
+   "schematic": {
+    "min": -0.553,
+    "typ": -0.213,
+    "max": -0.046,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -0.73,
+    "typ": -0.73,
+    "max": -0.73,
+    "status": "Pass"
+   },
+   "delta": -0.517,
+   "delta_pct": -242.7230046948357,
+   "flag": "\u0394"
+  },
+  {
+   "var": "IQ",
+   "name": "Quiescent current",
+   "unit": "uA",
+   "schematic": {
+    "min": 16.008,
+    "typ": 18.3,
+    "max": 19.919,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 18.324,
+    "typ": 18.324,
+    "max": 18.324,
+    "status": "Pass"
+   },
+   "delta": 0.02400000000000091,
+   "delta_pct": 0.13114754098361153,
+   "flag": ""
+  },
+  {
+   "var": "PWR",
+   "name": "Quiescent power",
+   "unit": "uW",
+   "schematic": {
+    "min": 19.209,
+    "typ": 24.705,
+    "max": 29.878,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 24.737,
+    "typ": 24.737,
+    "max": 24.737,
+    "status": "Pass"
+   },
+   "delta": 0.03200000000000003,
+   "delta_pct": 0.12952843553936463,
+   "flag": ""
+  },
+  {
+   "var": "VOUT",
+   "name": "Output voltage",
+   "unit": "V",
+   "schematic": {
+    "min": 0.6,
+    "typ": 0.6,
+    "max": 0.601,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.601,
+    "typ": 0.601,
+    "max": 0.601,
+    "status": "Pass"
+   },
+   "delta": 0.0010000000000000009,
+   "delta_pct": 0.16666666666666682,
+   "flag": ""
+  },
+  {
+   "var": "GAIN_ERR",
+   "name": "Gain error (1 - dVout/dVin)",
+   "unit": "%",
+   "schematic": {
+    "min": -0.218,
+    "typ": 0.048,
+    "max": 0.084,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.059,
+    "typ": 0.059,
+    "max": 0.059,
+    "status": "Pass"
+   },
+   "delta": 0.010999999999999996,
+   "delta_pct": 22.916666666666657,
+   "flag": "\u0394"
+  },
+  {
+   "var": "GAIN_TC",
+   "name": "Gain tempco (ppm per \u00b0C)",
+   "unit": "ppm",
+   "schematic": {
+    "min": 0.48,
+    "typ": 1.301,
+    "max": 2.043,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.788,
+    "typ": 0.788,
+    "max": 0.788,
+    "status": "Pass"
+   },
+   "delta": -0.5129999999999999,
+   "delta_pct": -39.431206764027664,
+   "flag": "\u0394"
+  },
+  {
+   "var": "G_MEAN",
+   "name": "Mean follower gain",
+   "unit": "V/V",
+   "schematic": {
+    "min": 0.999,
+    "typ": 1.0,
+    "max": 1.002,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.999,
+    "typ": 0.999,
+    "max": 0.999,
+    "status": "Pass"
+   },
+   "delta": -0.0010000000000000009,
+   "delta_pct": -0.10000000000000009,
+   "flag": ""
+  },
+  {
+   "var": "CMRR_DC",
+   "name": "CMRR @10 Hz",
+   "unit": "dB",
+   "schematic": {
+    "min": 53.977,
+    "typ": 64.868,
+    "max": 84.357,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 65.094,
+    "typ": 65.094,
+    "max": 65.094,
+    "status": "Pass"
+   },
+   "delta": 0.2259999999999991,
+   "delta_pct": 0.3483998273416771,
+   "flag": ""
+  },
+  {
+   "var": "CMRR_100K",
+   "name": "CMRR @100 kHz",
+   "unit": "dB",
+   "schematic": {
+    "min": 27.317,
+    "typ": 29.294,
+    "max": 31.224,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 29.461,
+    "typ": 29.461,
+    "max": 29.461,
+    "status": "Pass"
+   },
+   "delta": 0.16699999999999804,
+   "delta_pct": 0.5700826107735305,
+   "flag": ""
+  },
+  {
+   "var": "CMRR_1M",
+   "name": "CMRR @1 MHz",
+   "unit": "dB",
+   "schematic": {
+    "min": 6.976,
+    "typ": 9.152,
+    "max": 11.236,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 9.28,
+    "typ": 9.28,
+    "max": 9.28,
+    "status": "Pass"
+   },
+   "delta": 0.1280000000000001,
+   "delta_pct": 1.3986013986013999,
+   "flag": ""
+  },
+  {
+   "var": "PSRR_DC",
+   "name": "PSRR @10 Hz",
+   "unit": "dB",
+   "schematic": {
+    "min": 51.479,
+    "typ": 73.886,
+    "max": 105.355,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 76.33,
+    "typ": 76.33,
+    "max": 76.33,
+    "status": "Pass"
+   },
+   "delta": 2.4440000000000026,
+   "delta_pct": 3.3077985003925003,
+   "flag": ""
+  },
+  {
+   "var": "PSRR_100K",
+   "name": "PSRR @100 kHz",
+   "unit": "dB",
+   "schematic": {
+    "min": 51.349,
+    "typ": 62.907,
+    "max": 66.926,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 65.52,
+    "typ": 65.52,
+    "max": 65.52,
+    "status": "Pass"
+   },
+   "delta": 2.6129999999999995,
+   "delta_pct": 4.153750774953502,
+   "flag": ""
+  },
+  {
+   "var": "PSRR_1M",
+   "name": "PSRR @1 MHz",
+   "unit": "dB",
+   "schematic": {
+    "min": 41.813,
+    "typ": 44.032,
+    "max": 48.104,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 44.966,
+    "typ": 44.966,
+    "max": 44.966,
+    "status": "Pass"
+   },
+   "delta": 0.9340000000000046,
+   "delta_pct": 2.1211845930232665,
+   "flag": ""
+  },
+  {
+   "var": "ICMR_MIN",
+   "name": "Lower ICMR bound",
+   "unit": "V",
+   "schematic": {
+    "min": 0.06,
+    "typ": 0.078,
+    "max": 0.096,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.078,
+    "typ": 0.078,
+    "max": 0.078,
+    "status": "Pass"
+   },
+   "delta": 0.0,
+   "delta_pct": 0.0,
+   "flag": ""
+  },
+  {
+   "var": "ICMR_MAX",
+   "name": "Upper ICMR bound",
+   "unit": "V",
+   "schematic": {
+    "min": 0.991,
+    "typ": 1.18,
+    "max": 1.369,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 1.202,
+    "typ": 1.202,
+    "max": 1.202,
+    "status": "Pass"
+   },
+   "delta": 0.02200000000000002,
+   "delta_pct": 1.8644067796610186,
+   "flag": ""
+  },
+  {
+   "var": "ICMR_SPAN",
+   "name": "ICMR span",
+   "unit": "V",
+   "schematic": {
+    "min": 0.9,
+    "typ": 1.103,
+    "max": 1.297,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 1.124,
+    "typ": 1.124,
+    "max": 1.124,
+    "status": "Pass"
+   },
+   "delta": 0.02100000000000013,
+   "delta_pct": 1.9038984587488785,
+   "flag": ""
+  },
+  {
+   "var": "T_DELAY",
+   "name": "Delay (50 %)",
+   "unit": "ns",
+   "schematic": {
+    "min": 50.698,
+    "typ": 67.558,
+    "max": 86.179,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 67.732,
+    "typ": 67.732,
+    "max": 67.732,
+    "status": "Pass"
+   },
+   "delta": 0.17399999999999238,
+   "delta_pct": 0.2575564699961402,
+   "flag": ""
+  },
+  {
+   "var": "T_RISE",
+   "name": "Rise time (10-90 %)",
+   "unit": "ns",
+   "schematic": {
+    "min": 65.799,
+    "typ": 79.484,
+    "max": 94.454,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 77.17,
+    "typ": 77.17,
+    "max": 77.17,
+    "status": "Pass"
+   },
+   "delta": -2.313999999999993,
+   "delta_pct": -2.911277741432229,
+   "flag": ""
+  },
+  {
+   "var": "OVERSHOOT",
+   "name": "Overshoot",
+   "unit": "%",
+   "schematic": {
+    "min": 4.413,
+    "typ": 9.871,
+    "max": 14.731,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 12.253,
+    "typ": 12.253,
+    "max": 12.253,
+    "status": "Pass"
+   },
+   "delta": 2.3819999999999997,
+   "delta_pct": 24.131293688582712,
+   "flag": "\u0394"
+  },
+  {
+   "var": "TS_1PCT",
+   "name": "Settling time 1 %",
+   "unit": "ns",
+   "schematic": {
+    "min": 100.072,
+    "typ": 123.057,
+    "max": 388.205,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 118.09,
+    "typ": 118.09,
+    "max": 118.09,
+    "status": "Pass"
+   },
+   "delta": -4.966999999999999,
+   "delta_pct": -4.036340882680383,
+   "flag": ""
+  },
+  {
+   "var": "TS_01PCT",
+   "name": "Settling time 0.1 %",
+   "unit": "ns",
+   "schematic": {
+    "min": 102.145,
+    "typ": 365.746,
+    "max": 455.678,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 335.122,
+    "typ": 335.122,
+    "max": 335.122,
+    "status": "Pass"
+   },
+   "delta": -30.623999999999967,
+   "delta_pct": -8.373023901833506,
+   "flag": "\u0394"
+  },
+  {
+   "var": "SR_POS",
+   "name": "Positive slew rate",
+   "unit": "V/s",
+   "schematic": {
+    "min": 314969.0,
+    "typ": 1945800.0,
+    "max": 2239030.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 1997610.0,
+    "typ": 1997610.0,
+    "max": 1997610.0,
+    "status": "Pass"
+   },
+   "delta": 51810.0,
+   "delta_pct": 2.6626580326857847,
+   "flag": ""
+  },
+  {
+   "var": "SR_NEG",
+   "name": "Negative slew rate",
+   "unit": "V/s",
+   "schematic": {
+    "min": 2151750.0,
+    "typ": 2430550.0,
+    "max": 2678630.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 2429940.0,
+    "typ": 2429940.0,
+    "max": 2429940.0,
+    "status": "Pass"
+   },
+   "delta": -610.0,
+   "delta_pct": -0.025097200222171937,
+   "flag": ""
+  },
+  {
+   "var": "T_RISE#2",
+   "name": "Rise time (10-90 %)",
+   "unit": "ns",
+   "schematic": {
+    "min": 214.378,
+    "typ": 246.686,
+    "max": 1523.96,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 240.288,
+    "typ": 240.288,
+    "max": 240.288,
+    "status": "Pass"
+   },
+   "delta": -6.397999999999996,
+   "delta_pct": -2.5935805031497514,
+   "flag": ""
+  },
+  {
+   "var": "T_FALL",
+   "name": "Fall time (90-10 %)",
+   "unit": "ns",
+   "schematic": {
+    "min": 179.196,
+    "typ": 197.486,
+    "max": 223.074,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 197.536,
+    "typ": 197.536,
+    "max": 197.536,
+    "status": "Pass"
+   },
+   "delta": 0.05000000000001137,
+   "delta_pct": 0.02531825040762959,
+   "flag": ""
+  },
+  {
+   "var": "T_PLH",
+   "name": "Propagation delay tpLH",
+   "unit": "ns",
+   "schematic": {
+    "min": 153.223,
+    "typ": 182.425,
+    "max": 208.091,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 182.575,
+    "typ": 182.575,
+    "max": 182.575,
+    "status": "Pass"
+   },
+   "delta": 0.14999999999997726,
+   "delta_pct": 0.0822255721529271,
+   "flag": ""
+  },
+  {
+   "var": "T_PHL",
+   "name": "Propagation delay tpHL",
+   "unit": "ns",
+   "schematic": {
+    "min": 121.785,
+    "typ": 141.944,
+    "max": 161.902,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 143.709,
+    "typ": 143.709,
+    "max": 143.709,
+    "status": "Pass"
+   },
+   "delta": 1.7650000000000148,
+   "delta_pct": 1.2434481203855146,
+   "flag": ""
+  }
+ ]
+}

@@ -2,6 +2,7 @@
 """Convert a kpex (KLayout-PEX, 2.5D / FasterCap) netlist into an ngspice netlist the CACE templates can include.
 
   pex_netlist.py <kpex.spice> <schematic.spice> <out.spice> [--cell NAME]
+  pex_netlist.py <magic.spice> <schematic.spice> <out.spice> --magic [--capnodes magic.spice.capnodes] [--cell NAME]
 
 What kpex writes and what ngspice + the PDK models need:
   M$1 d g s b sg13_lv_nmos L=5U W=5U AS=.. AD=.. PS=.. PD=.. rfmode=0   ->  XM_1 ... (the PDK models are .subckts)
@@ -14,8 +15,14 @@ What kpex writes and what ngspice + the PDK models need:
   .SUBCKT cell IBIAS VDD ...                   (alphabetical ports)        ->  ports in the order of the schematic
                                                                              netlist (the CACE templates instantiate by
                                                                              symbol pin order)
+
+--magic: input is the RC netlist of scripts/pex_magic.tcl (wire resistances wired to the device terminals). Devices are already
+PDK subckt calls; node names lose "." and "#"; the internal-net port labels (pnN) leave the .subckt line; poly resistors get
+ps/b/m; MoM caps are not in Magic's output (the GDS copy has no fingers) and are re-created from the schematic cap line
+between the two nets of every line of --capnodes.
 """
 import argparse
+import os
 import re
 import sys
 
@@ -128,11 +135,77 @@ def convert(src, sch, out, cell=None):
     print(f"pex_netlist: {out}: ports {' '.join(ports)}; " + ", ".join(f"{k}={v}" for k, v in nconv.items()))
 
 
+def mnode(n, ports):
+    """Magic node name -> ngspice-safe name (ports unchanged)"""
+    return n if n in ports else n.replace(".", "_").replace("#", "_")
+
+
+def convert_magic(src, sch, out, cell=None, capnodes=None):
+    scell, sports, cap = schematic_info(sch)
+    if not sports:
+        sys.exit(f"pex_netlist: no .subckt line in {sch}")
+    cell = cell or scell
+    ports = list(sports)
+    res, n = [], {"X": 0, "R": 0, "C": 0, "Cdev": 0}
+    top_ports = None
+    for s in (x.strip() for x in read_logical_lines(src)):
+        if not s or s.startswith("*"):
+            continue
+        low = s.lower()
+        if low.startswith(".subckt"):
+            toks = s.split()
+            if toks[1].lower() == cell.lower():
+                top_ports = toks[2:]
+            continue
+        if s.startswith("."):
+            continue
+        t = s.split()
+        kind = t[0][0].upper()
+        if kind == "X":
+            i = next(k for k, x in enumerate(t) if "=" in x) - 1      # model = token before the first param
+            model, params = t[i], t[i + 1:]
+            line = [t[0]] + [mnode(x, ports) for x in t[1:i]] + [model] + params
+            if model.lower().startswith(("rhigh", "rppd", "rsil")):
+                have = {x.split("=")[0].lower() for x in params}
+                line += [f"{k}={v}" for k, v in (("ps", "0"), ("b", "0"), ("m", "1")) if k not in have]
+            res.append(" ".join(line))
+            n["X"] += 1
+        elif kind in "RC":
+            res.append(" ".join([t[0]] + [mnode(x, ports) for x in t[1:3]] + t[3:]))
+            n[kind] += 1
+        else:
+            sys.exit(f"pex_netlist: unhandled Magic line: {s[:100]}")
+    if top_ports is None:
+        sys.exit(f"pex_netlist: no .subckt {cell} in {src}")
+    if set(ports) - set(top_ports):
+        sys.exit(f"pex_netlist: port mismatch: schematic {ports}, Magic {top_ports}")
+    if capnodes and os.path.isfile(capnodes):
+        lines = [l.split() for l in open(capnodes) if l.strip()]
+        if lines and not cap:
+            sys.exit("pex_netlist: layout has MoM caps but the schematic netlist has no cap_cmomi/cap_cmomf line")
+        for k, (a, b) in enumerate(lines, 1):
+            if not a or not b:
+                sys.exit(f"pex_netlist: no net found under MoM cap #{k} (capnodes line '{a} {b}')")
+            res.append(f"XCM_{k} {mnode(a, ports)} {mnode(b, ports)} {cap['model']} " + " ".join(cap["params"]) + " m=1")
+            n["Cdev"] += 1
+    with open(out, "w") as f:
+        f.write(f"** post-layout RC netlist of {cell}: Magic extresist -> ngspice by scripts/pex_netlist.py --magic (source: {src})\n")
+        f.write(f".subckt {cell} {' '.join(ports)}\n")
+        f.write("\n".join(res) + "\n")
+        f.write(f".ends {cell}\n")
+    print(f"pex_netlist: {out}: ports {' '.join(ports)}; " + ", ".join(f"{k}={v}" for k, v in n.items()))
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("src")
     ap.add_argument("schematic")
     ap.add_argument("out")
     ap.add_argument("--cell")
+    ap.add_argument("--magic", action="store_true", help="input is a Magic extresist netlist (scripts/pex_magic.tcl)")
+    ap.add_argument("--capnodes", help="Magic: net pairs of the MoM caps (written by pex_magic.tcl as <raw>.capnodes)")
     a = ap.parse_args()
-    convert(a.src, a.schematic, a.out, a.cell)
+    if a.magic:
+        convert_magic(a.src, a.schematic, a.out, a.cell, a.capnodes)
+    else:
+        convert(a.src, a.schematic, a.out, a.cell)

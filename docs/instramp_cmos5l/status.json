@@ -1,0 +1,56 @@
+{
+ "cell": "instramp_cmos5l",
+ "generated": "2026-10-14T14:15:21",
+ "commit": "932cd28",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/pgia_top/instramp_cmos5l.gds",
+  "sha1": "50fa4fd017b1"
+ },
+ "schematic": {
+  "path": "xschem/instramp_cmos5l/instramp_cmos5l.sch",
+  "sha1": "a36a205bb1f7"
+ },
+ "stages": [
+  {
+   "name": "cace",
+   "status": "pass",
+   "seconds": 0,
+   "detail": "reused RUN_2026-10-13_19-20-22: 10 rows, 0 failing"
+  },
+  {
+   "name": "drc",
+   "status": "pass",
+   "seconds": 25,
+   "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level];"
+  },
+  {
+   "name": "lvs",
+   "status": "pass",
+   "seconds": 7,
+   "detail": "RESULT: MATCH"
+  },
+  {
+   "name": "pex",
+   "status": "pass",
+   "seconds": 8,
+   "detail": "instramp_cmos5l.c.spice: ports VSS VDD IBIAS VINN VOUT VINP CM; M=87, Rpoly=9, Rext=0, Cdev=27, Cext=154;instramp_cmos5l.rc.spice: ports VSS VDD IBIAS VINN VOUT VINP CM; X=96, R=604, C=389, Cdev=27;"
+  },
+  {
+   "name": "post_c",
+   "status": "pass",
+   "seconds": 6,
+   "detail": "9 parameters with a % delta, 1 flagged"
+  },
+  {
+   "name": "post_rc",
+   "status": "pass",
+   "seconds": 9,
+   "detail": "9 parameters with a % delta, 1 flagged"
+  }
+ ],
+ "postlayout": {
+  "c": "docs/instramp_cmos5l/cace/postlayout.json",
+  "rc": "docs/instramp_cmos5l/cace/postlayout_rc.json"
+ }
+}

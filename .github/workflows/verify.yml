@@ -1,6 +1,6 @@
 # Physical verification on every push / PR: KLayout DRC and LVS (layout vs xschem schematic) per cell.
 # Same container as cace.yml. NOT yet run on GitHub (see docs/cace_ci/STATUS.md); the commands are the ones run locally:
-#   scripts/run_drc.sh <cell>   (exit 0 clean)     scripts/run_lvs.sh <cell>   (exit 0 match)
+#   scripts/flow.sh <cell> --only drc,lvs   (= scripts/run_drc.sh + scripts/run_lvs.sh for the cells of cells.yaml)
 name: verify
 
 on:
@@ -10,6 +10,8 @@ on:
       - "xschem/**"
       - "scripts/run_drc.sh"
       - "scripts/run_lvs.sh"
+      - "scripts/flow.sh"
+      - "cells.yaml"
       - "scripts/lvs_tools.py"
       - ".github/workflows/verify.yml"
   pull_request:
@@ -18,6 +20,8 @@ on:
       - "xschem/**"
       - "scripts/run_drc.sh"
       - "scripts/run_lvs.sh"
+      - "scripts/flow.sh"
+      - "cells.yaml"
       - "scripts/lvs_tools.py"
       - ".github/workflows/verify.yml"
   workflow_dispatch:
@@ -26,7 +30,19 @@ permissions:
   contents: read
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      cells: ${{ steps.m.outputs.cells }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install --quiet pyyaml || true
+      - id: m
+        # cells.yaml is the registry: a cell is in this matrix when its `stages` contain drc or lvs
+        run: echo "cells=$(python3 scripts/cellinfo.py --matrix verify)" >> "$GITHUB_OUTPUT"
+
   verify:
+    needs: plan
     runs-on: ubuntu-latest
     container:
       image: hpretl/iic-osic-tools:2026.09
@@ -34,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cell: [ota_cmos5l, instramp_cmos5l]    # needs gds/*/<cell>.gds and xschem/<cell>/<cell>.sch
+        cell: ${{ fromJSON(needs.plan.outputs.cells) }}
     env:
       PDK: ihp-sg13cmos5l
       PDK_ROOT: /foss/pdks
@@ -48,24 +64,19 @@ jobs:
           mkdir -p /foss/designs
           ln -sfn "$GITHUB_WORKSPACE" /foss/designs/sg13cmos5l_spma_ip__instramp
 
-      - name: DRC ${{ matrix.cell }}
-        id: drc
-        continue-on-error: true
-        run: scripts/run_drc.sh ${{ matrix.cell }} | tee drc.txt
+      - name: Python deps for the cell registry
+        run: python3 -m pip install --quiet pyyaml || true
 
-      - name: LVS ${{ matrix.cell }}
-        id: lvs
+      - name: DRC + antenna + LVS ${{ matrix.cell }}
+        # stages and layout path come from cells.yaml; a cell without schematic or layout gets SKIP, not a failure
+        id: flow
         continue-on-error: true
-        run: scripts/run_lvs.sh ${{ matrix.cell }} | tee lvs.txt
+        run: scripts/flow.sh ${{ matrix.cell }} --only drc,lvs
 
       - name: Job summary
         if: always()
         run: |
-          {
-            echo "## ${{ matrix.cell }}"
-            echo "### DRC (${{ steps.drc.outcome }})"; echo '```'; tail -20 drc.txt; echo '```'
-            echo "### LVS (${{ steps.lvs.outcome }})"; echo '```'; tail -40 lvs.txt; echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          { echo "## ${{ matrix.cell }}"; cat docs/${{ matrix.cell }}/status.md 2>/dev/null; } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload reports
         if: always()
@@ -75,9 +86,11 @@ jobs:
           path: |
             runs/drc/${{ matrix.cell }}
             runs/lvs/${{ matrix.cell }}
+            runs/flow/${{ matrix.cell }}
             netlist/${{ matrix.cell }}/lvs
+            docs/${{ matrix.cell }}/status.*
           if-no-files-found: warn
 
       - name: Fail on DRC / LVS errors
-        if: steps.drc.outcome == 'failure' || steps.lvs.outcome == 'failure'
+        if: steps.flow.outcome == 'failure'
         run: exit 1

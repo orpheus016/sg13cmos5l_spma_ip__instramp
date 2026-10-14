@@ -8,6 +8,7 @@ deltas (PNG next to the markdown). Rows whose delta exceeds --threshold percent,
 Fail, are flagged. Parameters present in only one run are listed as such.
 """
 import argparse
+import json
 import os
 import re
 import sys
@@ -72,6 +73,7 @@ def main():
              "| Parameter | Var | Unit | Schematic min / typ / max | Post-layout min / typ / max | Δ typ | Δ typ % | Status | Flag |",
              "|---|---|---|---|---|---:|---:|---|---|"]
     bars = []
+    jrows = []
     nflag = 0
     for key, r in p.items():
         var = key[0] + (f"#{key[1] + 1}" if key[1] else "")
@@ -90,6 +92,10 @@ def main():
         if q["status"] == "Pass" and r["status"] == "Fail":
             flag += " NEW FAIL"
         nflag += bool(flag)
+        jrows.append(dict(var=var, name=r["name"], unit=r["typ"][1],
+                          schematic=dict(min=q["min"][0], typ=q["typ"][0], max=q["max"][0], status=q["status"]),
+                          postlayout=dict(min=r["min"][0], typ=r["typ"][0], max=r["max"][0], status=r["status"]),
+                          delta=d, delta_pct=pct, flag=flag))
         lines.append(f"| {r['name']} | {var} | {r['typ'][1]} | {fmt(q['min'])} / {fmt(q['typ'])} / {fmt(q['max'])} | "
                      f"{fmt(r['min'])} / {fmt(r['typ'])} / {fmt(r['max'])} | {d:+.4g} | {"n/a" if pct is None else format(pct, "+.2f")} | "
                      f"{q['status']} → {r['status']} | {flag} |")
@@ -114,6 +120,8 @@ def main():
         fig.savefig(png, dpi=130)
         lines.append(f"\n![deltas]({os.path.basename(png)})")
     open(a.out, "w").write("\n".join(lines) + "\n")
+    json.dump(dict(schematic_run=a.schematic, postlayout_run=a.postlayout, schematic_source=s_src, postlayout_source=p_src,
+                   threshold_pct=a.threshold, rows=jrows), open(os.path.splitext(a.out)[0] + ".json", "w"), indent=1)
     print(f"compare_cace: {len(bars)} parameters with a % delta, {nflag} flagged -> {a.out}")
 
 

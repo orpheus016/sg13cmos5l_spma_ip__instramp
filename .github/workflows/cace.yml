@@ -13,7 +13,19 @@ permissions:
   contents: read
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      cells: ${{ steps.m.outputs.cells }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install --quiet pyyaml || true
+      - id: m
+        # cells.yaml is the registry: a cell is in this matrix when its `stages` contain cace
+        run: echo "cells=$(python3 scripts/cellinfo.py --matrix cace)" >> "$GITHUB_OUTPUT"
+
   cace:
+    needs: plan
     runs-on: ubuntu-latest
     container:
       image: hpretl/iic-osic-tools:2026.09
@@ -21,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cell: [ota_cmos5l, instramp_cmos5l]        # one entry per cace/<cell>.yaml
+        cell: ${{ fromJSON(needs.plan.outputs.cells) }}
     env:
       PDK: ihp-sg13cmos5l
       PDK_ROOT: /foss/pdks

@@ -1,0 +1,209 @@
+{
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-13_19-20-22",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/instramp_cmos5l/RUN_2026-10-14_14-27-02",
+ "schematic_source": "schematic",
+ "postlayout_source": "pex",
+ "threshold_pct": 5.0,
+ "rows": [
+  {
+   "var": "A_CL",
+   "name": "Closed-loop gain at 1 Hz",
+   "unit": "dB",
+   "schematic": {
+    "min": 17.765,
+    "typ": 18.061,
+    "max": 18.262,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 18.008,
+    "typ": 18.008,
+    "max": 18.008,
+    "status": "Pass"
+   },
+   "delta": -0.053000000000000824,
+   "delta_pct": -0.29344997508444065,
+   "flag": ""
+  },
+  {
+   "var": "A_ERR",
+   "name": "Gain error vs 8 V/V",
+   "unit": "dB",
+   "schematic": {
+    "min": -0.297,
+    "typ": -0.0,
+    "max": 0.2,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -0.054,
+    "typ": -0.054,
+    "max": -0.054,
+    "status": "Pass"
+   },
+   "delta": -0.054,
+   "delta_pct": null,
+   "flag": ""
+  },
+  {
+   "var": "F3DB",
+   "name": "-3 dB bandwidth",
+   "unit": "Hz",
+   "schematic": {
+    "min": 208893.0,
+    "typ": 279254.0,
+    "max": 361654.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 285981.0,
+    "typ": 285981.0,
+    "max": 285981.0,
+    "status": "Pass"
+   },
+   "delta": 6727.0,
+   "delta_pct": 2.4089180459366744,
+   "flag": ""
+  },
+  {
+   "var": "F0DB",
+   "name": "0 dB frequency",
+   "unit": "Hz",
+   "schematic": {
+    "min": 1506090.0,
+    "typ": 1987590.0,
+    "max": 2539050.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 2038700.0,
+    "typ": 2038700.0,
+    "max": 2038700.0,
+    "status": "Pass"
+   },
+   "delta": 51110.0,
+   "delta_pct": 2.571455883758723,
+   "flag": ""
+  },
+  {
+   "var": "PH0",
+   "name": "Closed-loop phase at 0 dB",
+   "unit": "\u00b0",
+   "schematic": {
+    "min": -143.186,
+    "typ": -139.829,
+    "max": -134.184,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -142.71,
+    "typ": -142.71,
+    "max": -142.71,
+    "status": "Pass"
+   },
+   "delta": -2.8810000000000002,
+   "delta_pct": -2.060373742213704,
+   "flag": ""
+  },
+  {
+   "var": "THD_DB",
+   "name": "THD",
+   "unit": "dB",
+   "schematic": {
+    "min": -72.538,
+    "typ": -63.52,
+    "max": -46.17,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -62.695,
+    "typ": -62.695,
+    "max": -62.695,
+    "status": "Pass"
+   },
+   "delta": 0.8250000000000028,
+   "delta_pct": 1.298803526448367,
+   "flag": ""
+  },
+  {
+   "var": "THD_PCT",
+   "name": "THD",
+   "unit": "%",
+   "schematic": {
+    "min": 0.024,
+    "typ": 0.067,
+    "max": 0.491,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.073,
+    "typ": 0.073,
+    "max": 0.073,
+    "status": "Pass"
+   },
+   "delta": 0.0059999999999999915,
+   "delta_pct": 8.955223880597002,
+   "flag": "\u0394"
+  },
+  {
+   "var": "HD2_DB",
+   "name": "2nd harmonic",
+   "unit": "dB",
+   "schematic": {
+    "min": -80.791,
+    "typ": -64.979,
+    "max": -48.314,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -63.726,
+    "typ": -63.726,
+    "max": -63.726,
+    "status": "Pass"
+   },
+   "delta": 1.2530000000000001,
+   "delta_pct": 1.9283153018667571,
+   "flag": ""
+  },
+  {
+   "var": "HD3_DB",
+   "name": "3rd harmonic",
+   "unit": "dB",
+   "schematic": {
+    "min": -76.241,
+    "typ": -69.23,
+    "max": -50.352,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -69.461,
+    "typ": -69.461,
+    "max": -69.461,
+    "status": "Pass"
+   },
+   "delta": -0.23099999999999454,
+   "delta_pct": -0.33367037411526007,
+   "flag": ""
+  },
+  {
+   "var": "VO1",
+   "name": "Output fundamental amplitude",
+   "unit": "V",
+   "schematic": {
+    "min": 0.192,
+    "typ": 0.2,
+    "max": 0.204,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.199,
+    "typ": 0.199,
+    "max": 0.199,
+    "status": "Pass"
+   },
+   "delta": -0.0010000000000000009,
+   "delta_pct": -0.5000000000000004,
+   "flag": ""
+  }
+ ]
+}

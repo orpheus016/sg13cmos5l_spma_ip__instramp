@@ -239,3 +239,7 @@ runs/
 cace/runs/
 netlist/
 
+
+# Generated interactive reports (large; built by scripts/build_report.sh, published by CI)
+docs/*/report.html
+docs/index.html

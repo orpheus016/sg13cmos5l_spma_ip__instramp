@@ -9,6 +9,8 @@
 | [cace_ci/00_overview.md](cace_ci/00_overview.md) | CACE / CI architecture overview |
 | [LVS guide](#lvs-guide-klayout) (below) | Layout vs schematic with KLayout: GUI loop, `scripts/run_lvs.sh`, pitfalls |
 | [lvs_upstream_issues.md](lvs_upstream_issues.md) | Draft IHP-Open-PDK issues for the MoM-cap LVS limitations (not posted) |
+| [Flow guide](#flow-guide-one-command-per-cell) (below) | `scripts/flow.sh <cell>`: schematic CACE -> DRC/antenna -> LVS -> PEX -> post-layout CACE -> comparison for every cell, manual steps, new cells, interactive report |
+| [roadmap.md](roadmap.md) | Optimisation (C/ID), ALIGN, ANN and topology-recommendation: feasibility and order of work |
 | [Post-layout guide](#post-layout-simulation-guide-pex--cace) (below) | LVS-clean layout -> PEX -> CACE on the extracted netlist -> schematic vs post-layout report |
 
 ---
@@ -354,13 +356,79 @@ Keep a gap between neighbouring caps: touching `recog_mom` markers merge and the
 
 ---
 
+# Flow guide (one command per cell)
+
+`cells.yaml` lists every cell and what can be done with it today. One command runs everything that applies:
+
+```bash
+scripts/flow.sh ota_cmos5l                    # cace (reused if fresh) -> drc -> lvs -> pex -> post (C and R+C)   ~1 min with the typ profile
+scripts/flow.sh instramp_cmos5l --profile pvt # post-layout over the full PVT grid
+scripts/flow.sh output_buffer                 # only the stages its cells.yaml entry lists (drc, lvs)
+scripts/flow.sh fine_gain                     # schematic-only cell: prints "no stages yet"
+scripts/flow.sh ota_cmos5l --only drc,lvs     # subset (what CI uses)   | --stages post   only that stage   | --force   rerun the schematic CACE
+scripts/build_report.sh ota_cmos5l            # docs/<cell>/report.html: interactive Plotly report (all cells: build_report.sh all)
+```
+
+Result: `docs/<cell>/status.md` and `status.json` (stage, result, time, detail; layout/schematic hashes so the report can tell when it is
+out of date), logs in `runs/flow/<cell>/<stage>.log`. A stage that cannot run says why: `skip` (no layout / datasheet yet), `blocked`
+(an earlier stage failed), `error` (the stage itself broke, e.g. xschem cannot find a symbol). Exit code 0 / 1 (a check failed) / 2 (error).
+
+## F1. What a cell needs for each stage
+
+| Stage | Needs | Script |
+|---|---|---|
+| `cace` | `cace/<cell>.yaml`, `cace/templates/<cell>/*.sch`, `xschem/<cell>/<cell>.sch` | `scripts/run_cace.sh` |
+| `drc` | layout (`gds:` in `cells.yaml`) | `scripts/run_drc.sh` |
+| `lvs` | layout and `xschem/<cell>/<cell>.sch`, net labels on `<metal>/25` | `scripts/run_lvs.sh` |
+| `pex` | LVS MATCH and one schematic CACE run (it writes `netlist/<cell>/schematic/<cell>.spice`, the pin order) | `scripts/run_pex.sh` |
+| `post` | extraction, CACE datasheet | `scripts/run_postlayout.sh` (`--netlist c` and `rc`) |
+
+Today: `ota_cmos5l`, `instramp_cmos5l` all five. `output_buffer` has DRC clean, but LVS stops because its schematic uses `cap_mfringe`, a device of the
+sg13g2 PDK that does not exist in cmos5l. `decoder_top_10b` has 19 DRC violations, all `CMOS5L.FORB.Metal5/Via4` (the layout uses Metal5, forbidden in
+this 4-metal + TopMetal process). `coarse_gain`, `fine_gain`, `fine_driver_6b` have no layout yet. `fine_gain.sch` also references the OTA symbol by an
+absolute path of another project (`/foss/designs/chipalooza/.../ota_cmos5l.sym`): CACE reports `Subcircuit ota_cmos5l was not found`. Use `ota_cmos5l.sym` and an xschemrc that lists `xschem/ota_cmos5l`.
+
+## F2. The same thing by hand, stage by stage (every cell)
+
+Replace `<cell>` by the name from `cells.yaml`. All commands run from the repository root; each prints a result line and writes into `runs/`.
+
+1. **Schematic characterisation (reference).** `scripts/run_cace.sh <cell>` (OTA: ~2 min with Monte Carlo; `-p dc_op ac_response` for only some parameters).
+   Result: `runs/RUN_<date>/summary.md`, `docs/<cell>/cace/README.md`, `netlist/<cell>/schematic/<cell>.spice`. Exit 0 = all pass, 2 = a spec fails.
+2. **DRC + antenna.** `scripts/run_drc.sh <cell>`: main + maximal rules, **antenna** (Ant.a-i) and, for information, density.
+   * *Density* (`M1.j M2.j M3.j TM1.c AFil.g GFil.g`) is a chip-level rule: fill is added at the top level, so a single block always shows 6 items. They are listed as `[info, chip-level]` and do not fail the run. `--density` makes them fail (use on the finished chip, after the PDK filler: KLayout *SG13CMOS5L PDK -> Filler*); `--no-antenna` skips the antenna deck.
+   * *Antenna* is a real block-level check and must be clean: a long Metal/Via run connected to a gate and no diffusion charges the gate during processing. Fix: shorten the run at that metal level and jump to a higher metal near the gate, or add a protection diode (`dantenna`) on the net. The script prints the rule family and the fix per violation.
+   * Open the markers in KLayout: *Tools -> Marker Browser* -> `runs/drc/<cell>/*.lyrdb`.
+3. **LVS.** `scripts/run_lvs.sh <cell>` (details: LVS guide above). Must say `RESULT: MATCH`.
+4. **Extraction.** `scripts/run_pex.sh <cell>` (`--skip-lvs` if you just ran LVS). Two netlists in `netlist/<cell>/pex/`: `<cell>.c.spice` (kpex 2.5D, wire capacitance) and `<cell>.rc.spice` (Magic: wire resistance + capacitance, see P2/P3). `--use rc` chooses what CACE reads by default, `--rthresh <mOhm>` drops small resistors, `--no-rc` skips Magic.
+5. **Post-layout CACE + comparison.** `scripts/run_postlayout.sh <cell> --netlist c` and `--netlist rc` (`--profile pvt` for the full grid). Result `docs/<cell>/cace/postlayout.md|.json|.png` (C) and `postlayout_rc.*` (R+C): typical/min/max, delta, delta %, new failures flagged.
+6. **Compare any two runs.** `python3 scripts/compare_cace.py runs/RUN_a runs/pex_cace_rc/<cell>/RUN_b -o /tmp/cmp.md --threshold 2`.
+7. **Report.** `scripts/build_report.sh <cell>` -> `docs/<cell>/report.html` (open it in a browser; works offline).
+
+## F3. Adding a cell
+
+1. Layout in `gds/<dir>/<cell>.gds`, schematic `xschem/<cell>/<cell>.sch` + `.sym`, an entry in `cells.yaml` (`gds`, `sch`, `stages`).
+2. Characterisation: `python3 scripts/new_cell.py <cell>` reads the symbol pins and writes `cace/<cell>.yaml` (pins, default conditions, a PVT-swept `dc_op` parameter with report-only limits), the testbench `cace/templates/<cell>/dc_op.sch`, an `xschem/<cell>/xschemrc`, and adds `cace` to the cell's stages. Check the pin roles it prints (power, ground, current input, output, logic; override with `--outputs`, `--current-pins`, `--logic`). Then `scripts/run_cace.sh <cell>`. The real parameters (ac, noise, ...) are written by copying a template from `cace/templates/` (CACE guide section 3).
+3. The CI matrices (`cace.yml`, `verify.yml`, `report.yml`) are generated from `cells.yaml`; nothing to edit there.
+
+## F4. Interactive report and automatic rebuild
+
+`tools/report.ipynb` (Plotly, reads through `scripts/cace_data.py`): status banner (red when the layout or schematic changed after the flow run), stage table,
+specification table, PVT explorer (drop-down per variable, corner = colour, supply = marker shape, spec lines), worst cases, Monte Carlo histograms, schematic vs post-layout (C and R+C) bars and table.
+`scripts/build_report.sh` runs it with `jupyter nbconvert --execute`. `.github/workflows/report.yml` rebuilds it for every cell when `xschem/**`, `cace/**`, `gds/**`, `cells.yaml`, `scripts/**` or the
+notebook change (pull requests: profile `typ`, `main`: `pvt`, published to GitHub Pages from `main`). The netlists themselves are git-ignored, they are derived from the schematic by the flow.
+The workflows have never run on GitHub (see STATUS.md).
+
+---
+
 # Post-layout simulation guide (PEX -> CACE)
 
 From a DRC/LVS-clean layout to the same CACE characterisation run on the extracted netlist, and a table that shows what
 the layout cost. One command per cell:
 
 ```bash
-scripts/run_postlayout.sh ota_cmos5l                  # typ profile: corner tt, typical vdd/T      (~25 s)
+scripts/run_postlayout.sh ota_cmos5l                  # typ profile: corner tt, typical vdd/T      (~25 s), wire C only
+scripts/run_postlayout.sh ota_cmos5l --netlist rc     # same with wire resistance (Magic extresist)
+scripts/flow.sh ota_cmos5l                            # everything, both netlists (Flow guide)
 scripts/run_postlayout.sh instramp_cmos5l --profile pvt   # full PVT grid, no Monte Carlo
 scripts/run_postlayout.sh ota_cmos5l -- -p dc_op ac_response   # only some CACE parameters
 ```
@@ -380,10 +448,10 @@ layout.gds --run_lvs.sh--> MATCH?
 
 | Script | What |
 |---|---|
-| `scripts/run_pex.sh <cell>` | LVS check + steps above up to `netlist/<cell>/pex/` (also usable on its own) |
+| `scripts/run_pex.sh <cell>` | LVS check + steps above up to `netlist/<cell>/pex/` (`<cell>.c.spice` kpex, `<cell>.rc.spice` Magic with wire R; also usable on its own) |
 | `scripts/run_postlayout.sh <cell>` | `run_pex.sh` if needed, CACE `-s pex`, comparison; exit 0 pass, 2 spec fail/error |
 | `scripts/compare_cace.py <run_a> <run_b>` | any two CACE runs -> markdown table + bar chart |
-| `scripts/pex_prepare_gds.py`, `scripts/pex_netlist.py` | the two helpers (see `--help`) |
+| `scripts/pex_prepare_gds.py`, `scripts/pex_netlist.py`, `scripts/pex_magic.tcl` | the helpers (see `--help`); `pex_netlist.py --magic` converts the Magic netlist |
 
 ## P1. Prerequisites
 
@@ -406,12 +474,20 @@ layout.gds --run_lvs.sh--> MATCH?
 * **kpex is run from a patched copy** (`runs/pex/_kpex`, built automatically): the installed 0.4.4 lacks most of the cmos5l
   LVS rule-deck includes and its netlist writer crashes on MoM-cap devices (`Invalid parameter name: 'C'`).
   Nothing in the system packages is modified.
-* **Capacitance only (`--mode CC`).** In kpex 0.4.4 `--mode RC` writes wire resistors whose nodes never connect to the device
+* **kpex gives capacitance only (`--mode CC`).** In kpex 0.4.4 `--mode RC` writes wire resistors whose nodes never connect to the device
   terminals (only the six port nets get one resistor), so that netlist cannot simulate (verified: VOUT = 0 V, IQ = -8 mA).
-  Device parasitics (AS/AD/PS/PD of every transistor, poly resistor value, MoM cap) come from the extracted devices; **metal wire
-  resistance is not modelled**.
-* **Not used:** Magic (`kpex --magic`, CACE's own `-s pex/rcx`) is fast but extracts the MoM fingers as a 2280-C / 3900-R
-  network and has no compact-model cap; FasterCap (3D) takes ~4 min on the stripped OTA and hits the same writer bug in this version.
+  Device parasitics (AS/AD/PS/PD of every transistor, poly resistor value, MoM cap) come from the extracted devices -> `<cell>.c.spice`.
+* **Wire resistance comes from Magic (`--rc`, on by default): `<cell>.rc.spice`.** Magic `extresist` on the same stripped GDS copy
+  (`scripts/pex_magic.tcl`; ~1 s). Checked: the resistors land on the device terminals (`VOUT_t3 ...`, unlike kpex RC), devices carry AS/AD/PS/PD,
+  and with every resistor dropped (`--rthresh 100000000`) it reproduces the kpex numbers (OTA A0 57.905 vs 57.904 dB, VOS -0.730 mV both, F3DB within 0.04 %).
+  What had to be worked around: (1) `extresist all` only extracts nets that are *ports* (6 of 11 nets on the OTA) -> the script gives every other net a port label `pnN` at the
+  location Magic reports for it, and `pex_netlist.py --magic` removes them from the `.subckt` line; (2) Magic has no `cap_cmomi` device (no entry in the cmos5l extract tech) and the
+  GDS copy has no fingers -> `pex_prepare_gds.py` writes `<gds>.caps` (a point on each of the two Metal4 terminal bars of every cap marker), Magic's `getnode` names the nets there,
+  and the compact-model cap is put back from the schematic line; (3) texts on other layers in sub-cells (`Source`, `Drain Bias` on Metal1) are removed in the flattened copy, Magic would use them as net names.
+  Known limitations: the R network differs from run to run (265-287 resistors on the OTA, same electrical result to 5 digits); **Magic gives a contact/via region one cut's resistance** (17 Ω for a drain
+  strip that has 14-30 cuts, tech `contact alldiffcont 17000`), so the many small resistors are pessimistic, and the well resistance (3 MΩ/sq) shows up as large resistors on `VSS`/`VDD`.
+  `--rthresh 30000` (drop resistors < 30 Ω) shows how much that matters (P3). The sheet resistances are the typical-corner values of the tech file; a corner mapping (hrhc/hrlc) is not wired to the CACE corner.
+* **Not used:** `kpex --magic` and CACE's own `-s pex/rcx` run Magic on the raw GDS, where the MoM fingers become a 2280-C / 3900-R network without the compact-model cap (the stripped copy + `pex_magic.tcl` above avoids that); FasterCap (3D) takes ~4 min on the stripped OTA and hits the same writer bug in this version.
 * **Conversion (`pex_netlist.py`):** `M`/`R`/`C` device lines -> `X` calls of the PDK subckts, poly resistor geometry
   (µm without unit) -> `w= l=` in metres, `C ... cap_cmomi` -> `X ... cap_cmomi` with `w l mmin mmax feed subblock` taken from the schematic
   (the kpex writer drops them), node names without `\$ . $`, `VSUBS` -> `VSS`, `.subckt` ports in the **symbol pin order** (the templates
@@ -421,27 +497,30 @@ layout.gds --run_lvs.sh--> MATCH?
   datasheet (`cace/<cell>_pex_tmp.yaml`, deleted afterwards) adds `paths.layout`, drops the Monte Carlo parameters and (profile `typ`) reduces
   the sweeps. CACE's own layout-image step prints `sg13g2.lyp` errors at the end of a pex run; the simulations are complete, ignore it.
 
-## P3. Measured, schematic vs post-layout (typical conditions, 2026-10-13 layout)
+## P3. Measured, schematic vs post-layout (typical conditions, 2026-10-14 layout)
 
-`ota_cmos5l` (`docs/ota_cmos5l/cace/postlayout.md`):
+`ota_cmos5l` (`docs/ota_cmos5l/cace/postlayout.md` = C, `postlayout_rc.md` = R+C):
 
-| | schematic | post-layout |
-|---|---:|---:|
-| DC gain A0 | 57.87 dB | 57.90 dB |
-| -3 dB / UGF | 3.70 kHz / 2.70 MHz | 3.74 kHz / 2.73 MHz |
-| Phase margin | 60.6° | 59.0° (min over PVT 54.2°) |
-| Input noise @1 kHz | 197 nV/√Hz | 195 nV/√Hz |
-| IQ | 18.29 µA | 18.32 µA |
-| CMRR @10 Hz | 64.9 dB | 65.1 dB |
-| **Input offset VOS** | **-0.21 mV** | **-0.73 mV** (spec ±1 mV; min -1.12 mV fails) |
+| | schematic | post-layout C | post-layout R+C |
+|---|---:|---:|---:|
+| DC gain A0 | 57.87 dB | 57.90 dB | 57.78 dB |
+| -3 dB / UGF | 3.70 kHz / 2.70 MHz | 3.74 kHz / 2.73 MHz | 3.79 kHz / 2.73 MHz |
+| Phase margin | 60.6° | 59.0° | 58.6° |
+| Input noise @1 kHz | 197 nV/√Hz | 195 nV/√Hz | 196 nV/√Hz |
+| IQ | 18.30 µA | 18.32 µA | 18.32 µA |
+| PSRR @10 Hz | 73.9 dB | 76.3 dB | 77.8 dB |
+| **Input offset VOS** | **-0.21 mV** | **-0.73 mV** | **-0.80 mV** (spec ±1 mV) |
 
-`instramp_cmos5l` (`docs/instramp_cmos5l/cace/postlayout.md`): closed-loop gain **18.060 dB** (schematic 18.061, target 18.0618), -3 dB bandwidth
-284.8 kHz (+2 %), closed-loop phase at 0 dB -142.7° (-2.9°), THD -62.6 dB (schematic -63.5 dB).
+`instramp_cmos5l` (`postlayout.md`, `postlayout_rc.md`): closed-loop gain 18.060 dB (C) / **18.008 dB (R+C)**, schematic 18.061, target 18.0618; -3 dB bandwidth 284.8 / 286.0 kHz (+2.0 / +2.4 %);
+closed-loop phase at 0 dB -142.7° both; THD -62.6 / -62.7 dB (schematic -63.5 dB). The 0.05 dB gain loss of the R+C netlist is mostly the pessimistic per-contact
+resistance of Magic (P2): dropping resistors below 30 Ω gives 18.053 dB. So the cost of wiring resistance on the closed-loop gain is between **-0.008 and -0.053 dB**
+(−0.1 … −0.6 %), still inside the PVT spread of the schematic (-0.30/+0.20 dB).
 
-The wire capacitance is almost free (<3 % on every AC number). The offset is **not** a wire effect: it is -0.730 mV with and
-without the extracted wire capacitors, i.e. it comes from the layout-derived device geometry (junction areas/perimeters of the
+Wire R on the OTA (the large ones): the poly gates of the mirror/input nets (270-780 Ω in the netlist, up to 24 kΩ in the instramp bias/ladder gate nets) and the long supply rails. Effect: A0 -0.13 dB,
+VOS -0.07 mV (that stays when the < 30 Ω contact lumps are removed: VOS -0.808 mV), PM -0.4° (-0.7° with the lumps). The wire capacitance is almost free (<3 % on every AC number).
+The offset is **not** a wire effect: it is -0.730 mV with and without the extracted wire capacitors, i.e. it comes from the layout-derived device geometry (junction areas/perimeters of the
 mirror and input pair differ from the schematic's automatic values, and between the two halves). That is the first thing to look at in the layout.
-What is *not* in these numbers: wire resistance, the sim-only `R5`/`R6` (10 MΩ, `lvs_ignore`), substrate coupling to other blocks, fill.
+What is *not* in these numbers: the sim-only `R5`/`R6` (10 MΩ, `lvs_ignore`), substrate coupling to other blocks, fill, resistor/metal corner variation of the wires.
 
 ## P4. Doing it by hand (to look at an intermediate result)
 
@@ -465,14 +544,14 @@ Required for trustworthy post-layout numbers:
    layout the input pair and the mirror with identical diffusion sharing/orientation (common centroid or at least same finger order and dummy ends).
 4. **Filler:** extract once without density fill (what the script does), and once more with metal/active fill from the PDK macros
    (*SG13CMOS5L PDK -> Filler*) before sign-off; floating fill adds coupling.
-5. **Wire resistance** is not covered. The high-impedance nodes (OTA `net4` between the poly resistor and the MoM cap, VOUT, the instramp
-   resistor ladder) are where it would matter; keep those runs wide and short, and check by hand with the RC mode of a newer kpex or Magic `extresist` if the margins get thin.
+5. **Wire resistance** is covered by the R+C netlist (P2/P3); its cost is small here (<0.2 dB, <0.1 mV). Still keep the high-impedance nodes (OTA `net4` between the poly resistor and the MoM cap,
+   VOUT, the instramp resistor ladder) short, and give the poly gates of the bias mirrors a metal strap (the largest resistors in the netlist are poly gates, 0.3-24 kΩ).
 6. **Well/substrate ties** around the input pair, the mirrors and the resistor array (noise, latch-up, and the substrate capacitance the extractor attaches to `VSS`).
 7. Keep **gaps between MoM caps** (touching `recog_mom` markers abort LVS) and keep the **pin labels** on `/25`.
 8. After layout changes that affect devices re-run: DRC, LVS, `run_postlayout.sh`; after changes to the schematic also `scripts/run_cace.sh`.
 
 Open (not done): a post-layout Monte Carlo (the extraction has no random part; mismatch would be the same as in the schematic runs),
-wire resistance, fill-aware extraction, running the post-layout comparison in CI.
+wire-resistance corners (hrhc/hrlc) and per-cut contact resistance in the Magic netlist, fill-aware extraction, running the flow in CI (`report.yml` is written, not run).
 
 ## P6. Troubleshooting
 
@@ -490,8 +569,7 @@ wire resistance, fill-aware extraction, running the post-layout comparison in CI
 
 ## DRC and LVS in CI
 
-`.github/workflows/verify.yml` runs `scripts/run_drc.sh <cell>` (density rules off, like the KLayout GUI default: they are chip-level) and
-`scripts/run_lvs.sh <cell>` for every cell of its matrix (`ota_cmos5l`, `instramp_cmos5l`) on push/PR when `gds/`, `xschem/` or those scripts change,
+`.github/workflows/verify.yml` runs `scripts/flow.sh <cell> --only drc,lvs` (DRC + antenna, density is information only; LVS) for every cell of `cells.yaml` that has those stages on push/PR when `gds/`, `xschem/` or those scripts change,
 and uploads `runs/drc|lvs/<cell>` (lyrdb/lvsdb, logs) as artifacts. Not yet run on GitHub. `instramp_cmos5l.sch` references the OTA symbol by an absolute
 `/foss/designs/...` path (from another path xschem reports `ota_cmos5l IS MISSING`); the workflow links the checkout to that path. A relative reference
 (`C {ota_cmos5l.sym}`) would remove the need.

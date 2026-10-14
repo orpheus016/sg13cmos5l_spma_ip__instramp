@@ -1,0 +1,209 @@
+{
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-13_19-20-22",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace/instramp_cmos5l/RUN_2026-10-14_14-15-07",
+ "schematic_source": "schematic",
+ "postlayout_source": "pex",
+ "threshold_pct": 5.0,
+ "rows": [
+  {
+   "var": "A_CL",
+   "name": "Closed-loop gain at 1 Hz",
+   "unit": "dB",
+   "schematic": {
+    "min": 17.765,
+    "typ": 18.061,
+    "max": 18.262,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 18.06,
+    "typ": 18.06,
+    "max": 18.06,
+    "status": "Pass"
+   },
+   "delta": -0.0010000000000012221,
+   "delta_pct": -0.005536791982731976,
+   "flag": ""
+  },
+  {
+   "var": "A_ERR",
+   "name": "Gain error vs 8 V/V",
+   "unit": "dB",
+   "schematic": {
+    "min": -0.297,
+    "typ": -0.0,
+    "max": 0.2,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -0.002,
+    "typ": -0.002,
+    "max": -0.002,
+    "status": "Pass"
+   },
+   "delta": -0.002,
+   "delta_pct": null,
+   "flag": ""
+  },
+  {
+   "var": "F3DB",
+   "name": "-3 dB bandwidth",
+   "unit": "Hz",
+   "schematic": {
+    "min": 208893.0,
+    "typ": 279254.0,
+    "max": 361654.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 284823.0,
+    "typ": 284823.0,
+    "max": 284823.0,
+    "status": "Pass"
+   },
+   "delta": 5569.0,
+   "delta_pct": 1.994241801370795,
+   "flag": ""
+  },
+  {
+   "var": "F0DB",
+   "name": "0 dB frequency",
+   "unit": "Hz",
+   "schematic": {
+    "min": 1506090.0,
+    "typ": 1987590.0,
+    "max": 2539050.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 2043250.0,
+    "typ": 2043250.0,
+    "max": 2043250.0,
+    "status": "Pass"
+   },
+   "delta": 55660.0,
+   "delta_pct": 2.8003763351596658,
+   "flag": ""
+  },
+  {
+   "var": "PH0",
+   "name": "Closed-loop phase at 0 dB",
+   "unit": "\u00b0",
+   "schematic": {
+    "min": -143.186,
+    "typ": -139.829,
+    "max": -134.184,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -142.706,
+    "typ": -142.706,
+    "max": -142.706,
+    "status": "Pass"
+   },
+   "delta": -2.876999999999981,
+   "delta_pct": -2.05751310529288,
+   "flag": ""
+  },
+  {
+   "var": "THD_DB",
+   "name": "THD",
+   "unit": "dB",
+   "schematic": {
+    "min": -72.538,
+    "typ": -63.52,
+    "max": -46.17,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -62.618,
+    "typ": -62.618,
+    "max": -62.618,
+    "status": "Pass"
+   },
+   "delta": 0.902000000000001,
+   "delta_pct": 1.420025188916878,
+   "flag": ""
+  },
+  {
+   "var": "THD_PCT",
+   "name": "THD",
+   "unit": "%",
+   "schematic": {
+    "min": 0.024,
+    "typ": 0.067,
+    "max": 0.491,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.074,
+    "typ": 0.074,
+    "max": 0.074,
+    "status": "Pass"
+   },
+   "delta": 0.006999999999999992,
+   "delta_pct": 10.44776119402984,
+   "flag": "\u0394"
+  },
+  {
+   "var": "HD2_DB",
+   "name": "2nd harmonic",
+   "unit": "dB",
+   "schematic": {
+    "min": -80.791,
+    "typ": -64.979,
+    "max": -48.314,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -63.677,
+    "typ": -63.677,
+    "max": -63.677,
+    "status": "Pass"
+   },
+   "delta": 1.3019999999999996,
+   "delta_pct": 2.0037242801520487,
+   "flag": ""
+  },
+  {
+   "var": "HD3_DB",
+   "name": "3rd harmonic",
+   "unit": "dB",
+   "schematic": {
+    "min": -76.241,
+    "typ": -69.23,
+    "max": -50.352,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -69.281,
+    "typ": -69.281,
+    "max": -69.281,
+    "status": "Pass"
+   },
+   "delta": -0.05100000000000193,
+   "delta_pct": -0.07366748519428272,
+   "flag": ""
+  },
+  {
+   "var": "VO1",
+   "name": "Output fundamental amplitude",
+   "unit": "V",
+   "schematic": {
+    "min": 0.192,
+    "typ": 0.2,
+    "max": 0.204,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.2,
+    "typ": 0.2,
+    "max": 0.2,
+    "status": "Pass"
+   },
+   "delta": 0.0,
+   "delta_pct": 0.0,
+   "flag": ""
+  }
+ ]
+}

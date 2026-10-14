@@ -1,0 +1,52 @@
+# Registry of the cells of this repository: single source of truth for scripts/flow.sh, scripts/cellinfo.py, the CI matrices
+# and the report. Paths are relative to the repository root.
+#   gds      layout (DRC / antenna / LVS / PEX); omit if the cell has no layout yet
+#   top      top cell name in the GDS (default: the cell name)
+#   sch      xschem schematic (LVS, netlist pin order)
+#   cace     CACE datasheet (schematic reference run and post-layout run)
+#   stages   what scripts/flow.sh runs, in order, out of: cace drc lvs pex post
+#   drc_args extra arguments for scripts/run_drc.sh (e.g. --density for a finished chip)
+#   note     free text shown in the status page
+# Cells with an empty stage list are schematic-only so far: flow.sh prints SKIP, scripts/new_cell.sh scaffolds the CACE part.
+ota_cmos5l:
+  gds: gds/pgia_top/ota_cmos5l.gds
+  sch: xschem/ota_cmos5l/ota_cmos5l.sch
+  cace: cace/ota_cmos5l.yaml
+  stages: [cace, drc, lvs, pex, post]
+  note: two-stage Miller OTA
+instramp_cmos5l:
+  gds: gds/pgia_top/instramp_cmos5l.gds
+  sch: xschem/instramp_cmos5l/instramp_cmos5l.sch
+  cace: cace/instramp_cmos5l.yaml
+  stages: [cace, drc, lvs, pex, post]
+  note: three-OTA instrumentation amplifier, closed-loop gain 8 V/V
+output_buffer:
+  gds: gds/pgia_top/output_buffer.gds
+  sch: xschem/output_buffer/output_buffer.sch
+  stages: [drc, lvs]
+  note: no CACE datasheet yet (python3 scripts/new_cell.sh output_buffer)
+decoder_top_10b:
+  gds: gds/pgia_top/decoder_top_10b.gds
+  stages: [drc]
+  note: digital (standard cells, librelane flow in xschem/decoder_top_10b/librelane); LVS and timing belong to that flow
+dec2to4:
+  gds: xschem/dec2to4/dec2to4.gds
+  stages: [drc]
+  note: digital building block
+pgia_top:
+  gds: gds/pgia_top/pgia_top.gds
+  stages: [drc]
+  drc_args: [--density]
+  note: chip level, density rules apply
+coarse_gain:
+  sch: xschem/coarse_gain/cg_ota.sch
+  stages: []
+  note: schematic only so far
+fine_gain:
+  sch: xschem/fine_gain/fine_gain.sch
+  stages: []
+  note: schematic only so far
+fine_driver_6b:
+  sch: xschem/fine_driver_6b/fine_driver_6b.sch
+  stages: []
+  note: schematic only so far
