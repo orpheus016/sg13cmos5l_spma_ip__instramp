@@ -6,13 +6,17 @@
 [![Status](https://img.shields.io/badge/Status-Active_Development-orange)](#)
 
 ## Shortcuts
-Below are the shortcuts to see each core specs.
+Below are the shortcuts to see each core specs. For more interactive report look up docs/<cells>/report.html. Route provided by docs/index.html 
 
 Post-Layout vs Simulation:
-- [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/postlayout.md)
-- [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/postlayout.md)
+- RC-PEX:
+  - [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/postlayout_rc.md)
+  - [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/postlayout_rc.md)
+- C-PEX:
+  - [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/postlayout.md)
+  - [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/postlayout.md)
 
-CACE:
+Circuit CACE:
 - [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/README.md)
 - [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/README.md)
 
