@@ -14,6 +14,8 @@ else cells="$target"; fi
 rc=0; built=""
 for cell in $cells; do
   out="$root/docs/$cell/report.html"
+  # schematic + layout pictures of the cell (the report embeds them); READMEs are not touched here
+  python3 -I "$root/scripts/update_images.py" "$cell" --no-readme >"$root/runs/images_$cell.log" 2>&1 || echo "report: update_images.py failed for $cell, see runs/images_$cell.log"
   # nbconvert runs in tools/ (the notebook finds ../scripts); a private HOME/runtime dir keeps jupyter from touching ~/.local
   ( cd "$root/tools" && CELL="$cell" jupyter nbconvert --to html --execute --no-input --ExecutePreprocessor.timeout=300 \
       --output-dir "$root/docs/$cell" --output report report.ipynb ) >"$root/runs/report_$cell.log" 2>&1

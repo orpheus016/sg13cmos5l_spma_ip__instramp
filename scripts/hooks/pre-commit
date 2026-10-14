@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Installed by scripts/install_hooks.sh. When a schematic, symbol or layout is part of the commit, regenerate the pictures of the
+# affected cells (docs/<cell>/media/*, README blocks) and add them to the commit, so committed READMEs never show an old circuit or layout.
+# Never blocks a commit: if a tool is missing or the script fails it only warns (run scripts/update_images.py by hand then).
+root="$(git rev-parse --show-toplevel)"
+staged="$(git diff --cached --name-only)"
+echo "$staged" | grep -qE '\.(sch|sym|gds)$' || exit 0
+[ -f "$root/scripts/update_images.py" ] || exit 0
+echo "pre-commit: schematic/layout changed -> scripts/update_images.py --staged"
+if ! python3 -I "$root/scripts/update_images.py" all --staged; then
+  echo "pre-commit: WARNING update_images.py failed, pictures not refreshed (commit continues)"; exit 0
+fi
+# stage what the script wrote (only files it owns)
+git -C "$root" add -- docs/*/media 2>/dev/null
+for f in $(git -C "$root" diff --name-only -- 'gds/*/README.md' 'xschem/*/README.md'); do git -C "$root" add -- "$f"; done
+exit 0

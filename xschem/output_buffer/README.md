@@ -14,6 +14,10 @@
 
 ## 2. Circuit Architecture & Sizing
 
+<!-- AUTO:schematic:output_buffer -->
+![output_buffer schematic](../../docs/output_buffer/media/output_buffer_schematic.png)
+<!-- /AUTO -->
+
 The buffer utilizes a **two-stage Miller-compensated operational amplifier core** configured in negative unity feedback ($V_{IN\_BUF-} = V_{OUT} = V_O$):
 
 ```

@@ -14,6 +14,10 @@
 
 ## 2. Circuit Architecture & Sub-Block Integration
 
+<!-- AUTO:schematic:decoder_top_10b -->
+![decoder_top_10b schematic](../../docs/decoder_top_10b/media/decoder_top_10b_schematic.png)
+<!-- /AUTO -->
+
 The top-level decoder is a clean hierarchical integration combining two specialized digital sub-blocks:
 
 ```

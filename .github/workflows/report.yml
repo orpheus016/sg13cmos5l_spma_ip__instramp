@@ -62,7 +62,7 @@ jobs:
           ln -sfn "$GITHUB_WORKSPACE" /foss/designs/sg13cmos5l_spma_ip__instramp
 
       - name: Python deps
-        run: python3 -m pip install --quiet plotly pandas nbformat || true
+        run: python3 -m pip install --quiet plotly pandas nbformat cairosvg pillow || true
 
       - name: Flow ${{ matrix.cell }}
         id: flow

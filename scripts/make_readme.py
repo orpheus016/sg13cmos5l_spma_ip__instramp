@@ -15,6 +15,7 @@ import datetime
 import glob
 import os
 import re
+import shutil
 import statistics as st
 import subprocess
 import sys
@@ -219,7 +220,20 @@ def git(*a):
         return "unknown"
 
 
+def pictures():
+    """schematic/symbol/layout pictures of the cell (scripts/update_images.py). CACE's own export (xschem -x --svg without zoom_full) writes
+    an SVG that is only a black rectangle, so its files are overwritten with the real ones and the README links point to docs/<cell>/media."""
+    subprocess.run([sys.executable, "-I", os.path.join(ROOT, "scripts", "update_images.py"), CELL, "--no-readme"], check=False)
+    media = os.path.join(ROOT, "docs", CELL, "media")
+    for kind in ("schematic", "symbol"):
+        src_f, dst = os.path.join(media, f"{CELL}_{kind}.svg"), os.path.join(DOC, f"{CELL}_{kind}.svg")
+        if os.path.isfile(src_f) and os.path.isdir(DOC):
+            shutil.copyfile(src_f, dst)
+    return os.path.isfile(os.path.join(media, f"{CELL}_layout.png"))
+
+
 def main():
+    has_layout = pictures()
     src = "schematic"
     res_md = cace_file(f"{CELL}_{src}.md")
     design_md = cace_file(f"{CELL}.md")
@@ -230,6 +244,9 @@ def main():
            "- Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).\n"]
     if design_md:
         body = re.sub(r"^# .*\n", "", design_md, count=1)
+        body = body.replace(f"]({CELL}_schematic.svg)", f"](../media/{CELL}_schematic.svg)").replace(f"]({CELL}_symbol.svg)", f"](../media/{CELL}_symbol.svg)")
+        if has_layout:
+            body = body.rstrip("\n") + f"\n\n## Layout\n\n![Layout of {CELL}](../media/{CELL}_layout.png)\n"
         out.append("## Design *(CACE)*\n" + body.replace("\n## ", "\n### "))
     if res_md:
         table = res_md.split("## Plots")[0]

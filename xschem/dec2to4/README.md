@@ -12,6 +12,21 @@
 
 ## 2. Circuit Architecture & Logic Mapping
 
+<!-- AUTO:schematic:dec2to4 -->
+![dec2to4 schematic](../../docs/dec2to4/media/dec2to4_schematic.png)
+<!-- /AUTO -->
+
+<!-- AUTO:layout:dec2to4 -->
+### Layout
+
+![dec2to4 layout](../../docs/dec2to4/media/dec2to4_layout.png)
+
+```bash
+W = 12.96um
+L = 4.39um
+```
+<!-- /AUTO -->
+
 The block is implemented with IHP SG13CMOS5L standard cells (`sg13cmos5l_stdcells`), ensuring compact layout, balanced drive, and DRC/LVS cleanliness.
 
 ### Logic Implementation

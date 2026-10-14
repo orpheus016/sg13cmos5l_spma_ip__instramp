@@ -1,7 +1,9 @@
 # OTA Specs and Performance
 
 ## Topology
-<img width="862" height="728" alt="image" src="https://github.com/user-attachments/assets/93cbe3e7-4963-4372-8eb0-26019f4ba6d9" />
+<!-- AUTO:schematic:ota_cmos5l -->
+![ota_cmos5l schematic](../../docs/ota_cmos5l/media/ota_cmos5l_schematic.png)
+<!-- /AUTO -->
 
 ## Physical Spec
 ```ngspice

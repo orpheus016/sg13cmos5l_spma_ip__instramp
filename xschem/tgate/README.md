@@ -13,6 +13,10 @@
 
 ## 2. Circuit Topology & Sizing
 
+<!-- AUTO:schematic:tgate -->
+![tgate schematic](../../docs/tgate/media/tgate_schematic.png)
+<!-- /AUTO -->
+
 The switch consists of a complementary NMOS and PMOS pair connected in parallel to ensure rail-to-rail signal transmission (0 V to 1.2 V).
 
 ### Transistor Sizing

@@ -1,13 +1,17 @@
 # Layout
 
 ## Top-Level
-Insert image
+<!-- AUTO:layout:pgia_top -->
+![pgia_top layout](../../docs/pgia_top/media/pgia_top_layout.png)
+<!-- /AUTO -->
 
 ### Physical Spec
+<!-- AUTO:dims:pgia_top -->
 ```bash
-W = ...
-L = ...
+W = 500.00um
+L = 250.00um
 ```
+<!-- /AUTO -->
 
 ### Post-Layout Metrics
 - Insert metrics
@@ -15,34 +19,53 @@ L = ...
 ## Cells
 
 ### Static Instrumentation Amplifier
-<img width="691" height="622" alt="image" src="https://github.com/user-attachments/assets/a5e48664-ed3d-4707-8399-d1cd57470147" />
+<!-- AUTO:layout:instramp_cmos5l -->
+![instramp_cmos5l layout](../../docs/instramp_cmos5l/media/instramp_cmos5l_layout.png)
+<!-- /AUTO -->
 
 Dimension:
+<!-- AUTO:dims:instramp_cmos5l -->
 ```bash
 W = 124.25um
 L = 122.79um
 ```
+<!-- /AUTO -->
 
 ### OTA_CMOS5L
-<img width="1210" height="412" alt="image" src="https://github.com/user-attachments/assets/bf74190a-3aa7-4320-9b3b-91de1c5d08b9" />
+<!-- AUTO:layout:ota_cmos5l -->
+![ota_cmos5l layout](../../docs/ota_cmos5l/media/ota_cmos5l_layout.png)
+<!-- /AUTO -->
 
 Dimension:
+<!-- AUTO:dims:ota_cmos5l -->
 ```bash
 W = 112.21um
 L = 37.41um
 ```
+<!-- /AUTO -->
 
 ### Decoder
-Insert image
+<!-- AUTO:layout:decoder_top_10b -->
+![decoder_top_10b layout](../../docs/decoder_top_10b/media/decoder_top_10b_layout.png)
+<!-- /AUTO -->
 
 Dimension:
-Insert dimension
+<!-- AUTO:dims:decoder_top_10b -->
+```bash
+W = 75.00um
+L = 75.00um
+```
+<!-- /AUTO -->
 
 ### Buffer
-<img width="1326" height="467" alt="image" src="https://github.com/user-attachments/assets/29893355-dae3-46fb-a916-89a292061fa6" />
+<!-- AUTO:layout:output_buffer -->
+![output_buffer layout](../../docs/output_buffer/media/output_buffer_layout.png)
+<!-- /AUTO -->
 
 Dimension:
+<!-- AUTO:dims:output_buffer -->
 ```bash
 W = 113.55um
 L = 37.41um
 ```
+<!-- /AUTO -->

@@ -14,6 +14,10 @@
 
 ## 2. Circuit Architecture & Topology
 
+<!-- AUTO:schematic:fine_driver_6b -->
+![fine_driver_6b schematic](../../docs/fine_driver_6b/media/fine_driver_6b_schematic.png)
+<!-- /AUTO -->
+
 Each digital bit $D_i$ ($i \in \{4, 5, 6, 7, 8, 9\}$) drives a parallel buffer and inverter channel to provide matched, low-skew complementary outputs:
 
 ```

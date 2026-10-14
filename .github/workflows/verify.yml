@@ -65,13 +65,20 @@ jobs:
           ln -sfn "$GITHUB_WORKSPACE" /foss/designs/sg13cmos5l_spma_ip__instramp
 
       - name: Python deps for the cell registry
-        run: python3 -m pip install --quiet pyyaml || true
+        run: python3 -m pip install --quiet pyyaml cairosvg pillow || true
 
       - name: DRC + antenna + LVS ${{ matrix.cell }}
         # stages and layout path come from cells.yaml; a cell without schematic or layout gets SKIP, not a failure
         id: flow
         continue-on-error: true
         run: scripts/flow.sh ${{ matrix.cell }} --only drc,lvs
+
+      - name: Pictures up to date? (non-blocking)
+        # schematic/layout pictures in docs/<cell>/media and the README blocks; fix with scripts/update_images.py (or the pre-commit hook)
+        if: always()
+        run: |
+          if scripts/update_images.py ${{ matrix.cell }} --check > images.txt 2>&1; then echo "pictures up to date"
+          else echo "::warning::pictures of ${{ matrix.cell }} are out of date, run scripts/update_images.py ${{ matrix.cell }}"; cat images.txt; fi
 
       - name: Job summary
         if: always()

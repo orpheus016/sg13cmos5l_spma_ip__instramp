@@ -1,7 +1,9 @@
 # OTA Specs and Performance
 
 ## Topology
-<img width="1240" height="792" alt="image" src="https://github.com/user-attachments/assets/1a7c5f2a-3bd9-4391-b745-d00f02187e5f" />
+<!-- AUTO:schematic:instramp_cmos5l -->
+![instramp_cmos5l schematic](../../docs/instramp_cmos5l/media/instramp_cmos5l_schematic.png)
+<!-- /AUTO -->
 
 ## Physical Spec
 ```ngspice

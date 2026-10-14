@@ -7,38 +7,48 @@
 #   stages   what scripts/flow.sh runs, in order, out of: cace drc lvs pex post
 #   drc_args extra arguments for scripts/run_drc.sh (e.g. --density for a finished chip)
 #   note     free text shown in the status page
+#   title    heading of this cell in gds/pgia_top/README.md (scripts/update_images.py puts the layout picture + W/L under it)
+#   schematics  further schematics of the cell to draw (the primary one is `sch`)
 # Cells with an empty stage list are schematic-only so far: flow.sh prints SKIP, scripts/new_cell.sh scaffolds the CACE part.
 ota_cmos5l:
+  title: OTA_CMOS5L
   gds: gds/pgia_top/ota_cmos5l.gds
   sch: xschem/ota_cmos5l/ota_cmos5l.sch
   cace: cace/ota_cmos5l.yaml
   stages: [cace, drc, lvs, pex, post]
   note: two-stage Miller OTA
 instramp_cmos5l:
+  title: Static Instrumentation Amplifier
   gds: gds/pgia_top/instramp_cmos5l.gds
   sch: xschem/instramp_cmos5l/instramp_cmos5l.sch
   cace: cace/instramp_cmos5l.yaml
   stages: [cace, drc, lvs, pex, post]
   note: three-OTA instrumentation amplifier, closed-loop gain 8 V/V
 output_buffer:
+  title: Buffer
   gds: gds/pgia_top/output_buffer.gds
   sch: xschem/output_buffer/output_buffer.sch
   stages: [drc, lvs]
-  note: no CACE datasheet yet (python3 scripts/new_cell.sh output_buffer)
+  note: no CACE datasheet yet (python3 scripts/new_cell.py output_buffer)
 decoder_top_10b:
+  title: Decoder
   gds: gds/pgia_top/decoder_top_10b.gds
+  sch: xschem/decoder_top_10b/decoder_top_10b.sch
   stages: [drc]
   note: digital (standard cells, librelane flow in xschem/decoder_top_10b/librelane); LVS and timing belong to that flow
 dec2to4:
   gds: xschem/dec2to4/dec2to4.gds
+  sch: xschem/dec2to4/dec2to4.sch
   stages: [drc]
   note: digital building block
 pgia_top:
+  title: Top-Level
   gds: gds/pgia_top/pgia_top.gds
   stages: [drc]
   drc_args: [--density]
   note: chip level, density rules apply
 coarse_gain:
+  schematics: [xschem/coarse_gain/cg_network.sch]
   sch: xschem/coarse_gain/cg_ota.sch
   stages: []
   note: schematic only so far
@@ -50,3 +60,19 @@ fine_driver_6b:
   sch: xschem/fine_driver_6b/fine_driver_6b.sch
   stages: []
   note: schematic only so far
+dec4to16:
+  sch: xschem/dec4to16/dec4to16.sch
+  stages: []
+  note: digital building block (4-to-16 thermometer decoder)
+tgate:
+  sch: xschem/tgate/tgate.sch
+  stages: []
+  note: transmission gate
+inv:
+  sch: xschem/inv/inv.sch
+  stages: []
+  note: inverter
+ota_5t:
+  sch: xschem/ota_5t/ota_5t.sch
+  stages: []
+  note: five-transistor OTA (early experiment)

@@ -10,6 +10,7 @@
 | [LVS guide](#lvs-guide-klayout) (below) | Layout vs schematic with KLayout: GUI loop, `scripts/run_lvs.sh`, pitfalls |
 | [lvs_upstream_issues.md](lvs_upstream_issues.md) | Draft IHP-Open-PDK issues for the MoM-cap LVS limitations (not posted) |
 | [Flow guide](#flow-guide-one-command-per-cell) (below) | `scripts/flow.sh <cell>`: schematic CACE -> DRC/antenna -> LVS -> PEX -> post-layout CACE -> comparison for every cell, manual steps, new cells, interactive report |
+| [Pictures](#f5-pictures-schematic-and-layout-of-every-cell) (Flow guide F5) | `scripts/update_images.py`: circuit-only schematics and layout renderings, auto-updated in the READMEs and `report.html` |
 | [roadmap.md](roadmap.md) | Optimisation (C/ID), ALIGN, ANN and topology-recommendation: feasibility and order of work |
 | [Post-layout guide](#post-layout-simulation-guide-pex--cace) (below) | LVS-clean layout -> PEX -> CACE on the extracted netlist -> schematic vs post-layout report |
 
@@ -367,6 +368,7 @@ scripts/flow.sh output_buffer                 # only the stages its cells.yaml e
 scripts/flow.sh fine_gain                     # schematic-only cell: prints "no stages yet"
 scripts/flow.sh ota_cmos5l --only drc,lvs     # subset (what CI uses)   | --stages post   only that stage   | --force   rerun the schematic CACE
 scripts/build_report.sh ota_cmos5l            # docs/<cell>/report.html: interactive Plotly report (all cells: build_report.sh all)
+scripts/update_images.py all                  # schematic + layout pictures and the README blocks (see F5)
 ```
 
 Result: `docs/<cell>/status.md` and `status.json` (stage, result, time, detail; layout/schematic hashes so the report can tell when it is
@@ -417,6 +419,35 @@ specification table, PVT explorer (drop-down per variable, corner = colour, supp
 `scripts/build_report.sh` runs it with `jupyter nbconvert --execute`. `.github/workflows/report.yml` rebuilds it for every cell when `xschem/**`, `cace/**`, `gds/**`, `cells.yaml`, `scripts/**` or the
 notebook change (pull requests: profile `typ`, `main`: `pvt`, published to GitHub Pages from `main`). The netlists themselves are git-ignored, they are derived from the schematic by the flow.
 The workflows have never run on GitHub (see STATUS.md).
+
+---
+
+## F5. Pictures: schematic and layout of every cell
+
+```bash
+scripts/update_images.py all                  # every cell of cells.yaml: pictures + README blocks (7 s)
+scripts/update_images.py ota_cmos5l           # one cell
+scripts/update_images.py all --check          # exit 1 if anything is out of date (CI), --dry-run shows what would change
+scripts/install_hooks.sh                      # once per clone: pre-commit hook refreshes the pictures of the cells you commit
+```
+
+| Picture | Where | Used in |
+|---|---|---|
+| `docs/<cell>/media/<cell>_schematic.png` / `.svg` | xschem schematic, **circuit only** (the SPICE code blocks - `.param`, simulator commands, every instance of type `netlist_commands` - are removed from the in-memory copy, the `.sch` file is not touched), light colours, cropped; the PNG for READMEs, the SVG (vector) for the report | `xschem/<cell>/README.md`, `docs/<cell>/cace/README.md`, `report.html` |
+| `docs/<cell>/media/<cell>_symbol.svg` | the symbol | `docs/<cell>/cace/README.md` |
+| `docs/<cell>/media/<cell>_layout.png` | KLayout rendering of the GDS with the PDK layer colours (`--labels` shows texts) | `gds/pgia_top/README.md` (with the measured W/L), `docs/<cell>/cace/README.md`, `report.html` |
+
+README text is never rewritten except between `<!-- AUTO:<kind>:<cell> -->` and `<!-- /AUTO -->`. The first run puts the block where the old hand-pasted
+picture was (`gds/pgia_top/README.md`: under the heading named by `title:` in `cells.yaml`, plus the `Dimension:` / `Physical Spec` W/L fence; `xschem/<cell>/README.md`: under the
+first heading containing topology/schematic/circuit, else below the `# ` title; a README that does not exist is created). After that the block is simply refreshed. To add a cell or an extra schematic (`schematics:` list), edit `cells.yaml`.
+Files are rewritten only when their bytes change, so a second run is a no-op and `git diff` shows only real changes (the xschem title block prints the file's modification time, so touching a `.sch` does change its picture).
+The flow runs this as its last stage (`images`), `scripts/build_report.sh` runs it before building the report, `scripts/make_readme.py` runs it and links the pictures into `docs/<cell>/cace/README.md`.
+
+Why the schematic in `docs/<cell>/cace/README.md` used to show nothing: CACE exports it with `xschem -x -q --svg --plotfile` and **without `xschem zoom_full`**, so the drawing falls outside the page and the SVG is only a black rectangle
+(5 elements). `make_readme.py` overwrites CACE's two SVGs with the real ones (`xschem zoom_full; xschem print svg`) after every CACE run.
+
+A schematic whose symbols cannot be found is drawn with `---MISSING SYMBOL---` boxes and the script prints a WARNING naming them. Currently: `fine_gain.sch`, `decoder_top_10b.sch`, `dec4to16.sch` (absolute paths of another checkout, `/foss/designs/chipalooza/...`),
+`output_buffer.sch` (`cap_mfringe`, not in cmos5l) and `ota_5t.sch` (sky130 `nfet_03v3`/`pfet_03v3`). Fix the references (relative `ota_cmos5l.sym`, an xschemrc that lists the sibling directories), then rerun.
 
 ---
 

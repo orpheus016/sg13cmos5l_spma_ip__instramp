@@ -87,3 +87,9 @@ auto build scaffolding but later move to phase 5 first
 
 ## Fixed 2026-10-13: CACE runs crashed randomly (error code -11)
 Cause: parallel headless xschem tried the X server (`DISPLAY` set) and shared one HOME (`recent_files` corruption). Fix: `unset DISPLAY` + `scripts/bin/xschem` wrapper (own HOME per call) in `run_cace.sh` and `run_postlayout.sh`. Full OTA run (PVT + MC): 43 Pass / 0 errors in 2m15s (before: up to 1113 crashes). dc_op/tran numbers moved by <=0.1 % in some conditions versus 2026-10-12 after the parameter centralisation (cause not isolated); the OTA report was regenerated.
+
+## Phase 3.9 – Pictures of every cell (2026-10-14)
+- [x] `scripts/update_images.py`: circuit-only light schematics (SPICE `netlist_commands` blocks removed), symbols and KLayout layout renderings -> `docs/<cell>/media/`; README blocks (markers) in `gds/pgia_top/README.md` (with measured W/L), `xschem/<cell>/README.md`; W/L matched the hand-entered values of OTA, instramp, buffer
+- [x] `docs/<cell>/cace/README.md`: CACE's own schematic/symbol SVG was a black rectangle (CACE calls `xschem -x --svg` without `zoom_full`); `make_readme.py` now overwrites them and adds a Layout section. Worth an upstream issue to CACE (missing `zoom_full`) and for the layout PNG (it looks for `ihp-sg13cmos5l.lyp`, the PDK ships `sg13cmos5l.lyp`)
+- [x] `report.html` has a "Schematic and layout" section (inline SVG + PNG); `flow.sh` stage `images`; `scripts/install_hooks.sh` pre-commit hook (tested in a scratch clone); `verify.yml` has a non-blocking `--check`
+- [ ] Schematics with missing symbols (drawn as `---MISSING SYMBOL---`): `fine_gain`, `decoder_top_10b`, `dec4to16` (absolute `/foss/designs/chipalooza/...` paths), `output_buffer` (`cap_mfringe`), `ota_5t` (sky130 symbols) - fix the references, rerun `scripts/update_images.py`

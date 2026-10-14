@@ -133,6 +133,17 @@ def postlayout(cell, variant="c"):
     return json.load(open(f)) if os.path.isfile(f) else None
 
 
+def images(cell):
+    """{schematic_svg, schematic_png, symbol_svg, layout_png} that exist in docs/<cell>/media (scripts/update_images.py)"""
+    m = os.path.join(ROOT, "docs", cell, "media")
+    out = {}
+    for k, f in (("schematic_svg", f"{cell}_schematic.svg"), ("schematic_png", f"{cell}_schematic.png"),
+                 ("symbol_svg", f"{cell}_symbol.svg"), ("layout_png", f"{cell}_layout.png")):
+        if os.path.isfile(os.path.join(m, f)):
+            out[k] = os.path.join(m, f)
+    return out
+
+
 def stale(cell):
     """list of reasons why docs/<cell>/status.json no longer matches the sources (empty = up to date)"""
     import hashlib

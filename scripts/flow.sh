@@ -8,6 +8,7 @@
 #   lvs    layout versus schematic                              scripts/run_lvs.sh
 #   pex    parasitic extraction: kpex C and Magic R+C           scripts/run_pex.sh   (needs lvs MATCH and the cace run)
 #   post   CACE on the extracted netlist(s) + comparison        scripts/run_postlayout.sh   (--netlist, default both c and rc)
+#   images schematic + layout pictures, README blocks           scripts/update_images.py   (always last; not with --only)
 # A stage that cannot run is SKIPPED with the reason (no layout yet, no datasheet...), a stage that depends on a failed one is BLOCKED.
 # --no-mc leaves the Monte Carlo parameters out of the schematic run (faster; the reference then has no MC rows).
 # Output: runs/flow/<cell>/<stage>.log, docs/<cell>/status.md and docs/<cell>/status.json (read by tools/report.ipynb).
@@ -128,6 +129,13 @@ if has_stage post; then
   fi
 fi
 
+# ---- images: schematic + layout pictures and their README blocks (always, unless --only restricts the stages, e.g. in CI)
+if [ -z "$only" ] && { [ -f "$gds" ] || [ -f "$sch" ]; }; then
+  run images python3 -I "$root/scripts/update_images.py" "$cell"
+  d=$(grep -E '^images:' "$log/images.log" | tail -1 | sed 's/^images: //')
+  case $RC in 0) record images pass "$SECS" "$d";; *) record images error "$SECS" "rc=$RC, see $log/images.log";; esac
+fi
+
 # ---- status page
 python3 -I - "$root" "$cell" "$profile" "$res" "$gds" "$sch" <<'PY'
 import datetime, hashlib, json, os, subprocess, sys
@@ -138,6 +146,20 @@ stages = []
 for line in open(res):
     n, s, t, d = line.rstrip("\n").split("\t")
     stages.append(dict(name=n, status=s, seconds=int(t), detail=d))
+# a partial run (--stages / --only) updates only the stages it ran; the others keep their last result
+now = datetime.datetime.now().isoformat(timespec="seconds")
+for s in stages:
+    s["at"] = now
+old_f = os.path.join(root, "docs", cell, "status.json")
+if os.path.isfile(old_f):
+    try:
+        prev = {s["name"]: s for s in json.load(open(old_f)).get("stages", [])}
+        ran = {s["name"] for s in stages}
+        stages = [prev[n] for n in prev if n not in ran] + stages
+        order = ["cace", "drc", "lvs", "pex", "post_c", "post_rc", "images"]
+        stages.sort(key=lambda s: order.index(s["name"]) if s["name"] in order else 99)
+    except Exception:
+        pass
 try:
     commit = subprocess.check_output(["git", "-C", root, "rev-parse", "--short", "HEAD"], text=True).strip()
 except Exception:

@@ -13,6 +13,10 @@
 
 ## 2. Circuit Architecture & Logic Mapping
 
+<!-- AUTO:schematic:dec4to16 -->
+![dec4to16 schematic](../../docs/dec4to16/media/dec4to16_schematic.png)
+<!-- /AUTO -->
+
 To minimize input capacitance on the digital bus, avoid slow 4-input gate stacks, and keep layout modular, a **2-level pre-decoding topology** is employed:
 
 ```

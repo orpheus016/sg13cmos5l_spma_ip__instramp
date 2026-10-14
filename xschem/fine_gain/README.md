@@ -5,7 +5,9 @@ This block implements the Fine-Gain Stage (Stage 3) of the Programmable Gain Ins
 
 ## Designed Topology
 <!-- Block diagram from the proposal -->
-<img width="968" height="330" alt="Block Diagram" src="https://github.com/user-attachments/assets/2cf7a7d1-d0d4-447e-ae6d-d60545853b4b" />
+<!-- AUTO:schematic:fine_gain -->
+![fine_gain schematic](../../docs/fine_gain/media/fine_gain_schematic.png)
+<!-- /AUTO -->
 
 ## Schematic (Xschem)
 <!-- Xschem schematic capture -->
