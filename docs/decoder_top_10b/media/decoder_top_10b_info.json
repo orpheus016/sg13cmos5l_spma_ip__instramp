@@ -1,0 +1,12 @@
+{
+ "cell": "decoder_top_10b",
+ "gds": "gds/pgia_top/decoder_top_10b.gds",
+ "layout": {
+  "L": 75.0,
+  "W": 75.0,
+  "area": 5625.0,
+  "top": "decoder_top_10b"
+ },
+ "params": [],
+ "schematic": "xschem/decoder_top_10b/decoder_top_10b.sch"
+}

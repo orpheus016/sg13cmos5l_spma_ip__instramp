@@ -144,6 +144,12 @@ def images(cell):
     return out
 
 
+def media_info(cell):
+    """docs/<cell>/media/<cell>_info.json: {params: [{source, instances, name, value}], layout: {top, W, L, area}} (scripts/update_images.py)"""
+    f = os.path.join(ROOT, "docs", cell, "media", f"{cell}_info.json")
+    return json.load(open(f)) if os.path.isfile(f) else {}
+
+
 def stale(cell):
     """list of reasons why docs/<cell>/status.json no longer matches the sources (empty = up to date)"""
     import hashlib

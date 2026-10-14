@@ -1,0 +1,12 @@
+{
+ "cell": "output_buffer",
+ "gds": "gds/pgia_top/output_buffer.gds",
+ "layout": {
+  "L": 37.41,
+  "W": 113.55,
+  "area": 4247.9,
+  "top": "output_buffer"
+ },
+ "params": [],
+ "schematic": "xschem/output_buffer/output_buffer.sch"
+}

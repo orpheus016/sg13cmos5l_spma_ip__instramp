@@ -1,0 +1,12 @@
+{
+ "cell": "dec2to4",
+ "gds": "xschem/dec2to4/dec2to4.gds",
+ "layout": {
+  "L": 4.39,
+  "W": 12.96,
+  "area": 56.9,
+  "top": "dec2to4"
+ },
+ "params": [],
+ "schematic": "xschem/dec2to4/dec2to4.sch"
+}

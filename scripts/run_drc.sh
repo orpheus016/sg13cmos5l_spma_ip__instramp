@@ -16,7 +16,7 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
 drc_py="$PDK_ROOT/$PDK/libs.tech/klayout/tech/drc/run_drc.py"
 
-gds=""; top="$cell"; density=""; antenna=1; extra=()
+gds=""; top="";  density=""; antenna=1; extra=()
 while [ $# -gt 0 ]; do
   case "$1" in
     --gds) gds="$2"; shift 2;;
@@ -29,6 +29,7 @@ while [ $# -gt 0 ]; do
     *) echo "run_drc.sh: unknown option $1"; exit 2;;
   esac
 done
+[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml (e.g. slot9_wrapper for pgia_top), else the cell name
 if [ -z "$gds" ]; then
   mapfile -t found < <(python3 -I "$root/scripts/cellinfo.py" "$cell" gds 2>/dev/null || ls "$root"/gds/*/"$cell.gds" 2>/dev/null)
   [ "${#found[@]}" -eq 1 ] || { echo "run_drc.sh: pass --gds (found ${#found[@]} candidates: ${found[*]:-none})"; exit 2; }

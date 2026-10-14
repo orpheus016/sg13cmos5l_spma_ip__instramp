@@ -1,0 +1,143 @@
+{
+ "cell": "instramp_cmos5l",
+ "gds": "gds/pgia_top/instramp_cmos5l.gds",
+ "layout": {
+  "L": 122.79,
+  "W": 124.25,
+  "area": 15256.7,
+  "top": "instramp_cmos5l"
+ },
+ "params": [
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "temp",
+   "source": "ota_cmos5l",
+   "value": "27"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "lbias",
+   "source": "ota_cmos5l",
+   "value": "0.15u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "wbias",
+   "source": "ota_cmos5l",
+   "value": "0.15u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "m6",
+   "source": "ota_cmos5l",
+   "value": "1"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "m7",
+   "source": "ota_cmos5l",
+   "value": "4"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "m8",
+   "source": "ota_cmos5l",
+   "value": "8"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "linpair",
+   "source": "ota_cmos5l",
+   "value": "3u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "winpair",
+   "source": "ota_cmos5l",
+   "value": "20u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "lload",
+   "source": "ota_cmos5l",
+   "value": "5u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "wload",
+   "source": "ota_cmos5l",
+   "value": "10u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "lcs",
+   "source": "ota_cmos5l",
+   "value": "3u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "wcs",
+   "source": "ota_cmos5l",
+   "value": "20u"
+  },
+  {
+   "instances": [
+    "x1",
+    "x2",
+    "x3"
+   ],
+   "name": "Cc",
+   "source": "ota_cmos5l",
+   "value": "2p"
+  }
+ ],
+ "schematic": "xschem/instramp_cmos5l/instramp_cmos5l.sch"
+}

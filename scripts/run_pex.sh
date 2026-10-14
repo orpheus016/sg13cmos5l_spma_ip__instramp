@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Parasitic extraction of one cell for post-layout simulation:  scripts/run_pex.sh <cell> [options]
 #
-#   --gds <file>   layout (default: the only gds/*/<cell>.gds)      --top <cell>  top cell (default <cell>)
+#   --gds <file>   layout (default: the only gds/*/<cell>.gds)      --top <cell>  top cell (default: top of cells.yaml, else <cell>)
 #   --skip-lvs     do not run scripts/run_lvs.sh first (it must be MATCH, PEX is meaningless otherwise)
 #   --mode CC|RC   kpex 2.5D mode (default CC = coupling/ground capacitance; see the note below)
 #   --no-rc        skip the Magic wire-resistance extraction (below)
@@ -22,7 +22,7 @@ set -uo pipefail
 cell="${1:?usage: run_pex.sh <cell> [--gds f] [--top c] [--skip-lvs] [--mode CC|RC]}"; shift
 root="$(cd "$(dirname "$0")/.." && pwd)"
 export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
-gds=""; top="$cell"; skip_lvs=""; mode="CC"; rc=1; use="c"; rthresh=0
+gds=""; top="";  skip_lvs=""; mode="CC"; rc=1; use="c"; rthresh=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --gds) gds="$2"; shift 2;; --top) top="$2"; shift 2;; --skip-lvs) skip_lvs=1; shift;; --mode) mode="$2"; shift 2;;
@@ -30,6 +30,7 @@ while [ $# -gt 0 ]; do
     *) echo "run_pex.sh: unknown option $1"; exit 2;;
   esac
 done
+[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml (e.g. slot9_wrapper for pgia_top), else the cell name
 if [ -z "$gds" ]; then
   mapfile -t found < <(python3 -I "$root/scripts/cellinfo.py" "$cell" gds 2>/dev/null || ls "$root"/gds/*/"$cell.gds" 2>/dev/null)
   [ "${#found[@]}" -eq 1 ] || { echo "run_pex.sh: pass --gds (found ${#found[@]} candidates)"; exit 2; }

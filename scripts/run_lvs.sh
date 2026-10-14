@@ -18,7 +18,7 @@ export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"   # the image defau
 lvs_py="$PDK_ROOT/$PDK/libs.tech/klayout/tech/lvs/run_lvs.py"
 tools="$root/scripts/lvs_tools.py"
 
-gds=""; top="$cell"; netlist_only=""; fix_labels=""; view=""; extra=()
+gds=""; top="";  netlist_only=""; fix_labels=""; view=""; extra=()
 while [ $# -gt 0 ]; do
   case "$1" in
     --gds) gds="$2"; shift 2;;
@@ -30,6 +30,7 @@ while [ $# -gt 0 ]; do
     *) echo "run_lvs.sh: unknown option $1"; exit 2;;
   esac
 done
+[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml (e.g. slot9_wrapper for pgia_top), else the cell name
 
 sch="$root/xschem/$cell/$cell.sch"
 [ -f "$sch" ] || { echo "run_lvs.sh: $sch not found"; exit 2; }

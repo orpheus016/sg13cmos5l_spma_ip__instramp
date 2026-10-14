@@ -1,0 +1,111 @@
+{
+ "cell": "fine_gain",
+ "gds": null,
+ "params": [
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "temp",
+   "source": "ota_cmos5l",
+   "value": "27"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "lbias",
+   "source": "ota_cmos5l",
+   "value": "0.15u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "wbias",
+   "source": "ota_cmos5l",
+   "value": "0.15u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "m6",
+   "source": "ota_cmos5l",
+   "value": "1"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "m7",
+   "source": "ota_cmos5l",
+   "value": "4"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "m8",
+   "source": "ota_cmos5l",
+   "value": "8"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "linpair",
+   "source": "ota_cmos5l",
+   "value": "3u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "winpair",
+   "source": "ota_cmos5l",
+   "value": "20u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "lload",
+   "source": "ota_cmos5l",
+   "value": "5u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "wload",
+   "source": "ota_cmos5l",
+   "value": "10u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "lcs",
+   "source": "ota_cmos5l",
+   "value": "3u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "wcs",
+   "source": "ota_cmos5l",
+   "value": "20u"
+  },
+  {
+   "instances": [
+    "x1"
+   ],
+   "name": "Cc",
+   "source": "ota_cmos5l",
+   "value": "2p"
+  }
+ ],
+ "schematic": "xschem/fine_gain/fine_gain.sch"
+}

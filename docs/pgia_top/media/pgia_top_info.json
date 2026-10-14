@@ -1,0 +1,12 @@
+{
+ "cell": "pgia_top",
+ "gds": "gds/pgia_top/pgia_top.gds",
+ "layout": {
+  "L": 273.0,
+  "W": 537.15,
+  "area": 146641.9,
+  "top": "slot9_wrapper"
+ },
+ "params": [],
+ "schematic": null
+}

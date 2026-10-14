@@ -1,7 +1,7 @@
 # Registry of the cells of this repository: single source of truth for scripts/flow.sh, scripts/cellinfo.py, the CI matrices
 # and the report. Paths are relative to the repository root.
 #   gds      layout (DRC / antenna / LVS / PEX); omit if the cell has no layout yet
-#   top      top cell name in the GDS (default: the cell name)
+#   top      top cell name in the GDS (default: the cell name; pgia_top.gds has the top cell `slot9_wrapper`)
 #   sch      xschem schematic (LVS, netlist pin order)
 #   cace     CACE datasheet (schematic reference run and post-layout run)
 #   stages   what scripts/flow.sh runs, in order, out of: cace drc lvs pex post
@@ -43,6 +43,7 @@ dec2to4:
   note: digital building block
 pgia_top:
   title: Top-Level
+  top: slot9_wrapper
   gds: gds/pgia_top/pgia_top.gds
   stages: [drc]
   drc_args: [--density]

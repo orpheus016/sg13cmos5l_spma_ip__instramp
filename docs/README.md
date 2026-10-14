@@ -437,8 +437,11 @@ scripts/install_hooks.sh                      # once per clone: pre-commit hook 
 | `docs/<cell>/media/<cell>_symbol.svg` | the symbol | `docs/<cell>/cace/README.md` |
 | `docs/<cell>/media/<cell>_layout.png` | KLayout rendering of the GDS with the PDK layer colours (`--labels` shows texts) | `gds/pgia_top/README.md` (with the measured W/L), `docs/<cell>/cace/README.md`, `report.html` |
 
+| `docs/<cell>/media/<cell>_info.json` | the numbers under the pictures: **`.param` values of the schematic** (and of the registered cells it instantiates, e.g. the OTA under instramp, with the instance names) and the **physical size W, L, area** (bounding box of the top cell, `top:` of `cells.yaml`) | table under the schematic / layout picture in the READMEs, `docs/<cell>/cace/README.md` and `report.html` |
+
+The parameters are read straight from the `.sch` (any instance whose `value`/`code` has `.param` lines), so editing a value updates the table in all places on the next run even though the schematic picture itself no longer shows SPICE code.
 README text is never rewritten except between `<!-- AUTO:<kind>:<cell> -->` and `<!-- /AUTO -->`. The first run puts the block where the old hand-pasted
-picture was (`gds/pgia_top/README.md`: under the heading named by `title:` in `cells.yaml`, plus the `Dimension:` / `Physical Spec` W/L fence; `xschem/<cell>/README.md`: under the
+picture was (`gds/pgia_top/README.md`: under the heading named by `title:` in `cells.yaml`, plus the `Dimension:` / `Physical Spec` W/L fence, auto-updated from the GDS; `xschem/<cell>/README.md`: under the
 first heading containing topology/schematic/circuit, else below the `# ` title; a README that does not exist is created). After that the block is simply refreshed. To add a cell or an extra schematic (`schematics:` list), edit `cells.yaml`.
 Files are rewritten only when their bytes change, so a second run is a no-op and `git diff` shows only real changes (the xschem title block prints the file's modification time, so touching a `.sch` does change its picture).
 The flow runs this as its last stage (`images`), `scripts/build_report.sh` runs it before building the report, `scripts/make_readme.py` runs it and links the pictures into `docs/<cell>/cace/README.md`.

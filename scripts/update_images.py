@@ -19,6 +19,7 @@ replaced; nothing else in a README is touched. A block that does not exist yet i
 """
 import argparse
 import io
+import json
 import os
 import re
 import subprocess
@@ -26,6 +27,9 @@ import sys
 import tempfile
 
 import yaml
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import media_md   # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PDK = "ihp-sg13cmos5l"   # not $PDK: the container default is ihp-sg13g2 (same reason the shell scripts export it)
@@ -36,6 +40,7 @@ HEADING = re.compile(r"^(#{1,6})\s+(.*?)\s*$")
 BLOCK = re.compile(r"<!-- AUTO:(\w+):([\w.-]+) -->.*?<!-- /AUTO -->", re.S)
 
 stats = dict(updated=0, unchanged=0, errors=0, warnings=0)
+REG = {}   # cells.yaml, set in main()
 WRITE = True
 LOG = []
 
@@ -61,6 +66,78 @@ def put(path, data, what=None):
         os.makedirs(os.path.dirname(path), exist_ok=True)
         open(path, "wb").write(data)
     return True
+
+
+# ------------------------------------------------------------------------------------------------ schematic parameters
+def parse_instances(path):
+    """[(symbol, {attr: value})] of an xschem .sch (instances: `C {sym} x y rot flip {attrs}`, attrs may span lines, braces are escaped)"""
+    text = open(path, errors="replace").read()
+    out = []
+    for m in re.finditer(r"^C \{([^}]*)\} +\S+ +\S+ +\S+ +\S+ +\{", text, re.M):
+        i, depth, j = m.end(), 1, m.end()
+        while j < len(text) and depth:
+            c = text[j]
+            if c == "\\":
+                j += 2
+                continue
+            depth += (c == "{") - (c == "}")
+            j += 1
+        out.append((m.group(1), parse_attrs(text[i:j - 1])))
+    return out
+
+
+def parse_attrs(s):
+    out, i = {}, 0
+    key_re, word_re = re.compile(r"\s*([\w.@-]+)="), re.compile(r"(?:\\.|\S)+")
+    while i < len(s):
+        m = key_re.match(s, i)
+        if not m:
+            i += 1
+            continue
+        key, i = m.group(1), m.end()
+        if i < len(s) and s[i] == '"':
+            j, buf = i + 1, []
+            while j < len(s) and s[j] != '"':
+                if s[j] == "\\" and j + 1 < len(s):
+                    buf.append(s[j + 1])
+                    j += 2
+                else:
+                    buf.append(s[j])
+                    j += 1
+            out[key], i = "".join(buf), j + 1
+        else:
+            w = word_re.match(s, i)
+            out[key] = re.sub(r"\\(.)", r"\1", w.group(0)) if w else ""
+            i = w.end() if w else i
+    return out
+
+
+def collect_params(cell, reg, seen=()):
+    """[{source, instances, name, value}]: `.param` lines of the cell's schematic, then those of the registered cells it instantiates"""
+    v = reg.get(cell) or {}
+    sch = os.path.join(ROOT, v["sch"]) if v.get("sch") else None
+    if not sch or not os.path.isfile(sch) or cell in seen:
+        return []
+    insts = parse_instances(sch)
+    rows = []
+    for sym, a in insts:
+        for key in ("value", "code"):
+            for line in a.get(key, "").splitlines():
+                if re.match(r"\s*\.param\b", line, re.I):
+                    for n, val in re.findall(r"(\w+)\s*=\s*(\{[^}]*\}|'[^']*'|\S+)", re.sub(r"^\s*\.param", "", line, flags=re.I)):
+                        rows.append(dict(source=cell, instances=[], name=n, value=val))
+    kids = {}
+    for sym, a in insts:
+        base = os.path.basename(sym)[:-4] if sym.endswith(".sym") else None
+        if base and base != cell and (reg.get(base) or {}).get("sch"):
+            kids.setdefault(base, []).append(a.get("name", ""))
+    for kid, names in kids.items():
+        sub = collect_params(kid, reg, seen + (cell,))
+        for r in sub:
+            if r["source"] == kid:
+                r["instances"] = sorted(names)
+        rows += [r for r in sub if (r["source"], r["name"]) not in {(x["source"], x["name"]) for x in rows}]
+    return rows
 
 
 # ------------------------------------------------------------------------------------------------ schematic
@@ -123,7 +200,7 @@ def render_schematic(sch, tmp, strip_code=True):
 
 # ------------------------------------------------------------------------------------------------ layout
 def render_layout(gds, top, png_path, labels=False):
-    """-> (png_bytes, (W, H) um) or None"""
+    """-> (png_bytes, (W, H) um, top cell name used) or None"""
     import klayout.lay as lay
 
     lv = lay.LayoutView()
@@ -155,7 +232,7 @@ def render_layout(gds, top, png_path, labels=False):
     lv.save_image(tmp, width, height)
     data = open(tmp, "rb").read()
     os.remove(tmp)
-    return data, (W, H)
+    return data, (W, H), ly.cell(ci).name
 
 
 # ------------------------------------------------------------------------------------------------ README editing
@@ -295,6 +372,15 @@ def do_cell(cell, v, args):
             if r:
                 put(os.path.join(media, f"{cell}_layout.png"), r[0])
                 res["layout"] = r[1]
+                res["top"] = r[2]
+    # numbers that belong under the pictures (READMEs, docs/<cell>/cace/README.md, report.html read this file)
+    info = dict(cell=cell, schematic=v.get("sch"), gds=v.get("gds"), params=collect_params(cell, REG) if v.get("sch") else [])
+    if res.get("layout"):
+        W, H = round(res["layout"][0], 2), round(res["layout"][1], 2)
+        info["layout"] = dict(top=res["top"], W=W, L=H, area=round(W * H, 1))
+    res["info"] = info
+    if info["params"] or info.get("layout"):
+        put(os.path.join(media, f"{cell}_info.json"), json.dumps(info, indent=1, sort_keys=True) + "\n")
     return res
 
 
@@ -310,10 +396,12 @@ def readmes(cell, v, res, args):
             body = f"![{cell} schematic](../../docs/{cell}/media/{cell}_schematic.png)"
             for base in res.get("extra", []):
                 body += f"\n\n![{cell} {base}](../../docs/{cell}/media/{cell}_{base}_schematic.png)"
+            pm = media_md.params_md(res["info"])
+            if pm:
+                body += "\n\n" + pm
             new = apply_block(new, "schematic", cell, body, pred, fallback="heading")
         if res.get("layout") and not v.get("title"):
-            W, H = res["layout"]
-            body = f"### Layout\n\n![{cell} layout](../../docs/{cell}/media/{cell}_layout.png)\n\n{fence(f'W = {W:.2f}um' + chr(10) + f'L = {H:.2f}um')}"
+            body = f"### Layout\n\n![{cell} layout](../../docs/{cell}/media/{cell}_layout.png)\n\n{media_md.layout_md(res['info'])}"
             new = apply_block(new, "layout", cell, body, None, after_marker="schematic")
         if new != text:
             put(rp, new, "README block")
@@ -347,6 +435,7 @@ def main():
     args = ap.parse_args()
     WRITE = not (args.dry_run or args.check)
     reg = yaml.safe_load(open(os.path.join(ROOT, "cells.yaml")))
+    REG.update(reg)
     for cell in cells_of(args, reg):
         v = reg[cell]
         log(f"{cell}:")

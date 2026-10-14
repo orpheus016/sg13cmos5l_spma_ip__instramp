@@ -25,6 +25,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import yaml
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # -I removes the script directory from sys.path
+import media_md  # noqa: E402
 from cace.common.spiceunits import spice_unit_unconvert
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -245,8 +248,13 @@ def main():
     if design_md:
         body = re.sub(r"^# .*\n", "", design_md, count=1)
         body = body.replace(f"]({CELL}_schematic.svg)", f"](../media/{CELL}_schematic.svg)").replace(f"]({CELL}_symbol.svg)", f"](../media/{CELL}_symbol.svg)")
+        info = media_md.load(CELL)
+        if media_md.params_md(info):   # the schematic picture has no SPICE code: its .param values go under it
+            body = body.rstrip("\n") + "\n\n" + media_md.params_md(info) + "\n"
         if has_layout:
             body = body.rstrip("\n") + f"\n\n## Layout\n\n![Layout of {CELL}](../media/{CELL}_layout.png)\n"
+            if media_md.layout_md(info):
+                body += "\n" + media_md.layout_md(info) + "\n"
         out.append("## Design *(CACE)*\n" + body.replace("\n## ", "\n### "))
     if res_md:
         table = res_md.split("## Plots")[0]
