@@ -8,10 +8,18 @@
 ## Shortcuts
 Below are the shortcuts to see each core specs.
 
+Post-Layout vs Simulation:
+- [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/postlayout.md)
+- [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/postlayout.md)
+
+CACE:
+- [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/README.md)
+- [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/README.md)
+
 Layout:
 - [Top level and Cells](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/gds/pgia_top)
 
-Core:
+Schematic:
 - [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/ota_cmos5l)
 - [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/instramp_cmos5l)
 - [Fine-Gain Stage](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/xschem/fine_gain)

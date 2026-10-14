@@ -1,0 +1,50 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sch
+.subckt instramp_cmos5l VSS VDD IBIAS VINN VOUT VINP CM
+*.PININFO VDD:B IBIAS:B VSS:B CM:B VOUT:B VINN:B VINP:B
+x1 VSS IBIAS VDD net3 VINP net4 ota_cmos5l
+x2 VSS IBIAS VDD net1 VINN net2 ota_cmos5l
+x3 VSS IBIAS VDD net5 net6 VOUT ota_cmos5l
+XR1 net4 net6 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
+XR2 net2 net5 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
+XR3 net6 CM VSS rhigh w=0.5e-6 l=8*2.23e-6 m=1 b=0 mm_ok=1
+XR4 net5 VOUT VSS rhigh w=0.5e-6 l=8*2.23e-6 m=1 b=0 mm_ok=1
+R5 VINN CM 10MEG
+R6 CM VINP 10MEG
+XR7 net2 net1 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
+XR8 net4 net3 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
+.ends
+
+* expanding   symbol:  ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.PININFO IBIAS:B VDD:B VSS:B VOUT:B VINP:B VINN:B
+XM6 IBIAS IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6} mm_ok=1
+XM7 net1 IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7} mm_ok=1
+XM8 VOUT IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8} mm_ok=1
+XM1 net2 VINN net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM2 net3 VINP net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM3 net2 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM4 net3 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM5 VOUT net3 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1 m=1 mm_ok=1
+XR1 net3 net4 VSS rhigh w=0.5e-6 l=1.95e-6 m=1 b=0 mm_ok=1
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+XC2 VOUT net4 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=5 mm_ok=1
+**** begin user architecture code
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+
+
+**** end user architecture code
+XC1 VOUT net4 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=4 mm_ok=1
+.ends
+

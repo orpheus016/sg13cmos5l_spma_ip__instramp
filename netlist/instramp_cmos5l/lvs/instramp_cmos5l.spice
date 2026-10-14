@@ -1,0 +1,52 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sch
+.subckt instramp_cmos5l VSS VDD IBIAS VINN VOUT VINP CM
+*.PININFO VDD:B IBIAS:B VSS:B CM:B VOUT:B VINN:B VINP:B
+x1 VSS IBIAS VDD net3 VINP net4 ota_cmos5l
+x2 VSS IBIAS VDD net1 VINN net2 ota_cmos5l
+x3 VSS IBIAS VDD net5 net6 VOUT ota_cmos5l
+RR1 net4 net6 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR2 net2 net5 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR3 net6 CM 53.06k $SUB=VSS $[rhigh] w=0.5e-6 l=8*2.23e-6 b=0
+RR4 net5 VOUT 53.06k $SUB=VSS $[rhigh] w=0.5e-6 l=8*2.23e-6 b=0
+RR7 net2 net1 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR8 net4 net3 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+.ends
+
+* expanding   symbol:  ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+*.PININFO IBIAS:B VDD:B VSS:B VOUT:B VINP:B VINN:B
+MM6 IBIAS IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6}
+MM7 net1 IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7}
+MM8 VOUT IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8}
+MM1 net2 VINN net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1
+MM2 net3 VINP net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1
+MM3 net2 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1
+MM4 net3 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1
+MM5 VOUT net3 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1
+RR1 net3 net4 6.085k $SUB=VSS $[rhigh] w=0.5e-6 l=1.95e-6 b=0
+CC2_1 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_2 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_3 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_4 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_5 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+**** begin user architecture code
+
+
+
+
+**** end user architecture code
+CC1_1 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+CC1_2 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+CC1_3 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+CC1_4 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+.ends
+

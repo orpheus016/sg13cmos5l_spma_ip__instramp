@@ -1,0 +1,280 @@
+** post-layout netlist of instramp_cmos5l: kpex -> ngspice by scripts/pex_netlist.py (source: /foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex/instramp_cmos5l/kpex/instramp_cmos5l__instramp_cmos5l/instramp_cmos5l_k25d_pex_netlist.spice)
+.subckt instramp_cmos5l VSS VDD IBIAS VINN VOUT VINP CM
+XM_1 n59 n58 VSS VSS sg13_lv_nmos L=5U W=5U AS=1.8P AD=0.95P PS=10.72U PD=5.38U rfmode=0
+XM_2 VSS n58 n59 VSS sg13_lv_nmos L=5U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_3 n37 n37 VSS VSS sg13_lv_nmos L=5U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_4 VSS n37 n37 VSS sg13_lv_nmos L=5U W=5U AS=0.95P AD=1.8P PS=5.38U PD=10.72U rfmode=0
+XM_5 n38 n37 VSS VSS sg13_lv_nmos L=5U W=5U AS=1.8P AD=0.95P PS=10.72U PD=5.38U rfmode=0
+XM_6 VSS n37 n38 VSS sg13_lv_nmos L=5U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_7 n10 n12 VSS VSS sg13_lv_nmos L=5U W=5U AS=1.8P AD=0.95P PS=10.72U PD=5.38U rfmode=0
+XM_8 VSS n12 n10 VSS sg13_lv_nmos L=5U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_9 n12 n12 VSS VSS sg13_lv_nmos L=5U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_10 VSS n12 n12 VSS sg13_lv_nmos L=5U W=5U AS=0.95P AD=1.8P PS=5.38U PD=10.72U rfmode=0
+XM_11 n13 n10 VSS VSS sg13_lv_nmos L=3U W=5U AS=1.8P AD=0.95P PS=10.72U PD=5.38U rfmode=0
+XM_12 VSS n10 n13 VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_13 n13 n10 VSS VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_14 VSS n10 n13 VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_15 VOUT n38 VSS VSS sg13_lv_nmos L=3U W=5U AS=1.8P AD=0.95P PS=10.72U PD=5.38U rfmode=0
+XM_16 VSS n38 VOUT VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_17 VOUT n38 VSS VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_18 VSS n38 VOUT VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_19 n60 n59 VSS VSS sg13_lv_nmos L=3U W=5U AS=1.8P AD=0.95P PS=10.72U PD=5.38U rfmode=0
+XM_20 VSS n59 n60 VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_21 n60 n59 VSS VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_22 VSS n59 n60 VSS sg13_lv_nmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_23 n58 n58 VSS VSS sg13_lv_nmos L=5U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_24 VSS n58 n58 VSS sg13_lv_nmos L=5U W=5U AS=0.95P AD=1.8P PS=5.38U PD=10.72U rfmode=0
+XM_25 n12 n9 n18 VDD sg13_lv_pmos L=3U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_26 n18 n9 n12 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_27 n12 n9 n18 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_28 n18 n9 n12 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_29 n10 VINP n18 VDD sg13_lv_pmos L=3U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_30 n18 VINP n10 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_31 n10 VINP n18 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_32 n18 VINP n10 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_33 VDD IBIAS IBIAS VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_34 VDD IBIAS n18 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_35 VDD IBIAS n18 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_36 VDD IBIAS n18 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_37 VDD IBIAS n18 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_38 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_39 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_40 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_41 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_42 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_43 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_44 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_45 VDD IBIAS n13 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_46 IBIAS IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_47 n31 IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_48 n31 IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_49 n31 IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_50 n31 IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_51 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_52 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_53 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_54 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_55 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_56 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_57 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_58 VOUT IBIAS VDD VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1545P AD=0.1005P PS=1.7U PD=1.34U rfmode=0
+XM_59 n37 n40 n31 VDD sg13_lv_pmos L=3U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_60 n31 n40 n37 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_61 n37 n40 n31 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_62 n31 n40 n37 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_63 n38 n5 n31 VDD sg13_lv_pmos L=3U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_64 n31 n5 n38 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_65 n38 n5 n31 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_66 n31 n5 n38 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_67 n58 n56 n65 VDD sg13_lv_pmos L=3U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_68 n65 n56 n58 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_69 n58 n56 n65 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_70 n65 n56 n58 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_71 n59 VINN n65 VDD sg13_lv_pmos L=3U W=5U AS=1.7P AD=0.95P PS=10.68U PD=5.38U rfmode=0
+XM_72 n65 VINN n59 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_73 n59 VINN n65 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=0.95P PS=5.38U PD=5.38U rfmode=0
+XM_74 n65 VINN n59 VDD sg13_lv_pmos L=3U W=5U AS=0.95P AD=1.7P PS=5.38U PD=10.68U rfmode=0
+XM_75 VDD IBIAS IBIAS VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_76 VDD IBIAS n65 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_77 VDD IBIAS n65 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_78 VDD IBIAS n65 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_79 VDD IBIAS n65 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_80 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_81 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_82 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_83 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_84 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_85 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_86 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XM_87 VDD IBIAS n60 VDD sg13_lv_pmos L=0.15U W=0.15U AS=0.1005P AD=0.1545P PS=1.34U PD=1.7U rfmode=0
+XR_88 n59 n66 VSS rhigh w=0.5u l=1.95u ps=0 b=0 m=1
+XR_89 n40 n60 VSS rhigh w=0.5u l=2.0u ps=0 b=0 m=1
+XR_90 n60 n56 VSS rhigh w=0.5u l=2.0u ps=0 b=0 m=1
+XR_91 VOUT n40 VSS rhigh w=0.5u l=17.84u ps=0 b=0 m=1
+XR_92 n5 CM VSS rhigh w=0.5u l=17.84u ps=0 b=0 m=1
+XR_93 n26 n38 VSS rhigh w=0.5u l=1.95u ps=0 b=0 m=1
+XR_94 n10 n19 VSS rhigh w=0.5u l=1.95u ps=0 b=0 m=1
+XR_95 n5 n13 VSS rhigh w=0.5u l=2.0u ps=0 b=0 m=1
+XR_96 n13 n9 VSS rhigh w=0.5u l=2.0u ps=0 b=0 m=1
+XC_97 n26 VOUT cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_98 n26 VOUT cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_99 VOUT n26 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_100 n26 VOUT cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_101 VOUT n26 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_102 n26 VOUT cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_103 VOUT n26 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_104 VOUT n26 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_105 n26 VOUT cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_106 n13 n19 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_107 n13 n19 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_108 n19 n13 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_109 n13 n19 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_110 n19 n13 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_111 n13 n19 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_112 n19 n13 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_113 n19 n13 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_114 n13 n19 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_115 n60 n66 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_116 n60 n66 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_117 n66 n60 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_118 n60 n66 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_119 n66 n60 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_120 n60 n66 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_121 n66 n60 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_122 n66 n60 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+XC_123 n60 n66 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=1
+Cext_1 n10 n12 821.414a
+Cext_2 n10 n13 3.90042f
+Cext_3 n10 n18 147.701a
+Cext_4 n10 n19 28.0876a
+Cext_5 n10 n9 0.178189a
+Cext_6 n10 IBIAS 0.597256a
+Cext_7 n10 VDD 7.75179a
+Cext_8 n10 VINP 2.01243f
+Cext_9 n10 VSS 2.4148f
+Cext_10 n10 VSS 13.0574f
+Cext_11 n12 n13 15.0233a
+Cext_12 n12 n18 131.46a
+Cext_13 n12 n5 10.3212a
+Cext_14 n12 n9 2.1542f
+Cext_15 n12 IBIAS 5.34089a
+Cext_16 n12 VDD 5.27408a
+Cext_17 n12 VINP 356.728a
+Cext_18 n12 VSS 4.03283f
+Cext_19 n12 VSS 18.0703f
+Cext_20 n13 n18 223.132a
+Cext_21 n13 n19 962.45a
+Cext_22 n13 n5 4.61531f
+Cext_23 n13 n9 20.4067a
+Cext_24 n13 IBIAS 41.3938a
+Cext_25 n13 VDD 328.698a
+Cext_26 n13 VINP 33.3628a
+Cext_27 n13 VSS 10.511f
+Cext_28 n13 VSS 15.2394f
+Cext_29 n18 n19 34.1439a
+Cext_30 n18 n5 15.2762a
+Cext_31 n18 n9 1.39193f
+Cext_32 n18 IBIAS 263.943a
+Cext_33 n18 VDD 246.295a
+Cext_34 n18 VINP 1.37763f
+Cext_35 n18 VSS 2.33263f
+Cext_36 n19 n5 30.8462a
+Cext_37 n19 VDD 5.67793f
+Cext_38 n19 VINP 73.5058a
+Cext_39 n19 VSS 2.13836f
+Cext_40 n19 VSS 7.47724f
+Cext_41 n26 n31 34.1439a
+Cext_42 n26 n38 28.0876a
+Cext_43 n26 n40 83.1417a
+Cext_44 n26 n5 73.5058a
+Cext_45 n26 VDD 5.67793f
+Cext_46 n26 VOUT 528.057a
+Cext_47 n26 VSS 2.13836f
+Cext_48 n26 VSS 7.55217f
+Cext_49 n31 n37 131.46a
+Cext_50 n31 n38 147.701a
+Cext_51 n31 n40 1.39193f
+Cext_52 n31 n5 1.40898f
+Cext_53 n31 IBIAS 278.094a
+Cext_54 n31 VDD 260.491a
+Cext_55 n31 VOUT 223.132a
+Cext_56 n31 VSS 2.33263f
+Cext_57 n37 n38 821.414a
+Cext_58 n37 n40 2.15584f
+Cext_59 n37 n5 360.757a
+Cext_60 n37 IBIAS 61.2214a
+Cext_61 n37 VDD 68.8933a
+Cext_62 n37 VOUT 15.0233a
+Cext_63 n37 VSS 4.03288f
+Cext_64 n37 VSS 18.06f
+Cext_65 n38 n40 0.178189a
+Cext_66 n38 n5 2.01243f
+Cext_67 n38 IBIAS 0.597256a
+Cext_68 n38 VDD 7.75179a
+Cext_69 n38 VOUT 3.90042f
+Cext_70 n38 VSS 2.4148f
+Cext_71 n38 VSS 13.0574f
+Cext_72 n40 n5 678.58a
+Cext_73 n40 n60 4.41489f
+Cext_74 n40 n66 30.8091a
+Cext_75 n40 CM 4.62607a
+Cext_76 n40 IBIAS 1.02876f
+Cext_77 n40 VDD 330.34a
+Cext_78 n40 VSS 9.93788f
+Cext_79 n40 VSS 18.1167f
+Cext_80 n5 n9 350.778a
+Cext_81 n5 CM 1.23796a
+Cext_82 n5 IBIAS 843.041a
+Cext_83 n5 VDD 953.669a
+Cext_84 n5 VINP 80.6156a
+Cext_85 n5 VOUT 33.3628a
+Cext_86 n5 VSS 10.3377f
+Cext_87 n5 VSS 21.3935f
+Cext_88 n56 n58 2.1545f
+Cext_89 n56 n59 0.178189a
+Cext_90 n56 n60 20.4067a
+Cext_91 n56 n65 1.39193f
+Cext_92 n56 IBIAS 655.306a
+Cext_93 n56 VDD 301.649a
+Cext_94 n56 VINN 454.184a
+Cext_95 n56 VSS 35.79a
+Cext_96 n56 VSS 11.9176f
+Cext_97 n58 n59 821.414a
+Cext_98 n58 n60 15.0233a
+Cext_99 n58 n65 131.46a
+Cext_100 n58 IBIAS 16.7433a
+Cext_101 n58 VDD 68.5362a
+Cext_102 n58 VINN 356.728a
+Cext_103 n58 VSS 4.03283f
+Cext_104 n58 VSS 18.0703f
+Cext_105 n59 n60 3.90042f
+Cext_106 n59 n65 147.701a
+Cext_107 n59 n66 28.0876a
+Cext_108 n59 IBIAS 0.597256a
+Cext_109 n59 VDD 7.75179a
+Cext_110 n59 VINN 2.01243f
+Cext_111 n59 VSS 2.4148f
+Cext_112 n59 VSS 13.0574f
+Cext_113 n60 n65 223.132a
+Cext_114 n60 n66 962.576a
+Cext_115 n60 IBIAS 291.441a
+Cext_116 n60 VDD 352.625a
+Cext_117 n60 VINN 33.3628a
+Cext_118 n60 VSS 10.0149f
+Cext_119 n60 VSS 15.2309f
+Cext_120 n65 n66 34.1439a
+Cext_121 n65 IBIAS 280.431a
+Cext_122 n65 VDD 260.491a
+Cext_123 n65 VINN 1.37763f
+Cext_124 n65 VSS 2.33263f
+Cext_125 n66 VDD 5.67793f
+Cext_126 n66 VINN 73.5058a
+Cext_127 n66 VSS 1.92915f
+Cext_128 n66 VSS 7.82928f
+Cext_129 n9 IBIAS 235.595a
+Cext_130 n9 VDD 206.39a
+Cext_131 n9 VINP 454.895a
+Cext_132 n9 VSS 35.6699a
+Cext_133 n9 VSS 11.9294f
+Cext_134 CM IBIAS 98.6496a
+Cext_135 CM VDD 250.562a
+Cext_136 CM VSS 586.417a
+Cext_137 IBIAS VDD 3.35323f
+Cext_138 IBIAS VINN 96.9048a
+Cext_139 IBIAS VINP 17.0577a
+Cext_140 IBIAS VOUT 41.3938a
+Cext_141 IBIAS VSS 81.6486a
+Cext_142 IBIAS VSS 10.9702f
+Cext_143 VDD VINN 376.888a
+Cext_144 VDD VINP 281.597a
+Cext_145 VDD VOUT 328.698a
+Cext_146 VDD VSS 186.342a
+Cext_147 VDD VSS 36.4831f
+Cext_148 VINN VSS 6.53905a
+Cext_149 VINN VSS 12.5959f
+Cext_150 VINP VSS 6.53905a
+Cext_151 VINP VSS 12.5973f
+Cext_152 VOUT VSS 803.049a
+Cext_153 VOUT VSS 9.25812f
+Cext_154 VSS VSS 50.9771f
+.ends instramp_cmos5l

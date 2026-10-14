@@ -1,0 +1,44 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/fine_gain/fine_gain.sch
+.subckt fine_gain VIN3 BIAS VOUT VCM AVDD AVSS D4 D5 D6 D7 D8 D9
+*.PININFO VIN3:I VCM:I D4:I D5:I D6:I D7:I D8:I D9:I BIAS:I VOUT:B AVDD:I AVSS:I
+XR1 VIN3 net1 sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XM1 net3 D4 net4 net3 sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM2 VCM D4_inv net3 VCM sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR2 net1 net2 sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR8 net1 net3 sub! rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XR9 net2 net5 sub! rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XR15 net4 VOUT sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XM3 net5 D5 net4 net5 sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM4 VCM D5_inv net5 VCM sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR3 net2 net6 sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR4 net6 net8 sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR5 net8 net10 sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR6 net10 net12 sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR7 net12 net14 sub! rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR10 net6 net7 sub! rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM5 net7 D6 net4 net7 sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM6 VCM D6_inv net7 VCM sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR11 net8 net9 sub! rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM7 net9 D7 net4 net9 sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM8 VCM D7_inv net9 VCM sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR12 net10 net11 sub! rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM9 net11 D8 net4 net11 sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM10 VCM D8_inv net11 VCM sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR13 net12 net13 sub! rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM11 net13 D9 net4 net13 sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM12 VCM D9_inv net13 VCM sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR14 net14 VCM sub! rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM13 D4_inv D4 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM14 D4_inv D4 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM15 D5_inv D5 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM16 D5_inv D5 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM17 D6_inv D6 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM18 D6_inv D6 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM19 D7_inv D7 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM20 D7_inv D7 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM21 D8_inv D8 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM22 D8_inv D8 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM23 D9_inv D9 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM24 D9_inv D9 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+*  x1 -  ota_cmos5l  IS MISSING !!!!
+.ends
