@@ -1,0 +1,22 @@
+{
+  "PDK": "ihp-sg13cmos5l",
+  "STD_CELL_LIBRARY": "sg13cmos5l_stdcell",
+  "DESIGN_NAME": "gain_decoder_4b",
+  "VERILOG_FILES": [
+    "dir::gain_decoder_4b.v"
+  ],
+  "CLOCK_PORT": null,
+  "PDN_MULTILAYER": false,
+  "FP_SIZING": "absolute",
+  "DIE_AREA": [
+    0,
+    0,
+    65,
+    45
+  ],
+  "PL_TARGET_DENSITY_PCT": 50,
+  "SYNTH_ARITH_TREE": false,
+  "RT_MIN_LAYER": "Metal2",
+  "RT_MAX_LAYER": "Metal4",
+  "IO_PIN_ORDER_CFG": "dir::pin_order.cfg"
+}

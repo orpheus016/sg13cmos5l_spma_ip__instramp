@@ -1,0 +1,183 @@
+{
+  "creator": "Yosys 0.60 (git sha1 5bafeb77d, g++ 12.2.1 -fPIC -O3)",
+  "modules": {
+    "gain_decoder_4b": {
+      "attributes": {
+        "hdlname": "gain_decoder_4b",
+        "top": "00000000000000000000000000000001",
+        "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:26.1-114.10"
+      },
+      "ports": {
+        "gain_sel": {
+          "direction": "input",
+          "bits": [ 2, 3, 4, 5 ]
+        },
+        "s1": {
+          "direction": "output",
+          "bits": [ 6, 7, 8, 9, 10 ]
+        },
+        "s1_b": {
+          "direction": "output",
+          "bits": [ 11, 12, 13, 14, 15 ]
+        },
+        "s2": {
+          "direction": "output",
+          "bits": [ 16, 17, 18, 19, 20 ]
+        },
+        "s2_b": {
+          "direction": "output",
+          "bits": [ 21, 22, 23, 24, 25 ]
+        }
+      },
+      "cells": {
+        "$auto$mem.cc:305:emit$6": {
+          "hide_name": 1,
+          "type": "$memrd_v2",
+          "parameters": {
+            "ABITS": "00000000000000000000000000000100",
+            "ARST_VALUE": "xxxxxxxxxx",
+            "CE_OVER_SRST": "00000000000000000000000000000000",
+            "CLK_ENABLE": "00000000000000000000000000000000",
+            "CLK_POLARITY": "00000000000000000000000000000001",
+            "COLLISION_X_MASK": "",
+            "INIT_VALUE": "xxxxxxxxxx",
+            "MEMID": "$auto$proc_rom.cc:155:do_switch$5",
+            "SRST_VALUE": "xxxxxxxxxx",
+            "TRANSPARENCY_MASK": "",
+            "WIDTH": "00000000000000000000000000001010"
+          },
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:35.9-107.16"
+          },
+          "port_directions": {
+            "ADDR": "input",
+            "ARST": "input",
+            "CLK": "input",
+            "DATA": "output",
+            "EN": "input",
+            "SRST": "input"
+          },
+          "connections": {
+            "ADDR": [ 2, 3, 4, 5 ],
+            "ARST": [ "0" ],
+            "CLK": [ "x" ],
+            "DATA": [ 6, 7, 8, 9, 10, 16, 17, 18, 19, 20 ],
+            "EN": [ "1" ],
+            "SRST": [ "0" ]
+          }
+        },
+        "$auto$mem.cc:351:emit$7": {
+          "hide_name": 1,
+          "type": "$meminit",
+          "parameters": {
+            "ABITS": "00000000000000000000000000100000",
+            "MEMID": "$auto$proc_rom.cc:155:do_switch$5",
+            "PRIORITY": "00000000000000000000000000000000",
+            "WIDTH": "00000000000000000000000000001010",
+            "WORDS": "00000000000000000000000000010000"
+          },
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:35.9-107.16"
+          },
+          "port_directions": {
+            "ADDR": "input",
+            "DATA": "input"
+          },
+          "connections": {
+            "ADDR": [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ],
+            "DATA": [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1", "1", "0", "0", "0", "0", "0", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "0", "0", "0", "1", "0", "0", "1", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ]
+          }
+        },
+        "$not$/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:111$2": {
+          "hide_name": 1,
+          "type": "$not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000101",
+            "Y_WIDTH": "00000000000000000000000000000101"
+          },
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:111.19-111.22"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 6, 7, 8, 9, 10 ],
+            "Y": [ 11, 12, 13, 14, 15 ]
+          }
+        },
+        "$not$/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:112$3": {
+          "hide_name": 1,
+          "type": "$not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000101",
+            "Y_WIDTH": "00000000000000000000000000000101"
+          },
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:112.19-112.22"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 16, 17, 18, 19, 20 ],
+            "Y": [ 21, 22, 23, 24, 25 ]
+          }
+        }
+      },
+      "memories": {
+        "$auto$proc_rom.cc:155:do_switch$5": {
+          "hide_name": 1,
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:35.9-107.16"
+          },
+          "width": 10,
+          "start_offset": 0,
+          "size": 16
+        }
+      },
+      "netnames": {
+        "gain_sel": {
+          "hide_name": 0,
+          "bits": [ 2, 3, 4, 5 ],
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:27.23-27.31"
+          }
+        },
+        "s1": {
+          "hide_name": 0,
+          "bits": [ 6, 7, 8, 9, 10 ],
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:28.23-28.25"
+          }
+        },
+        "s1_b": {
+          "hide_name": 0,
+          "bits": [ 11, 12, 13, 14, 15 ],
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:29.23-29.27"
+          }
+        },
+        "s2": {
+          "hide_name": 0,
+          "bits": [ 16, 17, 18, 19, 20 ],
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:30.23-30.25"
+          }
+        },
+        "s2_b": {
+          "hide_name": 0,
+          "bits": [ 21, 22, 23, 24, 25 ],
+          "attributes": {
+            "src": "/foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/gds/gain_decoder_4b/gain_decoder_4b.v:31.23-31.27"
+          }
+        }
+      }
+    }
+  }
+}
