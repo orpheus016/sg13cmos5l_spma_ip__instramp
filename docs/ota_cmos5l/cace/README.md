@@ -1,7 +1,7 @@
 # ota_cmos5l - CACE characterisation
 
-- Generated: 2026-10-14 17:52 by `scripts/make_readme.py` from `runs/RUN_2026-10-13_19-33-20`
-- Commit: `9e69656` (working tree dirty)
+- Generated: 2026-10-15 18:50 by `scripts/make_readme.py` from `runs/RUN_2026-10-15_18-48-38`
+- Commit: `7cec125` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/ota_cmos5l.yaml`; reproduce with `scripts/run_cace.sh ota_cmos5l`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 

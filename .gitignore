@@ -240,3 +240,6 @@ cace/runs/
 
 # Agent / chat contexts (from origin/main)
 contexts/
+
+# Notebook Reference for Roadmap
+notebook_references/

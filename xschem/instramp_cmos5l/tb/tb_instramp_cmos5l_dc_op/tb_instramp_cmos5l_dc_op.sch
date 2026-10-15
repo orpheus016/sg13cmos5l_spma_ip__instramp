@@ -31,56 +31,6 @@ N 900 -380 960 -380 {lab=out}
 N 480 -480 480 -440 {lab=vcm}
 N 480 -380 480 -340 {lab=vss}
 N 380 -340 480 -340 {lab=vss}
-C {simulator_commands_shown.sym} 1070 -970 0 0 {name=SimulatorNGSPICE
-simulator=ngspice
-only_toplevel=false 
-value="
-.param temp=27
-
-.control
-save all
-
-** Voltage offset simulation
-dc V3 0.5 1.0 0.001
-
-** Measurements
-let vtarget = v(vdd)/2
-let vin = v(vinp)
-let vout = v(out)
-meas dc offset FIND vin WHEN vout=vtarget RISE=1
-let vos = 0.75 - offset
-print vos
-
-** Plots
-setplot dc1
-plot vout
-
-write tb_instramp_cmos5l_dc1.raw
-
-** VDD DC sweep simulation
-dc V1 0 1.5 0.1
-
-** Plots
-setplot dc2
-let vout = v(out)
-plot vout
-
-write tb_instramp_cmos5l_dc2.raw
-
-.endc
-* ngspice commands
-"}
-C {simulator_commands_shown.sym} 1560 -300 0 0 {
-name=Libs_Ngspice
-simulator=ngspice
-only_toplevel=false
-value="
-.lib cornerMOSlv.lib mos_tt
-.lib cornerMOShv.lib mos_tt
-.lib cornerRES.lib res_typ
-.lib cornerDIO.lib dio_tt
-"
-      }
 C {launcher.sym} 1140 -160 0 0 {name=h4
 descr=SimulateNGSPICE
 tclcommand="
@@ -118,7 +68,7 @@ C {lab_wire.sym} 1000 -380 0 0 {name=p4 sig_type=std_logic lab=out}
 C {lab_wire.sym} 180 -480 0 0 {name=p5 sig_type=std_logic lab=ibias}
 C {isource.sym} 180 -410 0 0 {name=I0 value=4.2u}
 C {vdd.sym} 80 -480 0 0 {name=l2 lab=VDD}
-C {vsource.sym} 80 -410 0 0 {name=V1 value=1.5 savecurrent=false}
+C {vsource.sym} 80 -410 0 0 {name=V1 value=1.2 savecurrent=false}
 C {lab_wire.sym} 80 -340 0 0 {name=p7 sig_type=std_logic lab=vss}
 C {vsource.sym} 80 -270 0 0 {name=V2 value=0 savecurrent=false}
 C {gnd.sym} 80 -200 0 0 {name=l3 lab=0}
@@ -134,13 +84,69 @@ xschem setprop rect 2 0 fullxzoom
 "
 }
 C {lab_wire.sym} 280 -480 0 0 {name=p9 sig_type=std_logic lab=vinp}
-C {vsource.sym} 280 -410 0 0 {name=V3 value=0.75 savecurrent=false}
-C {vsource.sym} 380 -410 0 0 {name=V4 value=0.75 savecurrent=false}
+C {vsource.sym} 280 -410 0 0 {name=V3 value=0.6 savecurrent=false}
+C {vsource.sym} 380 -410 0 0 {name=V4 value=0.6 savecurrent=false}
 C {lab_wire.sym} 380 -480 0 0 {name=p12 sig_type=std_logic lab=vinn}
 C {lab_wire.sym} 580 -330 2 0 {name=p13 sig_type=std_logic lab=vinp}
 C {lab_wire.sym} 580 -430 2 0 {name=p14 sig_type=std_logic lab=vinn}
 C {gnd.sym} 960 -260 0 0 {name=l5 lab=0}
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym} 770 -380 0 0 {name=x1}
 C {lab_wire.sym} 580 -380 2 0 {name=p3 sig_type=std_logic lab=vcm}
-C {vsource.sym} 480 -410 0 0 {name=V5 value=0.75 savecurrent=false}
+C {vsource.sym} 480 -410 0 0 {name=V5 value=0.6 savecurrent=false}
 C {lab_wire.sym} 480 -480 0 0 {name=p6 sig_type=std_logic lab=vcm}
+C {simulator_commands_shown.sym} 1410 -590 0 0 {
+name=Libs_Ngspice1
+simulator=ngspice
+only_toplevel=false
+value="
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
+"
+      }
+C {simulator_commands_shown.sym} 1080 -590 0 0 {name=General_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=27
+.param cl=3p
+.param ib=1.4u
+.param vdd=1.2
+.param vicm=vdd/2
+.param vid=0
+"
+      }
+C {simulator_commands_shown.sym} 1080 -400 0 0 {name=OTA_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=27
+"
+      }
+C {simulator_commands.sym} 1460 -390 0 0 {name=DC_close_loop_op
+simulator=ngspice
+only_toplevel=false 
+value=".control
+save all
+shell mkdir -p result
+op
+write ./result/tb_instramp_cmos5l_dc_op.raw
+show all : m, l, w, vgs, vds, vth, ids, vsat, gm, gds, fug, ids
+let v_in = v(vinp)
+let v_out = v(out)
+let vos_mv = (v_in - v_out) * 1000
+let i_q = -i(v1)
+let p_q = i_q * 1.2
+let p_q_uw = p_q * 1e6
+let i_q_ua = i_q * 1e6
+echo \\"=======================================================\\"
+echo \\" Input Common-Mode (Vin+): \\" $&v_in \\" V\\"
+echo \\" Output Voltage (Vout): \\" $&v_out \\" V\\"
+echo \\" Systematic Offset (Vos): \\" $&vos_mv \\" mV\\"
+echo \\" Quiescent Current (I_q): \\" $&i_q_ua \\" uA\\"
+echo \\" Quiescent Power (P_q): \\" $&p_q_uw \\" uW\\"
+echo \\"=======================================================\\"
+.endc
+"
+}

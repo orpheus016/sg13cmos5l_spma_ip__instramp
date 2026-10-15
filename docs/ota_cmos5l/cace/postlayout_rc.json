@@ -1,6 +1,6 @@
 {
- "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-13_19-33-20",
- "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/ota_cmos5l/RUN_2026-10-14_14-14-09",
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-15_18-48-38",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/ota_cmos5l/RUN_2026-10-15_18-52-02",
  "schematic_source": "schematic",
  "postlayout_source": "pex",
  "threshold_pct": 5.0,
@@ -376,13 +376,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 0.873,
-    "typ": 0.873,
-    "max": 0.873,
+    "min": 0.705,
+    "typ": 0.705,
+    "max": 0.705,
     "status": "Pass"
    },
-   "delta": -0.42799999999999994,
-   "delta_pct": -32.89777094542659,
+   "delta": -0.596,
+   "delta_pct": -45.8109146810146,
    "flag": "\u0394"
   },
   {

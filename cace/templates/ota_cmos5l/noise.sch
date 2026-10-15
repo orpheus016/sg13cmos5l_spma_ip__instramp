@@ -36,25 +36,7 @@ N 730 -440 730 -420 {lab=I_B
 }
 N 550 -250 570 -250 {lab=VINN2
 }
-C {simulator_commands_shown.sym} 1410 -810 0 0 {
-name=Libs_Ngspice1
-simulator=ngspice
-only_toplevel=false
-value="
-.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSlv.lib mos_CACE\{corner\}
-.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOShv.lib mos_CACE\{corner\}
-.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerRES.lib res_CACE\{rcorner\}
-.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerCAP.lib cap_typ
-.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerDIO.lib dio_tt
-.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
-
-.include CACE\{DUT_path\}
-
-.temp CACE\{temperature\}
-
-.option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
-"
-      }
+C {title.sym} 160 -30 0 0 {name=l6 author="James Patrick"}
 C {simulator_commands_shown.sym} 1080 -410 0 0 {name=loopgainprobe1
 simulator=ngspice
 only_toplevel=false
@@ -65,17 +47,6 @@ Vnodebuffer b x 0
 .ends loopgainprobe
 
 .func tian_loop() \{1/(1/(2*(ac1.i(v.x999.Vi)*ac2.v(x999.x)-ac1.v(x999.x)*ac2.i(v.x999.Vi))+ac1.v(x999.x)+ac2.i(v.x999.Vi))-1)\}
-"
-      }
-C {simulator_commands_shown.sym} 1080 -810 0 0 {name=General_Params
-simulator=ngspice
-only_toplevel=false
-value=".param temp=CACE\{temperature\}
-.param cl=CACE\{cl\}
-.param ib=CACE\{ib\}
-.param vdd=CACE\{vdd\}
-.param vicm=CACE\{vcm\}
-.param vid=0
 "
       }
 C {isource.sym} 210 -430 0 0 {name=I1 value=\{ib\}}
@@ -127,36 +98,84 @@ C {loopgainprobe.sym} 200 -180 0 0 {name=X3 device=loopgainprobe
 }
 C {simulator_commands.sym} 1400 -560 0 0 {name=Noise
 simulator=ngspice
-only_toplevel=false 
+only_toplevel="false"
 value=".control
 set num_threads=CACE\{jobs\}
 save all
 destroy all
-* noise referred to the input source v4 (vicm)
-alter @v4[acmag]=1
-noise v(out2) v4 dec 20 10 100MEG
-setplot noise1
-let IRN_100 = inoise_spectrum[20]
-let IRN_1K = inoise_spectrum[40]
-let IRN_10K = inoise_spectrum[60]
-let IRN_1M = inoise_spectrum[100]
-let ORN_1K = onoise_spectrum[40]
-let INOISE_TOT = noise2.inoise_total
-let ONOISE_TOT = noise2.onoise_total
-echo $&IRN_100 $&IRN_1K $&IRN_10K $&IRN_1M $&ORN_1K $&INOISE_TOT $&ONOISE_TOT > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
-.endc"=======================================================\\"
-echo \\" Total Output Noise (10 Hz - 100 MHz): \\" $&onoise_total_uv \\" uV_rms\\"
-echo \\" Total Input Noise (10 Hz - 100 MHz): \\" $&inoise_total_uv \\" uV_rms\\"
-echo \\"-------------------------------------------------------\\"
-echo \\" IRN @ 10 Hz (Flicker Noise): \\" $&irn_10 \\" nV/sqrt(Hz)\\"
-echo \\" IRN @ 100 Hz: \\" $&irn_100 \\" nV/sqrt(Hz)\\"
-echo \\" IRN @ 1 kHz: \\" $&irn_1k \\" nV/sqrt(Hz)\\"
-echo \\" IRN @ 10 kHz: \\" $&irn_10k \\" nV/sqrt(Hz)\\"
-echo \\" IRN @ 100 kHz: \\" $&irn_100k \\" nV/sqrt(Hz)\\"
-echo \\" IRN @ 1 MHz (Thermal Noise Floor): \\" $&irn_1meg \\" nV/sqrt(Hz)\\"
-echo \\"=======================================================\\"
 
+* Tian probe idled
+alter i.x999.ii acmag=0
+alter v.x999.vi acmag=0
+
+* Add AC 1 to Vicm
+alter @v4[acmag]=1
+
+* Noise simulation
+noise v(out2) v4 dec 20 10 100MEG
+
+* Return to initial condition
+alter @v4[acmag]=0
+
+setplot noise1
+
+* Parameters #1
+let inoise_total_uv = noise2.inoise_total * 1e6
+let onoise_total_uv = noise2.onoise_total * 1e6
+let irn_nv = noise1.inoise_spectrum * 1e9
+let orn_nv = noise1.onoise_spectrum * 1e9
+
+* IRN extraction at certain frequencies
+let irn_10 = irn_nv[0]
+let irn_100 = irn_nv[20]
+let irn_1k = irn_nv[40]
+let irn_10k = irn_nv[60]
+let irn_100k = irn_nv[80]
+let irn_1meg = irn_nv[100]
+* meas noise irn_10 find irn_nv at=10
+* meas noise irn_100 find irn_nv at=100
+* meas noise irn_1k find irn_nv at=1k
+* meas noise irn_10k find irn_nv at=10k
+* meas noise irn_100k find irn_nv at=100k
+* meas noise irn_1meg find irn_nv at=1MEG
+let cace_IRN_100 = irn_100*1e-9
+let cace_IRN_1K = irn_1k*1e-9
+let cace_IRN_10K = irn_10k*1e-9
+let cace_IRN_1M = irn_1meg*1e-9
+let cace_ORN_1K = orn_nv[40]*1e-9
+let cace_INOISE_TOT = inoise_total_uv*1e-6
+let cace_ONOISE_TOT = onoise_total_uv*1e-6
+echo $&cace_IRN_100 $&cace_IRN_1K $&cace_IRN_10K $&cace_IRN_1M $&cace_ORN_1K $&cace_INOISE_TOT $&cace_ONOISE_TOT > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "
 }
+C {simulator_commands_shown.sym} 1070 -990 0 0 {name=Libs_Ngspice
+simulator=ngspice
+only_toplevel=false
+value="
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSlv.lib mos_CACE\{corner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOShv.lib mos_CACE\{corner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerRES.lib res_CACE\{rcorner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerDIO.lib dio_tt
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
 
+.include CACE\{DUT_path\}
+
+.temp CACE\{temperature\}
+
+.option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
+"
+      }
+C {simulator_commands_shown.sym} 1070 -760 0 0 {name=General_Params
+simulator=ngspice
+only_toplevel=false
+value=".param temp=CACE\{temperature\}
+.param cl=CACE\{cl\}
+.param ib=CACE\{ib\}
+.param vdd=CACE\{vdd\}
+.param vicm=CACE\{vcm\}
+.param vid=0
+"
+      }
+T {GENERATED by scripts/gen_cace.py from xschem tb xschem/ota_cmos5l/tb/tb_ota_cmos5l_noise/tb_ota_cmos5l_noise.sch - edit the testbench / the manifest, not this file} 160 -80 0 0 0.3 0.3 {}

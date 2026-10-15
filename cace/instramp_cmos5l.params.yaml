@@ -1,0 +1,115 @@
+# Manifest of the CACE parameters of instramp_cmos5l. scripts/gen_cace.py (run by scripts/flow.sh and scripts/run_cace.sh) turns it,
+# together with the interactive testbenches xschem/instramp_cmos5l/tb/<tb>/<tb>.sch, into
+#   cace/templates/instramp_cmos5l/<template>   (do not edit)
+#   cace/instramp_cmos5l.yaml from the line `parameters:` on   (do not edit; the pins and default_conditions above it are yours)
+#
+# parameter:
+#   tb:        testbench folder/name under xschem/instramp_cmos5l/tb. Without `tb:` the template is hand-written (thd.sch).
+#   template:  file name in cace/templates/instramp_cmos5l
+#   spec:      one entry per number in the .data file, in this order. `expr` = ngspice expression evaluated at the end of the
+#              testbench control block (names of its `let`/`meas` results); the value must be in SI base units
+#              (V, A, W, s, Hz, dB, V/sqrt(Hz), ...), `unit` is only the display unit CACE converts to.
+#              min / typ / max: number or any (report only, no pass/fail).
+#   subst:     optional {old text: new text} on the control block (e.g. a hard-coded 0.6 -> CACE{vcm})
+#   sources:   optional {instance: condition} on top of the global map below
+#   conditions / plots: optional, default = the global conditions and "first variable vs temperature"
+#
+# Names of the CACE variables (keys of `spec`) are free; they do not have to differ from the ngspice names in the testbench.
+
+# instance name in the testbench -> CACE condition that replaces its value
+sources: {V1: vdd, I0: ib, C1: cl, V3: vcm, V4: vcm, V5: vcm}
+
+conditions:
+  corner:
+    enumerate: [tt, ss, ff, sf, fs]
+  vdd:
+    minimum: 1.2
+    typical: 1.35
+    maximum: 1.5
+  temperature:
+    minimum: -40
+    typical: 27
+    maximum: 85
+
+parameters:
+  ac_gain:
+    tb: tb_instramp_cmos5l_ac
+    template: ac.sch
+    display: Closed-loop AC gain
+    description: Differential closed-loop gain (VINP ac=1 V, VINN and CM at DC), gain target 8 V/V = 18.0618 dB
+    plots: ["A_CL:temperature", "F3DB:temperature", "A_CL:vdd"]
+    spec:
+      A_CL:  {expr: DC_gain, display: Closed-loop gain at 1 Hz, unit: dB, typ: 18.0618}
+      A_ERR: {expr: "DC_gain - 20*log10(8)", display: Gain error vs 8 V/V, unit: dB}
+      F3DB:  {expr: f_3db, display: -3 dB bandwidth, unit: Hz}
+      F0DB:  {expr: f_0db, display: 0 dB frequency, unit: Hz}
+      PH0:   {expr: phase_0db, display: Closed-loop phase at 0 dB, unit: "°"}
+
+  thd:
+    template: thd.sch            # hand-written (no interactive testbench yet)
+    display: Total harmonic distortion
+    description: THD (harmonics 2..9) of the closed-loop output for a sine on VINP, coherent FFT over 8 periods (128 points per period)
+    spec:
+      THD_DB:  {expr: -, display: THD, unit: dB}
+      THD_PCT: {expr: -, display: THD, unit: "%"}
+      HD2_DB:  {expr: -, display: 2nd harmonic, unit: dB}
+      HD3_DB:  {expr: -, display: 3rd harmonic, unit: dB}
+      VO1:     {expr: -, display: Output fundamental amplitude, unit: V}
+
+  cmrr:
+    tb: tb_instramp_cmos5l_cmrr
+    template: cmrr.sch
+    display: CMRR
+    description: Common-mode rejection = differential gain / common-mode gain (two AC runs), CM pin held at DC
+    spec:
+      ADM_DC:    {expr: adm_dc,    display: Differential gain @10 Hz, unit: dB}
+      CMRR_DC:   {expr: cmrr_dc,   display: CMRR @10 Hz, unit: dB}
+      CMRR_100K: {expr: cmrr_100k, display: CMRR @100 kHz, unit: dB}
+      CMRR_1M:   {expr: cmrr_1meg, display: CMRR @1 MHz, unit: dB}
+
+  psrr:
+    tb: tb_instramp_cmos5l_psrr
+    template: psrr.sch
+    display: PSRR
+    description: Input-referred supply rejection of VDD = differential gain / VDD-to-output gain
+    spec:
+      ADM_DC:    {expr: adm_dc,    display: Differential gain @10 Hz, unit: dB}
+      PSRR_DC:   {expr: psrr_dc,   display: PSRR @10 Hz, unit: dB}
+      PSRR_100K: {expr: psrr_100k, display: PSRR @100 kHz, unit: dB}
+      PSRR_1M:   {expr: psrr_1meg, display: PSRR @1 MHz, unit: dB}
+
+  noise:
+    tb: tb_instramp_cmos5l_noise
+    template: noise.sch
+    display: Noise
+    description: Differential input-referred noise density (referred to VINP, gain VINP->VOUT = Adm), 10 Hz-100 MHz; INOISE_EQ = output noise / low-frequency gain
+    spec:
+      IRN_10:    {expr: "irn_10*1e-9",   display: Input noise @10 Hz, unit: nV/rtHz}
+      IRN_100:   {expr: "irn_100*1e-9",  display: Input noise @100 Hz, unit: nV/rtHz}
+      IRN_1K:    {expr: "irn_1k*1e-9",   display: Input noise @1 kHz, unit: nV/rtHz}
+      IRN_10K:   {expr: "irn_10k*1e-9",  display: Input noise @10 kHz, unit: nV/rtHz}
+      ORN_1K:    {expr: "orn_nv[40]*1e-9", display: Output noise @1 kHz, unit: nV/rtHz}
+      ONOISE_TOT: {expr: "onoise_total_uv*1e-6", display: Integrated output noise, unit: uV-rms}
+      INOISE_EQ: {expr: "inoise_eq_uv*1e-6", display: In-band input-referred noise (Vn_out / gain), unit: uV-rms}
+
+  dc_op:
+    tb: tb_instramp_cmos5l_dc_op
+    template: dc_op.sch
+    display: DC operating point
+    description: Output offset (VOUT - Vcm with VINP = VINN = CM = Vcm), quiescent current and power
+    spec:
+      VOS:  {expr: "vos_mv*1e-3",   display: Output offset (Vcm - Vout), unit: mV}
+      VOUT: {expr: v_out,           display: Output voltage, unit: V}
+      IQ:   {expr: i_q,             display: Quiescent current, unit: uA}
+      PWR:  {expr: "i_q*CACE{vdd}", display: Quiescent power, unit: uW}
+
+  tran_small:
+    tb: tb_instramp_cmos5l_TRAN_small
+    template: tran_small.sch
+    display: Small-signal transient
+    description: 1 uV (peak) 10 Hz sine on VINP around Vcm, gain from peak-to-peak over the last 5 periods and the mean output level
+    subst:
+      "alter @v3 sin = [ 0.6 1u 10 ]": "alter @v3 sin = [ CACE{vcm} 1u 10 ]"
+    spec:
+      TR_GAIN:     {expr: "vo_pp/vi_pp", display: Small-signal gain (transient)}
+      TR_VOUT_AVG: {expr: vo_avg,        display: Mean output level, unit: V}

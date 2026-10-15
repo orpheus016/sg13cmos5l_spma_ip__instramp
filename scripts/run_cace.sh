@@ -22,6 +22,9 @@ export PATH="$root/scripts/bin:$PATH"   # xschem wrapper: one HOME per call (see
 cace_home="$(mktemp -d)"
 trap 'rm -rf "$cace_home"' EXIT
 
+# templates + parameters of the datasheet are generated from the xschem testbenches (cells with cace/<cell>.params.yaml only)
+python3 -I "$root/scripts/gen_cace.py" "$cell" || { echo "run_cace.sh: gen_cace.py failed"; exit 1; }
+
 cd "$root/cace" || exit 1
 # datasheet first: -p/-sp take lists and would swallow it
 HOME="$cace_home" cace -s schematic "$cell.yaml" --nofail "$@"
