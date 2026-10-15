@@ -500,28 +500,6 @@ C {lab_pin.sym} 1050 110 0 1 {name=p6 sig_type=std_logic lab=N_B}
 C {lab_pin.sym} 1010 -30 1 0 {name=p7 sig_type=std_logic lab=N_A}
 C {lab_pin.sym} 750 150 2 0 {name=p11 sig_type=std_logic lab=F2}
 C {lab_pin.sym} 580 180 0 0 {name=p12 sig_type=std_logic lab=F1}
-C {sg13cmos5l_pr/cap_cmomf.sym} 930 260 3 0 {name=C1
-model=cap_cmomf
-w=22e-6
-l=22e-6
-mmin=1
-mmax=4
-subblock=0
-m=1
-mm_ok=1
-spiceprefix=X
-}
-C {sg13cmos5l_pr/cap_cmomf.sym} 1160 -110 3 0 {name=C2
-model=cap_cmomf
-w=15.44e-6
-l=15.44e-6
-mmin=1
-mmax=4
-subblock=0
-m=1
-mm_ok=1
-spiceprefix=X
-}
 C {sg13cmos5l_pr/rhigh.sym} -550 170 0 0 {name=R1
 w=0.5e-6
 l=15e-6
@@ -609,4 +587,28 @@ b=0
  m=1
   mm_ok=1
 value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
+}
+C {sg13cmos5l_pr/cap_cmomi.sym} 930 260 3 0 {name=C3
+model=cap_cmomi
+w=12.5e-6
+l=12.5e-6
+mmin=1
+mmax=4
+feed=double
+subblock=0
+m=4
+mm_ok=1
+spiceprefix=X
+}
+C {sg13cmos5l_pr/cap_cmomi.sym} 1160 -110 3 0 {name=C4
+model=cap_cmomi
+w=8.5e-6
+l=8.5e-6
+mmin=1
+mmax=4
+feed=double
+subblock=0
+m=4
+mm_ok=1
+spiceprefix=X
 }

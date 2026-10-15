@@ -473,7 +473,7 @@ N 50 -650 50 -630 {lab=VINP1
 spice_ignore=true}
 N 250 -550 250 -530 {lab=OUT1
 spice_ignore=true}
-N 250 -470 250 -440 {lab=VSS
+N 250 -470 250 -440 {lab=OUT1
 spice_ignore=true}
 N 760 -270 780 -270 {lab=VINN2
 spice_ignore=true}
@@ -648,7 +648,7 @@ value="tcleval(
 .lib $::MODELS_NGSPICE/cornerCAP.lib cap_typ
 .lib $::MODELS_NGSPICE/cornerMOSCAP.lib moscap_tt 
 )"
-      }
+      spice_ignore=true}
 C {launcher.sym} -250 -340 0 0 {name=h4
 descr=Plot_AC
 tclcommand="xschem raw_read [file join $netlist_dir result tb_cg_ota_ac.raw]"}
@@ -1512,7 +1512,7 @@ value="tcleval(
 .lib $::MODELS_NGSPICE/cornerMOSCAP.lib moscap_tt_mismatch
 .lib $::MODELS_NGSPICE/cornerMOSCAP.lib moscap_tt_stat
 )"
-      spice_ignore=true}
+      }
 C {simulator_commands.sym} -290 -1150 0 0 {name=Worst-Case_SS
 simulator=ngspice
 only_toplevel=false 
