@@ -3,7 +3,8 @@
 #   scripts/flow.sh <cell> [--profile typ|pvt] [--stages cace,drc,lvs,pex,post | --only drc,lvs] [--no-mc] [--netlist c|rc|both] [--force] [--keep-going]
 #
 # The stages come from cells.yaml (`stages:` of the cell); --stages overrides them, --only intersects with them (CI). Stages, in this order:
-#   cace   schematic CACE run = the reference (scripts/run_cace.sh). Reused when newer than the schematic, yaml and templates (--force: rerun)
+#   cace   schematic CACE run = the reference (scripts/run_cace.sh). Reused when newer than the schematic, yaml, manifest and templates (--force: rerun).
+#          For cells with cace/<cell>.params.yaml, scripts/gen_cace.py first rebuilds templates + yaml parameters from xschem/<cell>/tb/*
 #   drc    KLayout DRC + antenna (+ density info)               scripts/run_drc.sh
 #   lvs    layout versus schematic                              scripts/run_lvs.sh
 #   pex    parasitic extraction: kpex C and Magic R+C           scripts/run_pex.sh   (needs lvs MATCH and the cace run)
@@ -54,6 +55,9 @@ echo "flow: $cell  stages: ${stages:-none}  profile: $profile"
 if has_stage cace; then
   if [ -z "$yaml" ] || [ ! -f "$yaml" ]; then record cace skip 0 "no CACE datasheet (scripts/new_cell.sh $cell)"
   else
+    # templates and the parameters of the datasheet are generated from the xschem testbenches (cace/<cell>.params.yaml); only a real
+    # change of the generated files makes the reference stale below
+    python3 -I "$root/scripts/gen_cace.py" "$cell" >"$log/gen_cace.log" 2>&1 || { cat "$log/gen_cace.log"; force=1; }   # run_cace.sh then fails with the same message (error row), never a silent old reference
     ref=""
     for d in $(ls -d "$root"/runs/RUN_* 2>/dev/null | sort -r); do
       grep -q "CACE Summary for $cell\$" "$d/summary.md" 2>/dev/null && grep -q "netlist source\*\*: schematic" "$d/summary.md" || continue
@@ -62,7 +66,7 @@ if has_stage cace; then
     fresh=""
     if [ -n "$ref" ] && [ -z "$force" ]; then
       fresh=1
-      for f in "$sch" "$yaml" $(ls "$root"/cace/templates/"$cell"/*.sch 2>/dev/null) "$root"/xschem/ota_cmos5l/ota_cmos5l.sch; do
+      for f in "$sch" "$yaml" "$root/cace/$cell.params.yaml" "$root/scripts/gen_cace.py" $(ls "$root"/cace/templates/"$cell"/*.sch 2>/dev/null) "$root"/xschem/ota_cmos5l/ota_cmos5l.sch; do
         [ -f "$f" ] && [ "$f" -nt "$ref/summary.md" ] && fresh=""
       done
     fi

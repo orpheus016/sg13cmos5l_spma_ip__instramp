@@ -1,0 +1,109 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/tb/tb_ota_cmos5l_cmrr/tb_ota_cmos5l_cmrr.sch
+**.subckt tb_ota_cmos5l_cmrr
+x1 VSS I_B VDD OUT3 VINP3 OUT3 ota_cmos5l
+C1 OUT3 0 3p
+I0 I_B VSS 1.4u
+V1 VDD VSS 1.2
+V2 VSS 0 0
+V3 VINP3 VSS 0.6
+**** begin user architecture code
+
+
+
+.lib cornerMOSlv.lib mos_tt
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerDIO.lib dio_tt
+.lib cornerCAP.lib cap_typ
+.lib cornerMOSCAP.lib moscap_tt
+
+
+
+
+.param temp=27
+.param cl=3p
+.param ib=1.4u
+.param vdd=1.2
+.param vicm=vdd/2
+.param vid=0
+
+
+
+
+.param temp=27
+
+
+
+
+.control
+save all
+shell mkdir -p result
+
+* CMRR
+alter @v1[acmag]=0
+alter @v3[acmag]=1
+
+ac dec 20 1 10G
+
+let v_diff_res = v(VINP3) - v(OUT3)
+let cmrr_curve = db(1 / (v_diff_res + 1e-15))
+
+meas ac cmrr_dc find cmrr_curve at=10
+meas ac cmrr_100k find cmrr_curve at=100k
+meas ac cmrr_1meg find cmrr_curve at=1MEG
+
+write ./result/tb_cg_ota_cmrr.raw v_diff_res cmrr_curve
+
+echo "======================================================="
+echo "  CMRR @ DC / 10 Hz        : " $&cmrr_dc   " dB (Target: > 60 dB)"
+echo "  CMRR @ 100 kHz           : " $&cmrr_100k " dB"
+echo "  CMRR @ 1 MHz             : " $&cmrr_1meg " dB"
+echo "======================================================="
+
+plot cmrr_curve xlog
+.endc
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.iopin IBIAS
+*.iopin VDD
+*.iopin VSS
+*.iopin VOUT
+*.iopin VINP
+*.iopin VINN
+XM6 IBIAS IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6} mm_ok=1
+XM7 net1 IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7} mm_ok=1
+XM8 VOUT IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8} mm_ok=1
+XM1 net2 VINN net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM2 net3 VINP net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM3 net2 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM4 net3 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM5 VOUT net3 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1 m=1 mm_ok=1
+XR1 net3 net4 VSS rhigh w=0.5e-6 l=1.95e-6 m=1 b=0 mm_ok=1
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+XC2 VOUT net4 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=5 mm_ok=1
+**** begin user architecture code
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+
+
+**** end user architecture code
+XC1 VOUT net4 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=4 mm_ok=1
+.ends
+
+.GLOBAL VDD
+.end

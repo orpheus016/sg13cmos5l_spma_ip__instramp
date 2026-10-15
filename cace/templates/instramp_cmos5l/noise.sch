@@ -1,0 +1,133 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {}
+V {}
+S {}
+F {}
+E {}
+N 790 -520 790 -480 {lab=VDD}
+N 830 -520 830 -480 {lab=vss}
+N 750 -520 750 -480 {lab=ibias}
+N 980 -350 980 -320 {lab=out}
+N 980 -260 980 -230 {lab=0}
+N 200 -450 200 -410 {lab=ibias}
+N 200 -350 200 -310 {lab=vss}
+N 100 -310 100 -270 {lab=vss}
+N 100 -450 100 -410 {lab=VDD}
+N 100 -210 100 -170 {lab=0}
+N 300 -450 300 -410 {lab=vinp}
+N 300 -350 300 -310 {lab=vss}
+N 400 -350 400 -310 {lab=vss}
+N 400 -450 400 -410 {lab=vinn}
+N 300 -310 400 -310 {lab=vss}
+N 100 -310 200 -310 {lab=vss}
+N 200 -310 300 -310 {lab=vss}
+N 100 -350 100 -310 {lab=vss}
+N 600 -400 660 -400 {lab=vinn}
+N 600 -300 660 -300 {lab=vinp}
+N 600 -350 660 -350 {lab=vcm}
+N 980 -350 1020 -350 {lab=out}
+N 920 -350 980 -350 {lab=out}
+N 500 -450 500 -410 {lab=vcm}
+N 500 -350 500 -310 {lab=vss}
+N 400 -310 500 -310 {lab=vss}
+C {title.sym} 160 -30 0 0 {name=l6 author="James Patrick"}
+C {simulator_commands.sym} 1390 -350 0 0 {name=Noise
+simulator=ngspice
+only_toplevel="false"
+value=".control
+set num_threads=CACE\{jobs\}
+save all
+destroy all
+
+* Noise referred to V3 (VINP): gain VINP->OUT = Adm, so inoise = differential-input noise.
+* VINN / VCM are held at DC.
+alter @v3[acmag]=1
+noise v(out) v3 dec 20 10 100MEG
+alter @v3[acmag]=0
+
+setplot noise1
+
+* Parameters #1
+let inoise_total_uv = noise2.inoise_total * 1e6
+let onoise_total_uv = noise2.onoise_total * 1e6
+let irn_nv = noise1.inoise_spectrum * 1e9
+let orn_nv = noise1.onoise_spectrum * 1e9
+
+* inoise_total integrates out to 100 MHz where the closed-loop gain has rolled off, so it is
+* inflated. In-band equivalent = output noise / low-frequency gain (gain = onoise/inoise @ 10 Hz).
+let gain_lf = noise1.onoise_spectrum[0] / noise1.inoise_spectrum[0]
+let inoise_eq_uv = onoise_total_uv / gain_lf
+
+* IRN extraction at certain frequencies (20 pts/dec from 10 Hz)
+let irn_10 = irn_nv[0]
+let irn_100 = irn_nv[20]
+let irn_1k = irn_nv[40]
+let irn_10k = irn_nv[60]
+let irn_100k = irn_nv[80]
+let irn_1meg = irn_nv[100]
+let cace_IRN_10 = irn_10*1e-9
+let cace_IRN_100 = irn_100*1e-9
+let cace_IRN_1K = irn_1k*1e-9
+let cace_IRN_10K = irn_10k*1e-9
+let cace_ORN_1K = orn_nv[40]*1e-9
+let cace_ONOISE_TOT = onoise_total_uv*1e-6
+let cace_INOISE_EQ = inoise_eq_uv*1e-6
+echo $&cace_IRN_10 $&cace_IRN_100 $&cace_IRN_1K $&cace_IRN_10K $&cace_ORN_1K $&cace_ONOISE_TOT $&cace_INOISE_EQ > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
+.endc"
+}
+C {vdd.sym} 790 -520 0 0 {name=l1 lab=VDD}
+C {lab_wire.sym} 830 -520 0 0 {name=p1 sig_type=std_logic lab=vss}
+C {lab_wire.sym} 750 -520 0 0 {name=p2 sig_type=std_logic lab=ibias}
+C {capa.sym} 980 -290 0 0 {name=C1
+m=1
+value=\{cl\}
+footprint=1206
+device="ceramic capacitor"}
+C {lab_wire.sym} 1020 -350 0 0 {name=p4 sig_type=std_logic lab=out}
+C {lab_wire.sym} 200 -450 0 0 {name=p5 sig_type=std_logic lab=ibias}
+C {isource.sym} 200 -380 0 0 {name=I0 value=\{ib\}}
+C {vdd.sym} 100 -450 0 0 {name=l2 lab=VDD}
+C {vsource.sym} 100 -380 0 0 {name=V1 value=\{vdd\} savecurrent=false}
+C {lab_wire.sym} 100 -310 0 0 {name=p7 sig_type=std_logic lab=vss}
+C {vsource.sym} 100 -240 0 0 {name=V2 value=0 savecurrent=false}
+C {gnd.sym} 100 -170 0 0 {name=l3 lab=0}
+C {lab_wire.sym} 300 -450 0 0 {name=p9 sig_type=std_logic lab=vinp}
+C {vsource.sym} 300 -380 0 0 {name=V3 value=\{vcm\} savecurrent=false}
+C {vsource.sym} 400 -380 0 0 {name=V4 value=\{vcm\} savecurrent=false}
+C {lab_wire.sym} 400 -450 0 0 {name=p12 sig_type=std_logic lab=vinn}
+C {lab_wire.sym} 600 -300 2 0 {name=p13 sig_type=std_logic lab=vinp}
+C {lab_wire.sym} 600 -400 2 0 {name=p14 sig_type=std_logic lab=vinn}
+C {gnd.sym} 980 -230 0 0 {name=l5 lab=0}
+C {instramp_cmos5l.sym} 790 -350 0 0 {name=x1}
+C {lab_wire.sym} 600 -350 2 0 {name=p3 sig_type=std_logic lab=vcm}
+C {vsource.sym} 500 -380 0 0 {name=V5 value=\{vcm\} savecurrent=false}
+C {lab_wire.sym} 500 -450 0 0 {name=p6 sig_type=std_logic lab=vcm}
+C {simulator_commands_shown.sym} 1070 -990 0 0 {name=Libs_Ngspice
+simulator=ngspice
+only_toplevel=false
+value="
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSlv.lib mos_CACE\{corner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOShv.lib mos_CACE\{corner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerRES.lib res_CACE\{rcorner\}
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerDIO.lib dio_tt
+.lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+
+.include CACE\{DUT_path\}
+
+.temp CACE\{temperature\}
+
+.option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
+"
+      }
+C {simulator_commands_shown.sym} 1070 -760 0 0 {name=General_Params
+simulator=ngspice
+only_toplevel=false
+value=".param ib=CACE\{ib\}
+.param vdd=CACE\{vdd\}
+.param vcm=CACE\{vcm\}
+.param cl=CACE\{cl\}
+"
+      }
+T {GENERATED by scripts/gen_cace.py from xschem tb xschem/instramp_cmos5l/tb/tb_instramp_cmos5l_noise/tb_instramp_cmos5l_noise.sch - edit the testbench / the manifest, not this file} 160 -80 0 0 0.3 0.3 {}

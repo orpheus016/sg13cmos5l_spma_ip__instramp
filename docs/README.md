@@ -24,9 +24,11 @@ Worked example for everything below: **`ota_cmos5l`** (copy it, don't start from
 ```
 xschem/<cell>/<cell>.sch|.sym          the design under test (DUT)
 xschem/<cell>/xschemrc                 lets CACE netlist the DUT
-xschem/<cell>/tb/...                   your own interactive testbenches (stay untouched, used as a source)
-cace/<cell>.yaml                       the datasheet: pins, conditions, specs, which template measures what
-cace/templates/<cell>/*.sch            CACE testbench templates (one per kind of measurement)
+xschem/<cell>/tb/...                   your own interactive testbenches (you edit these; the source of the CACE templates)
+cace/<cell>.params.yaml                manifest (auto-build, see 3a): which testbench gives which parameter, expressions, units, limits
+cace/<cell>.yaml                       the datasheet: pins, conditions (hand-written) + `parameters:` (GENERATED from the manifest)
+cace/templates/<cell>/*.sch            CACE testbench templates (one per kind of measurement; GENERATED from the testbenches)
+scripts/gen_cace.py <cell>             builds the templates and the `parameters:` of the yaml (run by flow.sh and run_cace.sh)
 scripts/run_cace.sh <cell>             run everything, build the report, exit code for CI
 scripts/make_readme.py <cell>          (called by run_cace.sh) writes docs/<cell>/cace/README.md
 docs/<cell>/cace/                      generated report: README.md, PNGs, CACE md/svg   <- commit this
@@ -51,9 +53,46 @@ Do not create `netlist/`, `runs/` or `docs/<cell>/cace/` by hand, they are gener
 
 Sizing parameters: the OTA schematic uses free parameters (`{wbias}`, `{linpair}`, …) that every template currently declares in an `OTA_Params` block. Copy that block 1:1 into new templates for now (centralising it is Phase 3 in [cace_ci/STATUS.md](cace_ci/STATUS.md)).
 
-## 3. Migrating a testbench to a CACE template
+## 3a. Automatic build: testbench -> template + yaml (`instramp_cmos5l`, `ota_cmos5l`)
 
-Start from your working xschem testbench `xschem/<cell>/tb/tb_<cell>_<x>/tb_<cell>_<x>.sch`, copy it to `cace/templates/<cell>/<x>.sch` and change **only** the following. Keep the circuit topology (follower, Tian loop, …) as it is.
+You edit the interactive testbench (the one with the plots and banners, `xschem/<cell>/tb/tb_<cell>_<x>/tb_<cell>_<x>.sch`); the CACE template and the yaml entry follow by themselves.
+A cell opts in by having a manifest `cace/<cell>.params.yaml`. **`scripts/flow.sh <cell>` and `scripts/run_cace.sh <cell>` call `scripts/gen_cace.py <cell>` first**, so a run can no longer use an old template or an old parameter list. It also works by itself:
+
+```bash
+python3 scripts/gen_cace.py instramp_cmos5l          # write templates + yaml (only the files whose content changes)
+python3 scripts/gen_cace.py instramp_cmos5l --check  # write nothing, exit 1 if something is out of date (CI)
+```
+
+What it generates and from what:
+
+| Generated (do not edit) | Source (edit this) |
+|---|---|
+| `cace/templates/<cell>/<template>.sch` | the testbench named by `tb:` in the manifest |
+| `cace/<cell>.yaml` from the line `parameters:` on | `cace/<cell>.params.yaml` (the pins and `default_conditions` above that line stay hand-written) |
+
+A manifest entry (full description in the header of `cace/instramp_cmos5l.params.yaml`):
+
+```yaml
+  cmrr:                                   # parameter name in the datasheet
+    tb: tb_instramp_cmos5l_cmrr           # testbench folder = file name under xschem/<cell>/tb  (no tb: -> hand-written template, e.g. thd)
+    template: cmrr.sch
+    display: CMRR
+    spec:                                 # one entry per number of the .data file, in this order
+      CMRR_DC:  {expr: cmrr_dc,  display: CMRR @10 Hz, unit: dB, min: 40}   # expr = ngspice expression of the testbench, SI base units
+      CMRR_1M:  {expr: cmrr_1meg, display: CMRR @1 MHz, unit: dB}           # no min/typ/max = report only
+```
+
+Cell status: `instramp_cmos5l` builds everything from its testbenches except `thd` (no testbench yet). `ota_cmos5l` builds `ac` (Tian), `noise`, `cmrr`, `psrr`, `icmr` from `xschem/ota_cmos5l/tb/*`; `dc_op`, `gain_tc`, `tran_small`, `tran_large` stay hand-written templates (entries without `tb:` in `cace/ota_cmos5l.params.yaml`) because they were tuned for the PVT sweep and differ on purpose from the interactive testbench (steps of +-50 mV / +-0.3 V around vcm instead of fixed levels, a 3-point DC sweep for the gain error). The Monte Carlo parameters (`mc_*`) reuse the template of the normal measurement (`collate:`, `variables: [X, null, ...]`, own `conditions:` in the manifest). Moving the OTA to the generator changed no result: all 43 schematic rows are identical to the run before.
+
+The conversion applies the rules of section 3b: DUT symbol -> `<cell>.sym`; `V1 I0 C1 V3 V4 V5` get `{vdd} {ib} {cl} {vcm}` (map `sources:` in the manifest); every `.lib`/`.param` block is replaced by the canonical CACE block (libs, `.include CACE{DUT_path}`, `.temp`, seed); in the control block `plot shell write show echo print run .op` lines are dropped, `set num_threads=CACE{jobs}` is added and, at the end, `let cace_<VAR> = <expr>` plus the `echo ... > .data` line. `.subckt` / `.func` helper blocks (the Tian loop-gain probe) are kept and a symbol that lives in `cace/templates/<cell>/` (`loopgainprobe.sym`) is referenced by its file name. The `.param` block comes from `params:` in the manifest (default `ib vdd vcm cl`; the OTA uses `temp ... vicm ... vid`). Graph boxes and launchers are removed. Your testbench keeps its own plots, banners and raw files for the interactive use. Two things to keep in mind when you write a testbench:
+- every number that should become a CACE variable must exist as an ngspice variable/vector at the end of the control block (`meas` result or `let`); put it in the manifest as `expr` (convert to SI base units there, e.g. `irn_100*1e-9` for V/sqrt(Hz)); `CACE{vdd}` etc. may appear in an `expr` or in a `subst:` text replacement (e.g. a hard-coded `0.6` stimulus).
+- component names matter: the supplies/loads that CACE sweeps are taken from the map `sources:` of the manifest (instramp: `V1` vdd, `I0` ib, `C1` cl, `V3 V4 V5` vcm; OTA: `V1 I0 C1 V3` with `vicm`); a parameter can add its own `sources:` (OTA ac/noise: `I1 V5 V1/V4 C3`).
+
+Workflow after you changed a testbench: just `scripts/flow.sh <cell>` (the schematic CACE run is repeated only if a generated template, the yaml, the manifest or the schematic really changed; `--force` repeats it anyway; `--stages cace` for only that stage). Adding a parameter = new testbench + one manifest entry.
+
+## 3b. Migrating a testbench to a CACE template by hand (cells without manifest)
+
+The table below is what `gen_cace.py` does for you. Start from your working xschem testbench `xschem/<cell>/tb/tb_<cell>_<x>/tb_<cell>_<x>.sch`, copy it to `cace/templates/<cell>/<x>.sch` and change **only** the following. Keep the circuit topology (follower, Tian loop, …) as it is.
 
 | In the xschem testbench | In the CACE template |
 |---|---|
@@ -112,7 +151,7 @@ Before running the whole sweep, test one template in the GUI with the symbol vis
 
 ## 4. Writing `cace/<cell>.yaml`
 
-Copy `cace/ota_cmos5l.yaml`. Structure:
+Copy `cace/ota_cmos5l.yaml`. For a cell with a manifest (section 3a) you only write the part above `parameters:` here; the `parameters:` part is generated from `cace/<cell>.params.yaml` (same keys as below). Structure:
 
 ```yaml
 name:           <cell>                # == file names of .sch/.sym
@@ -362,7 +401,7 @@ Keep a gap between neighbouring caps: touching `recog_mom` markers merge and the
 `cells.yaml` lists every cell and what can be done with it today. One command runs everything that applies:
 
 ```bash
-scripts/flow.sh ota_cmos5l                    # cace (reused if fresh) -> drc -> lvs -> pex -> post (C and R+C)   ~1 min with the typ profile
+scripts/flow.sh ota_cmos5l                    # (gen_cace.py ->) cace (reused if fresh) -> drc -> lvs -> pex -> post (C and R+C)   ~1 min with the typ profile
 scripts/flow.sh instramp_cmos5l --profile pvt # post-layout over the full PVT grid
 scripts/flow.sh output_buffer                 # only the stages its cells.yaml entry lists (drc, lvs)
 scripts/flow.sh fine_gain                     # schematic-only cell: prints "no stages yet"
@@ -375,11 +414,15 @@ Result: `docs/<cell>/status.md` and `status.json` (stage, result, time, detail; 
 out of date), logs in `runs/flow/<cell>/<stage>.log`. A stage that cannot run says why: `skip` (no layout / datasheet yet), `blocked`
 (an earlier stage failed), `error` (the stage itself broke, e.g. xschem cannot find a symbol). Exit code 0 / 1 (a check failed) / 2 (error).
 
+**"I changed a testbench but the flow shows the old result"**: (1) for a cell without `cace/<cell>.params.yaml` the templates are hand-copies, a change in `xschem/<cell>/tb/` never reaches them (add the manifest, CACE guide 3a); (2) the `cace` stage reuses the newest schematic run
+while the schematic, the yaml, the manifest, `gen_cace.py` and the templates are older than it — `--force` repeats it, and the line `cace pass 0s reused RUN_...` tells you it was reused; (3) a testbench that is not named in the manifest is never simulated by CACE;
+(4) the `post` stage compares against the last schematic run, so run `cace` before it (a full `flow.sh <cell>` does).
+
 ## F1. What a cell needs for each stage
 
 | Stage | Needs | Script |
 |---|---|---|
-| `cace` | `cace/<cell>.yaml`, `cace/templates/<cell>/*.sch`, `xschem/<cell>/<cell>.sch` | `scripts/run_cace.sh` |
+| `cace` | `cace/<cell>.yaml`, `cace/templates/<cell>/*.sch`, `xschem/<cell>/<cell>.sch`; with `cace/<cell>.params.yaml` the templates and the yaml parameters are first rebuilt from `xschem/<cell>/tb/*` (CACE guide 3a) | `scripts/gen_cace.py`, `scripts/run_cace.sh` |
 | `drc` | layout (`gds:` in `cells.yaml`) | `scripts/run_drc.sh` |
 | `lvs` | layout and `xschem/<cell>/<cell>.sch`, net labels on `<metal>/25` | `scripts/run_lvs.sh` |
 | `pex` | LVS MATCH and one schematic CACE run (it writes `netlist/<cell>/schematic/<cell>.spice`, the pin order) | `scripts/run_pex.sh` |
@@ -394,7 +437,7 @@ absolute path of another project (`/foss/designs/chipalooza/.../ota_cmos5l.sym`)
 
 Replace `<cell>` by the name from `cells.yaml`. All commands run from the repository root; each prints a result line and writes into `runs/`.
 
-1. **Schematic characterisation (reference).** `scripts/run_cace.sh <cell>` (OTA: ~2 min with Monte Carlo; `-p dc_op ac_response` for only some parameters).
+1. **Schematic characterisation (reference).** `scripts/run_cace.sh <cell>` (runs `gen_cace.py` first if the cell has a manifest; OTA: ~2 min with Monte Carlo; `-p dc_op ac_response` for only some parameters).
    Result: `runs/RUN_<date>/summary.md`, `docs/<cell>/cace/README.md`, `netlist/<cell>/schematic/<cell>.spice`. Exit 0 = all pass, 2 = a spec fails.
 2. **DRC + antenna.** `scripts/run_drc.sh <cell>`: main + maximal rules, **antenna** (Ant.a-i) and, for information, density.
    * *Density* (`M1.j M2.j M3.j TM1.c AFil.g GFil.g`) is a chip-level rule: fill is added at the top level, so a single block always shows 6 items. They are listed as `[info, chip-level]` and do not fail the run. `--density` makes them fail (use on the finished chip, after the PDK filler: KLayout *SG13CMOS5L PDK -> Filler*); `--no-antenna` skips the antenna deck.
@@ -409,7 +452,7 @@ Replace `<cell>` by the name from `cells.yaml`. All commands run from the reposi
 ## F3. Adding a cell
 
 1. Layout in `gds/<dir>/<cell>.gds`, schematic `xschem/<cell>/<cell>.sch` + `.sym`, an entry in `cells.yaml` (`gds`, `sch`, `stages`).
-2. Characterisation: `python3 scripts/new_cell.py <cell>` reads the symbol pins and writes `cace/<cell>.yaml` (pins, default conditions, a PVT-swept `dc_op` parameter with report-only limits), the testbench `cace/templates/<cell>/dc_op.sch`, an `xschem/<cell>/xschemrc`, and adds `cace` to the cell's stages. Check the pin roles it prints (power, ground, current input, output, logic; override with `--outputs`, `--current-pins`, `--logic`). Then `scripts/run_cace.sh <cell>`. The real parameters (ac, noise, ...) are written by copying a template from `cace/templates/` (CACE guide section 3).
+2. Characterisation: `python3 scripts/new_cell.py <cell>` reads the symbol pins and writes `cace/<cell>.yaml` (pins, default conditions, a PVT-swept `dc_op` parameter with report-only limits), the testbench `cace/templates/<cell>/dc_op.sch`, an `xschem/<cell>/xschemrc`, and adds `cace` to the cell's stages. Check the pin roles it prints (power, ground, current input, output, logic; override with `--outputs`, `--current-pins`, `--logic`). Then `scripts/run_cace.sh <cell>`. The real parameters (ac, noise, ...) come from your testbenches: add `cace/<cell>.params.yaml` (copy `cace/instramp_cmos5l.params.yaml`, CACE guide section 3a), or copy a template by hand (section 3b).
 3. The CI matrices (`cace.yml`, `verify.yml`, `report.yml`) are generated from `cells.yaml`; nothing to edit there.
 
 ## F4. Interactive report and automatic rebuild

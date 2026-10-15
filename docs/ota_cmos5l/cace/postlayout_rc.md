@@ -1,7 +1,7 @@
 # Schematic vs post-layout
 
-* schematic run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-13_19-33-20` (netlist source: schematic)
-* post-layout run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/ota_cmos5l/RUN_2026-10-14_14-14-09` (netlist source: pex)
+* schematic run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-15_18-48-38` (netlist source: schematic)
+* post-layout run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/ota_cmos5l/RUN_2026-10-15_18-52-02` (netlist source: pex)
 * flag threshold: 5 % on the typical value; units as in the CACE summary
 
 | Parameter | Var | Unit | Schematic min / typ / max | Post-layout min / typ / max | Δ typ | Δ typ % | Status | Flag |
@@ -24,7 +24,7 @@
 | Quiescent power | PWR | uW | 19.209 / 24.705 / 29.878 | 24.736 / 24.736 / 24.736 | +0.031 | +0.13 | Pass → Pass |  |
 | Output voltage | VOUT | V | 0.6 / 0.6 / 0.601 | 0.601 / 0.601 / 0.601 | +0.001 | +0.17 | Pass → Pass |  |
 | Gain error (1 - dVout/dVin) | GAIN_ERR | % | -0.218 / 0.048 / 0.084 | 0.062 / 0.062 / 0.062 | +0.014 | +29.17 | Pass → Pass | Δ |
-| Gain tempco (ppm per °C) | GAIN_TC | ppm | 0.48 / 1.301 / 2.043 | 0.873 / 0.873 / 0.873 | -0.428 | -32.90 | Pass → Pass | Δ |
+| Gain tempco (ppm per °C) | GAIN_TC | ppm | 0.48 / 1.301 / 2.043 | 0.705 / 0.705 / 0.705 | -0.596 | -45.81 | Pass → Pass | Δ |
 | Mean follower gain | G_MEAN | V/V | 0.999 / 1 / 1.002 | 0.999 / 0.999 / 0.999 | -0.001 | -0.10 | Pass → Pass |  |
 | CMRR @10 Hz | CMRR_DC | dB | 53.977 / 64.868 / 84.357 | 64.69 / 64.69 / 64.69 | -0.178 | -0.27 | Pass → Pass |  |
 | CMRR @100 kHz | CMRR_100K | dB | 27.317 / 29.294 / 31.224 | 29.456 / 29.456 / 29.456 | +0.162 | +0.55 | Pass → Pass |  |
