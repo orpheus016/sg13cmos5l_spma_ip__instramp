@@ -1,0 +1,68 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 20/10/2026 07:45
+
+.SUBCKT gain_ota I_bias VDD VSS V_inn V_inp V_out
+M$1 \$154 \$36 VDD VDD sg13_lv_pmos L=2u W=59.68u AS=20.2912p AD=20.2912p
++ PS=124.8u PD=124.8u rfmode=0
+M$9 \$36 \$36 VDD VDD sg13_lv_pmos L=2u W=59.68u AS=20.2912p AD=20.2912p
++ PS=124.8u PD=124.8u rfmode=0
+C$17 \$6 V_out cap_cmomi w=8.65u l=10.2u A=0p P=0u m=4
+C$21 \$18 V_out cap_cmomi w=25.56u l=26.16u A=0p P=0u m=1
+M$22 \$63 \$63 \$112 VDD sg13_lv_pmos L=0.5u W=2.2u AS=0.748p AD=0.748p
++ PS=5.08u PD=5.08u rfmode=0
+M$23 VDD \$112 \$112 VDD sg13_lv_pmos L=0.5u W=5.55u AS=1.887p AD=1.887p
++ PS=11.78u PD=11.78u rfmode=0
+M$24 VDD \$62 \$84 VDD sg13_lv_pmos L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u
++ PD=19.1u rfmode=0
+M$25 VDD \$62 \$64 VDD sg13_lv_pmos L=2u W=4.6u AS=1.564p AD=1.564p PS=9.88u
++ PD=9.88u rfmode=0
+M$26 VDD \$62 \$10 VDD sg13_lv_pmos L=2u W=23u AS=5.2325p AD=5.2325p PS=30.57u
++ PD=30.57u rfmode=0
+M$30 VDD \$62 \$9 VDD sg13_lv_pmos L=2u W=11.5u AS=3.0475p AD=3.0475p PS=18.31u
++ PD=18.31u rfmode=0
+M$32 VDD \$62 \$62 VDD sg13_lv_pmos L=2u W=2.3u AS=0.782p AD=0.782p PS=5.28u
++ PD=5.28u rfmode=0
+M$33 VSS \$45 \$45 VSS sg13_lv_nmos L=0.5u W=2.1u AS=0.714p AD=0.714p PS=4.88u
++ PD=4.88u rfmode=0
+M$34 \$84 \$9 \$18 VSS sg13_lv_nmos L=2u W=6.41u AS=2.1794p AD=2.1794p PS=13.5u
++ PD=13.5u rfmode=0
+M$35 \$11 \$9 \$56 VSS sg13_lv_nmos L=2u W=6.41u AS=2.1794p AD=2.1794p PS=13.5u
++ PD=13.5u rfmode=0
+M$36 \$45 \$64 \$64 VSS sg13_lv_nmos L=0.5u W=0.84u AS=0.2856p AD=0.2856p
++ PS=2.36u PD=2.36u rfmode=0
+M$37 \$73 \$64 \$84 VSS sg13_lv_nmos L=0.5u W=0.84u AS=0.2856p AD=0.2856p
++ PS=2.36u PD=2.36u rfmode=0
+M$38 \$4 \$9 \$9 VSS sg13_lv_nmos L=2u W=1.6u AS=0.544p AD=0.544p PS=3.88u
++ PD=3.88u rfmode=0
+M$39 VSS I_bias \$73 VSS sg13_lv_nmos L=2u W=3.2u AS=1.088p AD=1.088p PS=7.08u
++ PD=7.08u rfmode=0
+M$40 VSS I_bias \$63 VSS sg13_lv_nmos L=2u W=1.74u AS=0.5916p AD=0.5916p
++ PS=4.16u PD=4.16u rfmode=0
+M$41 VSS I_bias \$36 VSS sg13_lv_nmos L=2u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+M$42 I_bias I_bias VSS VSS sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p
++ PS=2.42u PD=2.42u rfmode=0
+M$43 VSS I_bias \$62 VSS sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p
++ PS=2.42u PD=2.42u rfmode=0
+M$44 VSS \$73 V_out VSS sg13_lv_nmos L=0.5u W=8.4u AS=2.856p AD=2.856p
++ PS=17.48u PD=17.48u rfmode=0
+M$45 \$73 \$63 \$84 VDD sg13_lv_pmos L=0.5u W=2.2u AS=0.748p AD=0.748p PS=5.08u
++ PD=5.08u rfmode=0
+M$46 VDD \$84 V_out VDD sg13_lv_pmos L=0.5u W=22.2u AS=5.0505p AD=5.0505p
++ PS=29.57u PD=29.57u rfmode=0
+M$50 VSS \$10 \$10 VSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u
++ PD=19.1u rfmode=0
+M$51 VSS \$10 \$18 VSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u
++ PD=19.1u rfmode=0
+M$52 \$11 \$10 VSS VSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u
++ PD=19.1u rfmode=0
+M$53 \$84 \$56 VDD VDD sg13_lv_pmos L=2u W=7.33u AS=2.4922p AD=2.4922p
++ PS=15.34u PD=15.34u rfmode=0
+M$54 \$56 \$56 VDD VDD sg13_lv_pmos L=2u W=7.33u AS=2.4922p AD=2.4922p
++ PS=15.34u PD=15.34u rfmode=0
+M$55 \$154 V_inp \$18 VDD sg13_lv_pmos L=2u W=26.56u AS=6.0424p AD=6.0424p
++ PS=35.02u PD=35.02u rfmode=0
+M$59 \$154 V_inn \$11 VDD sg13_lv_pmos L=2u W=26.56u AS=6.0424p AD=6.0424p
++ PS=35.02u PD=35.02u rfmode=0
+R$63 \$4 VSS VSS rhigh w=0.5u l=15u ps=0u b=0 m=1
+R$64 \$84 \$6 VSS rhigh w=0.5u l=4u ps=0u b=0 m=1
+.ENDS gain_ota

@@ -1,0 +1,9 @@
+{
+    "technology": "",
+    "statements": [
+        {
+            "lib_name": "sg13cmos5l",
+            "lib_path": "$PDK_ROOT/ihp-sg13cmos5l/libs.tech/klayout/tech/sg13cmos5l.map"
+        }
+    ]
+}

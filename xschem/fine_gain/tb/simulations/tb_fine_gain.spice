@@ -1,0 +1,230 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/fine_gain/tb/tb_fine_gain.sch
+**.subckt tb_fine_gain
+I0 VDD I_B {ib}
+V2 VDD 0 {vdd}
+V3 VSS 0 0
+V1 VCM VSS {vicm}
+C1 OUT2 VSS {cl}
+VS1 D4 VSS 0
+VS2 D5 VSS 0
+VS3 D6 VSS 0
+VS4 D7 VSS 0
+VS5 D8 VSS 0
+VS6 D9 VSS 0
+V4 IN2 VSS DC 0.6 AC 1
+x1 IN2 I_B OUT2 VCM VDD VSS D4 D5 D6 D7 D8 D9 fine_gain
+**** begin user architecture code
+
+
+.param temp=27
+.param cl=2p
+.param ib=1u
+.param vdd=1.2
+.param vicm=vdd/2
+
+
+
+
+
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib dio_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+
+
+
+
+.control
+* ==============================================================================
+* FINE-GAIN NETWORK 64-TAP BINARY AUTOMATED CHARACTERIZATION
+* ==============================================================================
+destroy all
+save all
+shell mkdir -p result
+shell rm -f ./result/tb_fg_network_summary.txt
+
+echo "===========================================================================================================" >> ./result/tb_fg_network_summary.txt
+echo " Tap    Target(dB)    Meas(dB)    Err(dB)    -3dB BW(Hz)    Vos_out(mV)    P_dc(uW)" >> ./result/tb_fg_network_summary.txt
+echo "===========================================================================================================" >> ./result/tb_fg_network_summary.txt
+
+echo "STARTING 64-TAP BINARY SWEEP..."
+
+let tap = 0
+while tap < 64
+  * Convert decimal tap to 6-bit binary for D4(LSB) to D9(MSB)
+  let bit0 = tap % 2
+  let temp1 = floor(tap / 2)
+  let bit1 = temp1 % 2
+  let temp2 = floor(temp1 / 2)
+  let bit2 = temp2 % 2
+  let temp3 = floor(temp2 / 2)
+  let bit3 = temp3 % 2
+  let temp4 = floor(temp3 / 2)
+  let bit4 = temp4 % 2
+  let temp5 = floor(temp4 / 2)
+  let bit5 = temp5 % 2
+
+  * Apply logic voltages (1.2V or 0V) to VS1-VS6
+  alter @vs1[dc] = bit0 * 1.2
+  alter @vs2[dc] = bit1 * 1.2
+  alter @vs3[dc] = bit2 * 1.2
+  alter @vs4[dc] = bit3 * 1.2
+  alter @vs5[dc] = bit4 * 1.2
+  alter @vs6[dc] = bit5 * 1.2
+
+  * 1. Run DC Operating Point
+  op
+  let cur_pdc_uw = -i(v2) * 1.2 * 1e6
+  let cur_vos_mv = (v(out2) - 0.6) * 1e3
+
+  * 2. Run AC Analysis
+  ac dec 30 10 100MEG
+  let gain_db = db(v(out2))
+
+  * Measure midband gain at 1 kHz
+  meas ac g_meas_db find gain_db at=1k
+
+  * Measure -3 dB bandwidth
+  let target_3db = g_meas_db - 3
+  meas ac f_3db when gain_db=target_3db
+
+  * 3. Calculate Error (0.0581 dB per step)
+  let ideal_db = tap * 0.0581
+  let err_db = g_meas_db - ideal_db
+
+  * 4. Log to Terminal and File
+  echo "Tap $&tap | Tgt: $&ideal_db dB | Meas: $&g_meas_db dB | Err: $&err_db dB | BW: $&f_3db Hz | P_dc: $&cur_pdc_uw uW"
+  echo " $&tap      $&ideal_db      $&g_meas_db      $&err_db      $&f_3db      $&cur_vos_mv      $&cur_pdc_uw" >> ./result/tb_fg_network_summary.txt
+
+  let tap = tap + 1
+end
+
+echo "CHARACTERIZATION COMPLETED! Log exported to ./result/tb_fg_network_summary.txt"
+.endc
+
+
+
+.include $PDK_ROOT/$PDK/libs.ref/sg13cmos5l_stdcell/spice/sg13cmos5l_stdcell.spice
+
+
+
+
+.param W_RES=0.5u L_R=10u L_2R=20u
+.param W_TG_N=1u L_TG_N=0.13u NG_TG_N=2
+.param W_TG_P=3u L_TG_P=0.13u NG_TG_P=6
+.param W_INV_N=2u L_INV_N=0.13u NG_INV_N=1
+.param W_INV_P=6u L_INV_P=0.13u NG_INV_P=1
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/fine_gain/fine_gain.sym # of pins=12
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/fine_gain/fine_gain.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/fine_gain/fine_gain.sch
+.subckt fine_gain VIN3 BIAS VOUT VCM AVDD AVSS D4 D5 D6 D7 D8 D9
+*.ipin VIN3
+*.ipin VCM
+*.ipin D4
+*.ipin D5
+*.ipin D6
+*.ipin D7
+*.ipin D8
+*.ipin D9
+*.ipin BIAS
+*.iopin VOUT
+*.ipin AVDD
+*.ipin AVSS
+XR1 VIN3 net1 AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XM1 net3 D4 net4 AVSS sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM2 VCM D4_inv net3 AVDD sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR2 net1 net2 AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR8 net1 net3 AVSS rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XR9 net2 net5 AVSS rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XR15 net4 VOUT AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XM3 net5 D5 net4 AVSS sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM4 VCM D5_inv net5 AVDD sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR3 net2 net6 AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR4 net6 net8 AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR5 net8 net10 AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR6 net10 net12 AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR7 net12 net14 AVSS rhigh w={W_RES} l={L_R} m=1 b=0 mm_ok=1
+XR10 net6 net7 AVSS rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM5 net7 D6 net4 AVSS sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM6 VCM D6_inv net7 AVDD sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR11 net8 net9 AVSS rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM7 net9 D7 net4 AVSS sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM8 VCM D7_inv net9 AVDD sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR12 net10 net11 AVSS rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM9 net11 D8 net4 AVSS sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM10 VCM D8_inv net11 AVDD sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR13 net12 net13 AVSS rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM11 net13 D9 net4 AVSS sg13_lv_nmos w={W_TG_N} l={L_TG_N} ng={NG_TG_N} m=1 mm_ok=1
+XM12 VCM D9_inv net13 AVDD sg13_lv_pmos w={W_TG_P} l={L_TG_P} ng={NG_TG_P} m=1 mm_ok=1
+XR14 net14 VCM AVSS rhigh w={W_RES} l={L_2R} m=1 b=0 mm_ok=1
+XM13 D4_inv D4 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM14 D4_inv D4 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM15 D5_inv D5 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM16 D5_inv D5 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM17 D6_inv D6 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM18 D6_inv D6 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM19 D7_inv D7 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM20 D7_inv D7 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM21 D8_inv D8 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM22 D8_inv D8 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+XM23 D9_inv D9 AVSS AVSS sg13_lv_nmos w={W_INV_N} l={L_INV_N} ng={NG_INV_N} m=1 mm_ok=1
+XM24 D9_inv D9 AVDD AVDD sg13_lv_pmos w={W_INV_P} l={L_INV_P} ng={NG_INV_P} m=1 mm_ok=1
+x1 AVDD VCM net4 VOUT BIAS AVSS cg_ota
+.ends
+
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_ota.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_ota.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/cg_ota.sch
+.subckt cg_ota VDD V_inp V_inn V_out I_bias VSS
+*.ipin V_inn
+*.ipin VDD
+*.ipin VSS
+*.opin V_out
+*.ipin I_bias
+*.ipin V_inp
+XM1 F1 V_inn net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4 m=1 mm_ok=1
+XM2 F2 V_inp net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4 m=1 mm_ok=1
+XM3 net5 net5 VDD VDD sg13_lv_pmos w=7.33u l=2u ng=1 m=1 mm_ok=1
+XM4 N_A net5 VDD VDD sg13_lv_pmos w=7.33u l=2u ng=1 m=1 mm_ok=1
+XM7 F1 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XM8 F2 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XM_tail net6 V_btail VDD VDD sg13_lv_pmos w=7.46u l=2u ng=1 m=8 mm_ok=1
+XM_ctrlp N_B V_ctrlp N_A VDD sg13_lv_pmos w=2.20u l=0.50u ng=1 m=1 mm_ok=1
+XM_outp V_out N_A VDD VDD sg13_lv_pmos w=22.20u l=0.5u ng=4 m=1 mm_ok=1
+XM_ctrln N_A V_ctrln N_B VSS sg13_lv_nmos w=0.84u l=0.5u ng=1 m=1 mm_ok=1
+XM_outn V_out N_B VSS VSS sg13_lv_nmos w=8.4u l=0.5u ng=1 m=1 mm_ok=1
+XM5 net5 V_bn1 F1 VSS sg13_lv_nmos w=6.41u l=2u ng=1 m=1 mm_ok=1
+XM6 N_A V_bn1 F2 VSS sg13_lv_nmos w=6.41u l=2u ng=1 m=1 mm_ok=1
+XM_mp1 net1 net1 VDD VDD sg13_lv_pmos w=2.30u l=2u ng=1 m=1 mm_ok=1
+XM_mn1 net1 I_bias VSS VSS sg13_lv_nmos w=0.87u l=2u ng=1 m=1 mm_ok=1
+XM_refn I_bias I_bias VSS VSS sg13_lv_nmos w=0.87u l=2u ng=1 m=1 mm_ok=1
+XM_mp2 V_bn1 net1 VDD VDD sg13_lv_pmos w=11.50u l=2u ng=2 m=1 mm_ok=1
+XM_mp3 V_bn2 net1 VDD VDD sg13_lv_pmos w=23u l=2u ng=4 m=1 mm_ok=1
+XM_bn1 V_bn1 V_bn1 net2 VSS sg13_lv_nmos w=1.60u l=2u ng=1 m=1 mm_ok=1
+XM_bn2 V_bn2 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XM_mn2 V_btail I_bias VSS VSS sg13_lv_nmos w=6u l=2u ng=1 m=1 mm_ok=1
+XM_rep_tail V_btail V_btail VDD VDD sg13_lv_pmos w=7.46u l=2u ng=1 m=8 mm_ok=1
+XM_mn4 N_B I_bias VSS VSS sg13_lv_nmos w=3.2u l=2u ng=1 m=1 mm_ok=1
+XC1 F2 V_out cap_cmomf w=22e-6 l=22e-6 mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
+XC2 net7 V_out cap_cmomf w=15.44e-6 l=15.44e-6 mmin=1 mmax=4 subblock=0 m=1 mm_ok=1
+XR1 net2 VSS VSS rhigh w=0.5e-6 l=15e-6 m=1 b=0 mm_ok=1
+XM_mp4 V_ctrln net1 VDD VDD sg13_lv_pmos w=4.60u l=2u ng=1 m=1 mm_ok=1
+XM_rep_ctrln V_ctrln V_ctrln net3 VSS sg13_lv_nmos w=0.84u l=0.5u ng=1 m=1 mm_ok=1
+XM_rep_outn net3 net3 VSS VSS sg13_lv_nmos w=2.10u l=0.5u ng=1 m=1 mm_ok=1
+XM_mn3 V_ctrlp I_bias VSS VSS sg13_lv_nmos w=1.74u l=2u ng=1 m=1 mm_ok=1
+XM_rep_outp net4 net4 VDD VDD sg13_lv_pmos w=5.55u l=0.5u ng=1 m=1 mm_ok=1
+XM_rep_ctrlp V_ctrlp V_ctrlp net4 VDD sg13_lv_pmos w=2.20u l=0.50u ng=1 m=1 mm_ok=1
+XM_mp5 N_A net1 VDD VDD sg13_lv_pmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XR2 N_A net7 VSS rhigh w=0.5e-6 l=4e-6 m=1 b=0 mm_ok=1
+.ends
+
+.GLOBAL VDD
+.end

@@ -1,0 +1,79 @@
+{
+  "entries": [
+    {
+      "netlist_device": "SG13_LV_NMOS",
+      "layout_cell_library": "SG13_dev",
+      "layout_cell": "nmos",
+      "layout_cell_type": "pcell",
+      "parameter_mapping": {
+        "entries": {
+          "w": "@w",
+          "l": "@l",
+          "ng": "@ng"
+        }
+      },
+      "multiplier": "@m",
+      "netlist_node_order": [
+        "d",
+        "g",
+        "s",
+        "b"
+      ]
+    },
+    {
+      "netlist_device": "SG13_LV_PMOS",
+      "layout_cell_library": "SG13_dev",
+      "layout_cell": "pmos",
+      "layout_cell_type": "pcell",
+      "parameter_mapping": {
+        "entries": {
+          "w": "@w",
+          "l": "@l",
+          "ng": "@ng"
+        }
+      },
+      "multiplier": "@m",
+      "netlist_node_order": [
+        "d",
+        "g",
+        "s",
+        "b"
+      ]
+    },
+    {
+      "netlist_device": "RHIGH",
+      "layout_cell_library": "SG13_dev",
+      "layout_cell": "rhigh",
+      "layout_cell_type": "pcell",
+      "parameter_mapping": {
+        "entries": {
+          "w": "@w",
+          "l": "@l",
+          "b": "@b"
+        }
+      },
+      "multiplier": "@m",
+      "netlist_node_order": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "netlist_device": "CAP_CMOMI",
+      "layout_cell_library": "SG13_dev",
+      "layout_cell": "cap_cmomi",
+      "layout_cell_type": "pcell",
+      "parameter_mapping": {
+        "entries": {
+          "w": "@w",
+          "l": "@l"
+        }
+      },
+      "multiplier": "@m",
+      "netlist_node_order": [
+        "PLUS",
+        "MINUS"
+      ]
+    }
+  ]
+}
