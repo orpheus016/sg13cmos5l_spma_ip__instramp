@@ -243,3 +243,6 @@ contexts/
 
 # Notebook Reference for Roadmap
 notebook_references/
+xschem/milestone_1.md
+.gitignore
+xschem/milestone_2.md

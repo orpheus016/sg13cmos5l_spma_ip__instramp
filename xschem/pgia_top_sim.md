@@ -239,7 +239,7 @@ graph TD
 
 ### Detailed Milestone Checklist:
 
-- [ ] **Milestone 1: Sub-Block Interface Adaptation**
+- [X] **Milestone 1: Sub-Block Interface Adaptation**
   - Verify pin contracts of `instramp_cmos5l`, `gain_network`, `output_buffer`, `gain_decoder_4b`.
   - Finalize $S_0$ tap logic for Gain Stage 1 and Stage 2 ($1\times$ feedback when `s1` or `s2` is zero).
 - [ ] **Milestone 2: Top-Level Schematic Assembly (`pgia_top.sch` & `pgia_top.sym`)**

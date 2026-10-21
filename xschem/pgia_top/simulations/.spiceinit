@@ -1,0 +1,11 @@
+* Custom spiceinit for IHP SG13CMOS5L
+set num_threads=4
+set ngbehavior=hsa
+set ng_nomodcheck
+
+osdi /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103.osdi
+osdi /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/osdi/psp103_nqs.osdi
+osdi /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/osdi/r3_cmc.osdi
+osdi /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/osdi/mosvar.osdi
+osdi /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomi.osdi
+osdi /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/osdi/cap_cmomf.osdi
