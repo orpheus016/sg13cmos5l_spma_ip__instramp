@@ -242,20 +242,20 @@ graph TD
 - [X] **Milestone 1: Sub-Block Interface Adaptation**
   - Verify pin contracts of `instramp_cmos5l`, `gain_network`, `output_buffer`, `gain_decoder_4b`.
   - Finalize $S_0$ tap logic for Gain Stage 1 and Stage 2 ($1\times$ feedback when `s1` or `s2` is zero).
-- [ ] **Milestone 2: Top-Level Schematic Assembly (`pgia_top.sch` & `pgia_top.sym`)**
+- [X] **Milestone 2: Top-Level Schematic Assembly (`pgia_top.sch` & `pgia_top.sym`)**
   - Create directory `xschem/pgia_top/`.
   - Draw `pgia_top.sch` implementing the Folded Two-Lane signal path.
   - Generate hierarchical symbol `pgia_top.sym` with all external pad pins.
-- [ ] **Milestone 3: Master Testbench Construction (`tb_pgia_top.sch`)**
+- [X] **Milestone 3: Master Testbench Construction (`tb_pgia_top.sch`)**
   - Draw `tb_pgia_top.sch` instantiating `pgia_top.sym`.
   - Add dual analog differential stimulus + digital 4-bit synchronous pulse sweep.
   - Netlist cleanly with Xschem batch command in Docker `iic-osic-tools_x11`.
-- [ ] **Milestone 4: DC Operating Point & AC Performance Verification**
+- [X] **Milestone 4: DC Operating Point & AC Performance Verification**
   - Run ngspice batch simulation for `.op` and `.ac`.
   - Extract gain curve, $-3\,\text{dB}$ bandwidth, and phase margin across all 11 settings.
-- [ ] **Milestone 5: Dynamic Transient Co-Simulation**
+- [X] **Milestone 5: Dynamic Transient Co-Simulation**
   - Run full mixed-signal transient sweep across all 16 states ($0\dots 15$).
   - Verify seamless gain transitions, low switching glitch energy, and safe clamping on states 11–15.
-- [ ] **Milestone 6: Post-Processing & Documentation**
+- [X] **Milestone 6: Post-Processing & Documentation**
   - Create Python verification script `verify_pgia_top.py` to parse raw SPICE data and compute metrics.
   - Document results with waveform plots and sign-off report in `xschem/pgia_top/README.md`.
