@@ -50,7 +50,7 @@ pgia_top:
   note: chip level, density rules apply
 gain_ota:
   title: Gain Stage OTA
-  gds: gds/gain_stage/gain_ota.gds
+  gds: gds/gain_ota/gain_ota.gds
   sch: xschem/gain_ota/gain_ota.sch
   cace: cace/gain_ota.yaml
   stages: [cace, drc, lvs, pex, post]

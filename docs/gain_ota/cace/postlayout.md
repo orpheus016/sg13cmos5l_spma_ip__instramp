@@ -1,7 +1,7 @@
 # Schematic vs post-layout
 
 * schematic run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_07-18-34` (netlist source: schematic)
-* post-layout run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace/gain_ota/RUN_2026-10-21_09-18-28` (netlist source: pex)
+* post-layout run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace/gain_ota/RUN_2026-10-21_20-34-47` (netlist source: pex)
 * flag threshold: 5 % on the typical value; units as in the CACE summary
 
 | Parameter | Var | Unit | Schematic min / typ / max | Post-layout min / typ / max | Δ typ | Δ typ % | Status | Flag |
