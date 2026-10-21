@@ -56,14 +56,14 @@ sim_type=ac
 rawfile=$netlist_dir/output_buffer_tb_ac.raw}
 B 2 1320 -260 2120 140 {flags=graph
 y1=0
-y2=3.3
+y2=1.2
 ypos1=0
 ypos2=2
 divy=5
 subdivy=1
 unity=1
 x1=0
-x2=3.1
+x2=1.0
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -126,8 +126,8 @@ N -300 70 -300 270 {lab=VO}
 N -300 70 -180 70 {lab=VO}
 N -200 20 -180 20 {lab=VIN_BUF}
 N 110 50 170 50 {lab=VO}
-C {vsource.sym} 380 180 0 1 {name=V1 value="DC 1.65 AC 1 0 PULSE(1.64 1.66 1m 1u 1u 9m 20m)" savecurrent=false}
-C {vsource.sym} 450 180 0 0 {name=V2 value="DC 3.3" savecurrent=false}
+C {vsource.sym} 380 180 0 1 {name=V1 value="DC 0.6 AC 1 0 PULSE(0.59 0.61 1m 1u 1u 9m 20m)" savecurrent=false}
+C {vsource.sym} 450 180 0 0 {name=V2 value="DC 1.2" savecurrent=false}
 C {lab_pin.sym} 380 130 0 0 {name=p1 sig_type=std_logic lab=VIN_BUF}
 C {lab_pin.sym} 450 130 0 1 {name=p2 sig_type=std_logic lab=AVDD}
 C {lab_pin.sym} -120 -70 1 0 {name=p3 sig_type=std_logic lab=AVDD}
@@ -140,18 +140,19 @@ value=100f
 footprint=1206
 device="ceramic capacitor"}
 C {gnd.sym} 110 150 0 0 {name=l3 lab=0}
-C {isource.sym} -70 180 0 0 {name=I0 value=10u}
+C {isource.sym} -70 180 0 0 {name=I0 value=1.4u}
 C {gnd.sym} -70 230 0 0 {name=l6 lab=0}
 C {code_shown.sym} 540 -230 0 0 {name=MODEL only_toplevel=false
 format="tcleval( @value )"
 value="
-.lib cornerMOShv.lib mos_tt
-.include /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cap_mfringe.lib 
+.lib cornerMOSlv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ 
 "
 }
 C {code_shown.sym} 550 -90 0 0 {name=NGSPICE only_toplevel=false 
 value="
-.param VCM=1.65
+.param VCM=0.6
 .param CLOAD_VALUE=100f
 .param RLOAD_VALUE=100Meg
 
@@ -185,7 +186,7 @@ meas tran vo_min min v(vo) from=1m to=10m
 write output_buffer_tb_tran.raw
 
 * DC transfer of the closed-loop follower.
-dc V1 0.2 3.1 0.01
+dc V1 0.2 1.0 0.01
 let dc_error = v(vo)-v(vin_buf)
 let abs_dc_error = abs(dc_error)
 write output_buffer_tb_dc.raw
@@ -195,7 +196,7 @@ write output_buffer_tb_dc.raw
 C {launcher.sym} 220 410 0 0 {name=h5
 descr="Load Transient waves" 
 tclcommand="xschem raw_read $netlist_dir/output_buffer_tb_tran.raw tran"}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym} 160 30 0 0 {name=x1}
+C {output_buffer.sym} 160 30 0 0 {name=x1}
 C {res.sym} 140 100 0 0 {name=RLOAD
 value=100M
 footprint=1206

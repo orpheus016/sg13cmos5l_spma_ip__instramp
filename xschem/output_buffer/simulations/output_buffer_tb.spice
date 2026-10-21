@@ -1,20 +1,21 @@
-** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/designs/libs/core_analog/output_buffer/output_buffer_tb.sch
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/output_buffer_tb.sch
 **.subckt output_buffer_tb VO
 *.iopin VO
-V1 VIN_BUF 0 DC 1.65 AC 1 0 PULSE(1.64 1.66 1m 1u 1u 9m 20m)
-V2 AVDD 0 DC 3.3
+V1 VIN_BUF 0 DC 0.6 AC 1 0 PULSE(0.59 0.61 1m 1u 1u 9m 20m)
+V2 AVDD 0 DC 1.2
 CLOAD VO 0 100f
-I0 net1 0 10u
+I0 net1 0 1.4u
 x1 AVDD net1 VO VIN_BUF VO 0 output_buffer
 RLOAD net2 0 100M
 **** begin user architecture code
 
-.lib cornerMOShv.lib mos_tt
-.include /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cap_mfringe.lib
+.lib cornerMOSlv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
 
 
 
-.param VCM=1.65
+.param VCM=0.6
 .param CLOAD_VALUE=100f
 .param RLOAD_VALUE=100Meg
 
@@ -48,7 +49,7 @@ meas tran vo_min min v(vo) from=1m to=10m
 write output_buffer_tb_tran.raw
 
 * DC transfer of the closed-loop follower.
-dc V1 0.2 3.1 0.01
+dc V1 0.2 1.0 0.01
 let dc_error = v(vo)-v(vin_buf)
 let abs_dc_error = abs(dc_error)
 write output_buffer_tb_dc.raw
@@ -59,24 +60,56 @@ write output_buffer_tb_dc.raw
 **.ends
 
 * expanding   symbol:  output_buffer.sym # of pins=6
-** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/designs/libs/core_analog/output_buffer/output_buffer.sym
-** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/designs/libs/core_analog/output_buffer/output_buffer.sch
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/output_buffer.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/output_buffer.sch
 .subckt output_buffer AVDD IBIAS VOUT VIN_BUF+ VIN_BUF- AVSS
 *.iopin AVDD
 *.iopin AVSS
-*.iopin VOUT
 *.iopin IBIAS
-*.iopin VIN_BUF-
 *.iopin VIN_BUF+
-XM1 net1 VIN_BUF- net3 AVDD sg13_hv_pmos w=0.3u l=0.4u ng=1 m=1 mm_ok=1
-XM2 net2 VIN_BUF+ net3 AVDD sg13_hv_pmos w=0.3u l=0.4u ng=1 m=1 mm_ok=1
-XM3 net3 IBIAS AVDD AVDD sg13_hv_pmos w=0.3u l=0.4u ng=1 m=1 mm_ok=1
-XM4 net1 net1 AVSS AVSS sg13_hv_nmos w=0.3u l=0.45u ng=1 m=1 mm_ok=1
-XM5 net2 net1 AVSS AVSS sg13_hv_nmos w=0.3u l=0.45u ng=1 m=1 mm_ok=1
-XM6 VOUT IBIAS AVDD AVDD sg13_hv_pmos w=0.3u l=0.4u ng=1 m=1 mm_ok=1
-XM7 VOUT net2 AVSS AVSS sg13_hv_nmos w=0.3u l=0.45u ng=1 m=1 mm_ok=1
-XM8 IBIAS IBIAS AVDD AVDD sg13_hv_pmos w=0.3u l=0.4u ng=1 m=1 mm_ok=1
-XC1 VOUT net2 cap_mfringe w=2.0u l=2.0u mmin=1 mmax=4
+*.iopin VIN_BUF-
+*.iopin VOUT
+x1 AVSS IBIAS AVDD VIN_BUF- VIN_BUF+ VOUT ota_cmos5l
+.ends
+
+
+* expanding   symbol:  ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/ota_cmos5l.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.iopin IBIAS
+*.iopin VDD
+*.iopin VSS
+*.iopin VOUT
+*.iopin VINP
+*.iopin VINN
+XM6 IBIAS IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6} mm_ok=1
+XM7 net1 IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7} mm_ok=1
+XM8 VOUT IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8} mm_ok=1
+XM1 net2 VINN net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM2 net3 VINP net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1 m=1 mm_ok=1
+XM3 net2 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM4 net3 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1 m=1 mm_ok=1
+XM5 VOUT net3 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1 m=1 mm_ok=1
+XR1 net3 net4 VSS rhigh w=0.5e-6 l=1.95e-6 m=1 b=0 mm_ok=1
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+XC2 VOUT net4 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=5 mm_ok=1
+**** begin user architecture code
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+
+
+**** end user architecture code
+XC1 VOUT net4 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=4 mm_ok=1
 .ends
 
 .end

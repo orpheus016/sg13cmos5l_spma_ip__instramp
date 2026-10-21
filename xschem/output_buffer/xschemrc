@@ -1,0 +1,8 @@
+# Project xschemrc for output_buffer
+if {![info exists PDK]} {
+    source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
+}
+
+set _here [file dirname [file normalize [info script]]]
+append XSCHEM_LIBRARY_PATH :$_here
+append XSCHEM_LIBRARY_PATH :$_here/../ota_cmos5l
