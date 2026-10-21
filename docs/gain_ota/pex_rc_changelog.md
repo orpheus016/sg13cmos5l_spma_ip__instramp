@@ -110,8 +110,8 @@ pn5 V_out 10.200u 8.650u
 pn12 V_out 26.160u 25.560u
 ```
 
-- Lines 1–4 ($XC4$): Connected between $R_z$ node (`pn5`) and output (`V_out`) with drawn dimensions $W \approx 10.2\,\mu\text{m}, L \approx 8.65\,\mu\text{m}$.
-- Line 5 ($XC3$): Connected between differential node $F2$ (`pn12`) and output (`V_out`) with drawn dimensions $W \approx 26.16\,\mu\text{m}, L \approx 25.56\,\mu\text{m}$.
+- Lines 1–4 ($XC4$): Connected between $R_z$ node (`pn5`) and output (`V_out`) with drawn dimensions $W \approx 10.2\text{ }\mu\text{m}, L \approx 8.65\text{ }\mu\text{m}$.
+- Line 5 ($XC3$): Connected between differential node $F2$ (`pn12`) and output (`V_out`) with drawn dimensions $W \approx 26.16\text{ }\mu\text{m}, L \approx 25.56\text{ }\mu\text{m}$.
 
 ---
 
