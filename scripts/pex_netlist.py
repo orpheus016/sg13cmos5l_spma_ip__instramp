@@ -180,14 +180,59 @@ def convert_magic(src, sch, out, cell=None, capnodes=None):
     if set(ports) - set(top_ports):
         sys.exit(f"pex_netlist: port mismatch: schematic {ports}, Magic {top_ports}")
     if capnodes and os.path.isfile(capnodes):
-        lines = [l.split() for l in open(capnodes) if l.strip()]
-        if lines and not cap:
+        raw_lines = [l.strip() for l in open(capnodes) if l.strip()]
+        if raw_lines and not cap:
             sys.exit("pex_netlist: layout has MoM caps but the schematic netlist has no cap_cmomi/cap_cmomf line")
-        for k, (a, b) in enumerate(lines, 1):
-            if not a or not b:
-                sys.exit(f"pex_netlist: no net found under MoM cap #{k} (capnodes line '{a} {b}')")
-            res.append(f"XCM_{k} {mnode(a, ports)} {mnode(b, ports)} {cap['model']} " + " ".join(cap["params"]) + " m=1")
+        for k, line in enumerate(raw_lines, 1):
+            toks = []
+            for m in re.finditer(r'\{([^}]+)\}|(\S+)', line):
+                val = m.group(1) or m.group(2)
+                if " " in val:
+                    sub = val.split()
+                    val = next((x for x in sub if "#" not in x), sub[0])
+                toks.append(val)
+            if len(toks) < 2 or not toks[0] or not toks[1]:
+                sys.exit(f"pex_netlist: no net found under MoM cap #{k} (capnodes line '{line}')")
+            a, b = toks[0], toks[1]
+            params = list(cap["params"])
+            if len(toks) >= 4:
+                w_val, l_val = toks[2], toks[3]
+                new_params = []
+                for p in params:
+                    if p.lower().startswith("w="):
+                        new_params.append(f"w={w_val}")
+                    elif p.lower().startswith("l="):
+                        new_params.append(f"l={l_val}")
+                    else:
+                        new_params.append(p)
+                params = new_params
+            res.append(f"XCM_{k} {mnode(a, ports)} {mnode(b, ports)} {cap['model']} " + " ".join(params) + " m=1")
             n["Cdev"] += 1
+
+    # Filter out dangling resistor stubs (resistors where at least one terminal is an internal node appearing nowhere else)
+    node_counts = {}
+    for line in res:
+        toks = line.split()
+        if not toks:
+            continue
+        kind = toks[0][0].upper()
+        if kind == "X":
+            i = next((k for k, x in enumerate(toks) if "=" in x), len(toks)) - 1
+            for nd in toks[1:i]:
+                node_counts[nd] = node_counts.get(nd, 0) + 1
+        elif kind in "RC":
+            for nd in toks[1:3]:
+                node_counts[nd] = node_counts.get(nd, 0) + 1
+
+    clean_res = []
+    for line in res:
+        toks = line.split()
+        if toks and toks[0][0].upper() == "R":
+            n1, n2 = toks[1], toks[2]
+            if (n1 not in ports and node_counts.get(n1, 0) <= 1) or (n2 not in ports and node_counts.get(n2, 0) <= 1):
+                continue
+        clean_res.append(line)
+    res = clean_res
     with open(out, "w") as f:
         f.write(f"** post-layout RC netlist of {cell}: Magic extresist -> ngspice by scripts/pex_netlist.py --magic (source: {src})\n")
         f.write(f".subckt {cell} {' '.join(ports)}\n")

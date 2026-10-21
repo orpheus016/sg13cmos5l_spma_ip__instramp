@@ -48,11 +48,14 @@ pgia_top:
   stages: [drc]
   drc_args: [--density]
   note: chip level, density rules apply
-coarse_gain:
-  schematics: [xschem/coarse_gain/cg_network.sch]
-  sch: xschem/coarse_gain/cg_ota.sch
-  stages: []
-  note: schematic only so far
+gain_ota:
+  title: Gain Stage OTA
+  gds: gds/gain_stage/gain_ota.gds
+  sch: xschem/gain_ota/gain_ota.sch
+  cace: cace/gain_ota.yaml
+  stages: [cace, drc, lvs, pex, post]
+  lvs_args: [--disable_tap_extraction]
+  note: Gain stage ota that has passed LVS and DRC
 fine_gain:
   sch: xschem/fine_gain/fine_gain.sch
   stages: []

@@ -13,6 +13,7 @@
 | [Pictures](#f5-pictures-schematic-and-layout-of-every-cell) (Flow guide F5) | `scripts/update_images.py`: circuit-only schematics and layout renderings, auto-updated in the READMEs and `report.html` |
 | [roadmap.md](roadmap.md) | Optimisation (C/ID), ALIGN, ANN and topology-recommendation: feasibility and order of work |
 | [Post-layout guide](#post-layout-simulation-guide-pex--cace) (below) | LVS-clean layout -> PEX -> CACE on the extracted netlist -> schematic vs post-layout report |
+| [gain_ota/pex_rc_changelog.md](gain_ota/pex_rc_changelog.md) | Changelog & troubleshooting: PEX RC extraction & post-layout fixes for gain_ota |
 
 ---
 
@@ -643,6 +644,9 @@ wire-resistance corners (hrhc/hrlc) and per-cut contact resistance in the Magic 
 | `unhandled line` in `pex_netlist.py` | the extractor wrote a device the converter does not know yet (inductor, BJT, diode): add a branch |
 | `sg13g2.lyp ... errno=2` at the end of a pex run | CACE's layout PNG step, known; simulations and `summary.md` are complete |
 | Magic starts during `cace -s pex` | netlist older than the GDS; use `run_postlayout.sh`, which re-extracts first |
+| `raw.spice.capnodes` has `pn1` instead of `V_out` | routing connects on Metal 1–3: ensure bus bars and vias are kept in `pex_prepare_gds.py` (see [gain_ota/pex_rc_changelog.md](gain_ota/pex_rc_changelog.md)) |
+| ngspice `Warning: singular matrix: check node x2.pn19` | resistor body `xres` extracted as port/resistor stub: skip `xres` in `pex_magic.tcl` |
+| Magic `You must select paint (not a cell) to use getnode` | unexpanded cell under marker: use `top.flatten(-1)` in `pex_prepare_gds.py` and `expand *` in `pex_magic.tcl` |
 
 ## DRC and LVS in CI
 

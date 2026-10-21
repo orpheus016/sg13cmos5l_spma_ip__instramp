@@ -1,6 +1,6 @@
 {
- "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-15_18-01-47",
- "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/instramp_cmos5l/RUN_2026-10-15_18-04-10",
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_10-03-50",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/instramp_cmos5l/RUN_2026-10-21_10-06-04",
  "schematic_source": "schematic",
  "postlayout_source": "pex",
  "threshold_pct": 5.0,
@@ -56,14 +56,14 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 285982.0,
-    "typ": 285982.0,
-    "max": 285982.0,
+    "min": 255797.0,
+    "typ": 255797.0,
+    "max": 255797.0,
     "status": "Pass"
    },
-   "delta": 6728.0,
-   "delta_pct": 2.409276142866351,
-   "flag": ""
+   "delta": -23457.0,
+   "delta_pct": -8.399879679431628,
+   "flag": "\u0394"
   },
   {
    "var": "F0DB",
@@ -76,14 +76,14 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 2038700.0,
-    "typ": 2038700.0,
-    "max": 2038700.0,
+    "min": 1813870.0,
+    "typ": 1813870.0,
+    "max": 1813870.0,
     "status": "Pass"
    },
-   "delta": 51110.0,
-   "delta_pct": 2.571455883758723,
-   "flag": ""
+   "delta": -173720.0,
+   "delta_pct": -8.74023314667512,
+   "flag": "\u0394"
   },
   {
    "var": "PH0",
@@ -96,13 +96,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": -142.71,
-    "typ": -142.71,
-    "max": -142.71,
+    "min": -139.167,
+    "typ": -139.167,
+    "max": -139.167,
     "status": "Pass"
    },
-   "delta": -2.8810000000000002,
-   "delta_pct": -2.060373742213704,
+   "delta": 0.6620000000000061,
+   "delta_pct": 0.4734354103941286,
    "flag": ""
   },
   {
@@ -116,13 +116,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": -62.695,
-    "typ": -62.695,
-    "max": -62.695,
+    "min": -62.696,
+    "typ": -62.696,
+    "max": -62.696,
     "status": "Pass"
    },
-   "delta": 0.8250000000000028,
-   "delta_pct": 1.298803526448367,
+   "delta": 0.8240000000000052,
+   "delta_pct": 1.2972292191435848,
    "flag": ""
   },
   {
@@ -156,13 +156,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": -63.727,
-    "typ": -63.727,
-    "max": -63.727,
+    "min": -63.725,
+    "typ": -63.725,
+    "max": -63.725,
     "status": "Pass"
    },
-   "delta": 1.2520000000000024,
-   "delta_pct": 1.9267763431262446,
+   "delta": 1.2539999999999978,
+   "delta_pct": 1.9298542606072697,
    "flag": ""
   },
   {
@@ -176,13 +176,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": -69.461,
-    "typ": -69.461,
-    "max": -69.461,
+    "min": -69.469,
+    "typ": -69.469,
+    "max": -69.469,
     "status": "Pass"
    },
-   "delta": -0.23099999999999454,
-   "delta_pct": -0.33367037411526007,
+   "delta": -0.2389999999999901,
+   "delta_pct": -0.34522605806729756,
    "flag": ""
   },
   {
@@ -236,13 +236,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 49.578,
-    "typ": 49.578,
-    "max": 49.578,
+    "min": 49.579,
+    "typ": 49.579,
+    "max": 49.579,
     "status": "Pass"
    },
-   "delta": 1.8840000000000003,
-   "delta_pct": 3.950182412882124,
+   "delta": 1.884999999999998,
+   "delta_pct": 3.9522791126766426,
    "flag": ""
   },
   {
@@ -256,13 +256,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 45.465,
-    "typ": 45.465,
-    "max": 45.465,
+    "min": 44.98,
+    "typ": 44.98,
+    "max": 44.98,
     "status": "Pass"
    },
-   "delta": 1.1090000000000018,
-   "delta_pct": 2.5002254486428033,
+   "delta": 0.6239999999999952,
+   "delta_pct": 1.4067995310668122,
    "flag": ""
   },
   {
@@ -276,13 +276,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 27.614,
-    "typ": 27.614,
-    "max": 27.614,
+    "min": 26.854,
+    "typ": 26.854,
+    "max": 26.854,
     "status": "Pass"
    },
-   "delta": 0.3360000000000021,
-   "delta_pct": 1.231761859373862,
+   "delta": -0.4239999999999995,
+   "delta_pct": -1.5543661558765287,
    "flag": ""
   },
   {
@@ -316,13 +316,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 76.708,
-    "typ": 76.708,
-    "max": 76.708,
+    "min": 76.736,
+    "typ": 76.736,
+    "max": 76.736,
     "status": "Pass"
    },
-   "delta": 3.823999999999998,
-   "delta_pct": 5.246693375775202,
+   "delta": 3.852000000000004,
+   "delta_pct": 5.285110586685698,
    "flag": "\u0394"
   },
   {
@@ -336,13 +336,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 64.768,
-    "typ": 64.768,
-    "max": 64.768,
+    "min": 63.606,
+    "typ": 63.606,
+    "max": 63.606,
     "status": "Pass"
    },
-   "delta": 2.7120000000000033,
-   "delta_pct": 4.37024622921233,
+   "delta": 1.5500000000000043,
+   "delta_pct": 2.497743973185517,
    "flag": ""
   },
   {
@@ -356,13 +356,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 44.703,
-    "typ": 44.703,
-    "max": 44.703,
+    "min": 43.381,
+    "typ": 43.381,
+    "max": 43.381,
     "status": "Pass"
    },
-   "delta": 0.46000000000000085,
-   "delta_pct": 1.0397124968921656,
+   "delta": -0.8620000000000019,
+   "delta_pct": -1.9483308093935805,
    "flag": ""
   },
   {
@@ -376,13 +376,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 3414.2,
-    "typ": 3414.2,
-    "max": 3414.2,
+    "min": 3414.41,
+    "typ": 3414.41,
+    "max": 3414.41,
     "status": "Pass"
    },
-   "delta": -39.38000000000011,
-   "delta_pct": -1.1402660427730098,
+   "delta": -39.17000000000007,
+   "delta_pct": -1.1341853960238382,
    "flag": ""
   },
   {
@@ -396,13 +396,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 1082.15,
-    "typ": 1082.15,
-    "max": 1082.15,
+    "min": 1082.22,
+    "typ": 1082.22,
+    "max": 1082.22,
     "status": "Pass"
    },
-   "delta": -12.819999999999936,
-   "delta_pct": -1.1708083326483771,
+   "delta": -12.75,
+   "delta_pct": -1.1644154634373545,
    "flag": ""
   },
   {
@@ -416,13 +416,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 349.986,
-    "typ": 349.986,
-    "max": 349.986,
+    "min": 350.007,
+    "typ": 350.007,
+    "max": 350.007,
     "status": "Pass"
    },
-   "delta": -4.567000000000007,
-   "delta_pct": -1.2881007917011018,
+   "delta": -4.545999999999992,
+   "delta_pct": -1.2821778408305649,
    "flag": ""
   },
   {
@@ -436,13 +436,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 132.87,
-    "typ": 132.87,
-    "max": 132.87,
+    "min": 132.894,
+    "typ": 132.894,
+    "max": 132.894,
     "status": "Pass"
    },
-   "delta": -1.811000000000007,
-   "delta_pct": -1.344658860566826,
+   "delta": -1.7870000000000061,
+   "delta_pct": -1.3268389750595897,
    "flag": ""
   },
   {
@@ -456,13 +456,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 2782.59,
-    "typ": 2782.59,
-    "max": 2782.59,
+    "min": 2782.76,
+    "typ": 2782.76,
+    "max": 2782.76,
     "status": "Pass"
    },
-   "delta": -55.07999999999993,
-   "delta_pct": -1.9410290837200916,
+   "delta": -54.909999999999854,
+   "delta_pct": -1.9350382532147803,
    "flag": ""
   },
   {
@@ -476,13 +476,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 541.572,
-    "typ": 541.572,
-    "max": 541.572,
+    "min": 524.236,
+    "typ": 524.236,
+    "max": 524.236,
     "status": "Pass"
    },
-   "delta": -2.6230000000000473,
-   "delta_pct": -0.48199634322256674,
+   "delta": -19.95900000000006,
+   "delta_pct": -3.667619143873071,
    "flag": ""
   },
   {
@@ -496,13 +496,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 68.117,
-    "typ": 68.117,
-    "max": 68.117,
+    "min": 65.936,
+    "typ": 65.936,
+    "max": 65.936,
     "status": "Pass"
    },
-   "delta": 0.21800000000000352,
-   "delta_pct": 0.32106511141548993,
+   "delta": -1.9629999999999939,
+   "delta_pct": -2.891058778479792,
    "flag": ""
   },
   {
@@ -556,13 +556,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 74.385,
-    "typ": 74.385,
-    "max": 74.385,
+    "min": 73.811,
+    "typ": 73.811,
+    "max": 73.811,
     "status": "Pass"
    },
-   "delta": 19.512000000000008,
-   "delta_pct": 35.558471379366914,
+   "delta": 18.93800000000001,
+   "delta_pct": 34.51241958704647,
    "flag": "\u0394"
   },
   {
@@ -576,13 +576,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 100.42,
-    "typ": 100.42,
-    "max": 100.42,
+    "min": 99.645,
+    "typ": 99.645,
+    "max": 99.645,
     "status": "Pass"
    },
-   "delta": 26.342,
-   "delta_pct": 35.55981532978752,
+   "delta": 25.566999999999993,
+   "delta_pct": 34.51362077809875,
    "flag": "\u0394"
   },
   {
@@ -590,19 +590,19 @@
    "name": "Small-signal gain (transient)",
    "unit": "",
    "schematic": {
-    "min": 7.73174,
-    "typ": 7.99991,
-    "max": 8.18701,
+    "min": 7.73179,
+    "typ": 7.99988,
+    "max": 8.18719,
     "status": "Pass"
    },
    "postlayout": {
-    "min": 7.95142,
-    "typ": 7.95142,
-    "max": 7.95142,
+    "min": 7.95131,
+    "typ": 7.95131,
+    "max": 7.95131,
     "status": "Pass"
    },
-   "delta": -0.048490000000000144,
-   "delta_pct": -0.6061318189829654,
+   "delta": -0.04856999999999978,
+   "delta_pct": -0.6071341070116024,
    "flag": ""
   },
   {

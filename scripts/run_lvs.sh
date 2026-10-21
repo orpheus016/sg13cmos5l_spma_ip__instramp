@@ -7,6 +7,7 @@
 #                     Rerun it (with --gds if the GDS is not gds/*/<cell>.gds) after moving MoM caps.
 #   --fix-labels      run on a scratch copy of the GDS where missing /25 net labels are copied from the pin/drawing
 #                     layer. The real GDS is never touched; fix the labels in KLayout afterwards.
+#   --no-taps         disable ntap1 and ptap1 device extraction (--disable_tap_extraction)
 #   --view            open KLayout with the GDS and the result database afterwards
 #
 # Steps: xschem LVS netlist -> make it readable for KLayout -> check labels -> run_lvs.py -> readable report.
@@ -25,11 +26,16 @@ while [ $# -gt 0 ]; do
     --top) top="$2"; shift 2;;
     --netlist-only) netlist_only=1; shift;;
     --fix-labels) fix_labels=1; shift;;
+    --no-taps|--disable-tap-extraction) extra+=(--disable_tap_extraction); shift;;
     --view) view=1; shift;;
-    --) shift; extra=("$@"); break;;
+    --) shift; extra+=("$@"); break;;
     *) echo "run_lvs.sh: unknown option $1"; exit 2;;
   esac
 done
+if [ ${#extra[@]} -eq 0 ]; then
+  read -ra lvs_extra <<<"$(python3 -I "$root/scripts/cellinfo.py" "$cell" lvs_args 2>/dev/null || true)"
+  [ ${#lvs_extra[@]} -gt 0 ] && extra=("${lvs_extra[@]}")
+fi
 [ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml (e.g. slot9_wrapper for pgia_top), else the cell name
 
 sch="$root/xschem/$cell/$cell.sch"

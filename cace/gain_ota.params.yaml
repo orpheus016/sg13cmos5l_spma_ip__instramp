@@ -1,0 +1,199 @@
+# Manifest of the CACE parameters of gain_ota.
+# scripts/gen_cace.py turns it into cace/gain_ota.yaml from the line `parameters:` on.
+#
+# Topology mappings:
+#   x1 (Open loop): dc_swing.sch
+#   x2 (Tian probe): ac.sch, noise.sch
+#   x3 (Follower): dc_op.sch, cmrr.sch, psrr.sch, icmr.sch, tran_small.sch, tran_large.sch, gain_tc.sch, mc_*
+
+sources: {V1: vdd, I0: ib, C1: cl, V3: vicm}
+params: |
+  .param temp=CACE{temperature}
+  .param cl=CACE{cl}
+  .param ib=CACE{ib}
+  .param vdd=CACE{vdd}
+  .param vicm=CACE{vcm}
+  .param vid=0
+
+conditions:
+  corner:
+    enumerate: [tt, ss, ff, sf, fs]
+  vdd:
+    minimum: 1.08
+    typical: 1.2
+    maximum: 1.5
+  temperature:
+    minimum: -40
+    typical: 27
+    maximum: 85
+
+parameters:
+  ac_response:
+    template: ac.sch
+    display: AC response (Tian loop gain)
+    description: Loop gain of the OTA in unity-feedback loop with Tian probe (circuit x2)
+    plots: ['A0:temperature', 'UGF:temperature', 'PM:temperature', 'PM:vdd']
+    spec:
+      A0: {display: DC gain, unit: dB, expr: dc_gain}
+      F3DB: {display: -3 dB frequency, unit: Hz, expr: f_3db}
+      UGF: {display: Unity-gain frequency, unit: Hz, expr: ugbw}
+      PM: {display: Phase margin, unit: °, expr: pm}
+      GM: {display: Gain margin, unit: dB, expr: gm_db}
+      GBW: {display: Gain-bandwidth product, unit: Hz, expr: gbw_calc}
+
+  noise:
+    template: noise.sch
+    display: Noise
+    description: Input-referred and output noise density and integrated noise (circuit x2)
+    plots: []
+    spec:
+      IRN_100: {display: Input noise @100 Hz, unit: nV/rtHz, expr: irn_100*1e-9}
+      IRN_1K: {display: Input noise @1 kHz, unit: nV/rtHz, expr: irn_1k*1e-9}
+      IRN_10K: {display: Input noise @10 kHz, unit: nV/rtHz, expr: irn_10k*1e-9}
+      IRN_1M: {display: Input noise @1 MHz, unit: nV/rtHz, expr: irn_1meg*1e-9}
+      ORN_1K: {display: Output noise @1 kHz, unit: nV/rtHz, expr: 'orn_nv[40]*1e-9'}
+      INOISE_TOT: {display: Integrated input noise, unit: uV-rms, expr: inoise_total_uv*1e-6}
+      ONOISE_TOT: {display: Integrated output noise, unit: uV-rms, expr: onoise_total_uv*1e-6}
+
+  dc_op:
+    template: dc_op.sch
+    display: DC operating point (follower)
+    description: Offset, quiescent current/power and DC gain error of unity-gain follower (circuit x3)
+    plots: []
+    spec:
+      VOS: {display: Input offset voltage, unit: mV}
+      IQ: {display: Quiescent current, unit: uA}
+      PWR: {display: Quiescent power, unit: uW}
+      VOUT: {display: Output voltage, unit: V}
+      GAIN_ERR: {display: Gain error (1 - dVout/dVin), unit: '%'}
+
+  dc_swing:
+    template: dc_swing.sch
+    display: DC open-loop differential swing
+    description: Maximum differential gain from DC sweep of open-loop circuit (circuit x1)
+    plots: []
+    spec:
+      MAX_GAIN_DB: {display: Maximum DC gain, unit: dB, expr: max_gain_db}
+
+  gain_tc:
+    template: gain_tc.sch
+    display: Gain temperature coefficient
+    description: Follower gain tempco, box method over Tmin..Tmax (circuit x3)
+    plots: []
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd: {minimum: 1.08, typical: 1.2, maximum: 1.5}
+      tmin: {display: Tmin, unit: °C, typical: -40}
+      tmax: {display: Tmax, unit: °C, typical: 85}
+      tstep: {display: Tstep, unit: °C, typical: 5}
+    spec:
+      GAIN_TC: {display: Gain tempco (ppm per °C), unit: ppm}
+      G_MEAN: {display: Mean follower gain, unit: V/V}
+
+  cmrr:
+    template: cmrr.sch
+    display: CMRR
+    description: Common-mode rejection of the unity-gain follower (circuit x3)
+    plots: []
+    spec:
+      CMRR_DC: {display: CMRR @10 Hz, unit: dB, expr: cmrr_dc}
+      CMRR_100K: {display: CMRR @100 kHz, unit: dB, expr: cmrr_100k}
+      CMRR_1M: {display: CMRR @1 MHz, unit: dB, expr: cmrr_1meg}
+
+  psrr:
+    template: psrr.sch
+    display: PSRR
+    description: Supply rejection of the unity-gain follower (circuit x3)
+    plots: []
+    spec:
+      PSRR_DC: {display: PSRR @10 Hz, unit: dB, expr: psrr_dc}
+      PSRR_100K: {display: PSRR @100 kHz, unit: dB, expr: psrr_100k}
+      PSRR_1M: {display: PSRR @1 MHz, unit: dB, expr: psrr_1meg}
+
+  icmr:
+    template: icmr.sch
+    display: Input common-mode range
+    description: Follower gain > 0.98 window, DC sweep 0..Vdd (circuit x3)
+    plots: ['ICMR_SPAN:vdd']
+    spec:
+      ICMR_MIN: {display: Lower ICMR bound, unit: V, expr: icmr_min}
+      ICMR_MAX: {display: Upper ICMR bound, unit: V, expr: icmr_max}
+      ICMR_SPAN: {display: ICMR span, unit: V, expr: icmr_span}
+
+  tran_small:
+    template: tran_small.sch
+    display: Small-signal step (100 mV)
+    description: Follower delay, rise time, overshoot and settling (circuit x3)
+    plots: []
+    spec:
+      T_DELAY: {display: Delay (50 %), unit: ns}
+      T_RISE: {display: Rise time (10-90 %), unit: ns}
+      OVERSHOOT: {display: Overshoot, unit: '%'}
+      TS_1PCT: {display: Settling time 1 %, unit: ns}
+      TS_01PCT: {display: Settling time 0.1 %, unit: ns}
+
+  tran_large:
+    template: tran_large.sch
+    display: Large-signal step (0.8 V)
+    description: Follower slew rate, rise/fall time and propagation delays (circuit x3)
+    plots: []
+    spec:
+      SR_POS: {display: Positive slew rate, unit: V/s}
+      SR_NEG: {display: Negative slew rate, unit: V/s}
+      T_RISE: {display: Rise time (10-90 %), unit: ns}
+      T_FALL: {display: Fall time (90-10 %), unit: ns}
+      T_PLH: {display: Propagation delay tpLH, unit: ns}
+      T_PHL: {display: Propagation delay tpHL, unit: ns}
+
+  mc_vos:
+    template: dc_op.sch
+    display: MC input offset
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners x 3 temperatures, vdd 1.2 V)
+    collate: iterations
+    variables: [VOS, null, null, null, null]
+    plots: []
+    conditions:
+      corner:
+        enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
+      rcorner: {typical: typ_mismatch}
+      vdd: {typical: 1.2}
+      temperature: {minimum: -40, typical: 27, maximum: 85}
+      iterations: {description: Monte Carlo iterations (mismatch seeds), display: Iterations, minimum: 1, maximum: 50, step: linear, stepsize: 1}
+    spec:
+      VOS: {display: Input offset voltage, unit: mV}
+
+  mc_cmrr:
+    template: cmrr.sch
+    display: MC CMRR
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners x 3 temperatures, vdd 1.2 V)
+    collate: iterations
+    variables: [CMRR_DC, null, null]
+    plots: []
+    conditions:
+      corner:
+        enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
+      rcorner: {typical: typ_mismatch}
+      vdd: {typical: 1.2}
+      temperature: {minimum: -40, typical: 27, maximum: 85}
+      iterations: {description: Monte Carlo iterations (mismatch seeds), display: Iterations, minimum: 1, maximum: 50, step: linear, stepsize: 1}
+    spec:
+      CMRR_DC: {display: CMRR @10 Hz, unit: dB}
+
+  mc_psrr:
+    template: psrr.sch
+    display: MC PSRR
+    description: Monte Carlo (local mismatch, 50 seeds x 5 corners x 3 temperatures, vdd 1.2 V)
+    collate: iterations
+    variables: [PSRR_DC, null, null]
+    plots: []
+    conditions:
+      corner:
+        enumerate: [tt_mismatch, ss_mismatch, ff_mismatch, sf_mismatch, fs_mismatch]
+      rcorner: {typical: typ_mismatch}
+      vdd: {typical: 1.2}
+      temperature: {minimum: -40, typical: 27, maximum: 85}
+      iterations: {description: Monte Carlo iterations (mismatch seeds), display: Iterations, minimum: 1, maximum: 50, step: linear, stepsize: 1}
+    spec:
+      PSRR_DC: {display: PSRR @10 Hz, unit: dB}
+

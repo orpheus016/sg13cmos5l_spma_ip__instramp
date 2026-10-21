@@ -1,0 +1,8 @@
+# Project xschemrc for ota_cmos5l (used by CACE to netlist the DUT)
+# Source the PDK xschemrc file
+if {![info exists PDK]} {
+    source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
+}
+
+# Add current directory (ota_cmos5l.sym / .sch)
+append XSCHEM_LIBRARY_PATH :[file dirname [info script]]

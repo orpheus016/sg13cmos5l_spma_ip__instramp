@@ -1,0 +1,12 @@
+{
+ "cell": "gain_ota",
+ "gds": "gds/gain_stage/gain_ota.gds",
+ "layout": {
+  "L": 59.41,
+  "W": 81.0,
+  "area": 4812.2,
+  "top": "gain_ota"
+ },
+ "params": [],
+ "schematic": "xschem/gain_ota/gain_ota.sch"
+}

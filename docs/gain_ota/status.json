@@ -1,0 +1,76 @@
+{
+ "cell": "gain_ota",
+ "generated": "2026-10-21T09:19:25",
+ "commit": "2bf6127",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/gain_stage/gain_ota.gds",
+  "sha1": "e2632fd500b4"
+ },
+ "schematic": {
+  "path": "xschem/gain_ota/gain_ota.sch",
+  "sha1": "d747b5e7626f"
+ },
+ "stages": [
+  {
+   "name": "cace",
+   "status": "pass",
+   "seconds": 0,
+   "detail": "reused RUN_2026-10-21_07-18-34: 44 rows, 0 failing",
+   "at": "2026-10-21T09:19:25"
+  },
+  {
+   "name": "drc",
+   "status": "pass",
+   "seconds": 20,
+   "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
+   "at": "2026-10-21T09:19:25"
+  },
+  {
+   "name": "lvs",
+   "status": "pass",
+   "seconds": 4,
+   "detail": "RESULT: MATCH",
+   "at": "2026-10-21T09:19:25"
+  },
+  {
+   "name": "pex",
+   "status": "pass",
+   "seconds": 15,
+   "detail": "gain_ota.c.spice: ports VDD V_inp V_inn V_out I_bias VSS; M=57, Rpoly=2, Rext=0, Cdev=5, Cext=182;gain_ota.rc.spice: ports VDD V_inp V_inn V_out I_bias VSS; X=59, R=2419, C=584, Cdev=5;",
+   "at": "2026-10-21T09:19:25"
+  },
+  {
+   "name": "post_c",
+   "status": "pass",
+   "seconds": 15,
+   "detail": "41 parameters with a % delta, 27 flagged",
+   "at": "2026-10-21T09:19:25"
+  },
+  {
+   "name": "post_rc",
+   "status": "pass",
+   "seconds": 42,
+   "detail": "41 parameters with a % delta, 22 flagged",
+   "at": "2026-10-21T09:19:25"
+  },
+  {
+   "name": "images",
+   "status": "pass",
+   "seconds": 1,
+   "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
+   "at": "2026-10-21T09:19:25"
+  },
+  {
+   "name": "post",
+   "status": "blocked",
+   "seconds": 0,
+   "detail": "pex stage: error",
+   "at": "2026-10-21T07:24:36"
+  }
+ ],
+ "postlayout": {
+  "c": "docs/gain_ota/cace/postlayout.json",
+  "rc": "docs/gain_ota/cace/postlayout_rc.json"
+ }
+}

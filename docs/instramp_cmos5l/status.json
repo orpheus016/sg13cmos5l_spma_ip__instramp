@@ -1,7 +1,7 @@
 {
  "cell": "instramp_cmos5l",
- "generated": "2026-10-15T18:04:25",
- "commit": "7cec125",
+ "generated": "2026-10-21T10:06:21",
+ "commit": "2bf6127",
  "profile": "typ",
  "gds": {
   "path": "gds/pgia_top/instramp_cmos5l.gds",
@@ -15,51 +15,51 @@
   {
    "name": "cace",
    "status": "pass",
-   "seconds": 0,
-   "detail": "reused RUN_2026-10-15_18-01-47: 31 rows, 0 failing",
-   "at": "2026-10-15T18:04:25"
+   "seconds": 48,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_10-03-50: 31 rows",
+   "at": "2026-10-21T10:06:21"
   },
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 40,
+   "seconds": 45,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level];",
-   "at": "2026-10-15T18:04:25"
+   "at": "2026-10-21T10:06:21"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 13,
+   "seconds": 11,
    "detail": "RESULT: MATCH",
-   "at": "2026-10-15T18:04:25"
+   "at": "2026-10-21T10:06:21"
   },
   {
    "name": "pex",
    "status": "pass",
-   "seconds": 12,
-   "detail": "instramp_cmos5l.c.spice: ports VSS VDD IBIAS VINN VOUT VINP CM; M=87, Rpoly=9, Rext=0, Cdev=27, Cext=154;instramp_cmos5l.rc.spice: ports VSS VDD IBIAS VINN VOUT VINP CM; X=96, R=608, C=389, Cdev=27;",
-   "at": "2026-10-15T18:04:25"
+   "seconds": 13,
+   "detail": "instramp_cmos5l.c.spice: ports VSS VDD IBIAS VINN VOUT VINP CM; M=87, Rpoly=9, Rext=0, Cdev=27, Cext=154;instramp_cmos5l.rc.spice: ports VSS VDD IBIAS VINN VOUT VINP CM; X=96, R=602, C=382, Cdev=27;",
+   "at": "2026-10-21T10:06:21"
   },
   {
    "name": "post_c",
    "status": "pass",
    "seconds": 16,
-   "detail": "30 parameters with a % delta, 2 flagged",
-   "at": "2026-10-15T18:04:25"
+   "detail": "30 parameters with a % delta, 3 flagged",
+   "at": "2026-10-21T10:06:21"
   },
   {
    "name": "post_rc",
    "status": "pass",
-   "seconds": 15,
-   "detail": "30 parameters with a % delta, 5 flagged",
-   "at": "2026-10-15T18:04:25"
+   "seconds": 18,
+   "detail": "30 parameters with a % delta, 7 flagged",
+   "at": "2026-10-21T10:06:21"
   },
   {
    "name": "images",
    "status": "pass",
    "seconds": 1,
    "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-10-15T18:04:25"
+   "at": "2026-10-21T10:06:21"
   }
  ],
  "postlayout": {

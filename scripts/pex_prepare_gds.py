@@ -32,8 +32,12 @@ VIAS = {(19, 0), (29, 0), (49, 0)}
 MARK = (99, 39), (99, 40)  # recog_mom, recog_momf
 
 
+def boxes_overlap(b1, b2):
+    return not (b1.right < b2.left or b1.left > b2.right or b1.top < b2.bottom or b1.bottom > b2.top)
+
+
 def write_caps(ly, top, path):
-    """one point on each of the two Metal4 terminal bars of every MoM cap marker (um)"""
+    """one point on each of the two Metal4 terminal bars of every MoM cap marker (um), plus W/L"""
     m4 = db.Region(top.begin_shapes_rec(ly.layer(50, 0)))
     marks = db.Region()
     for l in MARK:
@@ -47,7 +51,9 @@ def write_caps(ly, top, path):
             print(f"pex_prepare_gds: WARNING cap marker at {mk.bbox()} has {len(bars)} Metal4 bar(s), skipped")
             continue
         pts = [(b.bbox().center().x * ly.dbu, b.bbox().center().y * ly.dbu) for b in bars]
-        lines.append(" ".join(f"{v:.3f}" for p in pts for v in p))
+        w_um = mk.bbox().width() * ly.dbu
+        l_um = mk.bbox().height() * ly.dbu
+        lines.append(" ".join(f"{v:.3f}" for p in pts for v in p) + f" {w_um:.3f}u {l_um:.3f}u")
     with open(path, "w") as f:
         f.write("\n".join(lines) + ("\n" if lines else ""))
     print(f"pex_prepare_gds: {len(lines)} cap terminal pair(s) -> {path}")
@@ -70,18 +76,32 @@ def main():
         if not cell.name.lower().startswith(("cap_cmomi", "cap_cmomf")):
             continue
         ncells += 1
-        for (l, d), name in list(METALS.items()) + [(v, "Via") for v in VIAS]:
+        bus_boxes = []
+        # Keep wide bus bars on all metal layers (Metal1..Metal4)
+        for (l, d), name in METALS.items():
             li = ly.find_layer(l, d)
             if li is None:
                 continue
             for s in list(cell.shapes(li).each()):
-                if (l, d) == (50, 0):
-                    b = s.bbox()
-                    if min(b.width(), b.height()) >= keep_w:
-                        nkeep += 1
-                        continue
-                cell.shapes(li).erase(s)
-                nrem += 1
+                b = s.bbox()
+                if min(b.width(), b.height()) >= keep_w:
+                    bus_boxes.append(b)
+                    nkeep += 1
+                else:
+                    cell.shapes(li).erase(s)
+                    nrem += 1
+        # Keep vias connecting the bus bars (Via1..Via3); erase fine finger vias
+        for v in VIAS:
+            li = ly.find_layer(*v)
+            if li is None:
+                continue
+            for s in list(cell.shapes(li).each()):
+                b = s.bbox()
+                if any(boxes_overlap(bb, b) for bb in bus_boxes):
+                    nkeep += 1
+                else:
+                    cell.shapes(li).erase(s)
+                    nrem += 1
     if ncells == 0:
         print("pex_prepare_gds: no cap_cmomi/cap_cmomf cells found")
     if not a.no_flatten:
@@ -97,7 +117,7 @@ def main():
                     if s.is_text():
                         cell.shapes(li).erase(s)
                         nlab += 1
-        top.flatten(True)
+        top.flatten(-1)
         ly.prune_subcells(top.cell_index(), -1)
         print(f"pex_prepare_gds: flattened into {a.top}, removed {nlab} texts in sub-cells")
         write_caps(ly, top, a.out + ".caps")

@@ -34,7 +34,7 @@
 | Output voltage       | ngspice              | VOUT                 |             any |    0.600 V |          any |    0.602 V |          any |    0.605 V |   Pass ✅    |
 | Quiescent current    | ngspice              | IQ                   |             any |  48.004 uA |          any |  54.873 uA |          any |  59.750 uA |   Pass ✅    |
 | Quiescent power      | ngspice              | PWR                  |             any |  57.605 uW |          any |  74.078 uW |          any |  89.625 uW |   Pass ✅    |
-| Small-signal gain (transient) | ngspice              | TR_GAIN              |             any |    7.73174 |          any |    7.99991 |          any |    8.18701 |   Pass ✅    |
+| Small-signal gain (transient) | ngspice              | TR_GAIN              |             any |    7.73179 |          any |    7.99988 |          any |    8.18719 |   Pass ✅    |
 | Mean output level    | ngspice              | TR_VOUT_AVG          |             any |    0.600 V |          any |    0.602 V |          any |    0.605 V |   Pass ✅    |
 
 

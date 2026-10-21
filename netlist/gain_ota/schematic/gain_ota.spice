@@ -1,0 +1,38 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sch
+.subckt gain_ota VDD V_inp V_inn V_out I_bias VSS
+*.PININFO V_inn:I VDD:I VSS:I V_out:O I_bias:I V_inp:I
+XM1 F1 V_inn net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4 m=1 mm_ok=1
+XM2 F2 V_inp net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4 m=1 mm_ok=1
+XM3 net5 net5 VDD VDD sg13_lv_pmos w=7.33u l=2u ng=1 m=1 mm_ok=1
+XM4 N_A net5 VDD VDD sg13_lv_pmos w=7.33u l=2u ng=1 m=1 mm_ok=1
+XM7 F1 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XM8 F2 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XM_tail net6 V_btail VDD VDD sg13_lv_pmos w=7.46u l=2u ng=1 m=8 mm_ok=1
+XM_ctrlp N_B V_ctrlp N_A VDD sg13_lv_pmos w=2.20u l=0.50u ng=1 m=1 mm_ok=1
+XM_outp V_out N_A VDD VDD sg13_lv_pmos w=22.20u l=0.5u ng=4 m=1 mm_ok=1
+XM_ctrln N_A V_ctrln N_B VSS sg13_lv_nmos w=0.84u l=0.5u ng=1 m=1 mm_ok=1
+XM_outn V_out N_B VSS VSS sg13_lv_nmos w=8.4u l=0.5u ng=1 m=1 mm_ok=1
+XM5 net5 V_bn1 F1 VSS sg13_lv_nmos w=6.41u l=2u ng=1 m=1 mm_ok=1
+XM6 N_A V_bn1 F2 VSS sg13_lv_nmos w=6.41u l=2u ng=1 m=1 mm_ok=1
+XM_mp1 net1 net1 VDD VDD sg13_lv_pmos w=2.30u l=2u ng=1 m=1 mm_ok=1
+XM_mn1 net1 I_bias VSS VSS sg13_lv_nmos w=0.87u l=2u ng=1 m=1 mm_ok=1
+XM_refn I_bias I_bias VSS VSS sg13_lv_nmos w=0.87u l=2u ng=1 m=1 mm_ok=1
+XM_mp2 V_bn1 net1 VDD VDD sg13_lv_pmos w=11.50u l=2u ng=2 m=1 mm_ok=1
+XM_mp3 V_bn2 net1 VDD VDD sg13_lv_pmos w=23u l=2u ng=4 m=1 mm_ok=1
+XM_bn1 V_bn1 V_bn1 net2 VSS sg13_lv_nmos w=1.60u l=2u ng=1 m=1 mm_ok=1
+XM_bn2 V_bn2 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XM_mn2 V_btail I_bias VSS VSS sg13_lv_nmos w=6u l=2u ng=1 m=1 mm_ok=1
+XM_rep_tail V_btail V_btail VDD VDD sg13_lv_pmos w=7.46u l=2u ng=1 m=8 mm_ok=1
+XM_mn4 N_B I_bias VSS VSS sg13_lv_nmos w=3.2u l=2u ng=1 m=1 mm_ok=1
+XR1 net2 VSS VSS rhigh w=0.5e-6 l=15e-6 m=1 b=0 mm_ok=1
+XM_mp4 V_ctrln net1 VDD VDD sg13_lv_pmos w=4.60u l=2u ng=1 m=1 mm_ok=1
+XM_rep_ctrln V_ctrln V_ctrln net3 VSS sg13_lv_nmos w=0.84u l=0.5u ng=1 m=1 mm_ok=1
+XM_rep_outn net3 net3 VSS VSS sg13_lv_nmos w=2.10u l=0.5u ng=1 m=1 mm_ok=1
+XM_mn3 V_ctrlp I_bias VSS VSS sg13_lv_nmos w=1.74u l=2u ng=1 m=1 mm_ok=1
+XM_rep_outp net4 net4 VDD VDD sg13_lv_pmos w=5.55u l=0.5u ng=1 m=1 mm_ok=1
+XM_rep_ctrlp V_ctrlp V_ctrlp net4 VDD sg13_lv_pmos w=2.20u l=0.50u ng=1 m=1 mm_ok=1
+XM_mp5 N_A net1 VDD VDD sg13_lv_pmos w=9.21u l=2u ng=1 m=1 mm_ok=1
+XR2 N_A net7 VSS rhigh w=0.5e-6 l=4e-6 m=1 b=0 mm_ok=1
+XC3 F2 V_out cap_cmomi w=25e-6 l=25e-6 mmin=1 mmax=4 feed=double subblock=0 m=1 mm_ok=1
+XC4 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 mmin=1 mmax=4 feed=double subblock=0 m=4 mm_ok=1
+.ends

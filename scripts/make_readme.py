@@ -107,13 +107,19 @@ def pvt_section(pname, p):
         if not name or name == "null":
             continue
         u = specs[name]["unit"]
-        vals = [conv(u, r[3][i]) for r in rows]
+        valid_rows = [r for r in rows if len(r[3]) > i]
+        if not valid_rows:
+            out.append(f"| {name} [{u}] | - | - | - | - | any | Error |")
+            continue
+        vals = [conv(u, r[3][i]) for r in valid_rows]
         lo_i, hi_i = vals.index(min(vals)), vals.index(max(vals))
         lo, hi = limit(specs[name], "minimum"), limit(specs[name], "maximum")
         spec = " ".join(s for s in [f">= {lo:g}" if lo is not None else "", f"<= {hi:g}" if hi is not None else ""] if s) or "any"
         bad = sum(1 for x in vals if (lo is not None and x < lo) or (hi is not None and x > hi))
-        fails = f"**{bad}/{len(rows)}**" if bad else ("0" if spec != "any" else "-")
-        a, b = rows[lo_i], rows[hi_i]
+        fails = f"**{bad}/{len(valid_rows)}**" if bad else ("0" if spec != "any" else "-")
+        if len(valid_rows) < len(rows):
+            fails += f" ({len(rows) - len(valid_rows)} missing)"
+        a, b = valid_rows[lo_i], valid_rows[hi_i]
         out.append(f"| {name} [{u}] | {fmt(vals[lo_i])} | {a[0]}, {a[1]} V, {a[2]} C | {fmt(vals[hi_i])} | {b[0]}, {b[1]} V, {b[2]} C | {spec} | {fails} |")
     return "\n".join(out) + "\n"
 

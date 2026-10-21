@@ -1,7 +1,7 @@
 # instramp_cmos5l - CACE characterisation
 
-- Generated: 2026-10-15 18:02 by `scripts/make_readme.py` from `runs/RUN_2026-10-15_18-01-47`
-- Commit: `7cec125` (working tree dirty)
+- Generated: 2026-10-21 10:04 by `scripts/make_readme.py` from `runs/RUN_2026-10-21_10-03-50`
+- Commit: `2bf6127` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/instramp_cmos5l.yaml`; reproduce with `scripts/run_cace.sh instramp_cmos5l`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 
@@ -171,7 +171,7 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 | Output voltage       | ngspice              | VOUT                 |             any |    0.600 V |          any |    0.602 V |          any |    0.605 V |   Pass ✅    |
 | Quiescent current    | ngspice              | IQ                   |             any |  48.004 uA |          any |  54.873 uA |          any |  59.750 uA |   Pass ✅    |
 | Quiescent power      | ngspice              | PWR                  |             any |  57.605 uW |          any |  74.078 uW |          any |  89.625 uW |   Pass ✅    |
-| Small-signal gain (transient) | ngspice              | TR_GAIN              |             any |    7.73174 |          any |    7.99991 |          any |    8.18701 |   Pass ✅    |
+| Small-signal gain (transient) | ngspice              | TR_GAIN              |             any |    7.73179 |          any |    7.99988 |          any |    8.18719 |   Pass ✅    |
 | Mean output level    | ngspice              | TR_VOUT_AVG          |             any |    0.600 V |          any |    0.602 V |          any |    0.605 V |   Pass ✅    |
 
 

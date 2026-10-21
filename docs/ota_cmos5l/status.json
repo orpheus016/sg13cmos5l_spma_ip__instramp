@@ -1,7 +1,7 @@
 {
  "cell": "ota_cmos5l",
- "generated": "2026-10-15T18:52:17",
- "commit": "7cec125",
+ "generated": "2026-10-21T10:02:43",
+ "commit": "2bf6127",
  "profile": "typ",
  "gds": {
   "path": "gds/pgia_top/ota_cmos5l.gds",
@@ -15,51 +15,51 @@
   {
    "name": "cace",
    "status": "pass",
-   "seconds": 0,
-   "detail": "reused RUN_2026-10-15_18-48-38: 43 rows, 0 failing",
-   "at": "2026-10-15T18:52:17"
+   "seconds": 146,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_09-59-13: 43 rows",
+   "at": "2026-10-21T10:02:43"
   },
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 23,
+   "seconds": 24,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level];",
-   "at": "2026-10-15T18:52:17"
+   "at": "2026-10-21T10:02:43"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 4,
+   "seconds": 5,
    "detail": "RESULT: MATCH",
-   "at": "2026-10-15T18:52:17"
+   "at": "2026-10-21T10:02:43"
   },
   {
    "name": "pex",
    "status": "pass",
-   "seconds": 5,
-   "detail": "ota_cmos5l.c.spice: ports VSS IBIAS VDD VINN VINP VOUT; M=29, Rpoly=1, Rext=0, Cdev=9, Cext=48;ota_cmos5l.rc.spice: ports VSS IBIAS VDD VINN VINP VOUT; X=30, R=279, C=117, Cdev=9;",
-   "at": "2026-10-15T18:52:17"
+   "seconds": 4,
+   "detail": "ota_cmos5l.c.spice: ports VSS IBIAS VDD VINN VINP VOUT; M=29, Rpoly=1, Rext=0, Cdev=9, Cext=48;ota_cmos5l.rc.spice: ports VSS IBIAS VDD VINN VINP VOUT; X=30, R=275, C=116, Cdev=9;",
+   "at": "2026-10-21T10:02:43"
   },
   {
    "name": "post_c",
    "status": "pass",
-   "seconds": 17,
-   "detail": "40 parameters with a % delta, 5 flagged",
-   "at": "2026-10-15T18:52:17"
+   "seconds": 15,
+   "detail": "40 parameters with a % delta, 6 flagged",
+   "at": "2026-10-21T10:02:43"
   },
   {
    "name": "post_rc",
    "status": "pass",
-   "seconds": 15,
-   "detail": "40 parameters with a % delta, 7 flagged",
-   "at": "2026-10-15T18:52:17"
+   "seconds": 17,
+   "detail": "40 parameters with a % delta, 21 flagged",
+   "at": "2026-10-21T10:02:43"
   },
   {
    "name": "images",
    "status": "pass",
    "seconds": 1,
    "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-10-15T18:52:17"
+   "at": "2026-10-21T10:02:43"
   }
  ],
  "postlayout": {

@@ -22,7 +22,7 @@ set unit  0.005   ;# um per Magic internal unit of the .ext coordinates (checked
 gds read $gds
 load $cell
 select top cell
-expand
+expand *
 extract path extfiles
 extract all
 
@@ -42,6 +42,7 @@ set k 0
 foreach n [lsort -index 3 [lsort -integer -index 2 [lsort -integer -index 1 [lsort -index 0 $nodes]]]] {
     lassign $n name x y type
     if {[lsearch -exact $ports $name] >= 0} { continue }
+    if {$type eq "xres" || [string match "*res*" $type]} { continue }
     incr k
     box position [expr {$x * $unit}]um [expr {$y * $unit}]um
     box size 0.01um 0.01um
@@ -56,15 +57,46 @@ if {$caps ne "" && [file exists $caps]} {
     set cf [open ${out}.capnodes w]
     set cp [open $caps r]
     while {[gets $cp line] >= 0} {
-        if {[llength $line] != 4} { continue }
+        if {[llength $line] < 4} { continue }
         set names {}
-        foreach {x y} $line {
+        foreach {x y} [lrange $line 0 3] {
             box position ${x}um ${y}um
             box size 0.1um 0.1um
             select area m4
-            lappend names [getnode]
+            set nd ""
+            if {[catch {set nd [getnode]}] || $nd eq ""} {
+                catch {expand}
+                select area m4
+                if {[catch {set nd [getnode]}] || $nd eq ""} {
+                    select area m3
+                    if {[catch {set nd [getnode]}] || $nd eq ""} {
+                        select area
+                        catch {set nd [getnode]}
+                    }
+                }
+            }
+            if {[llength $nd] > 1} {
+                set pick ""
+                foreach item $nd {
+                    if {![string match "*#*" $item]} {
+                        set pick $item
+                        break
+                    }
+                }
+                if {$pick ne ""} {
+                    set nd $pick
+                } else {
+                    set nd [lindex $nd 0]
+                }
+            }
+            lappend names $nd
         }
-        puts $cf $names
+        set extra [lrange $line 4 end]
+        if {[llength $extra] > 0} {
+            puts $cf "$names $extra"
+        } else {
+            puts $cf $names
+        }
     }
     close $cp
     close $cf

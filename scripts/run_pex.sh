@@ -72,7 +72,7 @@ fi
 python3 -I "$root/scripts/pex_prepare_gds.py" "$gds" "$work/$top.gds" --top "$top" || exit 2
 
 # 3. kpex (2.5D)
-( cd "$work" && PYTHONPATH="$ov" python3 -m klayout_pex extract --pdk ihp-sg13cmos5l --gds "$work/$top.gds" --cell "$top" \
+( cd "$work" && PYTHONPATH="$ov" python3 -m klayout_pex --pdk ihp-sg13cmos5l --gds "$work/$top.gds" --cell "$top" \
     --schematic "$root/netlist/$cell/lvs/$cell.spice" --2.5D --mode "$mode" --blackbox true --out_dir "$work/kpex" ) >"$work/kpex.out" 2>&1
 raw="$(ls "$work"/kpex/*/*_k25d_pex_netlist.spice 2>/dev/null | head -1)"
 [ -n "$raw" ] || { echo "run_pex.sh: kpex produced no netlist, see $work/kpex.out"; tail -5 "$work/kpex.out"; exit 2; }
