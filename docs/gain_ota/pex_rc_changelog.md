@@ -14,7 +14,7 @@ Post-layout RC simulation (`gain_ota.rc.spice`) failed critically:
 - Open-loop DC gain collapsed to $A_0 = -0.865\text{ dB}$ (target $\approx 62\text{ dB}$).
 - Phase Margin (PM) corrupted ($10925^\circ$); Gain Margin (GM) and Gain-Bandwidth Product (GBW) were empty (`Error ❗`).
 - ngspice reported: `Warning: singular matrix: check node x2.pn19`. Dynamic gmin stepping and source stepping failed to converge.
-- DC operating point shifted drastically: $I_Q = 258\,\mu\text{A}$ (schematic $74\,\mu\text{A}$), $V_{OS} = 91\text{ mV}$ (schematic $0.69\text{ mV}$).
+- DC operating point shifted drastically: $I_Q = 258\text{ }\mu\text{A}$ (schematic $74\text{ }\mu\text{A}$), $V_{OS} = 91\text{ mV}$ (schematic $0.69\text{ mV}$).
 
 ---
 
@@ -23,9 +23,9 @@ Post-layout RC simulation (`gain_ota.rc.spice`) failed critically:
 ### A. Broken MoM Capacitor Terminal Connection (`pn1` vs `V_out`)
 - **File**: [scripts/pex_prepare_gds.py](file:///home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/scripts/pex_prepare_gds.py)
 - **Mechanism**:
-  The Miller compensation network in `gain_ota` employs four $8.5\,\mu\text{m} \times 8.5\,\mu\text{m}$ MoM capacitors ($XC4$, $m=4$) in series with a nulling resistor $R_z$ ($R2$).
+  The Miller compensation network in `gain_ota` employs four $8.5\text{ }\mu\text{m} \times 8.5\text{ }\mu\text{m}$ MoM capacitors ($XC4$, $m=4$) in series with a nulling resistor $R_z$ ($R2$).
   In the layout, the top-level wire connecting the output to the compensation capacitors routes on **Metal 3**.
-  Previously, `pex_prepare_gds.py` stripped *all* Metal 1–3 and Via 1–3 shapes inside `cap_cmomi` cells, keeping only Metal 4 shapes ($\ge 0.4\,\mu\text{m}$).
+  Previously, `pex_prepare_gds.py` stripped *all* Metal 1–3 and Via 1–3 shapes inside `cap_cmomi` cells, keeping only Metal 4 shapes ($\ge 0.4\text{ }\mu\text{m}$).
   Consequently, the vertical via stack between the Metal 4 terminal bar and the Metal 3 routing wire was severed!
   When Magic queried the coordinates of the capacitor terminals, it detected the isolated Metal 4 bar as a floating node named `pn1` (instead of `V_out`):
   ```text
@@ -51,7 +51,7 @@ Post-layout RC simulation (`gain_ota.rc.spice`) failed critically:
 - **File**: [scripts/pex_netlist.py](file:///home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/scripts/pex_netlist.py)
 - **Mechanism**:
   `schematic_info()` only captured the first MoM capacitor line from the schematic netlist (`and not cap:`), which happened to be $XC3$ ($25\,\mu\text{m} \times 25\,\mu\text{m}$).
-  When `convert_magic()` reconstructed the capacitors in `gain_ota.rc.spice`, all 5 instances were instantiated with `w=25e-6 l=25e-6`. This artificially inflated $XC4$ (nominally $4 \times 8.5\,\mu\text{m} \approx 540\text{ fF}$) to $4 \times 25\,\mu\text{m} \approx 4.6\text{ pF}$ ($\sim 8.5\times$ too large).
+  When `convert_magic()` reconstructed the capacitors in `gain_ota.rc.spice`, all 5 instances were instantiated with `w=25e-6 l=25e-6`. This artificially inflated $XC4$ (nominally $4 \times 8.5\text{ }\mu\text{m} \approx 540\text{ fF}$) to $4 \times 25\text{ }\mu\text{m} \approx 4.6\text{ pF}$ ($\sim 8.5\times$ too large).
 
 ### D. Incomplete Hierarchy Flattening (`top.flatten(True)`) & Unexpanded Cell Selection
 - **Files**: [scripts/pex_prepare_gds.py](file:///home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/scripts/pex_prepare_gds.py) & [scripts/pex_magic.tcl](file:///home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/scripts/pex_magic.tcl)
@@ -66,7 +66,7 @@ Post-layout RC simulation (`gain_ota.rc.spice`) failed critically:
 
 ### 1. `scripts/pex_prepare_gds.py`
 - **Preserve Terminal Bus Bars Across All Metal Layers**:
-  Wide metal shapes ($\ge \text{min\_width}$, default $0.4\,\mu\text{m}$) are preserved across Metal 1, Metal 2, Metal 3, and Metal 4, maintaining terminal bars on whichever metal the top-level wires connect to.
+  Wide metal shapes ($\ge \text{minimum width}$, default $0.4\text{ }\mu\text{m}$) are preserved across Metal 1, Metal 2, Metal 3, and Metal 4, maintaining terminal bars on whichever metal the top-level wires connect to.
 - **Preserve Bus-Bar Vias**:
   Implemented `boxes_overlap` arithmetic checking to keep Via 1, Via 2, and Via 3 arrays that intersect terminal bus bars. Only vias embedded in the fine capacitor finger core are deleted.
 - **Export $W$ and $L$ Dimensions**:
