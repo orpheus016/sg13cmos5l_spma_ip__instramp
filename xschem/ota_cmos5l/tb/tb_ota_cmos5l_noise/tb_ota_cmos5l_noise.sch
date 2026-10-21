@@ -201,7 +201,7 @@ C {vdd.sym} 650 -450 0 0 {name=l10 lab=VDD
 }
 C {lab_pin.sym} 730 -440 1 0 {name=p18 sig_type=std_logic lab=I_B
 }
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 690 -290 0 0 {name=x2
+C {ota_cmos5l.sym} 690 -290 0 0 {name=x2
 }
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/coarse_gain/tb/tb_cg_ota/loopgainprobe.sym} 200 -180 0 0 {name=X3 device=loopgainprobe
 }

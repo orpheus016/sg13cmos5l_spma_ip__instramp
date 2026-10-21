@@ -1528,7 +1528,7 @@ C {lab_pin.sym} 900 -970 2 0 {name=p23 sig_type=std_logic lab=OUT3
 spice_ignore=true}
 C {gnd.sym} 900 -850 0 0 {name=l8 lab=0
 spice_ignore=true}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 200 -210 0 0 {name=x4
+C {ota_cmos5l.sym} 200 -210 0 0 {name=x4
 spice_ignore=true}
 C {lab_pin.sym} 700 -170 0 0 {name=p14 sig_type=std_logic lab=VINN2
 }
@@ -1542,9 +1542,9 @@ C {vdd.sym} 800 -370 0 0 {name=l5 lab=VDD
 }
 C {lab_pin.sym} 880 -360 1 0 {name=p18 sig_type=std_logic lab=I_B
 }
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 840 -210 0 0 {name=x1
+C {ota_cmos5l.sym} 840 -210 0 0 {name=x1
 }
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym} 1490 -140 0 0 {name=x2
+C {ota_cmos5l.sym} 1490 -140 0 0 {name=x2
 spice_ignore=true}
 C {lab_pin.sym} 1350 -180 0 0 {name=p33 sig_type=std_logic lab=VINP3
 spice_ignore=true}

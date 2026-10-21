@@ -1572,9 +1572,9 @@ C {lab_pin.sym} 910 -950 2 0 {name=p23 sig_type=std_logic lab=OUT3
 spice_ignore=true}
 C {gnd.sym} 910 -830 0 0 {name=l8 lab=0
 spice_ignore=true}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_ota.sym} 200 -210 0 0 {name=x1
+C {gain_ota.sym} 200 -210 0 0 {name=x1
 spice_ignore=true}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_ota.sym} 880 -250 0 0 {name=x2
+C {gain_ota.sym} 880 -250 0 0 {name=x2
 spice_ignore=true}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_ota.sym} 1490 -200 0 0 {name=x3
+C {gain_ota.sym} 1490 -200 0 0 {name=x3
 spice_ignore=true}

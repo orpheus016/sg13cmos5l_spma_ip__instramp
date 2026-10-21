@@ -1,4 +1,4 @@
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/tb/tb_gain_network/tb_gain_network.sch
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_stage/tb/tb_gain_network/tb_gain_network.sch
 **.subckt tb_gain_network
 I0 VDD I_B {ib}
 V2 VDD 0 {vdd}
@@ -27,12 +27,12 @@ x1 S4 S5 S0 S2 S1 S3 VDD VCM IN2 OUT2 I_B VSS gain_network
 
 
 
-.lib /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
-.lib /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
-.lib /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
-.lib /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib dio_tt
-.lib /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib cap_typ
-.lib /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib dio_tt
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
 
 
 
@@ -177,9 +177,9 @@ echo "==========================================================================
 **** end user architecture code
 **.ends
 
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_network.sym # of pins=12
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_network.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_network.sch
+* expanding   symbol:  gain_network.sym # of pins=12
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_stage/gain_network.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_stage/gain_network.sch
 .subckt gain_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
 *.ipin I_BIAS
 *.ipin V_IN2
@@ -216,9 +216,9 @@ x1 AVDD V_CM net7 V_OUT2 I_BIAS AVSS gain_ota
 .ends
 
 
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sch
+* expanding   symbol:  tgate.sym # of pins=6
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sch
 .subckt tgate IN AVSS AVDD EN ENB OUT  l=0.13e-6 wn=1e-6 wp=3e-6
 *.iopin AVDD
 *.iopin AVSS
@@ -231,9 +231,9 @@ XM2 OUT ENB IN AVDD sg13_lv_pmos w=wp l=l ng=1 m=1 mm_ok=1
 .ends
 
 
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_ota.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_ota.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_ota.sch
+* expanding   symbol:  gain_ota.sym # of pins=6
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_stage/gain_ota.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_stage/gain_ota.sch
 .subckt gain_ota VDD V_inp V_inn V_out I_bias VSS
 *.ipin V_inn
 *.ipin VDD
@@ -274,7 +274,10 @@ XM_rep_ctrlp V_ctrlp V_ctrlp net4 VDD sg13_lv_pmos w=2.20u l=0.50u ng=1 m=1 mm_o
 XM_mp5 N_A net1 VDD VDD sg13_lv_pmos w=9.21u l=2u ng=1 m=1 mm_ok=1
 XR2 N_A net7 VSS rhigh w=0.5e-6 l=4e-6 m=1 b=0 mm_ok=1
 XC3 F2 V_out cap_cmomi w=25e-6 l=25e-6 mmin=1 mmax=4 feed=double subblock=0 m=1 mm_ok=1
-XC4 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 mmin=1 mmax=4 feed=double subblock=0 m=4 mm_ok=1
+XC4 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 mmin=1 mmax=4 feed=double subblock=0 m=1 mm_ok=1
+XC1 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 mmin=1 mmax=4 feed=double subblock=0 m=1 mm_ok=1
+XC2 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 mmin=1 mmax=4 feed=double subblock=0 m=1 mm_ok=1
+XC5 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 mmin=1 mmax=4 feed=double subblock=0 m=1 mm_ok=1
 .ends
 
 .GLOBAL VDD
