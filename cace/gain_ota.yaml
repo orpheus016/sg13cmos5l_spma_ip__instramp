@@ -1,5 +1,5 @@
 #--------------------------------------------------------------
-# CACE datasheet: ota_cmos5l (two-stage Miller OTA, PMOS input)
+# CACE datasheet: gain_ota
 #--------------------------------------------------------------
 
 name:           gain_ota

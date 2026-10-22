@@ -1,0 +1,12 @@
+{
+ "cell": "gain_network",
+ "gds": "gds/gain_network/gain_network.gds",
+ "layout": {
+  "L": 74.61,
+  "W": 97.45,
+  "area": 7270.7,
+  "top": "gain_network"
+ },
+ "params": [],
+ "schematic": "xschem/gain_network/gain_network.sch"
+}

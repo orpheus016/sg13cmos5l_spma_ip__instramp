@@ -56,10 +56,14 @@ gain_ota:
   stages: [cace, drc, lvs, pex, post]
   lvs_args: [--disable_tap_extraction]
   note: Gain stage ota that has passed LVS and DRC
-fine_gain:
-  sch: xschem/fine_gain/fine_gain.sch
-  stages: []
-  note: schematic only so far
+gain_network:
+  title: Gain Stage Network
+  gds: gds/gain_network/gain_network.gds
+  sch: xschem/gain_network/gain_network.sch
+  cace: cace/gain_network.yaml
+  stages: [cace, drc, lvs, pex, post]
+  lvs_args: [--disable_tap_extraction]
+  note: Gain stage whole circuit with biasing, resistor networks, and switches with transmission gates
 fine_driver_6b:
   sch: xschem/fine_driver_6b/fine_driver_6b.sch
   stages: []

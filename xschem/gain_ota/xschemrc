@@ -4,5 +4,5 @@ if {![info exists PDK]} {
     source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
 }
 
-# Add current directory (ota_cmos5l.sym / .sch)
+# Add current directory
 append XSCHEM_LIBRARY_PATH :[file dirname [info script]]

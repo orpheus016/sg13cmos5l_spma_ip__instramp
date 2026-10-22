@@ -323,4 +323,4 @@ value=".include $PDK_ROOT/$PDK/libs.ref/sg13cmos5l_stdcell/spice/sg13cmos5l_stdc
 C {launcher.sym} -130 90 0 0 {name=h1
 descr=xschemrc
 tclcommand="source xschemrc"}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_network.sym} 110 50 0 0 {name=x1}
+C {gain_network.sym} 110 50 0 0 {name=x1}
