@@ -89,6 +89,7 @@ LAYERS = {
     "TopMetal1_txt": (126, 25),
 
     # Passivation & Boundary
+    "digisub_drw": (60, 0),
     "Passiv_drw": (9, 0),
     "prBoundary": (189, 4),
     "TEXT_drw": (63, 0),
@@ -219,7 +220,7 @@ def create_ptap_rect(cell, ly, l_map, x1, y1, x2, y2, net="AVSS"):
     ))
     create_contact_array(cell, ly, l_map["Cont_drw"], x1, y1, x2, y2)
     cell.shapes(l_map["Metal1_drw"]).insert(pya.Box(to_dbu(x1, dbu), to_dbu(y1, dbu), to_dbu(x2, dbu), to_dbu(y2, dbu)))
-    cell.shapes(l_map["Metal1_txt"]).insert(pya.Text(net, to_dbu((x1 + x2) / 2.0, dbu), to_dbu((y1 + y2) / 2.0, dbu)))
+    cell.shapes(l_map["TEXT_drw"]).insert(pya.Text(net, to_dbu((x1 + x2) / 2.0, dbu), to_dbu((y1 + y2) / 2.0, dbu)))
 
 
 def create_ntap_rect(cell, ly, l_map, x1, y1, x2, y2, nw_x1=None, nw_y1=None, nw_x2=None, nw_y2=None, net="AVDD"):
@@ -235,7 +236,7 @@ def create_ntap_rect(cell, ly, l_map, x1, y1, x2, y2, nw_x1=None, nw_y1=None, nw
     ))
     create_contact_array(cell, ly, l_map["Cont_drw"], x1, y1, x2, y2)
     cell.shapes(l_map["Metal1_drw"]).insert(pya.Box(to_dbu(x1, dbu), to_dbu(y1, dbu), to_dbu(x2, dbu), to_dbu(y2, dbu)))
-    cell.shapes(l_map["Metal1_txt"]).insert(pya.Text(net, to_dbu((x1 + x2) / 2.0, dbu), to_dbu((y1 + y2) / 2.0, dbu)))
+    cell.shapes(l_map["TEXT_drw"]).insert(pya.Text(net, to_dbu((x1 + x2) / 2.0, dbu), to_dbu((y1 + y2) / 2.0, dbu)))
 
 
 def create_guard_ring(cell, ly, l_map, in_x1, in_y1, in_x2, in_y2, w_ring, is_nwell=False, nw_enc=0.5, net="vss_1v2"):
@@ -383,17 +384,20 @@ def add_digital_guard_ring(cell, ly, l_map, dec_x1=25.0, dec_y1=60.0, dec_x2=90.
     in_ntap_y2 = in_ptap_y2 + 1.6
     create_guard_ring(cell, ly, l_map, in_ntap_x1, in_ntap_y1, in_ntap_x2, in_ntap_y2, w_ring=0.8, is_nwell=True, nw_enc=0.5, net="vdd_1v2")
 
+    # Digital Substrate marker layer (60/0) isolates digital substrate from pwell_sub
+    cell.shapes(l_map["digisub_drw"]).insert(pya.Box(to_dbu(in_ntap_x1 - 1.0, ly.dbu), to_dbu(in_ntap_y1 - 1.0, ly.dbu), to_dbu(in_ntap_x2 + 1.0, ly.dbu), to_dbu(in_ntap_y2 + 1.0, ly.dbu)))
+
 
 # ============================================================================
 # PHASE 3: TOPMETAL1 POWER GRID DISTRIBUTION
 # ============================================================================
 def add_power_grid(c_pgia, c_wrapper, ly, l_map):
     """
-    Synthesize global power distribution network strictly on TopMetal1 (Layer 126/0).
-    Dual-domain star-point topology:
-      - Digital Domain: VPWR / VGND encircling West decoder, connected to vdd_1v2 / vss_1v2
-      - Analog Domain: AVDD / AVSS rings encircling analog blocks, connected via Kelvin star point
-      - Multi-layer via drops down to each block's Metal4 power pins and substrate moats.
+    Synthesize global power distribution network strictly on TopMetal1 (Layer 126/0)
+    with Metal4 drops to sub-blocks. 100% planar, zero TopMetal1 crossings.
+      - AVDD: Outer South Rail + East Riser + Center Moat Strap + North Rail
+      - AVSS: West Pad Trunk + West Riser + South Rail + Central Moat Straps
+      - AVDD drops crossing Lower Moat AVSS run on Metal4 under the TopMetal1 strap
     """
     dbu = ly.dbu
     print("  [Power] Synthesizing TopMetal1 Global Power Rings & Drops...")
@@ -405,55 +409,53 @@ def add_power_grid(c_pgia, c_wrapper, ly, l_map):
         c_pgia.shapes(l_map["TopMetal1_txt"]).insert(pya.Text(net, to_dbu(x, dbu), to_dbu(y, dbu)))
 
     # ------------------------------------------------------------------------
-    # 1. ANALOG PERIMETER POWER RINGS (AVDD & AVSS)
+    # 1. AVDD POWER TREE (Outer South Rail + East Riser + Center Moat + North Rail)
     # ------------------------------------------------------------------------
-    # South Rails:
-    # AVDD South: Y in [3.0, 8.0] um (width 5.0 um, directly abuts vdd_1v2 entry pad)
-    box_tm1(2.0, 3.0, 505.0, 8.0)
+    # South Rail: Y in [3.0, 8.0] um, directly abuts vdd_1v2 pad at X = 2.0 um
+    box_tm1(2.0, 3.0, 505.5, 8.0)
     lbl_tm1("AVDD", 340.0, 5.5)
 
-    # AVSS South: Y in [10.5, 15.5] um (width 5.0 um, spans analog core from West Riser to East Riser)
-    box_tm1(165.0, 10.5, 505.0, 15.5)
-    lbl_tm1("AVSS", 340.0, 13.0)
+    # East Vertical Riser: X in [502.0, 505.5] um, runs from South Rail to North Rail
+    box_tm1(502.0, 3.0, 505.5, 253.0)
 
-    # North Rails:
-    # AVDD North: Y in [248.0, 253.0] um (width 5.0 um)
-    box_tm1(165.0, 248.0, 505.0, 253.0)
+    # Center Moat AVDD Strap: Y in [146.5, 150.5] um (width 4.0 um)
+    # Spans from East Riser (X = 502.0) west to X = 180.0 um
+    box_tm1(180.0, 146.5, 502.0, 150.5)
+
+    # North Rail: Y in [248.0, 253.0] um (width 5.0 um)
+    # Spans from East Riser (X = 502.0) west to X = 180.0 um
+    box_tm1(180.0, 248.0, 502.0, 253.0)
     lbl_tm1("AVDD", 340.0, 250.5)
 
-    # AVSS North: Y in [256.0, 261.0] um (width 5.0 um)
-    box_tm1(165.0, 256.0, 505.0, 261.0)
-    lbl_tm1("AVSS", 340.0, 258.5)
-
-    # West Vertical Risers (X in [165.0, 175.0] um):
-    # AVSS West riser: X in [165.0, 169.0]
-    box_tm1(165.0, 10.5, 169.0, 261.0)
-    # AVDD West riser: X in [171.0, 175.0]
-    box_tm1(171.0, 3.0, 175.0, 253.0)
-
-    # East Vertical Risers (X in [496.0, 505.5] um):
-    # AVDD East riser: X in [496.0, 499.5] (Shifted 1.0 um West for TM1.b = 2.50 um space to AVSS at 502.0)
-    box_tm1(496.0, 3.0, 499.5, 253.0)
-    # AVSS East riser: X in [502.0, 505.5]
-    box_tm1(502.0, 10.5, 505.5, 261.0)
-
-    # Central Isolation Moat TopMetal1 Straps:
-    # AVSS over Lower PTap: Y in [141.0, 143.4] um
-    box_tm1(165.0, 141.0, 497.0, 143.4)
-    # AVDD over Center NTap: Y in [146.5, 150.5] um
-    box_tm1(171.0, 146.5, 499.5, 150.5)
-    # AVSS over Upper PTap: Y in [153.6, 156.0] um
-    box_tm1(165.0, 153.6, 497.0, 156.0)
-
     # ------------------------------------------------------------------------
-    # 2. DIGITAL POWER GRID (VPWR & VGND)
+    # 2. AVSS GROUND TREE (West Pad Trunk + West Riser + South Rail + Moat Straps)
     # ------------------------------------------------------------------------
-    # vss_1v2 main trunk from vss_1v2 pad (X in [0.0, 2.0], Y in [66.37, 96.37] um)
-    # Spans from West pad across decoder (feeding VGND) and continues East to AVSS West Riser (Kelvin star point)
-    box_tm1(2.0, 78.5, 169.0, 82.5)
+    # Main vss_1v2 trunk from West pad (X in [0.0, 2.0], Y in [66.37, 96.37] um):
+    # Runs at Y in [78.5, 82.5] um across decoder directly into AVSS West Riser at X = 175.0 um
+    # Separate Digital Ground Trunk (VGND): runs strictly from West pad to decoder
+    box_tm1(2.0, 78.5, 45.0, 82.5)
     lbl_tm1("VGND", 30.0, 80.5)
-    lbl_tm1("AVSS", 167.0, 80.5)
 
+    # West Vertical Riser: X in [171.0, 175.0] um (width 4.0 um)
+    # Spans from South AVSS Rail (Y = 10.5) up to Upper Moat AVSS (Y = 156.0 um)
+    box_tm1(171.0, 10.5, 175.0, 156.0)
+
+    # South AVSS Rail: Y in [10.5, 15.5] um (width 5.0 um)
+    # Spans from West edge (X = 2.0) east to X = 496.0 um directly to West pad
+    box_tm1(2.0, 10.5, 496.0, 15.5)
+    lbl_tm1("AVSS", 340.0, 13.0)
+
+    # Lower Moat AVSS Strap: Y in [141.0, 143.4] um (width 2.4 um)
+    # Spans from West Riser (X = 171.0) east to X = 496.0 um
+    box_tm1(171.0, 141.0, 496.0, 143.4)
+
+    # Upper Moat AVSS Strap: Y in [153.6, 156.0] um (width 2.4 um)
+    # Spans from West Riser (X = 171.0) east to X = 496.0 um
+    box_tm1(171.0, 153.6, 496.0, 156.0)
+
+    # ------------------------------------------------------------------------
+    # 3. DIGITAL POWER GRID (VPWR)
+    # ------------------------------------------------------------------------
     # VPWR feeder from vdd_1v2 pad (X in [0.0, 2.0], Y in [1.53, 56.80] um):
     box_tm1(2.0, 48.0, 18.0, 52.0)
     box_tm1(14.0, 48.0, 18.0, 72.0)
@@ -461,7 +463,7 @@ def add_power_grid(c_pgia, c_wrapper, ly, l_map):
     lbl_tm1("VPWR", 30.0, 70.0)
 
     # ------------------------------------------------------------------------
-    # 3. VERTICAL DROPS TO SUB-CELL METAL4 POWER PINS & GUARD MOATS
+    # 4. VERTICAL DROPS TO SUB-CELL METAL4 POWER PINS & GUARD MOATS
     # ------------------------------------------------------------------------
     # Decoder drops:
     create_m4_to_tm1_drop(c_pgia, ly, l_map, 40.76, 70.0, size_um=2.2)
@@ -473,40 +475,46 @@ def add_power_grid(c_pgia, c_wrapper, ly, l_map):
     create_guard_ring_drop(c_pgia, ly, l_map, 21.5, 70.0, w_ring=0.8)  # VPWR to outer NTap
 
     # Instramp drops:
-    # VSS drops:
+    # VSS drops (from South AVSS Rail at Y in [10.5, 15.5] up to Y = 20.64 um on TM1):
     for drop_x in [380.0, 430.0, 480.0]:
-        box_tm1(drop_x - 1.5, 10.5, drop_x + 1.5, 21.5)
+        box_tm1(drop_x - 1.5, 15.5, drop_x + 1.5, 21.5)
         create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 20.64, size_um=2.2)
-    # VDD drops:
+    # VDD drops: TopVia1 drop at Center Moat (Y = 148.5) -> Metal4 underpass crossing Lower Moat AVSS -> VDD pin at Y = 138.15
     for drop_x in [380.0, 430.0, 480.0]:
-        box_tm1(drop_x - 1.5, 137.0, drop_x + 1.5, 148.0)
-        create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 138.15, size_um=2.2)
+        create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 148.5, size_um=2.2)
+        # Metal4 strap from (drop_x, 148.5) down to (drop_x, 137.0)
+        c_pgia.shapes(l_map["Metal4_drw"]).insert(
+            pya.Box(to_dbu(drop_x - 1.0, dbu), to_dbu(137.0, dbu),
+                    to_dbu(drop_x + 1.0, dbu), to_dbu(148.5, dbu))
+        )
 
     # Gain Stage 1 drops:
-    # AVSS: M4 pin at (312.0, 25.5) -> South AVSS trunk at Y in [10.5, 15.5]
-    box_tm1(310.5, 10.5, 313.5, 26.5)
+    # AVSS: M4 pin at (312.0, 25.5) -> South AVSS rail at Y in [10.5, 15.5] on TM1
+    box_tm1(310.5, 15.5, 313.5, 26.5)
     create_m4_to_tm1_drop(c_pgia, ly, l_map, 312.0, 25.5, size_um=2.2)
-    # AVDD: M4 pin at (312.0, 83.9) -> South AVDD trunk via vertical TM1 branch
-    box_tm1(310.5, 3.0, 313.5, 85.0)
-    create_m4_to_tm1_drop(c_pgia, ly, l_map, 312.0, 83.9, size_um=2.2)
+    # AVDD: TopVia1 drop at Center Moat (312.0, 148.5) -> Metal4 underpass down to M4 pin at (312.0, 83.9)
+    create_m4_to_tm1_drop(c_pgia, ly, l_map, 312.0, 148.5, size_um=2.2)
+    c_pgia.shapes(l_map["Metal4_drw"]).insert(
+        pya.Box(to_dbu(311.0, dbu), to_dbu(83.0, dbu),
+                to_dbu(313.0, dbu), to_dbu(148.5, dbu))
+    )
 
     # Gain Stage 2 drops:
-    # AVSS: M4 pin at (225.3, 160.5) -> Upper PTap (AVSS) at Y in [153.6, 156.0]
-    box_tm1(223.8, 153.6, 226.8, 161.5)
+    # AVSS: M4 pin at (225.3, 160.5) -> Upper Moat AVSS strap at Y in [153.6, 156.0] on TM1
+    box_tm1(223.8, 156.0, 226.8, 161.5)
     create_m4_to_tm1_drop(c_pgia, ly, l_map, 225.3, 160.5, size_um=2.2)
-    # AVDD: M4 pin at (225.3, 218.9) -> North AVDD trunk at Y in [248.0, 253.0]
-    box_tm1(223.8, 217.5, 226.8, 253.0)
+    # AVDD: M4 pin at (225.3, 218.9) -> North AVDD rail at Y in [248.0, 253.0] on TM1
+    box_tm1(223.8, 217.5, 226.8, 248.0)
     create_m4_to_tm1_drop(c_pgia, ly, l_map, 225.3, 218.9, size_um=2.2)
 
     # Output Buffer drops:
-    # VSS: M4 rail at Y in [205.0, 206.8], fed from Upper PTap (AVSS)
+    # VSS: M4 rail at Y in [205.0, 206.8] -> Upper Moat AVSS strap at Y in [153.6, 156.0] on TM1
     for drop_x in [395.0, 445.0, 485.0]:
         box_tm1(drop_x - 1.5, 156.0, drop_x + 1.5, 207.5)
         create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 206.0, size_um=1.6)
-    # VDD: M4 rail at Y in [240.65, 242.41], fed from North AVDD trunk
-    # Sized to 1.6 um centered at 241.6 um (Y in [240.8, 242.4]) to maintain >= 0.5 um space to M4 at Y=240.3
+    # VDD: M4 rail at Y in [240.65, 242.41] -> North AVDD rail at Y in [248.0, 253.0] on TM1
     for drop_x in [395.0, 445.0, 485.0]:
-        box_tm1(drop_x - 1.5, 240.5, drop_x + 1.5, 250.0)
+        box_tm1(drop_x - 1.5, 240.5, drop_x + 1.5, 248.0)
         create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 241.6, size_um=1.6)
 
     # Central Moat via stacks down to Metal1:
@@ -594,21 +602,21 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
     txt4 = l_map["Metal4_txt"]
 
     print("  [Routing] 1. Analog Inputs (East Dedicated Pads -> x_ia)...")
-    # s9_an[0] (535.45, 34.545) -> x_ia VINP (484.195, 41.035)
+    # s9_an[0] (535.45, 34.545) -> x_ia VINP (484.195, 41.035) via dedicated East channel X = 525.0 um
     add_path(c_pgia, m3, [
         (535.450, 34.545),
-        (492.000, 34.545),
-        (492.000, 41.035),
+        (525.000, 34.545),
+        (525.000, 41.035),
         (484.195, 41.035)
     ], width_um=0.8, dbu=dbu)
     add_via2_drop(c_pgia, l_map, 484.195, 41.035, pad_size=0.50, dbu=dbu)
     c_pgia.shapes(txt3).insert(pya.Text("VINP", to_dbu(535.450, dbu), to_dbu(34.545, dbu)))
 
-    # s9_an[1] (535.45, 144.545) -> x_ia VINN (484.225, 119.385)
+    # s9_an[1] (535.45, 144.545) -> x_ia VINN (484.225, 119.385) via dedicated East channel X = 515.0 um
     add_path(c_pgia, m3, [
         (535.450, 144.545),
-        (492.000, 144.545),
-        (492.000, 119.385),
+        (515.000, 144.545),
+        (515.000, 119.385),
         (484.225, 119.385)
     ], width_um=0.8, dbu=dbu)
     add_via2_drop(c_pgia, l_map, 484.225, 119.385, pad_size=0.50, dbu=dbu)
@@ -622,7 +630,7 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
         (338.000, 56.755),
         (316.505, 56.755)
     ], width_um=0.8, dbu=dbu)
-    c_pgia.shapes(txt3).insert(pya.Text("v_ia", to_dbu(338.000, dbu), to_dbu(70.000, dbu)))
+    c_pgia.shapes(l_map["TEXT_drw"]).insert(pya.Text("v_ia", to_dbu(338.000, dbu), to_dbu(70.000, dbu)))
 
     print("  [Routing] 3. Inter-Stage Turnaround Spine (x_stage1 -> x_stage2 on Metal4)...")
     # Spine routed at X = 216.0 um: guarantees > 6.2 um clearance to x_stage2 AVSS rail (at X = 222.25 um)
@@ -634,7 +642,7 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
     ], width_um=0.6, dbu=dbu)
     add_via3_drop(c_pgia, l_map, 216.000, 191.755, pad_size=0.60, dbu=dbu)
     add_path(c_pgia, m3, [(216.000, 191.755), (220.945, 191.755)], width_um=0.6, dbu=dbu)
-    c_pgia.shapes(txt4).insert(pya.Text("v_stage1", to_dbu(216.000, dbu), to_dbu(120.000, dbu)))
+    c_pgia.shapes(l_map["TEXT_drw"]).insert(pya.Text("v_stage1", to_dbu(216.000, dbu), to_dbu(120.000, dbu)))
 
     print("  [Routing] 4. Upper Lane Forward Link (x_stage2 -> x_buf input)...")
     # x_stage2 V_OUT2 (313.715, 178.450) -> x_buf VINN (380.120, 225.440)
@@ -644,7 +652,7 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
         (345.000, 225.440),
         (380.120, 225.440)
     ], width_um=0.8, dbu=dbu)
-    c_pgia.shapes(txt3).insert(pya.Text("v_stage2", to_dbu(345.000, dbu), to_dbu(200.000, dbu)))
+    c_pgia.shapes(l_map["TEXT_drw"]).insert(pya.Text("v_stage2", to_dbu(345.000, dbu), to_dbu(200.000, dbu)))
 
     print("  [Routing] 5. Output Feed (x_buf VOUT -> s9_an[2] East Pad)...")
     # x_buf VOUT (493.440, 223.950) -> s9_an[2] (535.450, 254.545) on Metal4
@@ -659,12 +667,12 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
     c_pgia.shapes(txt4).insert(pya.Text("VOUT", to_dbu(535.450, dbu), to_dbu(254.545, dbu)))
 
     print("  [Routing] 6. Common-Mode Reference (VCM)...")
-    # vbias at (1.000, 95.215) -> Escape to X=14.0 um -> Jog to Corridor Y=120.0 um
-    add_path(c_pgia, m3, [(1.000, 95.215), (14.000, 95.215)], width_um=0.35, dbu=dbu)
-    add_via2_drop(c_pgia, l_map, 14.000, 95.215, pad_size=0.50, dbu=dbu)
-    add_path(c_pgia, m2, [(14.000, 95.215), (14.000, 120.000)], width_um=0.35, dbu=dbu)
-    add_via2_drop(c_pgia, l_map, 14.000, 120.000, pad_size=0.50, dbu=dbu)
-    add_path(c_pgia, m3, [(14.000, 120.000), (334.000, 120.000)], width_um=0.35, dbu=dbu)
+    # vbias at (1.000, 95.215) -> Escape immediately to X=2.5 um -> Jog to Corridor Y=120.0 um on M2
+    add_path(c_pgia, m3, [(1.000, 95.215), (2.500, 95.215)], width_um=0.35, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 2.500, 95.215, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m2, [(2.500, 95.215), (2.500, 120.000)], width_um=0.35, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 2.500, 120.000, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m3, [(2.500, 120.000), (334.000, 120.000)], width_um=0.35, dbu=dbu)
     c_pgia.shapes(txt3).insert(pya.Text("VCM", to_dbu(1.000, dbu), to_dbu(95.215, dbu)))
 
     # Branch north to x_stage2 V_CM (220.920, 190.570) via M2 vertical jumper
@@ -691,12 +699,12 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
     add_path(c_pgia, m3, [(490.000, 79.135), (484.215, 79.135)], width_um=0.35, dbu=dbu)
 
     print("  [Routing] 7. Current Bias Distribution (IBIAS)...")
-    # ibias0 at (1.000, 98.155) -> Escape to X=16.0 um -> Jog to Corridor Y=124.0 um
-    add_path(c_pgia, m3, [(1.000, 98.155), (16.000, 98.155)], width_um=0.35, dbu=dbu)
-    add_via2_drop(c_pgia, l_map, 16.000, 98.155, pad_size=0.50, dbu=dbu)
-    add_path(c_pgia, m2, [(16.000, 98.155), (16.000, 124.000)], width_um=0.35, dbu=dbu)
-    add_via2_drop(c_pgia, l_map, 16.000, 124.000, pad_size=0.50, dbu=dbu)
-    add_path(c_pgia, m3, [(16.000, 124.000), (336.000, 124.000)], width_um=0.35, dbu=dbu)
+    # ibias0 at (1.000, 98.155) -> Escape immediately to X=4.5 um -> Jog to Corridor Y=124.0 um on M2
+    add_path(c_pgia, m3, [(1.000, 98.155), (4.500, 98.155)], width_um=0.35, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 4.500, 98.155, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m2, [(4.500, 98.155), (4.500, 124.000)], width_um=0.35, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 4.500, 124.000, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m3, [(4.500, 124.000), (336.000, 124.000)], width_um=0.35, dbu=dbu)
     c_pgia.shapes(txt3).insert(pya.Text("IBIAS_IA", to_dbu(1.000, dbu), to_dbu(98.155, dbu)))
 
     # Branch north to x_stage2 I_BIAS (221.080, 177.805) via M2 jumper
@@ -715,19 +723,26 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
     add_path(c_pgia, m2, [(336.000, 124.000), (336.000, 162.000)], width_um=0.35, dbu=dbu)
     add_via2_drop(c_pgia, l_map, 336.000, 162.000, pad_size=0.50, dbu=dbu)
     add_via3_drop(c_pgia, l_map, 336.000, 162.000, pad_size=0.50, dbu=dbu)
-    add_path(c_pgia, m4, [(336.000, 162.000), (492.000, 162.000)], width_um=0.50, dbu=dbu)
-    add_via3_drop(c_pgia, l_map, 492.000, 162.000, pad_size=0.50, dbu=dbu)
-    add_via2_drop(c_pgia, l_map, 492.000, 162.000, pad_size=0.50, dbu=dbu)
-    add_path(c_pgia, m2, [(492.000, 162.000), (492.000, 130.215)], width_um=0.35, dbu=dbu)
-    add_via2_drop(c_pgia, l_map, 492.000, 130.215, pad_size=0.50, dbu=dbu)
-    add_path(c_pgia, m3, [(492.000, 130.215), (484.250, 130.215)], width_um=0.35, dbu=dbu)
+    add_path(c_pgia, m4, [(336.000, 162.000), (495.000, 162.000)], width_um=0.50, dbu=dbu)
+    add_via3_drop(c_pgia, l_map, 495.000, 162.000, pad_size=0.50, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 495.000, 162.000, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m2, [(495.000, 162.000), (495.000, 130.215)], width_um=0.35, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 495.000, 130.215, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m3, [(495.000, 130.215), (484.250, 130.215)], width_um=0.35, dbu=dbu)
+
+    # Branch north from M4 IBIAS rail to x_buf IBIAS at (380.000, 235.350)
+    add_via3_drop(c_pgia, l_map, 376.000, 162.000, pad_size=0.50, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 376.000, 162.000, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m2, [(376.000, 162.000), (376.000, 235.350)], width_um=0.35, dbu=dbu)
+    add_via2_drop(c_pgia, l_map, 376.000, 235.350, pad_size=0.50, dbu=dbu)
+    add_path(c_pgia, m3, [(376.000, 235.350), (380.000, 235.350)], width_um=0.35, dbu=dbu)
 
     print("  [Routing] 8. Digital Inputs (dig_in[0..3] -> x_dec gain_sel[0..3])...")
     dig_in_pins = [
-        ((1.000, 78.460), (25.200, 65.460), 6.0, "gain_sel[0]"),
-        ((1.000, 78.900), (25.200, 76.380), 9.0, "gain_sel[1]"),
-        ((1.000, 79.340), (25.200, 87.300), 12.0, "gain_sel[2]"),
-        ((1.000, 79.780), (25.200, 98.220), 15.0, "gain_sel[3]"),
+        ((1.000, 79.780), (25.200, 98.220), 7.0, "gain_sel[3]"),
+        ((1.000, 79.340), (25.200, 87.300), 10.0, "gain_sel[2]"),
+        ((1.000, 78.460), (25.200, 65.460), 13.0, "gain_sel[0]"),
+        ((1.000, 78.900), (25.200, 76.380), 16.0, "gain_sel[1]"),
     ]
     for (src, dst, jog_x, pname) in dig_in_pins:
         add_path(c_pgia, m3, [
@@ -768,7 +783,7 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
         add_via2_drop(c_pgia, l_map, col_east, dst[1], pad_size=0.50, dbu=dbu)
         # 5. Ingress West on M3 directly into x_stage1 East port
         add_path(c_pgia, m3, [(col_east, dst[1]), dst], width_um=0.30, dbu=dbu)
-        c_pgia.shapes(txt3).insert(pya.Text(sname, to_dbu(col_west, dbu), to_dbu(corr_y, dbu)))
+        c_pgia.shapes(l_map["TEXT_drw"]).insert(pya.Text(sname, to_dbu(col_west, dbu), to_dbu(corr_y, dbu)))
 
     print("  [Routing] 10. Decoded Stage 2 Control (Direct West Ingress to x_stage2)...")
     # All pins of x_stage2 are at X in [220.15, 220.42], Y in [220.96, 234.45].
@@ -791,7 +806,7 @@ def add_signal_routing(c_pgia, c_wrapper, master_ly, l_map):
         add_via2_drop(c_pgia, l_map, col_x, dst[1], pad_size=0.50, dbu=dbu)
         # 3. Enter West port of x_stage2 on M3
         add_path(c_pgia, m3, [(col_x, dst[1]), dst], width_um=0.30, dbu=dbu)
-        c_pgia.shapes(txt3).insert(pya.Text(sname, to_dbu(col_x, dbu), to_dbu(dst[1], dbu)))
+        c_pgia.shapes(l_map["TEXT_drw"]).insert(pya.Text(sname, to_dbu(col_x, dbu), to_dbu(dst[1], dbu)))
 
     print("  [PASS] All Phase 4 signal interconnects synthesized successfully.")
 
@@ -986,6 +1001,22 @@ def assemble_pgia(output_gds, place_only=False, with_moats=True, with_power=True
 
     # Ensure output directory exists
     os.makedirs(os.path.dirname(os.path.abspath(output_gds)), exist_ok=True)
+
+    # Clean up sub-cell internal text shapes on /25 layers to prevent port bubbling into top LVS
+    for c in master_ly.each_cell():
+        if c.name in ["pgia_top", "slot9_wrapper"]:
+            continue
+        for li in master_ly.layer_indexes():
+            info = master_ly.get_info(li)
+            if info.datatype == 25:
+                l_drw = master_ly.layer(info.layer, 0)
+                texts_to_move = []
+                for s in c.shapes(li).each():
+                    if s.is_text():
+                        texts_to_move.append(s.text)
+                for t in texts_to_move:
+                    c.shapes(l_drw).insert(t)
+                c.shapes(li).clear()
 
     # Write Master GDS
     print(f"\nWriting finalized assembly layout to: {output_gds}")

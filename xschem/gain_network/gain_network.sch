@@ -222,12 +222,12 @@ C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} -180 -370 0 0 {name=x11 VDD="AVDD" 
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} -10 -370 0 0 {name=x10 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} 170 -370 0 0 {name=x9 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} 360 -370 0 0 {name=x8 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym} -310 -230 3 0 {name=x7 l=0.13e-6 wn=0.9e-6 wp=2.7e-6}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym} -120 -230 3 0 {name=x6 l=0.13e-6 wn=1.5e-6 wp=4.5e-6}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym} 50 -230 3 0 {name=x5 l=0.13e-6 wn=2.2e-6 wp=6.6e-6}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym} 220 -230 3 0 {name=x4 l=0.13e-6 wn=2.6e-6 wp=7.8e-6}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym} 410 -230 3 0 {name=x3 l=0.13e-6 wn=2.9e-6 wp=8.7e-6}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym} 600 -230 3 0 {name=x2 l=0.13e-6 wn=3e-6 wp=9e-6}
+C {tgate.sym} -310 -230 3 0 {name=x7 l=0.13e-6 wn=0.9e-6 wp=2.7e-6}
+C {tgate.sym} -120 -230 3 0 {name=x6 l=0.13e-6 wn=1.5e-6 wp=4.5e-6}
+C {tgate.sym} 50 -230 3 0 {name=x5 l=0.13e-6 wn=2.2e-6 wp=6.6e-6}
+C {tgate.sym} 220 -230 3 0 {name=x4 l=0.13e-6 wn=2.6e-6 wp=7.8e-6}
+C {tgate.sym} 410 -230 3 0 {name=x3 l=0.13e-6 wn=2.9e-6 wp=8.7e-6}
+C {tgate.sym} 600 -230 3 0 {name=x2 l=0.13e-6 wn=3e-6 wp=9e-6}
 C {sg13cmos5l_pr/rhigh.sym} -180 -480 3 0 {name=R6
 w=0.5e-6
 l=5.3e-6
@@ -261,4 +261,4 @@ b=0
   mm_ok=1
 value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
 }
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sym} 30 30 0 0 {name=x1}
+C {gain_ota.sym} 30 30 0 0 {name=x1}

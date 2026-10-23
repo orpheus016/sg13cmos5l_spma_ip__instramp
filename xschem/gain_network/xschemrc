@@ -9,3 +9,5 @@ set _here [file dirname [file normalize [info script]]]
 append XSCHEM_LIBRARY_PATH :$_here
 append XSCHEM_LIBRARY_PATH :$_here/../tgate
 append XSCHEM_LIBRARY_PATH :$_here/../gain_ota
+append XSCHEM_LIBRARY_PATH ://libs.tech/xschem/sg13cmos5l_stdcells
+append XSCHEM_LIBRARY_PATH ://libs.ref/sg13cmos5l_stdcell/sch/xschem

@@ -1,4 +1,4 @@
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sch
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_ota/gain_ota.sch
 .subckt gain_ota VDD V_inp V_inn V_out I_bias VSS
 *.PININFO V_inn:I VDD:I VSS:I V_out:O I_bias:I V_inp:I
 MM1 F1 V_inn net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4

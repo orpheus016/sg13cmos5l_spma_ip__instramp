@@ -1,0 +1,1777 @@
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/pgia_top/pgia_top.sch
+.subckt pgia_top VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA AVSS VGND
+*.PININFO AVDD:B AVSS:B VPWR:B VGND:B VINP:I VINN:I VCM:I gain_sel[0]:I gain_sel[1]:I gain_sel[2]:I gain_sel[3]:I IBIAS_IA:I
+*+ VOUT:O
+x_dec VGND VPWR gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] s1[0] s1[1] s1[2] s1[3] s1[4] s1_b[0] net1 net2 net3 net4 s2[0]
++ s2[1] s2[2] s2[3] s2[4] s2_b[0] net5 net6 net7 net8 gain_decoder_4b
+x_ia AVSS AVDD IBIAS_IA VINN v_ia VINP VCM instramp_cmos5l
+x_stage1 s1[3] s1[4] s1_b[0] s1[1] s1[0] s1[2] AVDD VCM v_ia v_stage1 IBIAS_IA AVSS gain_network
+x_stage2 s2[3] s2[4] s2_b[0] s2[1] s2[0] s2[2] AVDD VCM v_stage1 v_stage2 IBIAS_IA AVSS gain_network
+x_buf AVDD AVSS IBIAS_IA v_stage2 VOUT output_buffer
+.ends
+
+* expanding   symbol:  instramp_cmos5l.sym # of pins=7
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/instramp_cmos5l/instramp_cmos5l.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/instramp_cmos5l/instramp_cmos5l.sch
+.subckt instramp_cmos5l VSS VDD IBIAS VINN VOUT VINP CM
+*.PININFO VDD:B IBIAS:B VSS:B CM:B VOUT:B VINN:B VINP:B
+x1 VSS IBIAS VDD net3 VINP net4 ota_cmos5l
+x2 VSS IBIAS VDD net1 VINN net2 ota_cmos5l
+x3 VSS IBIAS VDD net5 net6 VOUT ota_cmos5l
+RR1 net4 net6 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR2 net2 net5 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR3 net6 CM 53.06k $SUB=VSS $[rhigh] w=0.5e-6 l=8*2.23e-6 b=0
+RR4 net5 VOUT 53.06k $SUB=VSS $[rhigh] w=0.5e-6 l=8*2.23e-6 b=0
+RR7 net2 net1 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR8 net4 net3 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+.ends
+
+
+* expanding   symbol:  gain_network.sym # of pins=12
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_network/gain_network.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_network/gain_network.sch
+.subckt gain_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
+*.PININFO I_BIAS:I V_IN2:I V_CM:I AVSS:I AVDD:I V_OUT2:O S5:I S4:I S3:I S2:I S1:I S0:I
+RR7 net6 net5 32.01k $SUB=AVSS $[rhigh] w=0.5e-6 l=10.72e-6 b=0
+RR3 net2 net1 2k $SUB=AVSS $[rppd] w=2e-6 l=15.16e-6 b=0
+RR2 net1 V_OUT2 942.3 $SUB=AVSS $[rppd] w=2e-6 l=7e-6 b=0
+RR1 net7 V_IN2 2k $SUB=AVSS $[rppd] w=2e-6 l=15.16e-6 b=0
+x13 net8 S5 AVDD AVSS sg13cmos5l_inv_1
+x12 net9 S4 AVDD AVSS sg13cmos5l_inv_1
+x11 net10 S3 AVDD AVSS sg13cmos5l_inv_1
+x10 net11 S2 AVDD AVSS sg13cmos5l_inv_1
+x9 net12 S1 AVDD AVSS sg13cmos5l_inv_1
+x8 net13 S0 AVDD AVSS sg13cmos5l_inv_1
+x7 net7 AVSS AVDD S5 net8 net6 tgate l=0.13e-6 wn=0.9e-6 wp=2.7e-6
+x6 net7 AVSS AVDD S4 net9 net5 tgate l=0.13e-6 wn=1.5e-6 wp=4.5e-6
+x5 net7 AVSS AVDD S3 net10 net4 tgate l=0.13e-6 wn=2.2e-6 wp=6.6e-6
+x4 net7 AVSS AVDD S2 net11 net3 tgate l=0.13e-6 wn=2.6e-6 wp=7.8e-6
+x3 net7 AVSS AVDD S1 net12 net2 tgate l=0.13e-6 wn=2.9e-6 wp=8.7e-6
+x2 net7 AVSS AVDD S0 net13 net1 tgate l=0.13e-6 wn=3e-6 wp=9e-6
+RR6 net5 net4 15.99k $SUB=AVSS $[rhigh] w=0.5e-6 l=5.3e-6 b=0
+RR5 net4 net3 8.007k $SUB=AVSS $[rhigh] w=0.5e-6 l=2.6e-6 b=0
+RR4 net3 net2 4.016k $SUB=AVSS $[rhigh] w=0.5e-6 l=1.25e-6 b=0
+x1 AVDD V_CM net7 V_OUT2 I_BIAS AVSS gain_ota
+.ends
+
+
+* expanding   symbol:  output_buffer.sym # of pins=5
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/output_buffer.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/output_buffer.sch
+.subckt output_buffer VDD VSS IBIAS VINN VOUT
+*.PININFO VDD:B VSS:B IBIAS:B VINN:B VOUT:B
+x1 VSS IBIAS VDD VINN VOUT VOUT ota_cmos5l
+.ends
+
+
+* expanding   symbol:  ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/ota_cmos5l.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+*.PININFO IBIAS:B VDD:B VSS:B VOUT:B VINP:B VINN:B
+MM6 IBIAS IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6}
+MM7 net1 IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7}
+MM8 VOUT IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8}
+MM1 net2 VINN net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1
+MM2 net3 VINP net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1
+MM3 net2 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1
+MM4 net3 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1
+MM5 VOUT net3 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1
+RR1 net3 net4 6.085k $SUB=VSS $[rhigh] w=0.5e-6 l=1.95e-6 b=0
+CC2_1 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_2 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_3 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_4 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+CC2_5 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=1
+**** begin user architecture code
+
+
+
+
+**** end user architecture code
+CC1_1 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+CC1_2 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+CC1_3 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+CC1_4 net4 VOUT cap_cmomi w=15e-6 l=15e-6 m=1
+.ends
+
+
+* expanding   symbol:  tgate.sym # of pins=6
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sch
+.subckt tgate IN AVSS AVDD EN ENB OUT  l=0.13e-6 wn=1e-6 wp=3e-6
+*.PININFO AVDD:B AVSS:B IN:B OUT:B EN:I ENB:I
+MM1 IN EN OUT AVSS sg13_lv_nmos w=wn l=l ng=1
+MM2 OUT ENB IN AVDD sg13_lv_pmos w=wp l=l ng=1
+.ends
+
+
+* expanding   symbol:  gain_ota.sym # of pins=6
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_ota/gain_ota.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_ota/gain_ota.sch
+.subckt gain_ota VDD V_inp V_inn V_out I_bias VSS
+*.PININFO V_inn:I VDD:I VSS:I V_out:O I_bias:I V_inp:I
+MM1 F1 V_inn net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4
+MM2 F2 V_inp net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4
+MM3 net5 net5 VDD VDD sg13_lv_pmos w=7.33u l=2u ng=1
+MM4 N_A net5 VDD VDD sg13_lv_pmos w=7.33u l=2u ng=1
+MM7 F1 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1
+MM8 F2 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1
+MM_tail net6 V_btail VDD VDD sg13_lv_pmos w=7.46u l=2u ng=1 m=8
+MM_ctrlp N_B V_ctrlp N_A VDD sg13_lv_pmos w=2.20u l=0.50u ng=1
+MM_outp V_out N_A VDD VDD sg13_lv_pmos w=22.20u l=0.5u ng=4
+MM_ctrln N_A V_ctrln N_B VSS sg13_lv_nmos w=0.84u l=0.5u ng=1
+MM_outn V_out N_B VSS VSS sg13_lv_nmos w=8.4u l=0.5u ng=1
+MM5 net5 V_bn1 F1 VSS sg13_lv_nmos w=6.41u l=2u ng=1
+MM6 N_A V_bn1 F2 VSS sg13_lv_nmos w=6.41u l=2u ng=1
+MM_mp1 net1 net1 VDD VDD sg13_lv_pmos w=2.30u l=2u ng=1
+MM_mn1 net1 I_bias VSS VSS sg13_lv_nmos w=0.87u l=2u ng=1
+MM_refn I_bias I_bias VSS VSS sg13_lv_nmos w=0.87u l=2u ng=1
+MM_mp2 V_bn1 net1 VDD VDD sg13_lv_pmos w=11.50u l=2u ng=2
+MM_mp3 V_bn2 net1 VDD VDD sg13_lv_pmos w=23u l=2u ng=4
+MM_bn1 V_bn1 V_bn1 net2 VSS sg13_lv_nmos w=1.60u l=2u ng=1
+MM_bn2 V_bn2 V_bn2 VSS VSS sg13_lv_nmos w=9.21u l=2u ng=1
+MM_mn2 V_btail I_bias VSS VSS sg13_lv_nmos w=6u l=2u ng=1
+MM_rep_tail V_btail V_btail VDD VDD sg13_lv_pmos w=7.46u l=2u ng=1 m=8
+MM_mn4 N_B I_bias VSS VSS sg13_lv_nmos w=3.2u l=2u ng=1
+RR1 net2 VSS 44.67k $SUB=VSS $[rhigh] w=0.5e-6 l=15e-6 b=0
+MM_mp4 V_ctrln net1 VDD VDD sg13_lv_pmos w=4.60u l=2u ng=1
+MM_rep_ctrln V_ctrln V_ctrln net3 VSS sg13_lv_nmos w=0.84u l=0.5u ng=1
+MM_rep_outn net3 net3 VSS VSS sg13_lv_nmos w=2.10u l=0.5u ng=1
+MM_mn3 V_ctrlp I_bias VSS VSS sg13_lv_nmos w=1.74u l=2u ng=1
+MM_rep_outp net4 net4 VDD VDD sg13_lv_pmos w=5.55u l=0.5u ng=1
+MM_rep_ctrlp V_ctrlp V_ctrlp net4 VDD sg13_lv_pmos w=2.20u l=0.50u ng=1
+MM_mp5 N_A net1 VDD VDD sg13_lv_pmos w=9.21u l=2u ng=1
+RR2 N_A net7 12.15k $SUB=VSS $[rhigh] w=0.5e-6 l=4e-6 b=0
+CC3_1 V_out F2 cap_cmomi w=25e-6 l=25e-6 m=1
+CC4_1 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
+CC4_2 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
+CC4_3 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
+CC4_4 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
+.ends
+
+.subckt gain_decoder_4b VGND VPWR gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3]
++ s1[0] s1[1] s1[2] s1[3] s1[4] s1_b[0] s1_b[1] s1_b[2] s1_b[3] s1_b[4] s2[0] s2[1]
++ s2[2] s2[3] s2[4] s2_b[0] s2_b[1] s2_b[2] s2_b[3] s2_b[4]
+Xoutput20 s2_b[0] _33_/A VPWR VGND sg13cmos5l_buf_1
+Xoutput7 s1[2] _21_/Y VPWR VGND sg13cmos5l_buf_1
+Xoutput10 s1_b[0] _14_/Y VPWR VGND sg13cmos5l_buf_1
+Xoutput21 s2_b[1] _35_/A VPWR VGND sg13cmos5l_buf_1
+Xoutput8 s1[3] _27_/Y VPWR VGND sg13cmos5l_buf_1
+XFILLER_0_15 VPWR VGND sg13cmos5l_decap_8
+XFILLER_0_37 VPWR VGND sg13cmos5l_fill_1
+XFILLER_1_0 VPWR VGND sg13cmos5l_decap_8
+Xoutput11 s1_b[1] _18_/A VPWR VGND sg13cmos5l_buf_1
+Xoutput22 s2_b[2] _37_/A VPWR VGND sg13cmos5l_buf_1
+Xoutput9 s1[4] _31_/Y VPWR VGND sg13cmos5l_buf_1
+XFILLER_0_49 VPWR VGND sg13cmos5l_decap_4
+X_29_ _29_/Y _29_/A _40_/B VPWR VGND sg13cmos5l_nand2_1
+Xoutput12 s1_b[2] _21_/A VPWR VGND sg13cmos5l_buf_1
+Xoutput23 s2_b[3] _39_/Y VPWR VGND sg13cmos5l_buf_1
+XFILLER_0_29 VPWR VGND sg13cmos5l_decap_4
+X_28_ _40_/B _28_/A _39_/A VPWR VGND sg13cmos5l_nor2b_1
+Xoutput13 s1_b[3] _27_/A VPWR VGND sg13cmos5l_buf_1
+Xoutput24 s2_b[4] _41_/A VPWR VGND sg13cmos5l_buf_1
+X_26_ _27_/A _36_/A _34_/B VPWR VGND sg13cmos5l_nand2_1
+X_27_ _27_/Y _27_/A VPWR VGND sg13cmos5l_inv_1
+Xoutput14 s1_b[4] _30_/Y VPWR VGND sg13cmos5l_buf_1
+X_25_ _25_/Y _39_/A _28_/A VPWR VGND sg13cmos5l_nand2b_1
+Xoutput15 s2[0] _33_/Y VPWR VGND sg13cmos5l_buf_1
+X_24_ _34_/B _39_/A _28_/A VPWR VGND sg13cmos5l_nor2b_1
+X_41_ _41_/Y _41_/A VPWR VGND sg13cmos5l_inv_1
+Xoutput16 s2[1] _35_/Y VPWR VGND sg13cmos5l_buf_1
+Xoutput17 s2[2] _37_/Y VPWR VGND sg13cmos5l_buf_1
+XFILLER_1_21 VPWR VGND sg13cmos5l_fill_2
+XFILLER_1_7 VPWR VGND sg13cmos5l_decap_8
+X_23_ _23_/Y _36_/A VPWR VGND sg13cmos5l_inv_1
+X_40_ _41_/A _40_/A _40_/B VPWR VGND sg13cmos5l_nand2_1
+Xoutput18 s2[3] _38_/X VPWR VGND sg13cmos5l_buf_1
+X_22_ _36_/A _22_/A _22_/B VPWR VGND sg13cmos5l_nor2_1
+Xoutput19 s2[4] _41_/Y VPWR VGND sg13cmos5l_buf_1
+X_21_ _21_/Y _21_/A VPWR VGND sg13cmos5l_inv_1
+X_20_ _21_/A _22_/A _22_/B _20_/C VPWR VGND sg13cmos5l_nand3_1
+Xinput1 _22_/B gain_sel[0] VPWR VGND sg13cmos5l_buf_1
+XFILLER_1_14 VPWR VGND sg13cmos5l_decap_8
+XFILLER_1_58 VPWR VGND sg13cmos5l_fill_1
+Xinput2 _22_/A gain_sel[1] VPWR VGND sg13cmos5l_buf_1
+Xinput3 _28_/A gain_sel[2] VPWR VGND sg13cmos5l_buf_1
+Xinput4 _39_/A gain_sel[3] VPWR VGND sg13cmos5l_buf_1
+XFILLER_2_61 VPWR VGND sg13cmos5l_fill_1
+X_39_ _39_/Y _39_/A _39_/B VPWR VGND sg13cmos5l_nand2_1
+XFILLER_2_42 VPWR VGND sg13cmos5l_decap_8
+XFILLER_2_53 VPWR VGND sg13cmos5l_fill_1
+X_38_ _38_/X _39_/A _39_/B VPWR VGND sg13cmos5l_and2_1
+XFILLER_1_109 VPWR VGND sg13cmos5l_fill_2
+X_37_ _37_/Y _37_/A VPWR VGND sg13cmos5l_inv_1
+XFILLER_2_22 VPWR VGND sg13cmos5l_decap_8
+X_19_ _29_/A _22_/A _22_/B VPWR VGND sg13cmos5l_nand2_1
+X_36_ _37_/A _36_/A _40_/B VPWR VGND sg13cmos5l_nand2_1
+XFILLER_2_78 VPWR VGND sg13cmos5l_fill_1
+X_18_ _18_/Y _18_/A VPWR VGND sg13cmos5l_inv_1
+X_35_ _35_/Y _35_/A VPWR VGND sg13cmos5l_inv_1
+XFILLER_0_102 VPWR VGND sg13cmos5l_fill_1
+X_17_ _18_/A _40_/A _20_/C VPWR VGND sg13cmos5l_nand2_1
+X_34_ _35_/A _29_/A _34_/B VPWR VGND sg13cmos5l_nand2b_1
+XFILLER_2_15 VPWR VGND sg13cmos5l_decap_8
+XFILLER_2_36 VPWR VGND sg13cmos5l_fill_2
+X_16_ _20_/C _39_/A _28_/A VPWR VGND sg13cmos5l_nor2_1
+X_33_ _33_/Y _33_/A VPWR VGND sg13cmos5l_inv_1
+XFILLER_2_49 VPWR VGND sg13cmos5l_decap_4
+XFILLER_2_8 VPWR VGND sg13cmos5l_decap_8
+X_15_ _40_/A _22_/B _22_/A VPWR VGND sg13cmos5l_nor2b_1
+X_31_ _31_/Y _36_/A _25_/Y _29_/Y VPWR VGND sg13cmos5l_o21ai_1
+X_32_ _33_/A _40_/A _34_/B VPWR VGND sg13cmos5l_nand2_1
+X_14_ _14_/Y _39_/A _39_/B VPWR VGND sg13cmos5l_nand2b_1
+X_30_ _30_/Y _23_/Y _34_/B _40_/B _29_/A VPWR VGND sg13cmos5l_a22oi_1
+XFILLER_0_8 VPWR VGND sg13cmos5l_decap_8
+XFILLER_2_29 VPWR VGND sg13cmos5l_decap_8
+X_12_ _39_/B _22_/A _12_/B _28_/A VPWR VGND sg13cmos5l_nor3_1
+X_13_ _13_/Y _39_/A _39_/B VPWR VGND sg13cmos5l_nor2b_1
+X_11_ _12_/B _22_/B VPWR VGND sg13cmos5l_inv_1
+XFILLER_0_42 VPWR VGND sg13cmos5l_decap_8
+XFILLER_0_22 VPWR VGND sg13cmos5l_decap_8
+XFILLER_0_77 VPWR VGND sg13cmos5l_fill_1
+Xoutput5 s1[0] _13_/Y VPWR VGND sg13cmos5l_buf_1
+Xoutput6 s1[1] _18_/Y VPWR VGND sg13cmos5l_buf_1
+.ends
+
+************************************************************************
+*
+* Copyright 2023 IHP PDK Authors
+* 
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+* 
+*    https://www.apache.org/licenses/LICENSE-2.0
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+************************************************************************
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_a21o_1
+* View name: schematic
+.subckt sg13cmos5l_a21o_1 X A1 A2 B1 VDD VSS
+MN0 net1 A1 net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 net2 A2 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 net1 B1 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN3 X net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP2 net1 B1 net3 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net3 A1 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net3 A2 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 X net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_a21o_2
+* View name: schematic
+.subckt sg13cmos5l_a21o_2 X A1 A2 B1 VDD VSS
+MN0 net1 A1 net2 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net2 A2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net1 B1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 X net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP2 net1 B1 net3 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net3 A1 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net3 A2 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 X net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_a21oi_1
+* View name: schematic
+.subckt sg13cmos5l_a21oi_1 Y A1 A2 B1 VDD VSS
+MN0 Y B1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net1 A2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Y A1 net1 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP2 Y B1 net2 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net2 A2 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 net2 A1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_a21oi_2
+* View name: schematic
+.subckt sg13cmos5l_a21oi_2 Y A1 A2 B1 VDD VSS
+MN0 Y B1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN2 net2 A2 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 Y A1 net2 VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP2 Y B1 net1 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 net1 A2 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP0 net1 A1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_a221oi_1
+* View name: schematic
+.subckt sg13cmos5l_a221oi_1 Y A1 A2 B1 B2 C1 VDD VSS
+MP2 Y C1 net3 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP4 net3 B2 net1 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net3 B1 net1 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 net1 A2 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 net1 A1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN4 Y C1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 net4 B2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Y B1 net4 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net2 A2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 Y A1 net2 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_and2_1
+* View name: schematic
+.subckt sg13cmos5l_and2_1 X A B VDD VSS
+MN0 net4 A net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 X net4 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net2 B VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP0 net4 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 X net4 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net4 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_and2_2
+* View name: schematic
+.subckt sg13cmos5l_and2_2 X A B VDD VSS
+MN0 net1 A net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 X net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 net2 B VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP0 net1 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 X net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 net1 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_and3_1
+* View name: schematic
+.subckt sg13cmos5l_and3_1 X A B C VDD VSS
+MN2 net3 C VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN3 X net2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 net2 A net1 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 net1 B net3 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP3 X net2 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net2 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 net2 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 net2 C VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_and3_2
+* View name: schematic
+.subckt sg13cmos5l_and3_2 X A B C VDD VSS
+MN2 net3 C VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN3 X net2 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN0 net2 A net1 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 net1 B net3 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP3 X net2 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 net2 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 net2 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 net2 C VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_and4_1
+* View name: schematic
+.subckt sg13cmos5l_and4_1 X A B C D VDD VSS
+MN3 net17 D VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 net16 C net17 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 net15 B net16 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN0 net1 A net15 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN4 X net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP3 net1 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 X net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 net1 D VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 net1 C VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 net1 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_and4_2
+* View name: schematic
+.subckt sg13cmos5l_and4_2 X A B C D VDD VSS
+MN3 net17 D VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 net16 C net17 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 net15 B net16 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN0 net1 A net15 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN4 X net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP3 net1 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 X net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP0 net1 D VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 net1 C VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 net1 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_antennanp
+* View name: schematic
+.subckt sg13cmos5l_antennanp A VDD VSS
+XD1 VSS A dantenna l=780n w=780n m=1
+XD0 A VDD dpantenna l=1.34u w=1.05u m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_buf_1
+* View name: schematic
+.subckt sg13cmos5l_buf_1 X A VDD VSS
+MN0 net1 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN1 X net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP1 X net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_buf_16
+* View name: schematic
+.subckt sg13cmos5l_buf_16 X A VDD VSS
+MN0 net1 A VSS VSS sg13_lv_nmos w=4.44u l=130.00n ng=6 ad=8.436e-13 as=1.066e-12 pd=6.72e-06 ps=8.8e-06 m=1
+MN1 X net1 VSS VSS sg13_lv_nmos w=11.84u l=130.00n ng=16 ad=2.25e-12 as=2.472e-12 pd=1.792e-05 ps=2e-05 m=1
+MP1 X net1 VDD VDD sg13_lv_pmos w=17.92u l=130.00n ng=16 ad=3.405e-12 as=3.741e-12 pd=2.4e-05 ps=2.684e-05 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=6.72u l=130.00n ng=6 ad=1.277e-12 as=1.613e-12 pd=9e-06 ps=1.184e-05 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_buf_2
+* View name: schematic
+.subckt sg13cmos5l_buf_2 X A VDD VSS
+MN0 net1 A VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 X net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP1 X net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_buf_4
+* View name: schematic
+.subckt sg13cmos5l_buf_4 X A VDD VSS
+MN0 net1 A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 X net1 VSS VSS sg13_lv_nmos w=2.96u l=130.00n ng=4 ad=5.624e-13 as=7.844e-13 pd=4.48e-06 ps=6.56e-06 m=1
+MP1 X net1 VDD VDD sg13_lv_pmos w=4.48u l=130.00n ng=4 ad=8.512e-13 as=1.187e-12 pd=6e-06 ps=8.84e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=1.68u l=130.00n ng=2 ad=3.192e-13 as=5.712e-13 pd=2.44e-06 ps=4.72e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_buf_8
+* View name: schematic
+.subckt sg13cmos5l_buf_8 X A VDD VSS
+MN0 net1 A VSS VSS sg13_lv_nmos w=2.22u l=130.00n ng=3 ad=5.328e-13 as=5.328e-13 pd=4.4e-06 ps=4.4e-06 m=1
+MN1 X net1 VSS VSS sg13_lv_nmos w=5.92u l=130.00n ng=8 ad=1.125e-12 as=1.347e-12 pd=8.96e-06 ps=1.104e-05 m=1
+MP1 X net1 VDD VDD sg13_lv_pmos w=8.96u l=130.00n ng=8 ad=1.702e-12 as=2.038e-12 pd=1.2e-05 ps=1.484e-05 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=3.36u l=130.00n ng=3 ad=8.064e-13 as=8.064e-13 pd=5.92e-06 ps=5.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_decap_4
+* View name: schematic
+.subckt sg13cmos5l_decap_4 VDD VSS
+MN0 VSS VDD VSS VSS sg13_lv_nmos w=420.00n l=1.000u ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP0 VDD VSS VDD VDD sg13_lv_pmos w=1.000u l=1.000u ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_decap_8
+* View name: schematic
+.subckt sg13cmos5l_decap_8 VDD VSS
+MN0 VSS VDD VSS VSS sg13_lv_nmos w=840.00n l=1.000u ng=2 ad=1.596e-13 as=2.856e-13 pd=1.6e-06 ps=3.04e-06 m=1
+MP0 VDD VSS VDD VDD sg13_lv_pmos w=2.000u l=1.000u ng=2 ad=3.8e-13 as=6.8e-13 pd=2.76e-06 ps=5.36e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dfrbp_1
+* View name: schematic
+.subckt sg13cmos5l_dfrbp_1 Q Q_N CLK D RESET_B VDD VSS
+MN11 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN14 Q_N net5 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 Db D net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN1 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN4 Db clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN5 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN6 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN8 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN16 Q net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 net1 net5 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP11 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP14 Q_N net5 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP4 Db clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP0 Db RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP1 Db D VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP5 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP2 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP8 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP9 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP16 Q net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP10 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP15 net1 net5 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dfrbp_2
+* View name: schematic
+.subckt sg13cmos5l_dfrbp_2 Q Q_N CLK D RESET_B VDD VSS
+MN11 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN14 Q_N net5 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN0 Db D net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN1 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN4 Db clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN5 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN6 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN8 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN16 Q net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN15 net1 net5 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP11 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP14 Q_N net5 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP4 Db clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP0 Db RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP1 Db D VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP5 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP2 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP8 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP9 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP16 Q net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP10 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP15 net1 net5 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dlhq_1
+* View name: schematic
+.subckt sg13cmos5l_dlhq_1 Q D GATE VDD VSS
+MP8 Q qint_b VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP6 qint GATE_BB net8 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 qint_b qint VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 Db D VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 GATE_B GATE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 GATE_BB GATE_B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP5 net8 qint_b VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP4 net4 GATE_B qint VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net4 Db VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MN0 GATE_B GATE VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 GATE_BB GATE_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 qint GATE_B net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN8 Q qint_b VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN4 net7 Db VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN6 net9 qint_b VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 qint_b qint VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 qint GATE_BB net7 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Db D VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dlhr_1
+* View name: schematic
+.subckt sg13cmos5l_dlhr_1 Q Q_N D GATE RESET_B VDD VSS
+MP8 qint_b RESET_B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP9 Q qint_b VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP6 qint GATE_BB net11 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP5 net11 qint_b VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP4 qint GATE_B net2 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net2 Db VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 Db D VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 GATE_B GATE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP11 Q_N qintn_b VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP7 qint_b qint VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 GATE_BB GATE_B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP10 qintn_b qint_b VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MN7 qint_b qint net9 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 net9 RESET_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 qint GATE_B net7 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN6 net7 qint_b VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN9 Q qint_b VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 qint GATE_BB net1 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN4 net1 Db VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 Db D VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 GATE_B GATE VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN11 Q_N qintn_b VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 GATE_BB GATE_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN10 qintn_b qint_b VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dlhrq_1
+* View name: schematic
+.subckt sg13cmos5l_dlhrq_1 Q D GATE RESET_B VDD VSS
+MN8 net116 RESET_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 Q qint_b VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 GATE_BB GATE_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 qint GATE_B net89 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 qint_b qint net116 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Db D VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN4 net61 Db VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN3 qint GATE_BB net61 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN6 net89 qint_b VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN0 GATE_B GATE VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP3 net60 Db VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP8 qint_b RESET_B VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP6 qint GATE_BB net92 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP9 Q qint_b VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP5 net92 qint_b VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP0 GATE_B GATE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 Db D VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 qint GATE_B net60 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 GATE_BB GATE_B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP7 qint_b qint VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dllr_1
+* View name: schematic
+.subckt sg13cmos5l_dllr_1 Q Q_N D GATE_N RESET_B VDD VSS
+MN2 Db D VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 gnb GATE_N VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 gnbb gnb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN6 net89 qint_b VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 qint_b qint net116 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 net116 RESET_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 qint gnbb net89 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN11 Q_N qintn_b VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 qint gnb net61 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN10 qintn_b qint_b VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN4 net61 Db VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN9 Q qint_b VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP1 gnbb gnb VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 qint gnbb net60 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP10 qintn_b qint_b VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP11 Q_N qintn_b VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 net60 Db VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 net92 qint_b VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP8 qint_b RESET_B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 Db D VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 gnb GATE_N VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP9 Q qint_b VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP6 qint gnb net92 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 qint_b qint VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dllrq_1
+* View name: schematic
+.subckt sg13cmos5l_dllrq_1 Q D GATE_N RESET_B VDD VSS
+MN5 qint gnbb net89 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN3 qint gnb net61 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN8 net116 RESET_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 Q qint_b VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN4 net61 Db VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN6 net89 qint_b VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 qint_b qint net116 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Db D VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 gnb GATE_N VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 gnbb gnb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP3 net59 Db VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP8 qint_b RESET_B VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 gnb GATE_N VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP5 net92 qint_b VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 qint_b qint VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP9 Q qint_b VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP4 qint gnbb net59 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 Db D VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 gnbb gnb VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP6 qint gnb net92 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dlygate4sd1_1
+* View name: schematic
+.subckt sg13cmos5l_dlygate4sd1_1 X A VDD VSS
+MP3 X net3 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 net3 net2 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net2 net1 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN3 X net3 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net3 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN1 net2 net1 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dlygate4sd2_1
+* View name: schematic
+.subckt sg13cmos5l_dlygate4sd2_1 X A VDD VSS
+MP3 X net3 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 net3 net2 VDD VDD sg13_lv_pmos w=1.000u l=250.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net2 net1 VDD VDD sg13_lv_pmos w=1.000u l=250.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN3 X net3 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net3 net2 VSS VSS sg13_lv_nmos w=420.00n l=180.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN1 net2 net1 VSS VSS sg13_lv_nmos w=420.00n l=180.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dlygate4sd3_1
+* View name: schematic
+.subckt sg13cmos5l_dlygate4sd3_1 X A VDD VSS
+MP3 X net3 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 net3 net2 VDD VDD sg13_lv_pmos w=1.000u l=500.0n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net2 net1 VDD VDD sg13_lv_pmos w=1.000u l=500.0n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN3 X net3 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net3 net2 VSS VSS sg13_lv_nmos w=420.00n l=500.0n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN1 net2 net1 VSS VSS sg13_lv_nmos w=420.00n l=500.0n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_ebufn_2
+* View name: schematic
+.subckt sg13cmos5l_ebufn_2 Z A TE_B VDD VSS
+MN3 net4 net3 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN2 Z net1 net4 VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 net3 TE_B VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP2 net2 TE_B VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP3 Z net1 net2 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 net3 TE_B VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_ebufn_4
+* View name: schematic
+.subckt sg13cmos5l_ebufn_4 Z A TE_B VDD VSS
+MN0 net23 A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net21 TE_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Z net23 net22 VSS sg13_lv_nmos w=2.96u l=130.00n ng=4 ad=5.624e-13 as=7.844e-13 pd=4.48e-06 ps=6.56e-06 m=1
+MN3 net22 net21 VSS VSS sg13_lv_nmos w=2.96u l=130.00n ng=4 ad=5.624e-13 as=7.844e-13 pd=4.48e-06 ps=6.56e-06 m=1
+MP0 net23 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net21 TE_B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 Z net23 net24 VDD sg13_lv_pmos w=4.48u l=130.00n ng=4 ad=8.512e-13 as=1.187e-12 pd=6e-06 ps=8.84e-06 m=1
+MP2 net24 TE_B VDD VDD sg13_lv_pmos w=4.48u l=130.00n ng=4 ad=8.512e-13 as=1.187e-12 pd=6e-06 ps=8.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_ebufn_8
+* View name: schematic
+.subckt sg13cmos5l_ebufn_8 Z A TE_B VDD VSS
+MN3 net23 net22 VSS VSS sg13_lv_nmos w=5.92u l=130.00n ng=8 ad=1.125e-12 as=1.347e-12 pd=8.96e-06 ps=1.104e-05 m=1
+MN2 Z net21 net23 VSS sg13_lv_nmos w=5.92u l=130.00n ng=8 ad=1.125e-12 as=1.347e-12 pd=8.96e-06 ps=1.104e-05 m=1
+MN1 net22 TE_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 net21 A VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP2 net24 TE_B VDD VDD sg13_lv_pmos w=8.96u l=130.00n ng=8 ad=1.702e-12 as=2.038e-12 pd=1.2e-05 ps=1.484e-05 m=1
+MP3 Z net21 net24 VDD sg13_lv_pmos w=8.96u l=130.00n ng=8 ad=1.702e-12 as=2.038e-12 pd=1.2e-05 ps=1.484e-05 m=1
+MP1 net22 TE_B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 net21 A VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_einvn_2
+* View name: schematic
+.subckt sg13cmos5l_einvn_2 Z A TE_B VDD VSS
+MN0 TE TE_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN2 net1 TE VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 Z A net1 VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP0 TE TE_B VDD VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP1 net2 TE_B VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP2 Z A net2 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_einvn_4
+* View name: schematic
+.subckt sg13cmos5l_einvn_4 Z A TE_B VDD VSS
+MN2 net16 TE VSS VSS sg13_lv_nmos w=2.96u l=130.00n ng=4 ad=5.624e-13 as=7.844e-13 pd=4.48e-06 ps=6.56e-06 m=1
+MN0 TE TE_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Z A net16 VSS sg13_lv_nmos w=2.96u l=130.00n ng=4 ad=5.624e-13 as=7.844e-13 pd=4.48e-06 ps=6.56e-06 m=1
+MP0 TE TE_B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net17 TE_B VDD VDD sg13_lv_pmos w=4.48u l=130.00n ng=4 ad=8.512e-13 as=1.187e-12 pd=6e-06 ps=8.84e-06 m=1
+MP2 Z A net17 VDD sg13_lv_pmos w=4.48u l=130.00n ng=4 ad=8.512e-13 as=1.187e-12 pd=6e-06 ps=8.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_einvn_8
+* View name: schematic
+.subckt sg13cmos5l_einvn_8 Z A TE_B VDD VSS
+MN1 Z A net29 VSS sg13_lv_nmos w=5.92u l=130.00n ng=8 ad=1.125e-12 as=1.347e-12 pd=8.96e-06 ps=1.104e-05 m=1
+MN0 TE TE_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net29 TE VSS VSS sg13_lv_nmos w=5.92u l=130.00n ng=8 ad=1.125e-12 as=1.347e-12 pd=8.96e-06 ps=1.104e-05 m=1
+MP1 net28 TE_B VDD VDD sg13_lv_pmos w=8.96u l=130.00n ng=8 ad=1.702e-12 as=2.038e-12 pd=1.2e-05 ps=1.484e-05 m=1
+MP2 Z A net28 VDD sg13_lv_pmos w=8.96u l=130.00n ng=8 ad=1.702e-12 as=2.038e-12 pd=1.2e-05 ps=1.484e-05 m=1
+MP0 TE TE_B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_inv_1
+* View name: schematic
+.subckt sg13cmos5l_inv_1 Y A VDD VSS
+MN0 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_inv_16
+* View name: schematic
+.subckt sg13cmos5l_inv_16 Y A VDD VSS
+MN0 Y A VSS VSS sg13_lv_nmos w=11.84u l=130.00n ng=16 ad=2.25e-12 as=2.472e-12 pd=1.792e-05 ps=2e-05 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=17.92u l=130.00n ng=16 ad=3.405e-12 as=3.741e-12 pd=2.4e-05 ps=2.684e-05 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_inv_2
+* View name: schematic
+.subckt sg13cmos5l_inv_2 Y A VDD VSS
+MN0 Y A VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_inv_4
+* View name: schematic
+.subckt sg13cmos5l_inv_4 Y A VDD VSS
+MP0 Y A VDD VDD sg13_lv_pmos w=4.48u l=130.00n ng=4 ad=8.512e-13 as=1.187e-12 pd=6e-06 ps=8.84e-06 m=1
+MN0 Y A VSS VSS sg13_lv_nmos w=2.96u l=130.00n ng=4 ad=5.624e-13 as=7.844e-13 pd=4.48e-06 ps=6.56e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_inv_8
+* View name: schematic
+.subckt sg13cmos5l_inv_8 Y A VDD VSS
+MN0 Y A VSS VSS sg13_lv_nmos w=5.92u l=130.00n ng=8 ad=1.125e-12 as=1.347e-12 pd=8.96e-06 ps=1.104e-05 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=8.96u l=130.00n ng=8 ad=1.702e-12 as=2.038e-12 pd=1.2e-05 ps=1.484e-05 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_lgcp_1
+* View name: schematic
+.subckt sg13cmos5l_lgcp_1 GCLK CLK GATE VDD VSS
+MP1 CLKBB CLKB VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP3 net1 CLKBB net4 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP4 int_GATE net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 net4 GATE VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP8 net3 int_GATE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP9 GCLK net3 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP6 net1 CLKB net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP0 CLKB CLK VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP7 net3 CLK VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP5 net6 int_GATE VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN9 GCLK net3 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN7 net3 int_GATE net5 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN4 int_GATE net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 CLKBB CLKB VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN6 net7 int_GATE VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN3 net2 GATE VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN5 net1 CLKBB net7 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN0 CLKB CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 net5 CLK VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 net1 CLKB net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_mux2_1
+* View name: schematic
+.subckt sg13cmos5l_mux2_1 X A0 A1 S VDD VSS
+MP1 net4 S VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 X net6 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP4 net6 A1 net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 Sb S VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP3 net5 Sb VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net6 A0 net4 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MN4 net3 S VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net1 Sb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 X net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 Sb S VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN3 net6 A1 net3 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net6 A0 net1 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_mux2_2
+* View name: schematic
+.subckt sg13cmos5l_mux2_2 X A0 A1 S VDD VSS
+MP1 net4 S VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 X net6 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP4 net6 A1 net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 Sb S VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP3 net5 Sb VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net6 A0 net4 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MN4 net3 S VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net1 Sb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 X net6 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN0 Sb S VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN3 net6 A1 net3 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net6 A0 net1 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_mux4_1
+* View name: schematic
+.subckt sg13cmos5l_mux4_1 X A0 A1 A2 A3 S0 S1 VDD VSS
+MN12 X Xb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 low S0b net7 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN3 net7 A0 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN6 low S1b Xb VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN11 high S1 Xb VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN10 net4 A3 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN9 high S0 net4 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN8 net6 A2 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN7 high S0b net6 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN5 net2 A1 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN4 low S0 net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 S1b S1 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN0 S0b S0 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP6 low S1 Xb VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP11 high S1b Xb VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP12 X Xb VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP10 high S0b net3 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP9 net3 A3 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP8 high S0 net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP7 net5 A2 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net8 A0 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 low S0 net8 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 S1b S1 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 S0b S0 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 low S0b net1 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP4 net1 A1 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nand2_1
+* View name: schematic
+.subckt sg13cmos5l_nand2_1 Y A B VDD VSS
+MP1 Y B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN1 net1 B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 Y A net1 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nand2_2
+* View name: schematic
+.subckt sg13cmos5l_nand2_2 Y A B VDD VSS
+MP1 Y B VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MN1 net1 B VSS VSS sg13_lv_nmos w=1.44u l=130.00n ng=2 ad=2.736e-13 as=4.896e-13 pd=2.2e-06 ps=4.24e-06 m=1
+MN0 Y A net1 VSS sg13_lv_nmos w=1.44u l=130.00n ng=2 ad=2.736e-13 as=4.896e-13 pd=2.2e-06 ps=4.24e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nand2b_1
+* View name: schematic
+.subckt sg13cmos5l_nand2b_1 Y A_N B VDD VSS
+MP2 Y net2 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net2 A_N VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 Y B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN1 Y net2 net1 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 net2 A_N VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN2 net1 B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nand2b_2
+* View name: schematic
+.subckt sg13cmos5l_nand2b_2 Y A_N B VDD VSS
+MP2 Y A VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP0 A A_N VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 Y B VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MN1 Y B net1 VSS sg13_lv_nmos w=1.44u l=130.00n ng=2 ad=2.736e-13 as=4.896e-13 pd=2.2e-06 ps=4.24e-06 m=1
+MN0 A A_N VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN2 net1 A VSS VSS sg13_lv_nmos w=1.44u l=130.00n ng=2 ad=2.736e-13 as=4.896e-13 pd=2.2e-06 ps=4.24e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nand3_1
+* View name: schematic
+.subckt sg13cmos5l_nand3_1 Y A B C VDD VSS
+MP0 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 Y B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 Y C VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN1 net2 B net3 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net3 C VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 Y A net2 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nand3b_1
+* View name: schematic
+.subckt sg13cmos5l_nand3b_1 Y A_N B C VDD VSS
+MP0 net1 A_N VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 Y net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 Y B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 Y C VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN2 net2 B net3 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 net3 C VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 net1 A_N VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN1 Y net1 net2 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nand4_1
+* View name: schematic
+.subckt sg13cmos5l_nand4_1 Y A B C D VDD VSS
+MP3 Y D VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 Y B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 Y C VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN1 net2 B net3 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net3 C net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 Y A net2 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 net5 D VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor2_1
+* View name: schematic
+.subckt sg13cmos5l_nor2_1 Y A B VDD VSS
+MN0 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Y B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 Y B net1 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor2_2
+* View name: schematic
+.subckt sg13cmos5l_nor2_2 Y A B VDD VSS
+MN0 Y A VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 Y B VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 Y B net1 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor2b_1
+* View name: schematic
+.subckt sg13cmos5l_nor2b_1 Y A B_N VDD VSS
+MN0 B B_N VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Y B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP0 B B_N VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 net1 B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 Y A net1 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor2b_2
+* View name: schematic
+.subckt sg13cmos5l_nor2b_2 Y A B_N VDD VSS
+MN0 B B_N VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN1 Y A VSS VSS sg13_lv_nmos w=1.44u l=130.00n ng=2 ad=2.736e-13 as=4.896e-13 pd=2.2e-06 ps=4.24e-06 m=1
+MN2 Y B VSS VSS sg13_lv_nmos w=1.44u l=130.00n ng=2 ad=2.736e-13 as=4.896e-13 pd=2.2e-06 ps=4.24e-06 m=1
+MP0 B B_N VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net1 B VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP2 Y A net1 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor3_1
+* View name: schematic
+.subckt sg13cmos5l_nor3_1 Y A B C VDD VSS
+MP2 Y C net2 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net2 B net3 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 net3 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN0 Y A VSS VSS sg13_lv_nmos w=770.00n l=130.00n ng=1 ad=2.618e-13 as=2.618e-13 pd=2.22e-06 ps=2.22e-06 m=1
+MN1 Y B VSS VSS sg13_lv_nmos w=770.00n l=130.00n ng=1 ad=2.618e-13 as=2.618e-13 pd=2.22e-06 ps=2.22e-06 m=1
+MN2 Y C VSS VSS sg13_lv_nmos w=770.00n l=130.00n ng=1 ad=2.618e-13 as=2.618e-13 pd=2.22e-06 ps=2.22e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor3_2
+* View name: schematic
+.subckt sg13cmos5l_nor3_2 Y A B C VDD VSS
+MP2 Y C net2 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 net2 B net3 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP0 net3 A VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MN0 Y A VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 Y B VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN2 Y C VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor4_1
+* View name: schematic
+.subckt sg13cmos5l_nor4_1 Y A B C D VDD VSS
+MP0 net3 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net2 B net3 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 net1 C net2 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 Y D net1 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN0 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 Y D VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Y B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Y C VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_nor4_2
+* View name: schematic
+.subckt sg13cmos5l_nor4_2 Y A B C D VDD VSS
+MP0 net3 A VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 net2 B net3 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP2 net1 C net2 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP3 Y D net1 VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MN0 Y A VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN3 Y D VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 Y B VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN2 Y C VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_o21ai_1
+* View name: schematic
+.subckt sg13cmos5l_o21ai_1 Y A1 A2 B1 VDD VSS
+MP0 net14 A1 VDD VDD sg13_lv_pmos w=1.12u l=150.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 Y A2 net14 VDD sg13_lv_pmos w=1.12u l=150.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 Y B1 VDD VDD sg13_lv_pmos w=1.12u l=150.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN0 net1 A2 VSS VSS sg13_lv_nmos w=740.00n l=150.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net1 A1 VSS VSS sg13_lv_nmos w=740.00n l=150.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Y B1 net1 VSS sg13_lv_nmos w=740.00n l=150.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_or2_1
+* View name: schematic
+.subckt sg13cmos5l_or2_1 X A B VDD VSS
+MP1 net2 B net3 VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 net3 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 X net2 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN1 net2 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 net2 B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN2 X net2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_or2_2
+* View name: schematic
+.subckt sg13cmos5l_or2_2 X A B VDD VSS
+MP1 net2 B net3 VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 net3 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 X net2 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MN1 net2 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 net2 B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN2 X net2 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_or3_1
+* View name: schematic
+.subckt sg13cmos5l_or3_1 X A B C VDD VSS
+MN2 net1 C VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN3 X net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net1 B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MP3 X net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net9 B net12 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net12 A VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net1 C net9 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_or3_2
+* View name: schematic
+.subckt sg13cmos5l_or3_2 X A B C VDD VSS
+MN2 net1 C VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN3 X net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN1 net1 B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MP3 X net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP1 net9 B net12 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 net12 A VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net1 C net9 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_or4_1
+* View name: schematic
+.subckt sg13cmos5l_or4_1 X A B C D VDD VSS
+MN4 X net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 net1 D VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN2 net1 C VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN1 net1 B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MP0 net4 A VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net3 B net4 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net2 C net3 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net1 D net2 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP4 X net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_or4_2
+* View name: schematic
+.subckt sg13cmos5l_or4_2 X A B C D VDD VSS
+MN4 X net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN3 net1 D VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN2 net1 C VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN1 net1 B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 net1 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MP0 net4 A VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net3 B net4 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net2 C net3 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net1 D net2 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP4 X net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_sdfbbp_1
+* View name: schematic
+.subckt sg13cmos5l_sdfbbp_1 Q Q_N CLK D RESET_B SCD SCE SET_B VDD VSS
+MP1 resetbb RESET_B VDD VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP19 pre_q DbbLatch2 net8 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP20 pre_q SET_B VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 CLKbb CLKb VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 SCEb SCE VDD VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP7 Db D net3 VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP13 DbbTG CLKb net10 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net10 DbLatchM VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 net3 SCE VDD VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP21 Q_N pre_q VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP14 net1 DbLatchM VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP18 net8 resetbb VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP11 DbLatchM SET_B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 net2 SCD VDD VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP2 CLKb CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP10 DbLatchM DbbTG net7 VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP8 Db CLKbb DbbTG VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP5 Db SCEb net2 VDD sg13_lv_pmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP22 pre_qb pre_q VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP9 net7 resetbb VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP16 net6 pre_q VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP17 DbbLatch2 CLKbb net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP15 DbbLatch2 CLKb net1 VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP23 Q pre_qb VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MN4 Db SCE net5 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN5 net5 SCD VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN18 pre_q DbbLatch2 net11 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 Db CLKb DbbTG VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net4 SCEb VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN3 CLKbb CLKb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 resetbb RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN17 net14 pre_q VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN9 DbLatchM DbbTG net12 VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 SCEb SCE VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 net12 SET_B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN13 net15 DbLatchM VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN19 net11 SET_B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN12 DbbTG CLKbb net15 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN6 Db D net4 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN22 pre_qb pre_q VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN16 DbbLatch2 CLKb net14 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN23 Q pre_qb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 net13 DbLatchM VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN2 CLKb CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN14 DbbLatch2 CLKbb net13 VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN11 DbLatchM resetbb net12 VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN21 Q_N pre_q VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN20 pre_q resetbb net11 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_sighold
+* View name: schematic
+.subckt sg13cmos5l_sighold SH VDD VSS
+MN1 net1 SH VSS VSS sg13_lv_nmos w=300.0n l=130.00n ng=1 ad=1.02e-13 as=1.02e-13 pd=1.28e-06 ps=1.28e-06 m=1
+MN0 SH net1 VSS VSS sg13_lv_nmos w=300.0n l=700.0n ng=1 ad=1.02e-13 as=1.02e-13 pd=1.28e-06 ps=1.28e-06 m=1
+MP1 net1 SH VDD VDD sg13_lv_pmos w=450.00n l=130.00n ng=1 ad=1.53e-13 as=1.53e-13 pd=1.58e-06 ps=1.58e-06 m=1
+MP0 SH net1 VDD VDD sg13_lv_pmos w=300.0n l=700.0n ng=1 ad=1.02e-13 as=1.02e-13 pd=1.28e-06 ps=1.28e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_slgcp_1
+* View name: schematic
+.subckt sg13cmos5l_slgcp_1 GCLK CLK GATE SCE VDD VSS
+MP10 GCLK net5 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP4 net1 CLKbb net6 VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP1 CLKbb CLKb VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP8 net5 int_GATE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP2 net3 SCE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP7 net6 CLKb net4 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP5 int_GATE net6 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 CLKb CLK VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP9 net5 CLK VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP6 net4 int_GATE VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP3 net1 GATE net3 VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MN5 int_GATE net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 net2 CLK VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN2 net1 SCE VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN4 net6 CLKb net1 VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN7 net7 int_GATE VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN8 net5 int_GATE net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN10 GCLK net5 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 CLKbb CLKb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 net1 GATE VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN0 CLKb CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN6 net6 CLKbb net7 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_tiehi
+* View name: schematic
+.subckt sg13cmos5l_tiehi L_HI VDD VSS
+MN1 net3 net2 VSS VSS sg13_lv_nmos w=795.00n l=130.00n ng=1 ad=2.703e-13 as=2.703e-13 pd=2.27e-06 ps=2.27e-06 m=1
+MN0 net1 net1 VSS VSS sg13_lv_nmos w=300n l=130.00n ng=1 ad=1.02e-13 as=1.02e-13 pd=1.28e-06 ps=1.28e-06 m=1
+MP1 L_HI net3 VDD VDD sg13_lv_pmos w=1.155u l=130.00n ng=1 ad=3.927e-13 as=3.927e-13 pd=2.99e-06 ps=2.99e-06 m=1
+MP0 net2 net1 VDD VDD sg13_lv_pmos w=660.0n l=130.00n ng=1 ad=2.244e-13 as=2.244e-13 pd=2e-06 ps=2e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_tielo
+* View name: schematic
+.subckt sg13cmos5l_tielo L_LO VDD VSS
+MN0 net3 net2 VSS VSS sg13_lv_nmos w=385.00n l=130.00n ng=1 ad=1.309e-13 as=1.309e-13 pd=1.45e-06 ps=1.45e-06 m=1
+MN1 L_LO net1 VSS VSS sg13_lv_nmos w=880.0n l=130.00n ng=1 ad=2.992e-13 as=2.992e-13 pd=2.44e-06 ps=2.44e-06 m=1
+MP0 net2 net2 VDD VDD sg13_lv_pmos w=300n l=130.00n ng=1 ad=1.02e-13 as=1.02e-13 pd=1.28e-06 ps=1.28e-06 m=1
+MP1 net1 net3 VDD VDD sg13_lv_pmos w=1.045u l=130.00n ng=1 ad=3.553e-13 as=3.553e-13 pd=2.77e-06 ps=2.77e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_xnor2_1
+* View name: schematic
+.subckt sg13cmos5l_xnor2_1 Y A B VDD VSS
+MP4 Y net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 Y B net4 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 net4 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP1 net1 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP0 net1 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MN3 Y net1 net3 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net2 A VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN0 net1 B net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MN4 net3 B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net3 A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_xor2_1
+* View name: schematic
+.subckt sg13cmos5l_xor2_1 X A B VDD VSS
+MN0 net1 A VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN3 X B net3 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 X net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN4 net3 A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 net1 B VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MP0 net6 A VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP1 net1 B net6 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 net5 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP4 net5 B VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 X net1 net5 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_a22oi_1
+* View name: schematic
+.subckt sg13cmos5l_a22oi_1 Y A1 A2 B1 B2 VDD VSS
+MN1 net1 B1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 Y B2 net1 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 net2 A2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 Y A1 net2 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP1 Y B1 net3 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 Y B2 net3 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP2 net3 A2 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP0 net3 A1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_sdfrbpq_1
+* View name: schematic
+.subckt sg13cmos5l_sdfrbpq_1 Q CLK D RESET_B SCD SCE VDD VSS
+MN3 Db SCD net63 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Db D net65 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 SCEb SCE VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN4 net63 SCE VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net65 SCEb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN17 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN16 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN18 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN19 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN20 Q net2 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN6 Dbbb Dbb net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 Dbbb clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN11 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN14 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 Dbb Db VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP1 net64 SCE VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net62 SCEb VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 SCEb SCE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 Db SCD net62 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 Db D net64 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP17 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP18 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP19 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP20 Q net2 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP10 Dbbb clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 Dbbb RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 Dbbb Dbb VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP11 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP8 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP9 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP14 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP15 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 Dbb Db VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP16 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_sdfrbpq_2
+* View name: schematic
+.subckt sg13cmos5l_sdfrbpq_2 Q CLK D RESET_B SCD SCE VDD VSS
+MN3 Db SCD net63 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Db D net65 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 SCEb SCE VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN4 net63 SCE VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net65 SCEb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 Dbb Db VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN17 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN16 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN18 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN19 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN20 Q net2 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN6 Dbbb Dbb net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 Dbbb clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN11 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN14 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP1 net64 SCE VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net62 SCEb VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 SCEb SCE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 Db SCD net62 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 Db D net64 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 Dbb Db VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP17 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP18 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP19 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP20 Q net2 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP10 Dbbb clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 Dbbb RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 Dbbb Dbb VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP11 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP8 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP9 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP14 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP15 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP16 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_sdfrbp_2
+* View name: schematic
+.subckt sg13cmos5l_sdfrbp_2 Q Q_N CLK D RESET_B SCD SCE VDD VSS
+MN3 Db SCD net63 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Db D net65 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 SCEb SCE VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN4 net63 SCE VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net65 SCEb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 Dbb Db VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN17 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN16 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN18 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN19 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN20 Q_N net5 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN6 Dbbb Dbb net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 Dbbb clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN11 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN14 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN22 Q net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN21 net1 net5 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP1 net64 SCE VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net62 SCEb VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 SCEb SCE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 Db SCD net62 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 Db D net64 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 Dbb Db VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP17 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP18 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP19 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP20 Q_N net5 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP10 Dbbb clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 Dbbb RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 Dbbb Dbb VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP11 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP8 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP9 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP14 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP15 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP22 Q net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP16 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP21 net1 net5 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_sdfrbp_1
+* View name: schematic
+.subckt sg13cmos5l_sdfrbp_1 Q Q_N CLK D RESET_B SCD SCE VDD VSS
+MN3 Db SCD net63 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN1 Db D net65 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN0 SCEb SCE VSS VSS sg13_lv_nmos w=550.00n l=130.00n ng=1 ad=1.87e-13 as=1.87e-13 pd=1.78e-06 ps=1.78e-06 m=1
+MN4 net63 SCE VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 net65 SCEb VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN5 net13 Db VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN17 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN16 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN18 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN19 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN20 Q_N net5 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN6 Dbb net13 net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 Dbb clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN11 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN14 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN8 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN22 Q net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN21 net1 net5 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP1 net64 SCE VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP3 net62 SCEb VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP0 SCEb SCE VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 ad=2.856e-13 as=2.856e-13 pd=2.36e-06 ps=2.36e-06 m=1
+MP4 Db SCD net62 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP2 Db D net64 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP5 net13 Db VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP17 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP18 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP19 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP20 Q_N net5 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP10 Dbb clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 Dbb RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 Dbb net13 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP11 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP8 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP9 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP14 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP15 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP22 Q net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP16 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP21 net1 net5 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dfrbpq_2
+* View name: schematic
+.subckt sg13cmos5l_dfrbpq_2 Q CLK D RESET_B VDD VSS
+MN11 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN0 Db D net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN1 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN4 Db clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN5 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN6 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN8 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 Q net1 VSS VSS sg13_lv_nmos w=1.48u l=130.00n ng=2 ad=2.812e-13 as=5.032e-13 pd=2.24e-06 ps=4.32e-06 m=1
+MN14 net1 net5 VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 ad=2.176e-13 as=2.176e-13 pd=1.96e-06 ps=1.96e-06 m=1
+MP11 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP4 Db clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP0 Db RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP1 Db D VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP5 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP2 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP8 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP9 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP15 Q net1 VDD VDD sg13_lv_pmos w=2.24u l=130.00n ng=2 ad=4.256e-13 as=7.616e-13 pd=3e-06 ps=5.84e-06 m=1
+MP10 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP14 net1 net5 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_dfrbpq_1
+* View name: schematic
+.subckt sg13cmos5l_dfrbpq_1 Q CLK D RESET_B VDD VSS
+MN11 net12 net2 VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN10 net5 clkneg net12 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN12 net2 net5 net11 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN13 net11 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN0 Db D net10 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN1 net10 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN4 Db clkneg net6 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN5 net6 clkpos net9 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN6 net9 net4 net8 VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN7 net8 RESET_B VSS VSS sg13_lv_nmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MN8 net4 net6 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN2 clkneg CLK VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN9 net4 clkpos net5 VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN3 clkpos clkneg VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN15 Q net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MN14 net1 net5 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP11 net5 clkpos net3 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP12 net2 net5 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP13 net2 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP4 Db clkpos net6 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP0 Db RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP1 Db D VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP5 net7 net4 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP6 net6 clkneg net7 VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP7 net6 RESET_B VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP2 clkneg CLK VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP3 clkpos clkneg VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP8 net4 net6 VDD VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP9 net4 clkneg net5 VDD sg13_lv_pmos w=1.000u l=130.00n ng=1 ad=3.4e-13 as=3.4e-13 pd=2.68e-06 ps=2.68e-06 m=1
+MP15 Q net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+MP10 net3 net2 VDD VDD sg13_lv_pmos w=420.00n l=130.00n ng=1 ad=1.428e-13 as=1.428e-13 pd=1.52e-06 ps=1.52e-06 m=1
+MP14 net1 net5 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_fill_1
+* View name: schematic
+.subckt sg13cmos5l_fill_1 VDD VSS
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_fill_2
+* View name: schematic
+.subckt sg13cmos5l_fill_2 VDD VSS
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_fill_4
+* View name: schematic
+.subckt sg13cmos5l_fill_4 VDD VSS
+.ends
+* End of subcircuit definition.
+
+* Library name: sg13cmos5l_stdcell
+* Cell name: sg13cmos5l_fill_8
+* View name: schematic
+.subckt sg13cmos5l_fill_8 VDD VSS
+.ends
+* End of subcircuit definition.
+
+
