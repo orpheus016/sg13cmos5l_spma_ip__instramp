@@ -22,7 +22,11 @@ export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
 if ! command -v klayout >/dev/null 2>&1 || [ ! -d "$PDK_ROOT/$PDK" ]; then
   if command -v docker >/dev/null 2>&1 && docker ps --format '{{.Names}}' 2>/dev/null | grep -q '^iic-osic-tools_x11$'; then
     container_root="/foss/designs$(echo "$root" | sed 's|^/home/ranantalden/Projects/Designs||')"
-    container_cwd="/foss/designs$(pwd | sed 's|^/home/ranantalden/Projects/Designs||')"
+    if [[ "$(pwd)" == /home/ranantalden/Projects/Designs* ]]; then
+      container_cwd="/foss/designs$(pwd | sed 's|^/home/ranantalden/Projects/Designs||')"
+    else
+      container_cwd="$container_root"
+    fi
     args=()
     for arg in "$@"; do
       args+=("${arg//\/home\/ranantalden\/Projects\/Designs/\/foss\/designs}")

@@ -19,3 +19,4 @@ append XSCHEM_LIBRARY_PATH :$_here/../gain_stage
 append XSCHEM_LIBRARY_PATH :$_here/../output_buffer
 append XSCHEM_LIBRARY_PATH :$_here/../ota_cmos5l
 append XSCHEM_LIBRARY_PATH :$_here/../tgate
+append XSCHEM_LIBRARY_PATH :\/../gain_network
