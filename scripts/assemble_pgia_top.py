@@ -139,25 +139,25 @@ def get_placement_transforms():
             "cell": "instramp_cmos5l",
             "trans": pya.Trans(pya.Trans.M90, 484250, 18000),
             "desc": "Instrumentation Amp Front-End (Lower Lane East, facing s9_an[0..1])",
-            "domain": "Analog Sens (3.3V)"
+            "domain": "Analog Sens (1.2V)"
         },
         "x_stage1": {
             "cell": "gain_network",
             "trans": pya.Trans(pya.Trans.M90, 263300, 75880),
             "desc": "Gain Stage 1 Core (Lower Lane Center, V_IN2 faces IA)",
-            "domain": "Analog Core (3.3V)"
+            "domain": "Analog Core (1.2V)"
         },
         "x_stage2": {
             "cell": "gain_network",
             "trans": pya.Trans(274150, 210880),
             "desc": "Gain Stage 2 Core (Upper Lane Center, turnaround from Stage 1)",
-            "domain": "Analog Core (3.3V)"
+            "domain": "Analog Core (1.2V)"
         },
         "x_buf": {
             "cell": "output_buffer",
             "trans": pya.Trans(380000, 205000),
             "desc": "Output Buffer Driver (Upper Lane East, driving s9_an[2])",
-            "domain": "Analog Driver (3.3V)"
+            "domain": "Analog Driver (1.2V)"
         },
     }
 
@@ -212,7 +212,7 @@ def create_ptap_rect(cell, ly, l_map, x1, y1, x2, y2, net="AVSS"):
     """Create P-substrate tap rectangular strip."""
     dbu = ly.dbu
     cell.shapes(l_map["Activ_drw"]).insert(pya.Box(to_dbu(x1, dbu), to_dbu(y1, dbu), to_dbu(x2, dbu), to_dbu(y2, dbu)))
-    psd_over = 0.18  # pSD_c enclosure of Activ
+    psd_over = 0.18
     cell.shapes(l_map["pSD_drw"]).insert(pya.Box(
         to_dbu(x1 - psd_over, dbu), to_dbu(y1 - psd_over, dbu),
         to_dbu(x2 + psd_over, dbu), to_dbu(y2 + psd_over, dbu)
@@ -241,7 +241,6 @@ def create_ntap_rect(cell, ly, l_map, x1, y1, x2, y2, nw_x1=None, nw_y1=None, nw
 def create_guard_ring(cell, ly, l_map, in_x1, in_y1, in_x2, in_y2, w_ring, is_nwell=False, nw_enc=0.5, net="vss_1v2"):
     """Create a 4-segment guard ring surrounding an inner boundary."""
     dbu = ly.dbu
-    # 4 segments: South, North, West, East
     sx1, sy1, sx2, sy2 = in_x1 - w_ring, in_y1 - w_ring, in_x2 + w_ring, in_y1
     nx1, ny1, nx2, ny2 = in_x1 - w_ring, in_y2, in_x2 + w_ring, in_y2 + w_ring
     wx1, wy1, wx2, wy2 = in_x1 - w_ring, in_y1, in_x1, in_y2
@@ -251,7 +250,6 @@ def create_guard_ring(cell, ly, l_map, in_x1, in_y1, in_x2, in_y2, w_ring, is_nw
         for x1, y1, x2, y2 in [(sx1, sy1, sx2, sy2), (nx1, ny1, nx2, ny2), (wx1, wy1, wx2, wy2), (ex1, ey1, ex2, ey2)]:
             create_ptap_rect(cell, ly, l_map, x1, y1, x2, y2, net=net)
     else:
-        # Create continuous NWell frame (donut polygon)
         nw_x1 = in_x1 - w_ring - nw_enc
         nw_y1 = in_y1 - w_ring - nw_enc
         nw_x2 = in_x2 + w_ring + nw_enc
@@ -267,27 +265,73 @@ def create_guard_ring(cell, ly, l_map, in_x1, in_y1, in_x2, in_y2, w_ring, is_nw
 
 
 # ============================================================================
+# VIA DROP GENERATORS (M4 -> TopMetal1 and M1 -> TopMetal1)
+# ============================================================================
+def create_m4_to_tm1_drop(cell, ly, l_map, cx_um, cy_um, size_um=2.2):
+    """
+    Drop a 2x2 TopVia1 array connecting Metal4 to TopMetal1.
+    TV1 size: 0.42 um, space: 0.42 um.
+    M4 enclosure: 0.10 um. TM1 enclosure: 0.42 um.
+    """
+    dbu = ly.dbu
+    half_s = size_um / 2.0
+    x1, y1 = cx_um - half_s, cy_um - half_s
+    x2, y2 = cx_um + half_s, cy_um + half_s
+
+    cell.shapes(l_map["Metal4_drw"]).insert(pya.Box(to_dbu(x1, dbu), to_dbu(y1, dbu), to_dbu(x2, dbu), to_dbu(y2, dbu)))
+    cell.shapes(l_map["TopMetal1_drw"]).insert(pya.Box(to_dbu(x1, dbu), to_dbu(y1, dbu), to_dbu(x2, dbu), to_dbu(y2, dbu)))
+
+    tv_size = 0.42
+    shapes_tv1 = cell.shapes(l_map["TopVia1_drw"])
+    for ox in [-0.42, 0.42]:
+        for oy in [-0.42, 0.42]:
+            vx = cx_um + ox - tv_size / 2.0
+            vy = cy_um + oy - tv_size / 2.0
+            shapes_tv1.insert(pya.Box(to_dbu(vx, dbu), to_dbu(vy, dbu), to_dbu(vx + tv_size, dbu), to_dbu(vy + tv_size, dbu)))
+
+
+def create_m1_to_tm1_stack(cell, ly, l_map, cx_um, cy_um, size_um=2.2):
+    """Full via stack from Metal1 up to TopMetal1."""
+    dbu = ly.dbu
+    half_s = size_um / 2.0
+    x1, y1 = cx_um - half_s, cy_um - half_s
+    x2, y2 = cx_um + half_s, cy_um + half_s
+
+    for m in ["Metal1_drw", "Metal2_drw", "Metal3_drw", "Metal4_drw", "TopMetal1_drw"]:
+        cell.shapes(l_map[m]).insert(pya.Box(to_dbu(x1, dbu), to_dbu(y1, dbu), to_dbu(x2, dbu), to_dbu(y2, dbu)))
+
+    v_size = 0.19
+    for via_layer in ["Via1_drw", "Via2_drw", "Via3_drw"]:
+        shapes = cell.shapes(l_map[via_layer])
+        for ox in [-0.41, 0.0, 0.41]:
+            for oy in [-0.41, 0.0, 0.41]:
+                vx = cx_um + ox - v_size / 2.0
+                vy = cy_um + oy - v_size / 2.0
+                shapes.insert(pya.Box(to_dbu(vx, dbu), to_dbu(vy, dbu), to_dbu(vx + v_size, dbu), to_dbu(vy + v_size, dbu)))
+
+    tv_size = 0.42
+    shapes_tv1 = cell.shapes(l_map["TopVia1_drw"])
+    for ox in [-0.42, 0.42]:
+        for oy in [-0.42, 0.42]:
+            vx = cx_um + ox - tv_size / 2.0
+            vy = cy_um + oy - tv_size / 2.0
+            shapes_tv1.insert(pya.Box(to_dbu(vx, dbu), to_dbu(vy, dbu), to_dbu(vx + tv_size, dbu), to_dbu(vy + tv_size, dbu)))
+
+
+# ============================================================================
 # PHASE 2: SYNTHESIZE ISOLATION STRUCTURES
 # ============================================================================
 def add_central_isolation_moat(cell, ly, l_map, x1=180.0, x2=500.0):
     """
-    Synthesize the horizontal inter-lane isolation moat across Y in [141.0, 156.0] um.
+    Synthesize horizontal inter-lane isolation moat across Y in [141.0, 156.0] um.
     PNP sandwich topology:
       - Lower PTap: Y in [141.0, 143.4] um (AVSS)
       - Center NTap in NWell: Y in [144.5, 152.5] um (AVDD)
       - Upper PTap: Y in [153.6, 156.0] um (AVSS)
     """
     print(f"  [Moat] Synthesizing Central Isolation Moat: X=[{x1:.1f}, {x2:.1f}], Y=[141.0, 156.0] um (Width=15.0 um)...")
-
-    # Lower PTap strip (AVSS)
     create_ptap_rect(cell, ly, l_map, x1, 141.0, x2, 143.4, net="AVSS")
-
-    # Center NTap strip in NWell (AVDD)
-    # NWell: [x1, 144.5] -> [x2, 152.5] (8.0 um)
-    # Activ: [x1, 146.0] -> [x2, 151.0] (5.0 um, centered)
     create_ntap_rect(cell, ly, l_map, x1, 146.0, x2, 151.0, nw_x1=x1, nw_y1=144.5, nw_x2=x2, nw_y2=152.5, net="AVDD")
-
-    # Upper PTap strip (AVSS)
     create_ptap_rect(cell, ly, l_map, x1, 153.6, x2, 156.0, net="AVSS")
 
 
@@ -298,20 +342,150 @@ def add_digital_guard_ring(cell, ly, l_map, dec_x1=25.0, dec_y1=60.0, dec_x2=90.
       - Outer NTap ring in NWell (tied to vdd_1v2)
     """
     print(f"  [Guard] Synthesizing Digital Double Guard Ring around [{dec_x1:.1f}, {dec_y1:.1f}] -> [{dec_x2:.1f}, {dec_y2:.1f}] um...")
-
-    # Inner PTap ring (1.5 um gap to decoder, 0.8 um width)
-    # Inner: [23.5, 58.5] -> [91.5, 106.5], Outer: [22.7, 57.7] -> [92.3, 107.3]
     in_ptap_x1, in_ptap_y1 = dec_x1 - 1.5, dec_y1 - 1.5
     in_ptap_x2, in_ptap_y2 = dec_x2 + 1.5, dec_y2 + 1.5
     create_guard_ring(cell, ly, l_map, in_ptap_x1, in_ptap_y1, in_ptap_x2, in_ptap_y2, w_ring=0.8, is_nwell=False, net="vss_1v2")
 
-    # Outer NTap ring (0.8 um space from PTap outer edge, 0.8 um width)
-    # Inner: [21.9, 56.9] -> [93.1, 108.1], Outer: [21.1, 56.1] -> [93.9, 108.9]
-    in_ntap_x1 = in_ptap_x1 - 0.8 - 0.8  # 23.5 - 1.6 = 21.9
-    in_ntap_y1 = in_ptap_y1 - 0.8 - 0.8  # 58.5 - 1.6 = 56.9
-    in_ntap_x2 = in_ptap_x2 + 0.8 + 0.8  # 91.5 + 1.6 = 93.1
-    in_ntap_y2 = in_ptap_y2 + 0.8 + 0.8  # 106.5 + 1.6 = 108.1
+    in_ntap_x1 = in_ptap_x1 - 1.6
+    in_ntap_y1 = in_ptap_y1 - 1.6
+    in_ntap_x2 = in_ptap_x2 + 1.6
+    in_ntap_y2 = in_ptap_y2 + 1.6
     create_guard_ring(cell, ly, l_map, in_ntap_x1, in_ntap_y1, in_ntap_x2, in_ntap_y2, w_ring=0.8, is_nwell=True, nw_enc=0.5, net="vdd_1v2")
+
+
+# ============================================================================
+# PHASE 3: TOPMETAL1 POWER GRID DISTRIBUTION
+# ============================================================================
+def add_power_grid(c_pgia, c_wrapper, ly, l_map):
+    """
+    Synthesize global power distribution network strictly on TopMetal1 (Layer 126/0).
+    Dual-domain star-point topology:
+      - Digital Domain: VPWR / VGND encircling West decoder, connected to vdd_1v2 / vss_1v2
+      - Analog Domain: AVDD / AVSS rings encircling analog blocks, connected via Kelvin star point
+      - Multi-layer via drops down to each block's Metal4 power pins and substrate moats.
+    """
+    dbu = ly.dbu
+    print("  [Power] Synthesizing TopMetal1 Global Power Rings & Drops...")
+
+    def box_tm1(x1, y1, x2, y2):
+        c_pgia.shapes(l_map["TopMetal1_drw"]).insert(pya.Box(to_dbu(x1, dbu), to_dbu(y1, dbu), to_dbu(x2, dbu), to_dbu(y2, dbu)))
+
+    def lbl_tm1(net, x, y):
+        c_pgia.shapes(l_map["TopMetal1_txt"]).insert(pya.Text(net, to_dbu(x, dbu), to_dbu(y, dbu)))
+
+    # ------------------------------------------------------------------------
+    # 1. ANALOG PERIMETER POWER RINGS (AVDD & AVSS)
+    # ------------------------------------------------------------------------
+    # South Rails:
+    # AVDD South: Y in [3.0, 8.0] um (width 5.0 um, directly abuts vdd_1v2 entry pad)
+    box_tm1(2.0, 3.0, 505.0, 8.0)
+    lbl_tm1("AVDD", 340.0, 5.5)
+
+    # AVSS South: Y in [10.5, 15.5] um (width 5.0 um)
+    box_tm1(2.0, 10.5, 505.0, 15.5)
+    lbl_tm1("AVSS", 340.0, 13.0)
+
+    # West feeder for AVSS from vss_1v2 entry pad (Y in [66.37, 96.37] um):
+    # Runs vertically along X in [2.0, 6.0] from Y = 10.5 to Y = 68.0 um
+    box_tm1(2.0, 10.5, 6.0, 68.0)
+
+    # North Rails:
+    # AVDD North: Y in [248.0, 253.0] um (width 5.0 um)
+    box_tm1(165.0, 248.0, 505.0, 253.0)
+    lbl_tm1("AVDD", 340.0, 250.5)
+
+    # AVSS North: Y in [256.0, 261.0] um (width 5.0 um)
+    box_tm1(165.0, 256.0, 505.0, 261.0)
+    lbl_tm1("AVSS", 340.0, 258.5)
+
+    # West Vertical Risers (X in [165.0, 175.0] um):
+    # AVSS West riser: X in [165.0, 169.0]
+    box_tm1(165.0, 10.5, 169.0, 261.0)
+    # AVDD West riser: X in [171.0, 175.0]
+    box_tm1(171.0, 3.0, 175.0, 253.0)
+
+    # East Vertical Risers (X in [497.0, 505.5] um):
+    # AVDD East riser: X in [497.0, 500.5]
+    box_tm1(497.0, 3.0, 500.5, 253.0)
+    # AVSS East riser: X in [502.0, 505.5]
+    box_tm1(502.0, 10.5, 505.5, 261.0)
+
+    # Central Isolation Moat TopMetal1 Straps:
+    # AVSS over Lower PTap: Y in [141.0, 143.4] um
+    box_tm1(165.0, 141.0, 497.0, 143.4)
+    # AVDD over Center NTap: Y in [146.5, 150.5] um
+    box_tm1(171.0, 146.5, 497.0, 150.5)
+    # AVSS over Upper PTap: Y in [153.6, 156.0] um
+    box_tm1(165.0, 153.6, 497.0, 156.0)
+
+    # ------------------------------------------------------------------------
+    # 2. DIGITAL POWER GRID (VPWR & VGND)
+    # ------------------------------------------------------------------------
+    # VGND feeder from vss_1v2 pad (X in [0.0, 2.0], Y in [66.37, 96.37] um):
+    box_tm1(2.0, 78.5, 46.0, 82.5)
+    lbl_tm1("VGND", 30.0, 80.5)
+
+    # VPWR feeder from vdd_1v2 pad (X in [0.0, 2.0], Y in [1.53, 56.80] um):
+    box_tm1(2.0, 48.0, 18.0, 52.0)
+    box_tm1(14.0, 48.0, 18.0, 72.0)
+    box_tm1(14.0, 68.0, 43.0, 72.0)
+    lbl_tm1("VPWR", 30.0, 70.0)
+
+    # ------------------------------------------------------------------------
+    # 3. VERTICAL DROPS TO SUB-CELL METAL4 POWER PINS & GUARD MOATS
+    # ------------------------------------------------------------------------
+    # Decoder drops:
+    create_m4_to_tm1_drop(c_pgia, ly, l_map, 40.76, 70.0, size_um=2.2)
+    c_pgia.shapes(l_map["Metal4_drw"]).insert(pya.Box(to_dbu(39.66, dbu), to_dbu(70.0, dbu), to_dbu(41.86, dbu), to_dbu(81.0, dbu)))
+    create_m4_to_tm1_drop(c_pgia, ly, l_map, 43.76, 80.5, size_um=2.2)
+
+    # Digital guard ring drops:
+    create_m1_to_tm1_stack(c_pgia, ly, l_map, 23.1, 80.5, size_um=2.2)  # VGND to inner PTap
+    create_m1_to_tm1_stack(c_pgia, ly, l_map, 21.5, 70.0, size_um=2.2)  # VPWR to outer NTap
+
+    # Instramp drops:
+    # VSS drops:
+    for drop_x in [380.0, 430.0, 480.0]:
+        box_tm1(drop_x - 1.5, 10.5, drop_x + 1.5, 21.5)
+        create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 20.64, size_um=2.2)
+    # VDD drops:
+    for drop_x in [380.0, 430.0, 480.0]:
+        box_tm1(drop_x - 1.5, 137.0, drop_x + 1.5, 148.0)
+        create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 138.15, size_um=2.2)
+
+    # Gain Stage 1 drops:
+    # AVSS: M4 pin at (312.0, 25.5) -> South AVSS trunk at Y in [10.5, 15.5]
+    box_tm1(310.5, 10.5, 313.5, 26.5)
+    create_m4_to_tm1_drop(c_pgia, ly, l_map, 312.0, 25.5, size_um=2.2)
+    # AVDD: M4 pin at (312.0, 83.9) -> South AVDD trunk via vertical TM1 branch
+    box_tm1(310.5, 3.0, 313.5, 85.0)
+    create_m4_to_tm1_drop(c_pgia, ly, l_map, 312.0, 83.9, size_um=2.2)
+
+    # Gain Stage 2 drops:
+    # AVSS: M4 pin at (225.3, 160.5) -> Upper PTap (AVSS) at Y in [153.6, 156.0]
+    box_tm1(223.8, 153.6, 226.8, 161.5)
+    create_m4_to_tm1_drop(c_pgia, ly, l_map, 225.3, 160.5, size_um=2.2)
+    # AVDD: M4 pin at (225.3, 218.9) -> North AVDD trunk at Y in [248.0, 253.0]
+    box_tm1(223.8, 217.5, 226.8, 253.0)
+    create_m4_to_tm1_drop(c_pgia, ly, l_map, 225.3, 218.9, size_um=2.2)
+
+    # Output Buffer drops:
+    # VSS: M4 rail at Y in [205.0, 206.8], fed from Upper PTap (AVSS)
+    for drop_x in [395.0, 445.0, 485.0]:
+        box_tm1(drop_x - 1.5, 156.0, drop_x + 1.5, 207.5)
+        create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 206.0, size_um=2.2)
+    # VDD: M4 rail at Y in [240.65, 242.41], fed from North AVDD trunk
+    for drop_x in [395.0, 445.0, 485.0]:
+        box_tm1(drop_x - 1.5, 240.5, drop_x + 1.5, 250.0)
+        create_m4_to_tm1_drop(c_pgia, ly, l_map, drop_x, 241.5, size_um=2.2)
+
+    # Central Moat via stacks down to Metal1:
+    for stack_x in [200.0, 250.0, 300.0, 350.0, 400.0, 450.0]:
+        create_m1_to_tm1_stack(c_pgia, ly, l_map, stack_x, 142.2, size_um=2.2)
+        create_m1_to_tm1_stack(c_pgia, ly, l_map, stack_x, 148.5, size_um=2.2)
+        create_m1_to_tm1_stack(c_pgia, ly, l_map, stack_x, 154.8, size_um=2.2)
+
+    print("  [PASS] TopMetal1 Power Grid and drops synthesized successfully.")
 
 
 # ============================================================================
@@ -396,7 +570,7 @@ def audit_ports(ly, instances_info):
 # ============================================================================
 # MAIN ASSEMBLY PIPELINE
 # ============================================================================
-def assemble_pgia(output_gds, place_only=False, with_moats=True, with_power=False, with_routing=False, repo_root=None):
+def assemble_pgia(output_gds, place_only=False, with_moats=True, with_power=True, with_routing=False, repo_root=None):
     if repo_root is None:
         repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -485,11 +659,13 @@ def assemble_pgia(output_gds, place_only=False, with_moats=True, with_power=Fals
         print("  [PASS] Isolation moats and digital guard rings synthesized into pgia_top.")
 
     # ------------------------------------------------------------------------
-    # Phase 3: TopMetal1 Power Grid Distribution (Placeholder hook for Phase 3)
+    # Phase 3: TopMetal1 Power Grid Distribution
     # ------------------------------------------------------------------------
-    if with_power:
-        print("\n[Phase 3] Synthesizing TopMetal1 Power Distribution Grid...")
-        # Will be implemented in Phase 3
+    if with_power and not place_only:
+        print("\n" + "=" * 78)
+        print("PHASE 3: SYNTHESIZING TOPMETAL1 POWER GRID & DROPS")
+        print("=" * 78)
+        add_power_grid(c_pgia, c_wrapper, master_ly, l_map)
 
     # ------------------------------------------------------------------------
     # Phase 4: Inter-Block Signal Routing (Placeholder hook for Phase 4)
@@ -522,7 +698,7 @@ def main():
     parser.add_argument(
         "--place-only",
         action="store_true",
-        help="Execute Phase 1 only (Ingest and place sub-blocks without moats)",
+        help="Execute Phase 1 only (Ingest and place sub-blocks without moats/power)",
     )
     parser.add_argument(
         "--with-moats",
@@ -533,7 +709,8 @@ def main():
     parser.add_argument(
         "--with-power",
         action="store_true",
-        help="Execute Phase 3 (Add TopMetal1 power rings and TopVia1 stacks)",
+        default=True,
+        help="Execute Phase 3 (Add TopMetal1 power rings and TopVia1 stacks) [Default: True]",
     )
     parser.add_argument(
         "--with-routing",
@@ -551,14 +728,13 @@ def main():
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     output_path = os.path.join(repo_root, args.output) if not os.path.isabs(args.output) else args.output
 
-    with_moats = args.with_moats or args.all
-    with_power = args.with_power or args.all
+    with_moats = (args.with_moats or args.all) and not args.place_only
+    with_power = (args.with_power or args.all) and not args.place_only
     with_routing = args.with_routing or args.all
-    place_only = args.place_only and not (args.with_moats or args.all)
 
     assemble_pgia(
         output_gds=output_path,
-        place_only=place_only,
+        place_only=args.place_only,
         with_moats=with_moats,
         with_power=with_power,
         with_routing=with_routing,
