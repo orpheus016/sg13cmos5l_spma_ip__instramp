@@ -1,0 +1,63 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 28/10/2026 07:02
+
+.SUBCKT instramp_cmos5l
+M$1 \$1 \$79 \$38 \$1 sg13_lv_nmos L=3u W=20u AS=4.65p AD=4.55p PS=26.86u
++ PD=26.82u rfmode=0
+M$5 \$1 \$78 \$78 \$1 sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p PS=16.06u
++ PD=16.1u rfmode=0
+M$7 \$1 \$78 \$79 \$1 sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p PS=16.1u
++ PD=16.06u rfmode=0
+M$9 \$1 \$329 \$329 \$1 sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p PS=16.06u
++ PD=16.1u rfmode=0
+M$11 \$1 \$329 \$330 \$1 sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p PS=16.1u
++ PD=16.06u rfmode=0
+M$13 \$1 \$330 \$263 \$1 sg13_lv_nmos L=3u W=20u AS=4.65p AD=4.55p PS=26.86u
++ PD=26.82u rfmode=0
+M$17 \$1 \$509 \$469 \$1 sg13_lv_nmos L=3u W=20u AS=4.65p AD=4.55p PS=26.86u
++ PD=26.82u rfmode=0
+M$21 \$1 \$508 \$508 \$1 sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p PS=16.06u
++ PD=16.1u rfmode=0
+M$23 \$1 \$508 \$509 \$1 sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p PS=16.1u
++ PD=16.06u rfmode=0
+M$25 \$186 \$77 \$78 \$203 sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p PS=26.82u
++ PD=26.82u rfmode=0
+M$29 \$186 \$96 \$79 \$203 sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p PS=26.82u
++ PD=26.82u rfmode=0
+M$33 \$201 \$201 \$203 \$203 sg13_lv_pmos L=0.15u W=0.45u AS=0.3555p AD=0.4095p
++ PS=4.38u PD=4.74u rfmode=0
+M$34 \$186 \$201 \$203 \$203 sg13_lv_pmos L=0.15u W=0.6u AS=0.402p AD=0.618p
++ PS=5.36u PD=6.8u rfmode=0
+M$38 \$38 \$201 \$203 \$203 sg13_lv_pmos L=0.15u W=1.2u AS=0.804p AD=1.236p
++ PS=10.72u PD=13.6u rfmode=0
+M$47 \$203 \$201 \$326 \$203 sg13_lv_pmos L=0.15u W=0.6u AS=0.618p AD=0.402p
++ PS=6.8u PD=5.36u rfmode=0
+M$51 \$203 \$201 \$263 \$203 sg13_lv_pmos L=0.15u W=1.2u AS=1.236p AD=0.804p
++ PS=13.6u PD=10.72u rfmode=0
+M$59 \$326 \$327 \$329 \$203 sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$63 \$326 \$4 \$330 \$203 sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p PS=26.82u
++ PD=26.82u rfmode=0
+M$67 \$616 \$507 \$508 \$203 sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$71 \$616 \$548 \$509 \$203 sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$76 \$616 \$201 \$203 \$203 sg13_lv_pmos L=0.15u W=0.6u AS=0.402p AD=0.618p
++ PS=5.36u PD=6.8u rfmode=0
+M$80 \$469 \$201 \$203 \$203 sg13_lv_pmos L=0.15u W=1.2u AS=0.804p AD=1.236p
++ PS=10.72u PD=13.6u rfmode=0
+R$88 \$38 \$77 \$1 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$89 \$4 \$38 \$1 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$90 \$79 \$99 \$1 rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$91 \$4 \$346 \$1 rhigh w=0.5u l=17.84u ps=0u b=0 m=1
+R$92 \$222 \$330 \$1 rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$93 \$263 \$327 \$1 rhigh w=0.5u l=17.84u ps=0u b=0 m=1
+R$94 \$469 \$507 \$1 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$95 \$327 \$469 \$1 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$96 \$509 \$529 \$1 rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+C$97 \$99 \$38 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$101 \$38 \$99 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+C$106 \$222 \$263 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+C$111 \$263 \$222 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$115 \$529 \$469 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$119 \$469 \$529 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+.ENDS instramp_cmos5l

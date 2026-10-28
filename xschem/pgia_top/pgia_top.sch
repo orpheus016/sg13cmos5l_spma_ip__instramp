@@ -59,20 +59,33 @@ N 1250 70 1270 70 {lab=AVSS}
 N 1320 30 1320 50 {lab=IBIAS_IA}
 N 1190 -10 1210 -10 {lab=v_stage2}
 N 1470 -30 1510 -30 {lab=VOUT}
+N -490 -250 -450 -250 {lab=AVDD}
+N -490 -220 -450 -220 {lab=AVSS}
+N -490 -190 -450 -190 {lab=VPWR}
+N -490 -160 -450 -160 {lab=VGND}
+N -520 -100 -470 -100 {lab=VINP}
+N -520 -70 -470 -70 {lab=VINN}
+N -520 -40 -470 -40 {lab=VCM}
+N -520 20 -420 20 {lab=gain_sel[0]}
+N -520 50 -420 50 {lab=gain_sel[1]}
+N -520 80 -420 80 {lab=gain_sel[2]}
+N -520 110 -420 110 {lab=gain_sel[3]}
+N -520 170 -420 170 {lab=IBIAS_IA}
+N 1630 -20 1700 -20 {lab=VOUT}
 C {iopin.sym} -450 -250 0 0 {name=p_avdd lab=AVDD}
 C {iopin.sym} -450 -220 0 0 {name=p_avss lab=AVSS}
 C {iopin.sym} -450 -190 0 0 {name=p_vpwr lab=VPWR}
 C {iopin.sym} -450 -160 0 0 {name=p_vgnd lab=VGND}
-C {ipin.sym} -450 -100 0 0 {name=p_vinp lab=VINP}
-C {ipin.sym} -450 -70 0 0 {name=p_vinn lab=VINN}
-C {ipin.sym} -450 -40 0 0 {name=p_vcm lab=VCM}
-C {ipin.sym} -450 20 0 0 {name=p_gsel0 lab=gain_sel[0]}
-C {ipin.sym} -450 50 0 0 {name=p_gsel1 lab=gain_sel[1]}
-C {ipin.sym} -450 80 0 0 {name=p_gsel2 lab=gain_sel[2]}
-C {ipin.sym} -450 110 0 0 {name=p_gsel3 lab=gain_sel[3]}
-C {ipin.sym} -450 170 0 0 {name=p_ibia lab=IBIAS_IA}
+C {ipin.sym} -520 -100 0 0 {name=p_vinp lab=VINP}
+C {ipin.sym} -520 -70 0 0 {name=p_vinn lab=VINN}
+C {ipin.sym} -520 -40 0 0 {name=p_vcm lab=VCM}
+C {ipin.sym} -520 20 0 0 {name=p_gsel0 lab=gain_sel[0]}
+C {ipin.sym} -520 50 0 0 {name=p_gsel1 lab=gain_sel[1]}
+C {ipin.sym} -520 80 0 0 {name=p_gsel2 lab=gain_sel[2]}
+C {ipin.sym} -520 110 0 0 {name=p_gsel3 lab=gain_sel[3]}
+C {ipin.sym} -520 170 0 0 {name=p_ibia lab=IBIAS_IA}
 C {opin.sym} 1700 -20 0 0 {name=p_vout lab=VOUT}
-C {gain_decoder_4b.sym} -200 50 0 0 {name=x_dec}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_decoder_4b/gain_decoder_4b.sym} -200 50 0 0 {name=x_dec}
 C {lab_wire.sym} -290 10 0 0 {name=l_dec_in0 lab=gain_sel[0]}
 C {lab_wire.sym} -290 30 0 0 {name=l_dec_in1 lab=gain_sel[1]}
 C {lab_wire.sym} -290 50 0 0 {name=l_dec_in2 lab=gain_sel[2]}
@@ -91,7 +104,7 @@ C {lab_wire.sym} -90 250 2 0 {name=l_dec_s2_2 lab=s2[2]}
 C {lab_wire.sym} -90 270 2 0 {name=l_dec_s2_3 lab=s2[3]}
 C {lab_wire.sym} -90 290 2 0 {name=l_dec_s2_4 lab=s2[4]}
 C {lab_wire.sym} -90 310 2 0 {name=l_dec_s2_b0 lab=s2_b[0]}
-C {instramp_cmos5l.sym} 250 -50 0 0 {name=x_ia}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym} 250 -50 0 0 {name=x_ia}
 C {lab_wire.sym} 250 -200 1 0 {name=l_ia_vdd lab=AVDD}
 C {lab_wire.sym} 290 -200 1 0 {name=l_ia_vss lab=AVSS}
 C {lab_wire.sym} 210 -200 1 0 {name=l_ia_ib lab=IBIAS_IA}
@@ -99,7 +112,7 @@ C {lab_wire.sym} 100 -100 0 0 {name=l_ia_vinn lab=VINN}
 C {lab_wire.sym} 100 0 0 0 {name=l_ia_vinp lab=VINP}
 C {lab_wire.sym} 100 -50 0 0 {name=l_ia_vcm lab=VCM}
 C {lab_wire.sym} 420 -50 2 0 {name=l_ia_vout lab=v_ia}
-C {gain_network.sym} 650 0 0 0 {name=x_stage1}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym} 650 0 0 0 {name=x_stage1}
 C {lab_wire.sym} 630 -230 1 0 {name=l_st1_avdd lab=AVDD}
 C {lab_wire.sym} 610 -230 1 0 {name=l_st1_ib lab=IBIAS_IA}
 C {lab_wire.sym} 680 -80 3 0 {name=l_st1_avss lab=AVSS}
@@ -112,7 +125,7 @@ C {lab_wire.sym} 620 -80 3 0 {name=l_st1_s2 lab=s1[1]}
 C {lab_wire.sym} 600 -80 3 0 {name=l_st1_s3 lab=s1[2]}
 C {lab_wire.sym} 580 -80 3 0 {name=l_st1_s4 lab=s1[3]}
 C {lab_wire.sym} 560 -80 3 0 {name=l_st1_s5 lab=s1[4]}
-C {gain_network.sym} 1050 0 0 0 {name=x_stage2}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym} 1050 0 0 0 {name=x_stage2}
 C {lab_wire.sym} 1030 -230 1 0 {name=l_st2_avdd lab=AVDD}
 C {lab_wire.sym} 1010 -230 1 0 {name=l_st2_ib lab=IBIAS_IA}
 C {lab_wire.sym} 1080 -80 3 0 {name=l_st2_avss lab=AVSS}
@@ -125,10 +138,23 @@ C {lab_wire.sym} 1020 -80 3 0 {name=l_st2_s2 lab=s2[1]}
 C {lab_wire.sym} 1000 -80 3 0 {name=l_st2_s3 lab=s2[2]}
 C {lab_wire.sym} 980 -80 3 0 {name=l_st2_s4 lab=s2[3]}
 C {lab_wire.sym} 960 -80 3 0 {name=l_st2_s5 lab=s2[4]}
-C {output_buffer.sym} 1550 -50 0 0 {name=x_buf}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym} 1550 -50 0 0 {name=x_buf}
 C {lab_wire.sym} 1250 -130 0 0 {name=l_buf_avdd lab=AVDD}
 C {lab_wire.sym} 1250 70 0 0 {name=l_buf_avss lab=AVSS}
 C {lab_wire.sym} 1320 30 1 0 {name=l_buf_ib lab=IBIAS_IA}
 C {lab_wire.sym} 1190 -10 0 0 {name=l_buf_vin lab=v_stage2}
 C {lab_wire.sym} 1510 -30 2 0 {name=l_buf_vout lab=VOUT}
 C {title.sym} 100 400 0 0 {name=l_title author="Alden Cimahi"}
+C {lab_wire.sym} -490 -250 2 0 {name=l_ia_vdd1 lab=AVDD}
+C {lab_wire.sym} -490 -220 2 0 {name=l_ia_vss1 lab=AVSS}
+C {lab_wire.sym} -490 -190 2 0 {name=l_dec_vpwr1 lab=VPWR}
+C {lab_wire.sym} -490 -160 2 0 {name=l_dec_vgnd1 lab=VGND}
+C {lab_wire.sym} -470 -100 0 0 {name=l_ia_vinp1 lab=VINP}
+C {lab_wire.sym} -470 -70 0 0 {name=l_ia_vinn1 lab=VINN}
+C {lab_wire.sym} -470 -40 0 0 {name=l_ia_vcm1 lab=VCM}
+C {lab_wire.sym} -420 20 0 0 {name=l_dec_in4 lab=gain_sel[0]}
+C {lab_wire.sym} -420 50 0 0 {name=l_dec_in5 lab=gain_sel[1]}
+C {lab_wire.sym} -420 80 0 0 {name=l_dec_in6 lab=gain_sel[2]}
+C {lab_wire.sym} -420 110 0 0 {name=l_dec_in7 lab=gain_sel[3]}
+C {lab_wire.sym} -420 170 0 0 {name=l_ia_ib1 lab=IBIAS_IA}
+C {lab_wire.sym} 1630 -20 2 0 {name=l_buf_vout1 lab=VOUT}
