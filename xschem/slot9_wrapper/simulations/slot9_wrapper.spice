@@ -1,0 +1,112 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/slot9_wrapper/slot9_wrapper.sch
+.subckt slot9_wrapper s9_an_0_esd s9_an_1_esd vbias dig_in[0] dig_in[1] dig_in[2] dig_in[3] vdd_1v2 vss_1v2 ibias0 s9_an[2]
+*.PININFO s9_an_0_esd:B s9_an_1_esd:B vbias:B dig_in[0]:B dig_in[1]:B dig_in[2]:B dig_in[3]:B vdd_1v2:B vss_1v2:B ibias0:B
+*+ s9_an[2]:B
+x1 s9_an_0_esd s9_an_1_esd vbias dig_in[0] dig_in[1] dig_in[2] dig_in[3] s9_an[2] vdd_1v2 vdd_1v2 ibias0 vss_1v2 vss_1v2 pgia_top
+.ends
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sym # of pins=13
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sch
+.subckt pgia_top VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA AVSS VGND
+*.PININFO AVDD:B AVSS:B VPWR:B VGND:B VINP:I VINN:I VCM:I gain_sel[0]:I gain_sel[1]:I gain_sel[2]:I gain_sel[3]:I IBIAS_IA:I
+*+ VOUT:O
+x_dec VGND VPWR gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] s1[0] s1[1] s1[2] s1[3] s1[4] s1_b[0] net1 net2 net3 net4 s2[0]
++ s2[1] s2[2] s2[3] s2[4] s2_b[0] net5 net6 net7 net8 gain_decoder_4b
+x_ia AVSS AVDD IBIAS_IA VINN v_ia VINP VCM instramp_cmos5l
+x_stage1 s1[3] s1[4] s1_b[0] s1[1] s1[0] s1[2] AVDD VCM v_ia v_stage1 IBIAS_IA AVSS gain_network
+x_stage2 s2[3] s2[4] s2_b[0] s2[1] s2[0] s2[2] AVDD VCM v_stage1 v_stage2 IBIAS_IA AVSS gain_network
+x_buf AVDD AVSS IBIAS_IA v_stage2 VOUT output_buffer
+.ends
+
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym # of pins=7
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sch
+.subckt instramp_cmos5l VSS VDD IBIAS VINN VOUT VINP CM
+*.PININFO VDD:B IBIAS:B VSS:B CM:B VOUT:B VINN:B VINP:B
+x1 VSS IBIAS VDD net3 VINP net4 ota_cmos5l
+x2 VSS IBIAS VDD net1 VINN net2 ota_cmos5l
+x3 VSS IBIAS VDD net5 net6 VOUT ota_cmos5l
+RR1 net4 net6 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR2 net2 net5 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR3 net6 CM 53.06k $SUB=VSS $[rhigh] w=0.5e-6 l=8*2.23e-6 b=0
+RR4 net5 VOUT 53.06k $SUB=VSS $[rhigh] w=0.5e-6 l=8*2.23e-6 b=0
+R5 VINN CM 10MEG
+R6 CM VINP 10MEG
+RR7 net2 net1 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR8 net4 net3 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
+.ends
+
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym # of pins=12
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sch
+.subckt gain_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
+*.PININFO I_BIAS:I V_IN2:I V_CM:I AVSS:I AVDD:I V_OUT2:O S5:I S4:I S3:I S2:I S1:I S0:I
+RR7 net6 net5 32.01k $SUB=AVSS $[rhigh] w=0.5e-6 l=10.72e-6 b=0
+RR3 net2 net1 2k $SUB=AVSS $[rppd] w=2e-6 l=15.16e-6 b=0
+RR2 net1 V_OUT2 942.3 $SUB=AVSS $[rppd] w=2e-6 l=7e-6 b=0
+RR1 net7 V_IN2 2k $SUB=AVSS $[rppd] w=2e-6 l=15.16e-6 b=0
+x13 net8 S5 AVDD AVSS sg13cmos5l_inv_1
+x12 net9 S4 AVDD AVSS sg13cmos5l_inv_1
+x11 net10 S3 AVDD AVSS sg13cmos5l_inv_1
+x10 net11 S2 AVDD AVSS sg13cmos5l_inv_1
+x9 net12 S1 AVDD AVSS sg13cmos5l_inv_1
+x8 net13 S0 AVDD AVSS sg13cmos5l_inv_1
+*  x7 -  tgate  IS MISSING !!!!
+*  x6 -  tgate  IS MISSING !!!!
+*  x5 -  tgate  IS MISSING !!!!
+*  x4 -  tgate  IS MISSING !!!!
+*  x3 -  tgate  IS MISSING !!!!
+*  x2 -  tgate  IS MISSING !!!!
+RR6 net5 net4 15.99k $SUB=AVSS $[rhigh] w=0.5e-6 l=5.3e-6 b=0
+RR5 net4 net3 8.007k $SUB=AVSS $[rhigh] w=0.5e-6 l=2.6e-6 b=0
+RR4 net3 net2 4.016k $SUB=AVSS $[rhigh] w=0.5e-6 l=1.25e-6 b=0
+*  x1 -  gain_ota  IS MISSING !!!!
+.ends
+
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym # of pins=5
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sch
+.subckt output_buffer VDD VSS IBIAS VINN VOUT
+*.PININFO VDD:B VSS:B IBIAS:B VINN:B VOUT:B
+*  x1 -  ota_cmos5l  IS MISSING !!!!
+.ends
+
+
+* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
+.subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
+*.PININFO IBIAS:B VDD:B VSS:B VOUT:B VINP:B VINN:B
+MM6 IBIAS IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m6}
+MM7 net1 IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m7}
+MM8 VOUT IBIAS VDD VDD sg13_lv_pmos w={wbias} l={lbias} ng=1 m={m8}
+MM1 net2 VINN net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1
+MM2 net3 VINP net1 VDD sg13_lv_pmos w={winpair} l={linpair} ng=1
+MM3 net2 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1
+MM4 net3 net2 VSS VSS sg13_lv_nmos w={wload} l={lload} ng=1
+MM5 VOUT net3 VSS VSS sg13_lv_nmos w={wcs} l={lcs} ng=1
+RR1 net3 net4 6.085k $SUB=VSS $[rhigh] w=0.5e-6 l=1.95e-6 b=0
+.save v(vinp)
+.save v(vinn)
+.save v(vout)
+CC2 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=5
+**** begin user architecture code
+
+
+.param temp=27
+.param lbias=0.15u wbias=0.15u
+.param m6=1 m7=4 m8=8
+.param linpair=3u winpair=20u
+.param lload=5u wload=10u
+.param lcs=3u wcs=20u
+.param Cc=2p
+
+
+**** end user architecture code
+CC1 VOUT net4 cap_cmomi w=15e-6 l=15e-6 m=4
+.ends
+
