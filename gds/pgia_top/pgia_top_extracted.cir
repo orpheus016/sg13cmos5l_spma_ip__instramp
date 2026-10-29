@@ -1,0 +1,1241 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 23/10/2026 16:19
+
+.SUBCKT slot9_wrapper
+M$1 AVDD|AVSS|VPWR|vdd_1v2 \$133 \$133 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u
++ W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$2 \$90 \$84 \$84 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=1.6u AS=0.544p
++ AD=0.544p PS=3.88u PD=3.88u rfmode=0
+M$3 AVDD|AVSS|VPWR|vdd_1v2 \$105 \$48 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=3u
++ W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$4 \$48 \$105 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=3u
++ W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$5 AVDD|AVSS|VPWR|vdd_1v2 \$105 \$48 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=3u
++ W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$6 \$48 \$105 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=3u
++ W=5u AS=0.95p AD=1.8p PS=5.38u PD=10.72u rfmode=0
+M$7 AVDD|AVSS|VPWR|vdd_1v2 \$175 \$105 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=5u
++ W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$8 \$105 \$175 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=5u
++ W=5u AS=0.95p AD=1.8p PS=5.38u PD=10.72u rfmode=0
+M$9 AVDD|AVSS|VPWR|vdd_1v2 \$175 \$175 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=5u
++ W=5u AS=1.8p AD=0.95p PS=10.72u PD=5.38u rfmode=0
+M$10 \$175 \$175 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$11 \$101 \$84 \$378 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=6.41u
++ AS=2.1794p AD=2.1794p PS=13.5u PD=13.5u rfmode=0
+M$12 \$141 \$84 \$348 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=6.41u
++ AS=2.1794p AD=2.1794p PS=13.5u PD=13.5u rfmode=0
+M$13 \$348 \$133 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$14 AVDD|AVSS|VPWR|vdd_1v2 \$133 \$101 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$15 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$170 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=3.2u AS=1.088p AD=1.088p PS=7.08u PD=7.08u rfmode=0
+M$16 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$308 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=1.74u AS=0.5916p AD=0.5916p PS=4.16u PD=4.16u rfmode=0
+M$17 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$630 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=6u AS=2.04p AD=2.04p PS=12.68u PD=12.68u rfmode=0
+M$18 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$423 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p PS=2.42u PD=2.42u rfmode=0
+M$19 IBIAS_IA|ibias0 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p
++ PS=2.42u PD=2.42u rfmode=0
+M$20 \$170 \$307 \$141 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.5u W=0.84u
++ AS=0.2856p AD=0.2856p PS=2.36u PD=2.36u rfmode=0
+M$21 AVDD|AVSS|VPWR|vdd_1v2 \$170 \$87 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.5u W=8.4u AS=2.856p AD=2.856p PS=17.48u PD=17.48u rfmode=0
+M$22 \$232 \$307 \$307 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.5u W=0.84u
++ AS=0.2856p AD=0.2856p PS=2.36u PD=2.36u rfmode=0
+M$23 AVDD|AVSS|VPWR|vdd_1v2 \$232 \$232 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.5u W=2.1u AS=0.714p AD=0.714p PS=4.88u PD=4.88u rfmode=0
+M$24 \$649 \$692 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.15u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$25 VGND|vss_1v2 \$690 \$649 VGND|vss_1v2 sg13_lv_nmos L=0.15u W=0.74u
++ AS=0.1406p AD=0.1406p PS=1.12u PD=1.12u rfmode=0
+M$26 \$649 \$691 \$650 VGND|vss_1v2 sg13_lv_nmos L=0.15u W=0.74u AS=0.1406p
++ AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$27 VGND|vss_1v2 dig_in[1]|gain_sel[1] \$660 VGND|vss_1v2 sg13_lv_nmos L=0.13u
++ W=0.55u AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$28 VGND|vss_1v2 \$660 \$647 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$29 VGND|vss_1v2 dig_in[0]|gain_sel[0] \$661 VGND|vss_1v2 sg13_lv_nmos L=0.13u
++ W=0.55u AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$30 VGND|vss_1v2 \$661 \$648 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$31 VGND|vss_1v2 \$635 \$666 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$32 VGND|vss_1v2 \$666 \$551 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$33 VGND|vss_1v2 \$898 \$667 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$34 VGND|vss_1v2 \$667 \$975 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$35 VGND|vss_1v2 \$665 \$668 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$36 VGND|vss_1v2 \$668 \$974 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$37 VGND|vss_1v2 \$689 \$670 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$38 VGND|vss_1v2 \$670 \$973 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$39 VGND|vss_1v2 \$650 \$671 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$40 VGND|vss_1v2 \$671 \$972 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$41 VGND|vss_1v2 \$693 \$672 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$42 VGND|vss_1v2 \$672 \$636 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$43 VGND|vss_1v2 \$742 \$673 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$44 VGND|vss_1v2 \$673 \$651 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$45 VGND|vss_1v2 \$753 \$675 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$46 VGND|vss_1v2 \$675 \$652 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$47 VGND|vss_1v2 \$759 \$677 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$48 VGND|vss_1v2 \$677 \$653 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$49 VGND|vss_1v2 \$902 \$678 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$50 VGND|vss_1v2 \$678 \$654 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$51 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$52 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$53 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$54 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$55 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$56 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$57 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.1428p AD=0.1428p PS=1.52u PD=1.52u rfmode=0
+M$58 VGND|vss_1v2 \$796 \$663 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$59 \$663 \$704 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$60 VGND|vss_1v2 \$648 \$681 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$61 \$681 \$647 \$664 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$62 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$63 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$64 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos
++ L=1u W=0.42u AS=0.1428p AD=0.1428p PS=1.52u PD=1.52u rfmode=0
+M$65 VGND|vss_1v2 \$662 \$665 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$66 \$669 \$692 \$684 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p
++ AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$67 \$684 \$745 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$68 VGND|vss_1v2 \$634 \$686 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$69 \$686 \$704 \$676 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$70 VGND|vss_1v2 \$648 \$703 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$71 VGND|vss_1v2 \$647 \$634 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.77u
++ AS=0.2618p AD=0.1694p PS=2.22u PD=1.21u rfmode=0
+M$72 \$634 \$703 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.77u
++ AS=0.1694p AD=0.1463p PS=1.21u PD=1.15u rfmode=0
+M$73 VGND|vss_1v2 \$796 \$634 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.77u
++ AS=0.1463p AD=0.2618p PS=1.15u PD=2.22u rfmode=0
+M$74 \$662 \$647 \$868 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p
++ AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$75 \$868 \$648 \$869 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.1406p PS=1.12u PD=1.12u rfmode=0
+M$76 \$869 \$663 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2886p PS=1.12u PD=2.26u rfmode=0
+M$77 \$739 \$647 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.17255p PS=1.78u PD=1.25u rfmode=0
+M$78 VGND|vss_1v2 \$739 \$740 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.17255p AD=0.1406p PS=1.25u PD=1.12u rfmode=0
+M$79 \$740 \$648 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$80 VGND|vss_1v2 \$663 \$870 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$81 \$870 \$740 \$742 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$82 \$689 \$753 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$83 \$743 \$704 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.14505p PS=1.78u PD=1.15u rfmode=0
+M$84 VGND|vss_1v2 \$796 \$871 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14505p AD=0.1406p PS=1.15u PD=1.12u rfmode=0
+M$85 \$871 \$743 \$690 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.333p PS=1.12u PD=2.38u rfmode=0
+M$86 \$744 \$704 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.17255p PS=1.78u PD=1.25u rfmode=0
+M$87 VGND|vss_1v2 \$744 \$745 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.17255p AD=0.1406p PS=1.25u PD=1.12u rfmode=0
+M$88 \$745 \$796 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$89 \$746 \$796 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.17255p PS=1.78u PD=1.25u rfmode=0
+M$90 VGND|vss_1v2 \$746 \$747 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.17255p AD=0.1406p PS=1.25u PD=1.12u rfmode=0
+M$91 \$747 \$704 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$92 VGND|vss_1v2 \$692 \$748 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$93 \$750 \$664 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.14505p PS=1.78u PD=1.15u rfmode=0
+M$94 VGND|vss_1v2 \$747 \$874 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14505p AD=0.1406p PS=1.15u PD=1.12u rfmode=0
+M$95 \$874 \$750 \$849 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.333p PS=1.12u PD=2.38u rfmode=0
+M$96 VGND|vss_1v2 \$745 \$875 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$97 \$875 \$740 \$751 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$98 VGND|vss_1v2 \$747 \$876 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$99 \$876 \$692 \$753 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$100 VGND|vss_1v2 \$634 \$757 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.17255p AD=0.187p PS=1.25u PD=1.78u rfmode=0
+M$101 VGND|vss_1v2 \$704 \$635 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$102 \$635 \$757 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.17255p PS=1.12u PD=1.25u rfmode=0
+M$103 \$758 \$704 \$878 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.64u AS=0.2176p
++ AD=0.1216p PS=1.96u PD=1.02u rfmode=0
+M$104 \$878 \$634 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.64u
++ AS=0.1216p AD=0.1331p PS=1.02u PD=1.12u rfmode=0
+M$105 VGND|vss_1v2 \$758 \$759 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1331p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$106 \$760 \$704 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.14505p PS=1.78u PD=1.15u rfmode=0
+M$107 VGND|vss_1v2 \$634 \$879 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14505p AD=0.1406p PS=1.15u PD=1.12u rfmode=0
+M$108 \$879 \$760 \$693 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.333p PS=1.12u PD=2.38u rfmode=0
+M$109 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$110 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$111 VGND|vss_1v2 dig_in[3]|gain_sel[3] \$896 VGND|vss_1v2 sg13_lv_nmos
++ L=0.13u W=0.55u AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$112 VGND|vss_1v2 \$896 \$704 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$113 VGND|vss_1v2 dig_in[2]|gain_sel[2] \$897 VGND|vss_1v2 sg13_lv_nmos
++ L=0.13u W=0.55u AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$114 VGND|vss_1v2 \$897 \$796 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$115 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$116 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$117 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$118 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$119 VGND|vss_1v2 \$648 \$692 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$120 \$692 \$647 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$121 VGND|vss_1v2 \$742 \$898 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$122 VGND|vss_1v2 \$745 \$922 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$123 \$922 \$664 \$691 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p
++ AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$124 \$899 \$751 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$125 \$900 \$669 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$126 VGND|vss_1v2 \$745 \$872 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2553p AD=0.13875p PS=2.17u PD=1.115u rfmode=0
+M$127 \$872 \$664 \$749 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.13875p
++ AD=0.2664p PS=1.115u PD=1.46u rfmode=0
+M$128 \$749 \$748 \$873 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.2664p
++ AD=0.0962p PS=1.46u PD=1u rfmode=0
+M$129 \$873 \$747 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.0962p AD=0.2516p PS=1u PD=2.16u rfmode=0
+M$130 \$901 \$849 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$131 \$797 \$902 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$132 \$902 \$740 \$924 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p
++ AD=0.1406p PS=2.16u PD=1.12u rfmode=0
+M$133 \$924 \$747 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.1406p AD=0.2516p PS=1.12u PD=2.16u rfmode=0
+M$134 VGND|vss_1v2 \$749 \$903 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$135 VGND|vss_1v2 \$903 \$850 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$136 VGND|vss_1v2 \$901 \$904 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$137 VGND|vss_1v2 \$904 \$905 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$138 \$754 \$662 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.14875p PS=1.78u PD=1.16u rfmode=0
+M$139 VGND|vss_1v2 \$754 \$706 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$140 VGND|vss_1v2 \$900 \$906 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$141 VGND|vss_1v2 \$906 \$907 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$142 \$755 \$797 VGND|vss_1v2 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.187p AD=0.14875p PS=1.78u PD=1.16u rfmode=0
+M$143 VGND|vss_1v2 \$755 \$756 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$144 VGND|vss_1v2 \$899 \$908 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$145 VGND|vss_1v2 \$908 \$909 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$146 VGND|vss_1v2 \$849 \$910 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$147 VGND|vss_1v2 \$910 \$911 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$148 VGND|vss_1v2 \$751 \$912 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$149 VGND|vss_1v2 \$912 \$913 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$150 VGND|vss_1v2 \$669 \$914 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$151 VGND|vss_1v2 \$914 \$915 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$152 VGND|vss_1v2 \$676 \$916 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.55u
++ AS=0.14875p AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$153 VGND|vss_1v2 \$916 \$917 VGND|vss_1v2 sg13_lv_nmos L=0.13u W=0.74u
++ AS=0.14875p AD=0.2886p PS=1.16u PD=2.26u rfmode=0
+M$154 AVDD|AVSS|VPWR|vdd_1v2 \$578 \$495 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$155 \$495 \$578 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$156 AVDD|AVSS|VPWR|vdd_1v2 \$578 \$495 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$157 \$495 \$578 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=0.95p AD=1.8p PS=5.38u PD=10.72u rfmode=0
+M$158 AVDD|AVSS|VPWR|vdd_1v2 \$579 \$578 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$159 \$578 \$579 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=0.95p AD=1.8p PS=5.38u PD=10.72u rfmode=0
+M$160 AVDD|AVSS|VPWR|vdd_1v2 \$579 \$579 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=1.8p AD=0.95p PS=10.72u PD=5.38u rfmode=0
+M$161 \$579 \$579 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$162 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$163 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$164 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$165 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$166 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$167 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$168 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$169 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$170 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.0798p PS=1.52u PD=0.8u rfmode=0
+M$171 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.0798p AD=0.1428p PS=0.8u PD=1.52u rfmode=0
+M$172 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 VGND|vss_1v2
++ sg13_lv_nmos L=1u W=0.42u AS=0.1428p AD=0.1428p PS=1.52u PD=1.52u rfmode=0
+M$173 \$938 \$972 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$174 \$1023 \$972 \$1025 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=0.9u
++ AS=0.306p AD=0.306p PS=2.48u PD=2.48u rfmode=0
+M$175 \$939 \$973 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$176 \$1023 \$973 \$1026 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=1.5u
++ AS=0.51p AD=0.51p PS=3.68u PD=3.68u rfmode=0
+M$177 \$940 \$974 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$178 \$1023 \$974 \$1027 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=2.2u
++ AS=0.748p AD=0.748p PS=5.08u PD=5.08u rfmode=0
+M$179 \$941 \$975 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$180 \$1023 \$975 \$1028 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=2.6u
++ AS=0.884p AD=0.884p PS=5.88u PD=5.88u rfmode=0
+M$181 \$942 \$551 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$182 \$1023 \$551 \$1029 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=2.9u
++ AS=0.986p AD=0.986p PS=6.48u PD=6.48u rfmode=0
+M$183 \$943 \$636 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$184 \$1023 \$636 \$1046 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=3u
++ AS=1.02p AD=1.02p PS=6.68u PD=6.68u rfmode=0
+M$185 AVDD|AVSS|VPWR|vdd_1v2 \$1184 \$1081 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$186 \$1081 \$1184 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$187 AVDD|AVSS|VPWR|vdd_1v2 \$1184 \$1081 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$188 \$1081 \$1184 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=3u W=5u AS=0.95p AD=1.8p PS=5.38u PD=10.72u rfmode=0
+M$189 AVDD|AVSS|VPWR|vdd_1v2 \$1211 \$1184 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$190 \$1184 \$1211 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=0.95p AD=1.8p PS=5.38u PD=10.72u rfmode=0
+M$191 AVDD|AVSS|VPWR|vdd_1v2 \$1211 \$1211 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=1.8p AD=0.95p PS=10.72u PD=5.38u rfmode=0
+M$192 \$1211 \$1211 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$193 \$1395 \$1404 \$1404 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=1.6u
++ AS=0.544p AD=0.544p PS=3.88u PD=3.88u rfmode=0
+M$194 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$1686 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=6u AS=2.04p AD=2.04p PS=12.68u PD=12.68u rfmode=0
+M$195 AVDD|AVSS|VPWR|vdd_1v2 \$1405 \$1405 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$196 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$1458 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=3.2u AS=1.088p AD=1.088p PS=7.08u PD=7.08u rfmode=0
+M$197 \$1406 \$1405 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$198 AVDD|AVSS|VPWR|vdd_1v2 \$1405 \$1538 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$199 \$1433 \$1404 \$1538 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=6.41u
++ AS=2.1794p AD=2.1794p PS=13.5u PD=13.5u rfmode=0
+M$200 IBIAS_IA|ibias0 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p
++ PS=2.42u PD=2.42u rfmode=0
+M$201 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$1572 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p PS=2.42u PD=2.42u rfmode=0
+M$202 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$1510 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=2u W=1.74u AS=0.5916p AD=0.5916p PS=4.16u PD=4.16u rfmode=0
+M$203 \$1406 \$1404 \$1482 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=2u W=6.41u
++ AS=2.1794p AD=2.1794p PS=13.5u PD=13.5u rfmode=0
+M$204 AVDD|AVSS|VPWR|vdd_1v2 \$1481 \$1481 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.5u W=2.1u AS=0.714p AD=0.714p PS=4.88u PD=4.88u rfmode=0
+M$205 \$1481 \$1502 \$1502 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.5u W=0.84u
++ AS=0.2856p AD=0.2856p PS=2.36u PD=2.36u rfmode=0
+M$206 AVDD|AVSS|VPWR|vdd_1v2 \$1458 \$1390 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.5u W=8.4u AS=2.856p AD=2.856p PS=17.48u PD=17.48u rfmode=0
+M$207 \$1458 \$1502 \$1433 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.5u W=0.84u
++ AS=0.2856p AD=0.2856p PS=2.36u PD=2.36u rfmode=0
+M$208 AVDD|AVSS|VPWR|vdd_1v2 \$1749 VOUT|s9_an[2] AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=3u W=5u AS=1.8p AD=0.95p PS=10.72u PD=5.38u rfmode=0
+M$209 VOUT|s9_an[2] \$1749 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=3u W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$210 AVDD|AVSS|VPWR|vdd_1v2 \$1749 VOUT|s9_an[2] AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=3u W=5u AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$211 VOUT|s9_an[2] \$1749 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_nmos L=3u W=5u AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$212 AVDD|AVSS|VPWR|vdd_1v2 \$1748 \$1748 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$213 \$1748 \$1748 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=0.95p AD=1.8p PS=5.38u PD=10.72u rfmode=0
+M$214 AVDD|AVSS|VPWR|vdd_1v2 \$1748 \$1749 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=1.8p AD=0.95p PS=10.72u PD=5.38u rfmode=0
+M$215 \$1749 \$1748 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=5u W=5u AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$216 AVDD|AVSS|VPWR|vdd_1v2 \$654 \$1765 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$217 AVDD|AVSS|VPWR|vdd_1v2 \$756 \$1766 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$218 AVDD|AVSS|VPWR|vdd_1v2 \$905 \$1767 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$219 AVDD|AVSS|VPWR|vdd_1v2 \$907 \$1768 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$220 AVDD|AVSS|VPWR|vdd_1v2 \$653 \$1769 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$221 AVDD|AVSS|VPWR|vdd_1v2 \$909 \$1770 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos
++ L=0.13u W=0.74u AS=0.2516p AD=0.2516p PS=2.16u PD=2.16u rfmode=0
+M$222 \$1646 \$756 \$1850 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=2.9u
++ AS=0.986p AD=0.986p PS=6.48u PD=6.48u rfmode=0
+M$223 \$1646 \$905 \$1851 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=2.6u
++ AS=0.884p AD=0.884p PS=5.88u PD=5.88u rfmode=0
+M$224 \$1646 \$907 \$1835 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=2.2u
++ AS=0.748p AD=0.748p PS=5.08u PD=5.08u rfmode=0
+M$225 \$1646 \$653 \$1836 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=1.5u
++ AS=0.51p AD=0.51p PS=3.68u PD=3.68u rfmode=0
+M$226 \$1646 \$909 \$1837 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=0.9u
++ AS=0.306p AD=0.306p PS=2.48u PD=2.48u rfmode=0
+M$227 \$1646 \$654 \$1849 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_nmos L=0.13u W=3u
++ AS=1.02p AD=1.02p PS=6.68u PD=6.68u rfmode=0
+M$228 \$328 VINP|s9_an[0] \$105 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$229 \$105 VINP|s9_an[0] \$328 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$230 \$328 VINP|s9_an[0] \$105 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$231 \$105 VINP|s9_an[0] \$328 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$232 \$328 \$118 \$175 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=1.7p
++ AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$233 \$175 \$118 \$328 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$234 \$328 \$118 \$175 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$235 \$175 \$118 \$328 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$236 \$141 \$378 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.33u AS=2.4922p AD=2.4922p PS=15.34u PD=15.34u rfmode=0
+M$237 AVDD|AVSS|VPWR|vdd_1v2 \$376 \$376 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.887p AD=1.887p PS=11.78u PD=11.78u rfmode=0
+M$238 \$308 \$308 \$376 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.5u W=2.2u
++ AS=0.748p AD=0.748p PS=5.08u PD=5.08u rfmode=0
+M$239 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$240 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$241 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$242 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$243 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$244 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$245 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$246 \$48 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$247 \$328 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$248 \$328 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$249 \$328 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$250 \$328 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$251 IBIAS_IA|ibias0 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$252 \$378 \$378 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.33u AS=2.4922p AD=2.4922p PS=15.34u PD=15.34u rfmode=0
+M$253 AVDD|AVSS|VPWR|vdd_1v2 \$141 \$87 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.887p AD=1.0545p PS=11.78u PD=5.93u rfmode=0
+M$254 \$87 \$141 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.0545p AD=1.0545p PS=5.93u PD=5.93u rfmode=0
+M$255 AVDD|AVSS|VPWR|vdd_1v2 \$141 \$87 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.0545p AD=1.0545p PS=5.93u PD=5.93u rfmode=0
+M$256 \$87 \$141 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.0545p AD=1.887p PS=5.93u PD=11.78u rfmode=0
+M$257 \$375 VCM|vbias \$348 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=2.2576p AD=1.2616p PS=13.96u PD=7.02u rfmode=0
+M$258 \$348 VCM|vbias \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$259 \$375 VCM|vbias \$348 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$260 \$348 VCM|vbias \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=2.2576p PS=7.02u PD=13.96u rfmode=0
+M$261 AVDD|AVSS|VPWR|vdd_1v2 \$423 \$133 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.955p AD=1.0925p PS=12.18u PD=6.13u rfmode=0
+M$262 \$133 \$423 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.0925p PS=6.13u PD=6.13u rfmode=0
+M$263 AVDD|AVSS|VPWR|vdd_1v2 \$423 \$133 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.0925p PS=6.13u PD=6.13u rfmode=0
+M$264 \$133 \$423 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.955p PS=6.13u PD=12.18u rfmode=0
+M$265 \$141 \$423 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$266 AVDD|AVSS|VPWR|vdd_1v2 \$423 \$423 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=2.3u AS=0.782p AD=0.782p PS=5.28u PD=5.28u rfmode=0
+M$267 \$141 \$308 \$170 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.5u W=2.2u
++ AS=0.748p AD=0.748p PS=5.08u PD=5.08u rfmode=0
+M$268 AVDD|AVSS|VPWR|vdd_1v2 \$423 \$84 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.955p AD=1.0925p PS=12.18u PD=6.13u rfmode=0
+M$269 \$84 \$423 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.955p PS=6.13u PD=12.18u rfmode=0
+M$270 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$271 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$272 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$273 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$274 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$275 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$276 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$277 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$495 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$278 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$577 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$279 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$577 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$280 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$577 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$281 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 \$577 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p PS=1.7u PD=1.34u rfmode=0
+M$282 AVDD|AVSS|VPWR|vdd_1v2 IBIAS_IA|ibias0 IBIAS_IA|ibias0
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1545p AD=0.1005p
++ PS=1.7u PD=1.34u rfmode=0
+M$283 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$284 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$285 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$286 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$287 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$288 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$289 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$290 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$291 \$375 \$1023 \$101 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=2.2576p AD=1.2616p PS=13.96u PD=7.02u rfmode=0
+M$292 \$101 \$1023 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$293 \$375 \$1023 \$101 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$294 \$101 \$1023 \$375 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=2.2576p PS=7.02u PD=13.96u rfmode=0
+M$295 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$296 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$297 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$298 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$299 \$307 \$423 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=4.6u AS=1.564p AD=1.564p PS=9.88u PD=9.88u rfmode=0
+M$300 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$301 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$302 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$303 AVDD|AVSS|VPWR|vdd_1v2 \$630 \$630 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$304 \$577 \$3 \$578 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=1.7p
++ AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$305 \$578 \$3 \$577 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$306 \$577 \$3 \$578 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$307 \$578 \$3 \$577 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$308 \$577 \$580 \$579 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=1.7p
++ AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$309 \$579 \$580 \$577 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$310 \$577 \$580 \$579 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$311 \$579 \$580 \$577 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u AS=0.95p
++ AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$312 AVDD|AVSS|VPWR|vdd_1v2 dig_in[1]|gain_sel[1] \$660 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$313 AVDD|AVSS|VPWR|vdd_1v2 \$660 \$647 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$314 AVDD|AVSS|VPWR|vdd_1v2 dig_in[0]|gain_sel[0] \$661 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$315 AVDD|AVSS|VPWR|vdd_1v2 \$661 \$648 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$316 \$663 \$796 \$710 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.3808p AD=0.1176p PS=2.92u PD=1.33u rfmode=0
+M$317 \$710 \$704 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.1176p AD=0.4032p PS=1.33u PD=2.96u rfmode=0
+M$318 AVDD|AVSS|VPWR|vdd_1v2 \$648 \$664 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$319 \$664 \$647 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$320 AVDD|AVSS|VPWR|vdd_1v2 \$635 \$666 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$321 AVDD|AVSS|VPWR|vdd_1v2 \$666 \$551 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$322 AVDD|AVSS|VPWR|vdd_1v2 \$898 \$667 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$323 AVDD|AVSS|VPWR|vdd_1v2 \$667 \$975 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$324 AVDD|AVSS|VPWR|vdd_1v2 \$665 \$668 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$325 AVDD|AVSS|VPWR|vdd_1v2 \$668 \$974 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$326 AVDD|AVSS|VPWR|vdd_1v2 \$692 \$669 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$327 \$669 \$745 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$328 AVDD|AVSS|VPWR|vdd_1v2 \$689 \$670 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$329 AVDD|AVSS|VPWR|vdd_1v2 \$670 \$973 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$330 AVDD|AVSS|VPWR|vdd_1v2 \$650 \$671 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$331 AVDD|AVSS|VPWR|vdd_1v2 \$671 \$972 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$332 AVDD|AVSS|VPWR|vdd_1v2 \$693 \$672 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$333 AVDD|AVSS|VPWR|vdd_1v2 \$672 \$636 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$334 AVDD|AVSS|VPWR|vdd_1v2 \$742 \$673 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$335 AVDD|AVSS|VPWR|vdd_1v2 \$673 \$651 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$336 AVDD|AVSS|VPWR|vdd_1v2 \$753 \$675 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$337 AVDD|AVSS|VPWR|vdd_1v2 \$675 \$652 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$338 AVDD|AVSS|VPWR|vdd_1v2 \$634 \$676 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$339 \$676 \$704 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$340 AVDD|AVSS|VPWR|vdd_1v2 \$759 \$677 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$341 AVDD|AVSS|VPWR|vdd_1v2 \$677 \$653 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$342 AVDD|AVSS|VPWR|vdd_1v2 \$902 \$678 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$343 AVDD|AVSS|VPWR|vdd_1v2 \$678 \$654 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$344 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$345 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$346 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$347 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$348 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$349 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$350 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$351 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$352 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$353 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$354 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$355 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$356 AVDD|AVSS|VPWR|vdd_1v2 \$648 \$703 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$357 AVDD|AVSS|VPWR|vdd_1v2 \$647 \$835 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2464p PS=2.92u PD=1.56u rfmode=0
+M$358 \$835 \$703 \$836 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.2464p AD=0.2128p PS=1.56u PD=1.5u rfmode=0
+M$359 \$836 \$796 \$634 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$360 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$361 \$662 \$647 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$362 AVDD|AVSS|VPWR|vdd_1v2 \$648 \$662 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.2128p PS=1.5u PD=1.5u rfmode=0
+M$363 \$662 \$663 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$364 AVDD|AVSS|VPWR|vdd_1v2 \$647 \$739 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2618p AD=0.2856p PS=1.63u PD=2.36u rfmode=0
+M$365 AVDD|AVSS|VPWR|vdd_1v2 \$739 \$838 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2618p AD=0.1176p PS=1.63u PD=1.33u rfmode=0
+M$366 \$838 \$648 \$740 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.1176p AD=0.3808p PS=1.33u PD=2.92u rfmode=0
+M$367 AVDD|AVSS|VPWR|vdd_1v2 \$663 \$742 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$368 \$742 \$740 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$369 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$370 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$371 \$689 \$753 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$372 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$373 AVDD|AVSS|VPWR|vdd_1v2 \$704 \$743 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2198p AD=0.2856p PS=1.53u PD=2.36u rfmode=0
+M$374 AVDD|AVSS|VPWR|vdd_1v2 \$796 \$690 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2198p AD=0.2128p PS=1.53u PD=1.5u rfmode=0
+M$375 \$690 \$743 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$376 AVDD|AVSS|VPWR|vdd_1v2 \$662 \$665 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$377 AVDD|AVSS|VPWR|vdd_1v2 \$704 \$744 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2618p AD=0.2856p PS=1.63u PD=2.36u rfmode=0
+M$378 AVDD|AVSS|VPWR|vdd_1v2 \$744 \$841 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2618p AD=0.1176p PS=1.63u PD=1.33u rfmode=0
+M$379 \$841 \$796 \$745 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.1176p AD=0.3808p PS=1.33u PD=2.92u rfmode=0
+M$380 AVDD|AVSS|VPWR|vdd_1v2 \$692 \$713 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.15u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$381 \$713 \$690 \$650 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=1.12u
++ AS=0.2128p AD=0.2128p PS=1.5u PD=1.5u rfmode=0
+M$382 \$650 \$691 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.15u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$383 AVDD|AVSS|VPWR|vdd_1v2 \$796 \$746 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2618p AD=0.2856p PS=1.63u PD=2.36u rfmode=0
+M$384 AVDD|AVSS|VPWR|vdd_1v2 \$746 \$842 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2618p AD=0.1176p PS=1.63u PD=1.33u rfmode=0
+M$385 \$842 \$704 \$747 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.1176p AD=0.3808p PS=1.33u PD=2.92u rfmode=0
+M$386 AVDD|AVSS|VPWR|vdd_1v2 \$692 \$748 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$387 AVDD|AVSS|VPWR|vdd_1v2 \$748 \$705 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2716p PS=2.92u PD=1.605u rfmode=0
+M$388 \$705 \$745 \$749 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.2716p AD=0.2128p PS=1.605u PD=1.5u rfmode=0
+M$389 \$749 \$664 \$705 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.2128p AD=0.2744p PS=1.5u PD=1.61u rfmode=0
+M$390 \$705 \$747 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2744p AD=0.3808p PS=1.61u PD=2.92u rfmode=0
+M$391 AVDD|AVSS|VPWR|vdd_1v2 \$664 \$750 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2198p AD=0.2856p PS=1.53u PD=2.36u rfmode=0
+M$392 AVDD|AVSS|VPWR|vdd_1v2 \$747 \$849 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2198p AD=0.2128p PS=1.53u PD=1.5u rfmode=0
+M$393 \$849 \$750 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$394 AVDD|AVSS|VPWR|vdd_1v2 \$745 \$751 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$395 \$751 \$740 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$396 AVDD|AVSS|VPWR|vdd_1v2 \$747 \$753 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$397 \$753 \$692 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$398 \$754 \$662 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2856p AD=0.2114p PS=2.36u PD=1.54u rfmode=0
+M$399 AVDD|AVSS|VPWR|vdd_1v2 \$754 \$706 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$400 \$755 \$797 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2856p AD=0.2114p PS=2.36u PD=1.54u rfmode=0
+M$401 AVDD|AVSS|VPWR|vdd_1v2 \$755 \$756 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$402 \$635 \$704 \$845 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.3808p AD=0.1176p PS=2.92u PD=1.33u rfmode=0
+M$403 \$845 \$757 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.1176p AD=0.2618p PS=1.33u PD=1.63u rfmode=0
+M$404 AVDD|AVSS|VPWR|vdd_1v2 \$634 \$757 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2618p AD=0.2856p PS=1.63u PD=2.36u rfmode=0
+M$405 AVDD|AVSS|VPWR|vdd_1v2 \$704 \$758 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2856p AD=0.1596p PS=2.36u PD=1.22u rfmode=0
+M$406 \$758 \$634 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.1596p AD=0.1918p PS=1.22u PD=1.5u rfmode=0
+M$407 AVDD|AVSS|VPWR|vdd_1v2 \$758 \$759 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.1918p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$408 AVDD|AVSS|VPWR|vdd_1v2 \$704 \$760 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2198p AD=0.2856p PS=1.53u PD=2.36u rfmode=0
+M$409 AVDD|AVSS|VPWR|vdd_1v2 \$634 \$693 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2198p AD=0.2128p PS=1.53u PD=1.5u rfmode=0
+M$410 \$693 \$760 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$411 AVDD|AVSS|VPWR|vdd_1v2 dig_in[3]|gain_sel[3] \$896 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$412 AVDD|AVSS|VPWR|vdd_1v2 \$896 \$704 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$413 AVDD|AVSS|VPWR|vdd_1v2 dig_in[2]|gain_sel[2] \$897 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$414 AVDD|AVSS|VPWR|vdd_1v2 \$897 \$796 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$415 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$416 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$417 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$418 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$419 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$420 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$421 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$422 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$423 \$692 \$648 \$967 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=1.12u
++ AS=0.3808p AD=0.1176p PS=2.92u PD=1.33u rfmode=0
+M$424 \$967 \$647 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.1176p AD=0.4032p PS=1.33u PD=2.96u rfmode=0
+M$425 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$426 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+M$427 AVDD|AVSS|VPWR|vdd_1v2 VGND|vss_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=1u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$428 AVDD|AVSS|VPWR|vdd_1v2 \$742 \$898 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$429 AVDD|AVSS|VPWR|vdd_1v2 \$745 \$691 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$430 \$691 \$664 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$431 \$899 \$751 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$432 \$900 \$669 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$433 \$901 \$849 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$434 \$797 \$902 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$435 AVDD|AVSS|VPWR|vdd_1v2 \$740 \$902 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.2128p PS=2.92u PD=1.5u rfmode=0
+M$436 \$902 \$747 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2128p AD=0.3808p PS=1.5u PD=2.92u rfmode=0
+M$437 AVDD|AVSS|VPWR|vdd_1v2 \$749 \$903 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$438 AVDD|AVSS|VPWR|vdd_1v2 \$903 \$850 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$439 AVDD|AVSS|VPWR|vdd_1v2 \$901 \$904 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$440 AVDD|AVSS|VPWR|vdd_1v2 \$904 \$905 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$441 AVDD|AVSS|VPWR|vdd_1v2 \$900 \$906 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$442 AVDD|AVSS|VPWR|vdd_1v2 \$906 \$907 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$443 AVDD|AVSS|VPWR|vdd_1v2 \$899 \$908 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$444 AVDD|AVSS|VPWR|vdd_1v2 \$908 \$909 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$445 AVDD|AVSS|VPWR|vdd_1v2 \$849 \$910 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$446 AVDD|AVSS|VPWR|vdd_1v2 \$910 \$911 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$447 AVDD|AVSS|VPWR|vdd_1v2 \$751 \$912 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$448 AVDD|AVSS|VPWR|vdd_1v2 \$912 \$913 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$449 AVDD|AVSS|VPWR|vdd_1v2 \$669 \$914 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$450 AVDD|AVSS|VPWR|vdd_1v2 \$914 \$915 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$451 AVDD|AVSS|VPWR|vdd_1v2 \$676 \$916 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=0.84u AS=0.2114p AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$452 AVDD|AVSS|VPWR|vdd_1v2 \$916 \$917 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.2114p AD=0.42p PS=1.54u PD=2.99u rfmode=0
+M$453 \$1023 \$938 \$1025 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=2.7u
++ AS=0.918p AD=0.918p PS=6.08u PD=6.08u rfmode=0
+M$454 \$938 \$972 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$455 \$1023 \$939 \$1026 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=4.5u
++ AS=1.53p AD=1.53p PS=9.68u PD=9.68u rfmode=0
+M$456 \$939 \$973 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$457 \$1023 \$940 \$1027 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=6.6u
++ AS=2.244p AD=2.244p PS=13.88u PD=13.88u rfmode=0
+M$458 \$940 \$974 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$459 \$1023 \$941 \$1028 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=7.8u
++ AS=2.652p AD=2.652p PS=16.28u PD=16.28u rfmode=0
+M$460 \$941 \$975 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$461 \$1023 \$942 \$1029 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=8.7u
++ AS=2.958p AD=2.958p PS=18.08u PD=18.08u rfmode=0
+M$462 \$942 \$551 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$463 \$1023 \$943 \$1046 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=9u
++ AS=3.06p AD=3.06p PS=18.68u PD=18.68u rfmode=0
+M$464 \$943 \$636 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$465 \$1304 VINN|s9_an[1] \$1184 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$466 \$1184 VINN|s9_an[1] \$1304 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$467 \$1304 VINN|s9_an[1] \$1184 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$468 \$1184 VINN|s9_an[1] \$1304 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$469 \$1304 \$1185 \$1211 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$470 \$1211 \$1185 \$1304 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$471 \$1304 \$1185 \$1211 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$472 \$1211 \$1185 \$1304 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$473 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$474 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$475 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$476 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$477 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$478 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$479 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$480 \$1081 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$481 \$1304 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$482 \$1304 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$483 \$1304 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$484 \$1304 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$485 IBIAS_IA|ibias0 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$486 \$1510 \$1510 \$1562 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.5u W=2.2u
++ AS=0.748p AD=0.748p PS=5.08u PD=5.08u rfmode=0
+M$487 \$1562 \$1562 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.887p AD=1.887p PS=11.78u PD=11.78u rfmode=0
+M$488 AVDD|AVSS|VPWR|vdd_1v2 \$1572 \$1405 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.955p AD=1.0925p PS=12.18u PD=6.13u rfmode=0
+M$489 \$1405 \$1572 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.0925p PS=6.13u PD=6.13u rfmode=0
+M$490 AVDD|AVSS|VPWR|vdd_1v2 \$1572 \$1405 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.0925p PS=6.13u PD=6.13u rfmode=0
+M$491 \$1405 \$1572 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.955p PS=6.13u PD=12.18u rfmode=0
+M$492 \$1558 VCM|vbias \$1538 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=2.2576p AD=1.2616p PS=13.96u PD=7.02u rfmode=0
+M$493 \$1538 VCM|vbias \$1558 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$494 \$1558 VCM|vbias \$1538 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$495 \$1538 VCM|vbias \$1558 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=2.2576p PS=7.02u PD=13.96u rfmode=0
+M$496 \$1433 \$1482 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.33u AS=2.4922p AD=2.4922p PS=15.34u PD=15.34u rfmode=0
+M$497 \$1572 \$1572 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=2.3u AS=0.782p AD=0.782p PS=5.28u PD=5.28u rfmode=0
+M$498 \$1482 \$1482 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.33u AS=2.4922p AD=2.4922p PS=15.34u PD=15.34u rfmode=0
+M$499 \$1433 \$1572 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=9.21u AS=3.1314p AD=3.1314p PS=19.1u PD=19.1u rfmode=0
+M$500 AVDD|AVSS|VPWR|vdd_1v2 \$1433 \$1390 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.887p AD=1.0545p PS=11.78u PD=5.93u rfmode=0
+M$501 \$1390 \$1433 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.0545p AD=1.0545p PS=5.93u PD=5.93u rfmode=0
+M$502 AVDD|AVSS|VPWR|vdd_1v2 \$1433 \$1390 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.0545p AD=1.0545p PS=5.93u PD=5.93u rfmode=0
+M$503 \$1390 \$1433 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.5u W=5.55u AS=1.0545p AD=1.887p PS=5.93u PD=11.78u rfmode=0
+M$504 AVDD|AVSS|VPWR|vdd_1v2 \$1572 \$1404 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.955p AD=1.0925p PS=12.18u PD=6.13u rfmode=0
+M$505 \$1404 \$1572 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=5.75u AS=1.0925p AD=1.955p PS=6.13u PD=12.18u rfmode=0
+M$506 \$1558 \$1646 \$1406 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=2.2576p AD=1.2616p PS=13.96u PD=7.02u rfmode=0
+M$507 \$1406 \$1646 \$1558 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$508 \$1558 \$1646 \$1406 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=1.2616p PS=7.02u PD=7.02u rfmode=0
+M$509 \$1406 \$1646 \$1558 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=2u W=6.64u
++ AS=1.2616p AD=2.2576p PS=7.02u PD=13.96u rfmode=0
+M$510 \$1458 \$1510 \$1433 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.5u W=2.2u
++ AS=0.748p AD=0.748p PS=5.08u PD=5.08u rfmode=0
+M$511 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$512 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$513 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$514 \$1502 \$1572 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=4.6u AS=1.564p AD=1.564p PS=9.88u PD=9.88u rfmode=0
+M$515 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$516 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$517 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$518 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$519 \$1686 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$520 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$521 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$522 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$523 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$524 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$525 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$526 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$527 \$1558 \$1686 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=2u W=7.46u AS=2.5364p AD=2.5364p PS=15.6u PD=15.6u rfmode=0
+M$528 \$1646 \$1765 \$1849 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=9u
++ AS=3.06p AD=3.06p PS=18.68u PD=18.68u rfmode=0
+M$529 AVDD|AVSS|VPWR|vdd_1v2 \$654 \$1765 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$530 \$1646 \$1766 \$1850 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=8.7u
++ AS=2.958p AD=2.958p PS=18.08u PD=18.08u rfmode=0
+M$531 AVDD|AVSS|VPWR|vdd_1v2 \$756 \$1766 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$532 \$1646 \$1767 \$1851 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=7.8u
++ AS=2.652p AD=2.652p PS=16.28u PD=16.28u rfmode=0
+M$533 AVDD|AVSS|VPWR|vdd_1v2 \$905 \$1767 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$534 \$1646 \$1768 \$1835 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=6.6u
++ AS=2.244p AD=2.244p PS=13.88u PD=13.88u rfmode=0
+M$535 AVDD|AVSS|VPWR|vdd_1v2 \$907 \$1768 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$536 \$1646 \$1769 \$1836 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=4.5u
++ AS=1.53p AD=1.53p PS=9.68u PD=9.68u rfmode=0
+M$537 AVDD|AVSS|VPWR|vdd_1v2 \$653 \$1769 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$538 \$1646 \$1770 \$1837 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.13u W=2.7u
++ AS=0.918p AD=0.918p PS=6.08u PD=6.08u rfmode=0
+M$539 AVDD|AVSS|VPWR|vdd_1v2 \$909 \$1770 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos
++ L=0.13u W=1.12u AS=0.3808p AD=0.3808p PS=2.92u PD=2.92u rfmode=0
+M$540 \$1923 \$1390 \$1748 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$541 \$1748 \$1390 \$1923 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$542 \$1923 \$1390 \$1748 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$543 \$1748 \$1390 \$1923 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$544 \$1923 VOUT|s9_an[2] \$1749 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=1.7p AD=0.95p PS=10.68u PD=5.38u rfmode=0
+M$545 \$1749 VOUT|s9_an[2] \$1923 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$546 \$1923 VOUT|s9_an[2] \$1749 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=0.95p PS=5.38u PD=5.38u rfmode=0
+M$547 \$1749 VOUT|s9_an[2] \$1923 AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=3u W=5u
++ AS=0.95p AD=1.7p PS=5.38u PD=10.68u rfmode=0
+M$548 IBIAS_IA|ibias0 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$549 \$1923 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$550 \$1923 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$551 \$1923 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$552 \$1923 IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2
++ sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p PS=1.34u PD=1.7u rfmode=0
+M$553 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$554 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$555 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$556 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$557 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$558 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$559 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+M$560 VOUT|s9_an[2] IBIAS_IA|ibias0 AVDD|AVSS|VPWR|vdd_1v2
++ AVDD|AVSS|VPWR|vdd_1v2 sg13_lv_pmos L=0.15u W=0.15u AS=0.1005p AD=0.1545p
++ PS=1.34u PD=1.7u rfmode=0
+R$561 \$495 \$1023 AVDD|AVSS|VPWR|vdd_1v2 rppd w=2u l=15.16u ps=0u b=0 m=1
+R$562 \$87 \$1046 AVDD|AVSS|VPWR|vdd_1v2 rppd w=2u l=7u ps=0u b=0 m=1
+R$563 \$1029 \$1046 AVDD|AVSS|VPWR|vdd_1v2 rppd w=2u l=15.16u ps=0u b=0 m=1
+R$564 \$87 \$1646 AVDD|AVSS|VPWR|vdd_1v2 rppd w=2u l=15.16u ps=0u b=0 m=1
+R$565 \$1390 \$1849 AVDD|AVSS|VPWR|vdd_1v2 rppd w=2u l=7u ps=0u b=0 m=1
+R$566 \$1849 \$1850 AVDD|AVSS|VPWR|vdd_1v2 rppd w=2u l=15.16u ps=0u b=0 m=1
+R$567 \$48 \$118 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$568 \$90 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=15u
++ ps=0u b=0 m=1
+R$569 \$3 \$48 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$570 \$81 \$141 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=4u ps=0u b=0 m=1
+R$571 \$105 \$6 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$572 \$3 VCM|vbias AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=17.84u ps=0u b=0 m=1
+R$573 \$445 \$578 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$574 \$495 \$580 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=17.84u ps=0u b=0 m=1
+R$575 \$1025 \$1026 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=10.72u ps=0u b=0 m=1
+R$576 \$1026 \$1027 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=5.3u ps=0u b=0 m=1
+R$577 \$1027 \$1028 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=2.6u ps=0u b=0 m=1
+R$578 \$1028 \$1029 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=1.25u ps=0u b=0 m=1
+R$579 \$1395 AVDD|AVSS|VPWR|vdd_1v2 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=15u
++ ps=0u b=0 m=1
+R$580 \$1366 \$1433 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=4u ps=0u b=0 m=1
+R$581 \$580 \$1081 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$582 \$1184 \$1072 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$583 \$1081 \$1185 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$584 \$1850 \$1851 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=1.25u ps=0u b=0 m=1
+R$585 \$1851 \$1835 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=2.6u ps=0u b=0 m=1
+R$586 \$1835 \$1836 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=5.3u ps=0u b=0 m=1
+R$587 \$1836 \$1837 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=10.72u ps=0u b=0 m=1
+R$588 \$1749 \$1838 AVDD|AVSS|VPWR|vdd_1v2 rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+C$589 \$6 \$48 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$590 \$6 \$48 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$591 \$6 \$48 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$592 \$6 \$48 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$593 \$87 \$81 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$594 \$87 \$81 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$595 \$87 \$81 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$596 \$87 \$81 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$597 \$48 \$6 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$598 \$48 \$6 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$599 \$48 \$6 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$600 \$48 \$6 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$601 \$48 \$6 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$602 \$87 \$348 cap_cmomi w=25.56u l=26.16u A=0p P=0u m=1
+C$603 \$445 \$495 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$604 \$445 \$495 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$605 \$445 \$495 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$606 \$445 \$495 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$607 \$445 \$495 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$608 \$495 \$445 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$609 \$495 \$445 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$610 \$495 \$445 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$611 \$495 \$445 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$612 \$1072 \$1081 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$613 \$1072 \$1081 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$614 \$1072 \$1081 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$615 \$1072 \$1081 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$616 \$1081 \$1072 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$617 \$1081 \$1072 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$618 \$1081 \$1072 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$619 \$1081 \$1072 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$620 \$1081 \$1072 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$621 \$1366 \$1390 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$622 \$1366 \$1390 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$623 \$1366 \$1390 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$624 \$1366 \$1390 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=1
+C$625 \$1538 \$1390 cap_cmomi w=25.56u l=26.16u A=0p P=0u m=1
+C$626 \$1838 VOUT|s9_an[2] cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$627 \$1838 VOUT|s9_an[2] cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$628 \$1838 VOUT|s9_an[2] cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$629 \$1838 VOUT|s9_an[2] cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$630 VOUT|s9_an[2] \$1838 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$631 VOUT|s9_an[2] \$1838 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$632 VOUT|s9_an[2] \$1838 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$633 VOUT|s9_an[2] \$1838 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+C$634 VOUT|s9_an[2] \$1838 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=1
+.ENDS slot9_wrapper
