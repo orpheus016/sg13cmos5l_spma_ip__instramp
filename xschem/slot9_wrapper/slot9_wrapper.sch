@@ -31,7 +31,7 @@ N -270 -460 -170 -460 {lab=vss_1v2}
 N -270 -500 -170 -500 {lab=vdd_1v2}
 N -270 -420 -170 -420 {lab=ibias0}
 N -270 -540 -170 -540 {lab=s9_an[2]}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sym} 250 -250 0 0 {name=x1}
+C {pgia_top.sym} 250 -250 0 0 {name=x1}
 C {lab_wire.sym} 500 -310 0 0 {name=l_ia_vdd1 lab=s9_an[2]}
 C {lab_wire.sym} 0 -310 2 0 {name=l_ia_vdd2 lab=s9_an_1_esd}
 C {lab_wire.sym} 0 -350 2 0 {name=l_ia_vdd3 lab=s9_an_0_esd}
