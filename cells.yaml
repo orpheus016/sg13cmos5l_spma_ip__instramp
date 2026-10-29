@@ -42,12 +42,15 @@ dec2to4:
   stages: [drc]
   note: digital building block
 pgia_top:
-  title: Top-Level
+  title: Top-Level PGIA
   top: slot9_wrapper
   gds: gds/pgia_top/pgia_top.gds
-  stages: [drc]
+  sch: xschem/pgia_top/pgia_top.sch
+  cace: cace/pgia_top.yaml
+  stages: [cace, drc, lvs, pex, post]
   drc_args: [--density]
-  note: chip level, density rules apply
+  lvs_args: [--disable_tap_extraction]
+  note: Top-level PGIA IP core with 11 gain steps (8x to 8192x)
 gain_ota:
   title: Gain Stage OTA
   gds: gds/gain_ota/gain_ota.gds

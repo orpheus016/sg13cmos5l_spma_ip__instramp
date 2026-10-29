@@ -14,3 +14,8 @@ append XSCHEM_LIBRARY_PATH :$_here/../../xschem/ota_cmos5l
 append XSCHEM_LIBRARY_PATH :$_here/../../xschem/gain_network
 append XSCHEM_LIBRARY_PATH :$_here/../../xschem/gain_ota
 append XSCHEM_LIBRARY_PATH :$_here/../../xschem/instramp_cmos5l
+append XSCHEM_LIBRARY_PATH :$_here/../../xschem/pgia_top
+append XSCHEM_LIBRARY_PATH :$_here/../../xschem/gain_stage
+append XSCHEM_LIBRARY_PATH :$_here/../../xschem/output_buffer
+append XSCHEM_LIBRARY_PATH :$_here/../../xschem/gain_decoder_4b
+append XSCHEM_LIBRARY_PATH :$_here/../../xschem/tgate

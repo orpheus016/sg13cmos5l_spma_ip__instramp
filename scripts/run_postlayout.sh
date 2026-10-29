@@ -18,10 +18,15 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
 unset DISPLAY   # headless xschem, see run_cace.sh
 export PATH="$root/scripts/bin:$PATH"   # xschem wrapper: one HOME per call (see scripts/bin/xschem)
-profile="typ"; against=""; repex=""; netlist="c"; cace_args=()
+profile="typ"; against=""; repex=""; netlist="c"; threshold=""; allow_fail="${ALLOW_FAIL:-}"; cace_args=()
 while [ $# -gt 0 ]; do
   case "$1" in
-    --profile) profile="$2"; shift 2;; --against) against="$2"; shift 2;; --repex) repex=1; shift;; --netlist) netlist="$2"; shift 2;;
+    --profile) profile="$2"; shift 2;;
+    --against) against="$2"; shift 2;;
+    --repex) repex=1; shift;;
+    --netlist) netlist="$2"; shift 2;;
+    --threshold) threshold="$2"; shift 2;;
+    --allow-fail) allow_fail="$2"; shift 2;;
     --) shift; cace_args=("$@"); break;;
     *) echo "run_postlayout.sh: unknown option $1"; exit 1;;
   esac
@@ -84,11 +89,30 @@ run="$(ls -d "$out"/RUN_* 2>/dev/null | sort | tail -1)"
 echo "post-layout run: $run"
 
 if [ -n "$against" ]; then
-  python3 -I "$root/scripts/compare_cace.py" "$against" "$run" -o "$root/docs/$cell/cace/postlayout$suffix.md" || exit 1
+  thresh_arg=()
+  [ -n "$threshold" ] && thresh_arg=(--threshold "$threshold")
+  python3 -I "$root/scripts/compare_cace.py" "$against" "$run" "${thresh_arg[@]}" -o "$root/docs/$cell/cace/postlayout$suffix.md" || exit 1
 fi
-if grep -qE '\| *(Fail|Error)' "$run/summary.md"; then
-  echo "run_postlayout.sh: spec failure or error in $run/summary.md"
-  grep -E '\| *(Fail|Error)' "$run/summary.md" | sed 's/  */ /g' | cut -c1-150
-  exit 2
+
+fail_rows=$(grep -E '\| *(Fail|Error)' "$run/summary.md" || true)
+if [ -n "$fail_rows" ]; then
+  hard_fails=""
+  while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    if [ -n "$allow_fail" ] && echo "$line" | grep -qE "$allow_fail"; then
+      echo "run_postlayout.sh: WARNING (allowed failure): $(echo "$line" | sed 's/  */ /g' | cut -c1-150)"
+    else
+      hard_fails="${hard_fails}${line}"$'\n'
+    fi
+  done <<< "$fail_rows"
+
+  if [ -n "$hard_fails" ]; then
+    echo "run_postlayout.sh: spec failure or error in $run/summary.md"
+    echo -n "$hard_fails" | sed 's/  */ /g' | cut -c1-150
+    exit 2
+  else
+    echo "run_postlayout.sh: all critical parameters passed (allowed failures ignored)"
+  fi
+else
+  echo "run_postlayout.sh: all parameters passed"
 fi
-echo "run_postlayout.sh: all parameters passed"

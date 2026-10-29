@@ -1,0 +1,31 @@
+{
+ "cell": "pgia_top",
+ "generated": "2026-10-23T13:04:32",
+ "commit": "48e69ad",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/pgia_top/pgia_top.gds",
+  "sha1": "491fec7f4fc8"
+ },
+ "schematic": {
+  "path": "xschem/pgia_top/pgia_top.sch",
+  "sha1": "762254e89def"
+ },
+ "stages": [
+  {
+   "name": "cace",
+   "status": "fail",
+   "seconds": 85,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-23_13-03-07: 0 rows, 0 failing",
+   "at": "2026-10-23T13:04:32"
+  },
+  {
+   "name": "images",
+   "status": "pass",
+   "seconds": 1,
+   "detail": "1 updated, 5 unchanged, 0 error(s), 0 warning(s)",
+   "at": "2026-10-23T13:04:32"
+  }
+ ],
+ "postlayout": {}
+}

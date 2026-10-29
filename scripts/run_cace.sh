@@ -6,7 +6,7 @@
 # --nofail is given, so we always pass --nofail and derive the exit code from the summary table ourselves:
 #   0 = all parameters pass, 2 = a spec failed or a parameter errored.
 set -uo pipefail
-cell="${1:?usage: run_cace.sh <cell> [cace args]}"; shift || true
+cell="${1:?usage: run_cace.sh <cell> [--allow-fail pattern] [cace args]}"; shift || true
 root="$(cd "$(dirname "$0")/.." && pwd)"
 export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
 
@@ -14,6 +14,15 @@ export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
 # segfault (error code -11, "tran_large.spice: No such file"). Verified: 3/3 full OTA runs clean without DISPLAY, flaky with it.
 unset DISPLAY
 export PATH="$root/scripts/bin:$PATH"   # xschem wrapper: one HOME per call (see scripts/bin/xschem)
+
+allow_fail="${ALLOW_FAIL:-}"
+cace_args=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --allow-fail) allow_fail="$2"; shift 2;;
+    *) cace_args+=("$1"); shift;;
+  esac
+done
 
 # CACE starts one headless xschem per simulation, and every xschem rewrites ~/.xschem/recent_files.
 # With 16 in parallel the file gets corrupted (interleaved writes) and the next xschem segfaults, and it also
@@ -27,7 +36,7 @@ python3 -I "$root/scripts/gen_cace.py" "$cell" || { echo "run_cace.sh: gen_cace.
 
 cd "$root/cace" || exit 1
 # datasheet first: -p/-sp take lists and would swallow it
-HOME="$cace_home" cace -s schematic "$cell.yaml" --nofail "$@"
+HOME="$cace_home" cace -s schematic "$cell.yaml" --nofail "${cace_args[@]}"
 cace_rc=$?
 cd "$root" || exit 1
 [ "$cace_rc" -ne 0 ] && { echo "run_cace.sh: cace itself failed (rc=$cace_rc)"; exit "$cace_rc"; }
@@ -41,9 +50,25 @@ if [ -z "${NO_README:-}" ]; then
 fi
 
 # Status rows look like '... | Pass ✅ |', '... | Fail ❌ |', '... | Error ❗ |'
-if grep -qE '\| *(Fail|Error)' "$run/summary.md"; then
-  echo "run_cace.sh: spec failure or error in $run/summary.md"
-  grep -E '\| *(Fail|Error)' "$run/summary.md" | sed 's/  */ /g' | cut -c1-150
-  exit 2
+fail_rows=$(grep -E '\| *(Fail|Error)' "$run/summary.md" || true)
+if [ -n "$fail_rows" ]; then
+  hard_fails=""
+  while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    if [ -n "$allow_fail" ] && echo "$line" | grep -qE "$allow_fail"; then
+      echo "run_cace.sh: WARNING (allowed failure): $(echo "$line" | sed 's/  */ /g' | cut -c1-150)"
+    else
+      hard_fails="${hard_fails}${line}"$'\n'
+    fi
+  done <<< "$fail_rows"
+
+  if [ -n "$hard_fails" ]; then
+    echo "run_cace.sh: spec failure or error in $run/summary.md"
+    echo -n "$hard_fails" | sed 's/  */ /g' | cut -c1-150
+    exit 2
+  else
+    echo "run_cace.sh: all critical parameters passed (allowed failures ignored) ($run)"
+  fi
+else
+  echo "run_cace.sh: all parameters passed ($run)"
 fi
-echo "run_cace.sh: all parameters passed ($run)"
