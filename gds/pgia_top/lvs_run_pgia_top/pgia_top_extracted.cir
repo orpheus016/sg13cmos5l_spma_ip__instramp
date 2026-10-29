@@ -1,0 +1,777 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 23/10/2026 16:20
+
+.SUBCKT pgia_top AVDD AVSS IBIAS_IA VCM VGND VINN VINP VOUT VPWR gain_sel[0]
++ gain_sel[1] gain_sel[2] gain_sel[3]
+M$1 AVSS \$132 \$132 AVSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$2 \$88 \$133 \$133 AVSS sg13_lv_nmos L=2u W=1.6u AS=0.544p AD=0.544p PS=3.88u
++ PD=3.88u rfmode=0
+M$3 AVSS \$104 \$46 AVSS sg13_lv_nmos L=3u W=20u AS=4.55p AD=4.65p PS=26.82u
++ PD=26.86u rfmode=0
+M$7 AVSS \$175 \$104 AVSS sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p PS=16.06u
++ PD=16.1u rfmode=0
+M$9 AVSS \$175 \$175 AVSS sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p PS=16.1u
++ PD=16.06u rfmode=0
+M$11 \$99 \$133 \$378 AVSS sg13_lv_nmos L=2u W=6.41u AS=2.1794p AD=2.1794p
++ PS=13.5u PD=13.5u rfmode=0
+M$12 \$141 \$133 \$348 AVSS sg13_lv_nmos L=2u W=6.41u AS=2.1794p AD=2.1794p
++ PS=13.5u PD=13.5u rfmode=0
+M$13 \$348 \$132 AVSS AVSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$14 AVSS \$132 \$99 AVSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$15 AVSS IBIAS_IA \$170 AVSS sg13_lv_nmos L=2u W=3.2u AS=1.088p AD=1.088p
++ PS=7.08u PD=7.08u rfmode=0
+M$16 AVSS IBIAS_IA \$308 AVSS sg13_lv_nmos L=2u W=1.74u AS=0.5916p AD=0.5916p
++ PS=4.16u PD=4.16u rfmode=0
+M$17 AVSS IBIAS_IA \$621 AVSS sg13_lv_nmos L=2u W=6u AS=2.04p AD=2.04p
++ PS=12.68u PD=12.68u rfmode=0
+M$18 AVSS IBIAS_IA \$422 AVSS sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p
++ PS=2.42u PD=2.42u rfmode=0
+M$19 IBIAS_IA IBIAS_IA AVSS AVSS sg13_lv_nmos L=2u W=1.74u AS=0.5916p
++ AD=0.5916p PS=4.84u PD=4.84u rfmode=0
+M$20 \$170 \$307 \$141 AVSS sg13_lv_nmos L=0.5u W=0.84u AS=0.2856p AD=0.2856p
++ PS=2.36u PD=2.36u rfmode=0
+M$21 AVSS \$170 \$85 AVSS sg13_lv_nmos L=0.5u W=8.4u AS=2.856p AD=2.856p
++ PS=17.48u PD=17.48u rfmode=0
+M$22 \$232 \$307 \$307 AVSS sg13_lv_nmos L=0.5u W=0.84u AS=0.2856p AD=0.2856p
++ PS=2.36u PD=2.36u rfmode=0
+M$23 AVSS \$232 \$232 AVSS sg13_lv_nmos L=0.5u W=2.1u AS=0.714p AD=0.714p
++ PS=4.88u PD=4.88u rfmode=0
+M$24 \$633 \$669 VGND VGND sg13_lv_nmos L=0.15u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$25 VGND \$667 \$633 VGND sg13_lv_nmos L=0.15u W=0.74u AS=0.1406p AD=0.1406p
++ PS=1.12u PD=1.12u rfmode=0
+M$26 \$633 \$668 \$634 VGND sg13_lv_nmos L=0.15u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$27 VGND gain_sel[1] \$641 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p
++ AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$28 VGND \$641 \$631 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$29 VGND gain_sel[0] \$642 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p
++ AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$30 VGND \$642 \$632 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$31 VGND \$624 \$646 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$32 VGND \$646 \$550 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$33 VGND \$857 \$647 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$34 VGND \$647 \$918 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$35 VGND \$666 \$648 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$36 VGND \$648 \$917 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$37 VGND \$665 \$650 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$38 VGND \$650 \$916 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$39 VGND \$634 \$651 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$40 VGND \$651 \$915 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$41 VGND \$670 \$652 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$42 VGND \$652 \$625 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$43 VGND \$717 \$653 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$44 VGND \$653 \$635 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$45 VGND \$728 \$655 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$46 VGND \$655 \$636 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$47 VGND \$734 \$657 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$48 VGND \$657 \$637 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$49 VGND \$861 \$658 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$50 VGND \$658 \$638 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$51 VGND VPWR VGND VGND sg13_lv_nmos L=1u W=11.34u AS=3.0996p AD=3.0996p
++ PS=32.4u PD=32.4u rfmode=0
+M$58 VGND \$767 \$644 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$59 \$644 \$679 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$60 VGND \$632 \$659 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$61 \$659 \$631 \$645 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$65 VGND \$643 \$666 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$66 \$649 \$669 \$662 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$67 \$662 \$720 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$68 VGND \$623 \$664 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$69 \$664 \$679 \$656 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$70 VGND \$632 \$678 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$71 VGND \$631 \$623 VGND sg13_lv_nmos L=0.13u W=0.77u AS=0.2618p AD=0.1694p
++ PS=2.22u PD=1.21u rfmode=0
+M$72 \$623 \$678 VGND VGND sg13_lv_nmos L=0.13u W=0.77u AS=0.1694p AD=0.1463p
++ PS=1.21u PD=1.15u rfmode=0
+M$73 VGND \$767 \$623 VGND sg13_lv_nmos L=0.13u W=0.77u AS=0.1463p AD=0.2618p
++ PS=1.15u PD=2.22u rfmode=0
+M$74 \$643 \$631 \$832 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$75 \$832 \$632 \$833 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.1406p
++ PS=1.12u PD=1.12u rfmode=0
+M$76 \$833 \$644 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2886p
++ PS=1.12u PD=2.26u rfmode=0
+M$77 \$714 \$631 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.17255p
++ PS=1.78u PD=1.25u rfmode=0
+M$78 VGND \$714 \$715 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.17255p AD=0.1406p
++ PS=1.25u PD=1.12u rfmode=0
+M$79 \$715 \$632 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$80 VGND \$644 \$834 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$81 \$834 \$715 \$717 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$82 \$665 \$728 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$83 \$718 \$679 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.14505p
++ PS=1.78u PD=1.15u rfmode=0
+M$84 VGND \$767 \$835 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14505p AD=0.1406p
++ PS=1.15u PD=1.12u rfmode=0
+M$85 \$835 \$718 \$667 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.333p
++ PS=1.12u PD=2.38u rfmode=0
+M$86 \$719 \$679 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.17255p
++ PS=1.78u PD=1.25u rfmode=0
+M$87 VGND \$719 \$720 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.17255p AD=0.1406p
++ PS=1.25u PD=1.12u rfmode=0
+M$88 \$720 \$767 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$89 \$721 \$767 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.17255p
++ PS=1.78u PD=1.25u rfmode=0
+M$90 VGND \$721 \$722 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.17255p AD=0.1406p
++ PS=1.25u PD=1.12u rfmode=0
+M$91 \$722 \$679 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$92 VGND \$669 \$723 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$93 \$725 \$645 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.14505p
++ PS=1.78u PD=1.15u rfmode=0
+M$94 VGND \$722 \$838 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14505p AD=0.1406p
++ PS=1.15u PD=1.12u rfmode=0
+M$95 \$838 \$725 \$818 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.333p
++ PS=1.12u PD=2.38u rfmode=0
+M$96 VGND \$720 \$839 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$97 \$839 \$715 \$726 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$98 VGND \$722 \$840 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$99 \$840 \$669 \$728 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$100 VGND \$623 \$732 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.17255p AD=0.187p
++ PS=1.25u PD=1.78u rfmode=0
+M$101 VGND \$679 \$624 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$102 \$624 \$732 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.17255p
++ PS=1.12u PD=1.25u rfmode=0
+M$103 \$733 \$679 \$842 VGND sg13_lv_nmos L=0.13u W=0.64u AS=0.2176p AD=0.1216p
++ PS=1.96u PD=1.02u rfmode=0
+M$104 \$842 \$623 VGND VGND sg13_lv_nmos L=0.13u W=0.64u AS=0.1216p AD=0.1331p
++ PS=1.02u PD=1.12u rfmode=0
+M$105 VGND \$733 \$734 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1331p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$106 \$735 \$679 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.14505p
++ PS=1.78u PD=1.15u rfmode=0
+M$107 VGND \$623 \$843 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14505p AD=0.1406p
++ PS=1.15u PD=1.12u rfmode=0
+M$108 \$843 \$735 \$670 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.333p
++ PS=1.12u PD=2.38u rfmode=0
+M$111 VGND gain_sel[3] \$855 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p
++ AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$112 VGND \$855 \$679 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$113 VGND gain_sel[2] \$856 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p
++ AD=0.187p PS=1.16u PD=1.78u rfmode=0
+M$114 VGND \$856 \$767 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$119 VGND \$632 \$669 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$120 \$669 \$631 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$121 VGND \$717 \$857 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$122 VGND \$720 \$879 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$123 \$879 \$645 \$668 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$124 \$858 \$726 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$125 \$859 \$649 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$126 VGND \$720 \$836 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2553p AD=0.13875p
++ PS=2.17u PD=1.115u rfmode=0
+M$127 \$836 \$645 \$724 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.13875p
++ AD=0.2664p PS=1.115u PD=1.46u rfmode=0
+M$128 \$724 \$723 \$837 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2664p AD=0.0962p
++ PS=1.46u PD=1u rfmode=0
+M$129 \$837 \$722 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.0962p AD=0.2516p
++ PS=1u PD=2.16u rfmode=0
+M$130 \$860 \$818 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$131 \$768 \$861 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$132 \$861 \$715 \$881 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.1406p
++ PS=2.16u PD=1.12u rfmode=0
+M$133 \$881 \$722 VGND VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.1406p AD=0.2516p
++ PS=1.12u PD=2.16u rfmode=0
+M$134 VGND \$724 \$862 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$135 VGND \$862 \$819 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$136 VGND \$860 \$863 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$137 VGND \$863 \$864 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$138 \$729 \$643 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.14875p
++ PS=1.78u PD=1.16u rfmode=0
+M$139 VGND \$729 \$681 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$140 VGND \$859 \$865 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$141 VGND \$865 \$866 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$142 \$730 \$768 VGND VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.187p AD=0.14875p
++ PS=1.78u PD=1.16u rfmode=0
+M$143 VGND \$730 \$731 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$144 VGND \$858 \$867 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$145 VGND \$867 \$868 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$146 VGND \$818 \$869 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$147 VGND \$869 \$870 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$148 VGND \$726 \$871 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$149 VGND \$871 \$872 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$150 VGND \$649 \$873 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$151 VGND \$873 \$874 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$152 VGND \$656 \$875 VGND sg13_lv_nmos L=0.13u W=0.55u AS=0.14875p AD=0.187p
++ PS=1.16u PD=1.78u rfmode=0
+M$153 VGND \$875 \$876 VGND sg13_lv_nmos L=0.13u W=0.74u AS=0.14875p AD=0.2886p
++ PS=1.16u PD=2.26u rfmode=0
+M$154 AVSS \$577 \$494 AVSS sg13_lv_nmos L=3u W=20u AS=4.55p AD=4.65p PS=26.82u
++ PD=26.86u rfmode=0
+M$158 AVSS \$578 \$577 AVSS sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p PS=16.06u
++ PD=16.1u rfmode=0
+M$160 AVSS \$578 \$578 AVSS sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p PS=16.1u
++ PD=16.06u rfmode=0
+M$173 \$889 \$915 AVSS AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$174 \$953 \$915 \$954 AVSS sg13_lv_nmos L=0.13u W=0.9u AS=0.306p AD=0.306p
++ PS=2.48u PD=2.48u rfmode=0
+M$175 \$890 \$916 AVSS AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$176 \$953 \$916 \$955 AVSS sg13_lv_nmos L=0.13u W=1.5u AS=0.51p AD=0.51p
++ PS=3.68u PD=3.68u rfmode=0
+M$177 \$891 \$917 AVSS AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$178 \$953 \$917 \$956 AVSS sg13_lv_nmos L=0.13u W=2.2u AS=0.748p AD=0.748p
++ PS=5.08u PD=5.08u rfmode=0
+M$179 \$892 \$918 AVSS AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$180 \$953 \$918 \$957 AVSS sg13_lv_nmos L=0.13u W=2.6u AS=0.884p AD=0.884p
++ PS=5.88u PD=5.88u rfmode=0
+M$181 \$893 \$550 AVSS AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$182 \$953 \$550 \$958 AVSS sg13_lv_nmos L=0.13u W=2.9u AS=0.986p AD=0.986p
++ PS=6.48u PD=6.48u rfmode=0
+M$183 \$894 \$625 AVSS AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$184 \$953 \$625 \$975 AVSS sg13_lv_nmos L=0.13u W=3u AS=1.02p AD=1.02p
++ PS=6.68u PD=6.68u rfmode=0
+M$185 AVSS \$1094 \$1009 AVSS sg13_lv_nmos L=3u W=20u AS=4.55p AD=4.65p
++ PS=26.82u PD=26.86u rfmode=0
+M$189 AVSS \$1114 \$1094 AVSS sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p
++ PS=16.06u PD=16.1u rfmode=0
+M$191 AVSS \$1114 \$1114 AVSS sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p
++ PS=16.1u PD=16.06u rfmode=0
+M$193 \$1298 \$1305 \$1305 AVSS sg13_lv_nmos L=2u W=1.6u AS=0.544p AD=0.544p
++ PS=3.88u PD=3.88u rfmode=0
+M$194 AVSS IBIAS_IA \$1586 AVSS sg13_lv_nmos L=2u W=6u AS=2.04p AD=2.04p
++ PS=12.68u PD=12.68u rfmode=0
+M$195 AVSS \$1306 \$1306 AVSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$196 AVSS IBIAS_IA \$1359 AVSS sg13_lv_nmos L=2u W=3.2u AS=1.088p AD=1.088p
++ PS=7.08u PD=7.08u rfmode=0
+M$197 \$1307 \$1306 AVSS AVSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$198 AVSS \$1306 \$1438 AVSS sg13_lv_nmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$199 \$1334 \$1305 \$1438 AVSS sg13_lv_nmos L=2u W=6.41u AS=2.1794p AD=2.1794p
++ PS=13.5u PD=13.5u rfmode=0
+M$201 AVSS IBIAS_IA \$1473 AVSS sg13_lv_nmos L=2u W=0.87u AS=0.2958p AD=0.2958p
++ PS=2.42u PD=2.42u rfmode=0
+M$202 AVSS IBIAS_IA \$1411 AVSS sg13_lv_nmos L=2u W=1.74u AS=0.5916p AD=0.5916p
++ PS=4.16u PD=4.16u rfmode=0
+M$203 \$1307 \$1305 \$1383 AVSS sg13_lv_nmos L=2u W=6.41u AS=2.1794p AD=2.1794p
++ PS=13.5u PD=13.5u rfmode=0
+M$204 AVSS \$1382 \$1382 AVSS sg13_lv_nmos L=0.5u W=2.1u AS=0.714p AD=0.714p
++ PS=4.88u PD=4.88u rfmode=0
+M$205 \$1382 \$1403 \$1403 AVSS sg13_lv_nmos L=0.5u W=0.84u AS=0.2856p
++ AD=0.2856p PS=2.36u PD=2.36u rfmode=0
+M$206 AVSS \$1359 \$1293 AVSS sg13_lv_nmos L=0.5u W=8.4u AS=2.856p AD=2.856p
++ PS=17.48u PD=17.48u rfmode=0
+M$207 \$1359 \$1403 \$1334 AVSS sg13_lv_nmos L=0.5u W=0.84u AS=0.2856p
++ AD=0.2856p PS=2.36u PD=2.36u rfmode=0
+M$208 AVSS \$1649 VOUT AVSS sg13_lv_nmos L=3u W=20u AS=4.65p AD=4.55p PS=26.86u
++ PD=26.82u rfmode=0
+M$212 AVSS \$1648 \$1648 AVSS sg13_lv_nmos L=5u W=10u AS=2.65p AD=2.75p
++ PS=16.06u PD=16.1u rfmode=0
+M$214 AVSS \$1648 \$1649 AVSS sg13_lv_nmos L=5u W=10u AS=2.75p AD=2.65p
++ PS=16.1u PD=16.06u rfmode=0
+M$216 AVSS \$638 \$1665 AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$217 AVSS \$731 \$1666 AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$218 AVSS \$864 \$1667 AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$219 AVSS \$866 \$1668 AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$220 AVSS \$637 \$1669 AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$221 AVSS \$868 \$1670 AVSS sg13_lv_nmos L=0.13u W=0.74u AS=0.2516p AD=0.2516p
++ PS=2.16u PD=2.16u rfmode=0
+M$222 \$1546 \$731 \$1750 AVSS sg13_lv_nmos L=0.13u W=2.9u AS=0.986p AD=0.986p
++ PS=6.48u PD=6.48u rfmode=0
+M$223 \$1546 \$864 \$1751 AVSS sg13_lv_nmos L=0.13u W=2.6u AS=0.884p AD=0.884p
++ PS=5.88u PD=5.88u rfmode=0
+M$224 \$1546 \$866 \$1735 AVSS sg13_lv_nmos L=0.13u W=2.2u AS=0.748p AD=0.748p
++ PS=5.08u PD=5.08u rfmode=0
+M$225 \$1546 \$637 \$1736 AVSS sg13_lv_nmos L=0.13u W=1.5u AS=0.51p AD=0.51p
++ PS=3.68u PD=3.68u rfmode=0
+M$226 \$1546 \$868 \$1737 AVSS sg13_lv_nmos L=0.13u W=0.9u AS=0.306p AD=0.306p
++ PS=2.48u PD=2.48u rfmode=0
+M$227 \$1546 \$638 \$1749 AVSS sg13_lv_nmos L=0.13u W=3u AS=1.02p AD=1.02p
++ PS=6.68u PD=6.68u rfmode=0
+M$228 \$328 VINP \$104 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p PS=26.82u
++ PD=26.82u rfmode=0
+M$232 \$328 \$117 \$175 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$236 \$141 \$378 AVDD AVDD sg13_lv_pmos L=2u W=7.33u AS=2.4922p AD=2.4922p
++ PS=15.34u PD=15.34u rfmode=0
+M$237 AVDD \$376 \$376 AVDD sg13_lv_pmos L=0.5u W=5.55u AS=1.887p AD=1.887p
++ PS=11.78u PD=11.78u rfmode=0
+M$238 \$308 \$308 \$376 AVDD sg13_lv_pmos L=0.5u W=2.2u AS=0.748p AD=0.748p
++ PS=5.08u PD=5.08u rfmode=0
+M$239 \$46 IBIAS_IA AVDD AVDD sg13_lv_pmos L=0.15u W=1.2u AS=0.804p AD=1.236p
++ PS=10.72u PD=13.6u rfmode=0
+M$247 \$328 IBIAS_IA AVDD AVDD sg13_lv_pmos L=0.15u W=0.6u AS=0.402p AD=0.618p
++ PS=5.36u PD=6.8u rfmode=0
+M$251 IBIAS_IA IBIAS_IA AVDD AVDD sg13_lv_pmos L=0.15u W=0.6u AS=0.456p
++ AD=0.564p PS=5.72u PD=6.44u rfmode=0
+M$252 \$378 \$378 AVDD AVDD sg13_lv_pmos L=2u W=7.33u AS=2.4922p AD=2.4922p
++ PS=15.34u PD=15.34u rfmode=0
+M$253 AVDD \$141 \$85 AVDD sg13_lv_pmos L=0.5u W=22.2u AS=5.0505p AD=5.0505p
++ PS=29.57u PD=29.57u rfmode=0
+M$257 \$375 VCM \$348 AVDD sg13_lv_pmos L=2u W=26.56u AS=6.0424p AD=6.0424p
++ PS=35.02u PD=35.02u rfmode=0
+M$261 AVDD \$422 \$132 AVDD sg13_lv_pmos L=2u W=23u AS=5.2325p AD=5.2325p
++ PS=30.57u PD=30.57u rfmode=0
+M$265 \$141 \$422 AVDD AVDD sg13_lv_pmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$266 AVDD \$422 \$422 AVDD sg13_lv_pmos L=2u W=2.3u AS=0.782p AD=0.782p
++ PS=5.28u PD=5.28u rfmode=0
+M$267 \$141 \$308 \$170 AVDD sg13_lv_pmos L=0.5u W=2.2u AS=0.748p AD=0.748p
++ PS=5.08u PD=5.08u rfmode=0
+M$268 AVDD \$422 \$133 AVDD sg13_lv_pmos L=2u W=11.5u AS=3.0475p AD=3.0475p
++ PS=18.31u PD=18.31u rfmode=0
+M$270 AVDD IBIAS_IA \$494 AVDD sg13_lv_pmos L=0.15u W=1.2u AS=1.236p AD=0.804p
++ PS=13.6u PD=10.72u rfmode=0
+M$278 AVDD IBIAS_IA \$576 AVDD sg13_lv_pmos L=0.15u W=0.6u AS=0.618p AD=0.402p
++ PS=6.8u PD=5.36u rfmode=0
+M$283 AVDD \$621 \$375 AVDD sg13_lv_pmos L=2u W=59.68u AS=20.2912p AD=20.2912p
++ PS=124.8u PD=124.8u rfmode=0
+M$291 \$375 \$953 \$99 AVDD sg13_lv_pmos L=2u W=26.56u AS=6.0424p AD=6.0424p
++ PS=35.02u PD=35.02u rfmode=0
+M$295 AVDD \$621 \$621 AVDD sg13_lv_pmos L=2u W=59.68u AS=20.2912p AD=20.2912p
++ PS=124.8u PD=124.8u rfmode=0
+M$299 \$307 \$422 AVDD AVDD sg13_lv_pmos L=2u W=4.6u AS=1.564p AD=1.564p
++ PS=9.88u PD=9.88u rfmode=0
+M$304 \$576 \$100 \$577 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$308 \$576 \$579 \$578 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$312 VPWR gain_sel[1] \$641 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p
++ AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$313 VPWR \$641 \$631 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$314 VPWR gain_sel[0] \$642 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p
++ AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$315 VPWR \$642 \$632 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$316 \$644 \$767 \$685 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.1176p
++ PS=2.92u PD=1.33u rfmode=0
+M$317 \$685 \$679 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.1176p AD=0.4032p
++ PS=1.33u PD=2.96u rfmode=0
+M$318 VPWR \$632 \$645 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$319 \$645 \$631 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$320 VPWR \$624 \$646 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$321 VPWR \$646 \$550 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$322 VPWR \$857 \$647 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$323 VPWR \$647 \$918 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$324 VPWR \$666 \$648 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$325 VPWR \$648 \$917 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$326 VPWR \$669 \$649 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$327 \$649 \$720 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$328 VPWR \$665 \$650 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$329 VPWR \$650 \$916 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$330 VPWR \$634 \$651 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$331 VPWR \$651 \$915 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$332 VPWR \$670 \$652 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$333 VPWR \$652 \$625 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$334 VPWR \$717 \$653 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$335 VPWR \$653 \$635 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$336 VPWR \$728 \$655 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$337 VPWR \$655 \$636 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$338 VPWR \$623 \$656 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$339 \$656 \$679 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$340 VPWR \$734 \$657 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$341 VPWR \$657 \$637 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$342 VPWR \$861 \$658 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$343 VPWR \$658 \$638 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$344 VPWR VGND VPWR VPWR sg13_lv_pmos L=1u W=27u AS=7.38p AD=7.38p PS=56.76u
++ PD=56.76u rfmode=0
+M$356 VPWR \$632 \$678 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$357 VPWR \$631 \$806 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2464p
++ PS=2.92u PD=1.56u rfmode=0
+M$358 \$806 \$678 \$805 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2464p AD=0.2128p
++ PS=1.56u PD=1.5u rfmode=0
+M$359 \$805 \$767 \$623 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$361 \$643 \$631 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$362 VPWR \$632 \$643 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.2128p
++ PS=1.5u PD=1.5u rfmode=0
+M$363 \$643 \$644 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$364 VPWR \$631 \$714 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2618p AD=0.2856p
++ PS=1.63u PD=2.36u rfmode=0
+M$365 VPWR \$714 \$807 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2618p AD=0.1176p
++ PS=1.63u PD=1.33u rfmode=0
+M$366 \$807 \$632 \$715 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.1176p AD=0.3808p
++ PS=1.33u PD=2.92u rfmode=0
+M$367 VPWR \$644 \$717 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$368 \$717 \$715 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$371 \$665 \$728 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$373 VPWR \$679 \$718 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2198p AD=0.2856p
++ PS=1.53u PD=2.36u rfmode=0
+M$374 VPWR \$767 \$667 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2198p AD=0.2128p
++ PS=1.53u PD=1.5u rfmode=0
+M$375 \$667 \$718 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$376 VPWR \$643 \$666 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$377 VPWR \$679 \$719 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2618p AD=0.2856p
++ PS=1.63u PD=2.36u rfmode=0
+M$378 VPWR \$719 \$811 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2618p AD=0.1176p
++ PS=1.63u PD=1.33u rfmode=0
+M$379 \$811 \$767 \$720 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.1176p AD=0.3808p
++ PS=1.33u PD=2.92u rfmode=0
+M$380 VPWR \$669 \$688 VPWR sg13_lv_pmos L=0.15u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$381 \$688 \$667 \$634 VPWR sg13_lv_pmos L=0.15u W=1.12u AS=0.2128p AD=0.2128p
++ PS=1.5u PD=1.5u rfmode=0
+M$382 \$634 \$668 VPWR VPWR sg13_lv_pmos L=0.15u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$383 VPWR \$767 \$721 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2618p AD=0.2856p
++ PS=1.63u PD=2.36u rfmode=0
+M$384 VPWR \$721 \$812 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2618p AD=0.1176p
++ PS=1.63u PD=1.33u rfmode=0
+M$385 \$812 \$679 \$722 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.1176p AD=0.3808p
++ PS=1.33u PD=2.92u rfmode=0
+M$386 VPWR \$669 \$723 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$387 VPWR \$723 \$680 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2716p
++ PS=2.92u PD=1.605u rfmode=0
+M$388 \$680 \$720 \$724 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2716p AD=0.2128p
++ PS=1.605u PD=1.5u rfmode=0
+M$389 \$724 \$645 \$680 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.2744p
++ PS=1.5u PD=1.61u rfmode=0
+M$390 \$680 \$722 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2744p AD=0.3808p
++ PS=1.61u PD=2.92u rfmode=0
+M$391 VPWR \$645 \$725 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2198p AD=0.2856p
++ PS=1.53u PD=2.36u rfmode=0
+M$392 VPWR \$722 \$818 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2198p AD=0.2128p
++ PS=1.53u PD=1.5u rfmode=0
+M$393 \$818 \$725 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$394 VPWR \$720 \$726 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$395 \$726 \$715 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$396 VPWR \$722 \$728 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$397 \$728 \$669 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$398 \$729 \$643 VPWR VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2856p AD=0.2114p
++ PS=2.36u PD=1.54u rfmode=0
+M$399 VPWR \$729 \$681 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$400 \$730 \$768 VPWR VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2856p AD=0.2114p
++ PS=2.36u PD=1.54u rfmode=0
+M$401 VPWR \$730 \$731 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$402 \$624 \$679 \$815 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.1176p
++ PS=2.92u PD=1.33u rfmode=0
+M$403 \$815 \$732 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.1176p AD=0.2618p
++ PS=1.33u PD=1.63u rfmode=0
+M$404 VPWR \$623 \$732 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2618p AD=0.2856p
++ PS=1.63u PD=2.36u rfmode=0
+M$405 VPWR \$679 \$733 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2856p AD=0.1596p
++ PS=2.36u PD=1.22u rfmode=0
+M$406 \$733 \$623 VPWR VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.1596p AD=0.1918p
++ PS=1.22u PD=1.5u rfmode=0
+M$407 VPWR \$733 \$734 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.1918p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$408 VPWR \$679 \$735 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2198p AD=0.2856p
++ PS=1.53u PD=2.36u rfmode=0
+M$409 VPWR \$623 \$670 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2198p AD=0.2128p
++ PS=1.53u PD=1.5u rfmode=0
+M$410 \$670 \$735 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$411 VPWR gain_sel[3] \$855 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p
++ AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$412 VPWR \$855 \$679 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$413 VPWR gain_sel[2] \$856 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p
++ AD=0.2856p PS=1.54u PD=2.36u rfmode=0
+M$414 VPWR \$856 \$767 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$423 \$669 \$632 \$912 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.1176p
++ PS=2.92u PD=1.33u rfmode=0
+M$424 \$912 \$631 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.1176p AD=0.4032p
++ PS=1.33u PD=2.96u rfmode=0
+M$428 VPWR \$717 \$857 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$429 VPWR \$720 \$668 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$430 \$668 \$645 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$431 \$858 \$726 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$432 \$859 \$649 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$433 \$860 \$818 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$434 \$768 \$861 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$435 VPWR \$715 \$861 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.2128p
++ PS=2.92u PD=1.5u rfmode=0
+M$436 \$861 \$722 VPWR VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2128p AD=0.3808p
++ PS=1.5u PD=2.92u rfmode=0
+M$437 VPWR \$724 \$862 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$438 VPWR \$862 \$819 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$439 VPWR \$860 \$863 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$440 VPWR \$863 \$864 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$441 VPWR \$859 \$865 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$442 VPWR \$865 \$866 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$443 VPWR \$858 \$867 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$444 VPWR \$867 \$868 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$445 VPWR \$818 \$869 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$446 VPWR \$869 \$870 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$447 VPWR \$726 \$871 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$448 VPWR \$871 \$872 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$449 VPWR \$649 \$873 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$450 VPWR \$873 \$874 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$451 VPWR \$656 \$875 VPWR sg13_lv_pmos L=0.13u W=0.84u AS=0.2114p AD=0.2856p
++ PS=1.54u PD=2.36u rfmode=0
+M$452 VPWR \$875 \$876 VPWR sg13_lv_pmos L=0.13u W=1.12u AS=0.2114p AD=0.42p
++ PS=1.54u PD=2.99u rfmode=0
+M$453 \$953 \$889 \$954 AVDD sg13_lv_pmos L=0.13u W=2.7u AS=0.918p AD=0.918p
++ PS=6.08u PD=6.08u rfmode=0
+M$454 \$889 \$915 AVDD AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$455 \$953 \$890 \$955 AVDD sg13_lv_pmos L=0.13u W=4.5u AS=1.53p AD=1.53p
++ PS=9.68u PD=9.68u rfmode=0
+M$456 \$890 \$916 AVDD AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$457 \$953 \$891 \$956 AVDD sg13_lv_pmos L=0.13u W=6.6u AS=2.244p AD=2.244p
++ PS=13.88u PD=13.88u rfmode=0
+M$458 \$891 \$917 AVDD AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$459 \$953 \$892 \$957 AVDD sg13_lv_pmos L=0.13u W=7.8u AS=2.652p AD=2.652p
++ PS=16.28u PD=16.28u rfmode=0
+M$460 \$892 \$918 AVDD AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$461 \$953 \$893 \$958 AVDD sg13_lv_pmos L=0.13u W=8.7u AS=2.958p AD=2.958p
++ PS=18.08u PD=18.08u rfmode=0
+M$462 \$893 \$550 AVDD AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$463 \$953 \$894 \$975 AVDD sg13_lv_pmos L=0.13u W=9u AS=3.06p AD=3.06p
++ PS=18.68u PD=18.68u rfmode=0
+M$464 \$894 \$625 AVDD AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$465 \$1207 VINN \$1094 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$469 \$1207 \$1095 \$1114 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$473 \$1009 IBIAS_IA AVDD AVDD sg13_lv_pmos L=0.15u W=1.2u AS=0.804p AD=1.236p
++ PS=10.72u PD=13.6u rfmode=0
+M$481 \$1207 IBIAS_IA AVDD AVDD sg13_lv_pmos L=0.15u W=0.6u AS=0.402p AD=0.618p
++ PS=5.36u PD=6.8u rfmode=0
+M$486 \$1411 \$1411 \$1463 AVDD sg13_lv_pmos L=0.5u W=2.2u AS=0.748p AD=0.748p
++ PS=5.08u PD=5.08u rfmode=0
+M$487 \$1463 \$1463 AVDD AVDD sg13_lv_pmos L=0.5u W=5.55u AS=1.887p AD=1.887p
++ PS=11.78u PD=11.78u rfmode=0
+M$488 AVDD \$1473 \$1306 AVDD sg13_lv_pmos L=2u W=23u AS=5.2325p AD=5.2325p
++ PS=30.57u PD=30.57u rfmode=0
+M$492 \$1459 VCM \$1438 AVDD sg13_lv_pmos L=2u W=26.56u AS=6.0424p AD=6.0424p
++ PS=35.02u PD=35.02u rfmode=0
+M$496 \$1334 \$1383 AVDD AVDD sg13_lv_pmos L=2u W=7.33u AS=2.4922p AD=2.4922p
++ PS=15.34u PD=15.34u rfmode=0
+M$497 \$1473 \$1473 AVDD AVDD sg13_lv_pmos L=2u W=2.3u AS=0.782p AD=0.782p
++ PS=5.28u PD=5.28u rfmode=0
+M$498 \$1383 \$1383 AVDD AVDD sg13_lv_pmos L=2u W=7.33u AS=2.4922p AD=2.4922p
++ PS=15.34u PD=15.34u rfmode=0
+M$499 \$1334 \$1473 AVDD AVDD sg13_lv_pmos L=2u W=9.21u AS=3.1314p AD=3.1314p
++ PS=19.1u PD=19.1u rfmode=0
+M$500 AVDD \$1334 \$1293 AVDD sg13_lv_pmos L=0.5u W=22.2u AS=5.0505p AD=5.0505p
++ PS=29.57u PD=29.57u rfmode=0
+M$504 AVDD \$1473 \$1305 AVDD sg13_lv_pmos L=2u W=11.5u AS=3.0475p AD=3.0475p
++ PS=18.31u PD=18.31u rfmode=0
+M$506 \$1459 \$1546 \$1307 AVDD sg13_lv_pmos L=2u W=26.56u AS=6.0424p
++ AD=6.0424p PS=35.02u PD=35.02u rfmode=0
+M$510 \$1359 \$1411 \$1334 AVDD sg13_lv_pmos L=0.5u W=2.2u AS=0.748p AD=0.748p
++ PS=5.08u PD=5.08u rfmode=0
+M$511 \$1586 \$1586 AVDD AVDD sg13_lv_pmos L=2u W=59.68u AS=20.2912p
++ AD=20.2912p PS=124.8u PD=124.8u rfmode=0
+M$514 \$1403 \$1473 AVDD AVDD sg13_lv_pmos L=2u W=4.6u AS=1.564p AD=1.564p
++ PS=9.88u PD=9.88u rfmode=0
+M$520 \$1459 \$1586 AVDD AVDD sg13_lv_pmos L=2u W=59.68u AS=20.2912p
++ AD=20.2912p PS=124.8u PD=124.8u rfmode=0
+M$528 \$1546 \$1665 \$1749 AVDD sg13_lv_pmos L=0.13u W=9u AS=3.06p AD=3.06p
++ PS=18.68u PD=18.68u rfmode=0
+M$529 AVDD \$638 \$1665 AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$530 \$1546 \$1666 \$1750 AVDD sg13_lv_pmos L=0.13u W=8.7u AS=2.958p AD=2.958p
++ PS=18.08u PD=18.08u rfmode=0
+M$531 AVDD \$731 \$1666 AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$532 \$1546 \$1667 \$1751 AVDD sg13_lv_pmos L=0.13u W=7.8u AS=2.652p AD=2.652p
++ PS=16.28u PD=16.28u rfmode=0
+M$533 AVDD \$864 \$1667 AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$534 \$1546 \$1668 \$1735 AVDD sg13_lv_pmos L=0.13u W=6.6u AS=2.244p AD=2.244p
++ PS=13.88u PD=13.88u rfmode=0
+M$535 AVDD \$866 \$1668 AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$536 \$1546 \$1669 \$1736 AVDD sg13_lv_pmos L=0.13u W=4.5u AS=1.53p AD=1.53p
++ PS=9.68u PD=9.68u rfmode=0
+M$537 AVDD \$637 \$1669 AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$538 \$1546 \$1670 \$1737 AVDD sg13_lv_pmos L=0.13u W=2.7u AS=0.918p AD=0.918p
++ PS=6.08u PD=6.08u rfmode=0
+M$539 AVDD \$868 \$1670 AVDD sg13_lv_pmos L=0.13u W=1.12u AS=0.3808p AD=0.3808p
++ PS=2.92u PD=2.92u rfmode=0
+M$540 \$1823 \$1293 \$1648 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$544 \$1823 VOUT \$1649 AVDD sg13_lv_pmos L=3u W=20u AS=4.55p AD=4.55p
++ PS=26.82u PD=26.82u rfmode=0
+M$549 \$1823 IBIAS_IA AVDD AVDD sg13_lv_pmos L=0.15u W=0.6u AS=0.402p AD=0.618p
++ PS=5.36u PD=6.8u rfmode=0
+M$553 VOUT IBIAS_IA AVDD AVDD sg13_lv_pmos L=0.15u W=1.2u AS=0.804p AD=1.236p
++ PS=10.72u PD=13.6u rfmode=0
+R$561 \$494 \$953 AVSS rppd w=2u l=15.16u ps=0u b=0 m=1
+R$562 \$85 \$975 AVSS rppd w=2u l=7u ps=0u b=0 m=1
+R$563 \$958 \$975 AVSS rppd w=2u l=15.16u ps=0u b=0 m=1
+R$564 \$85 \$1546 AVSS rppd w=2u l=15.16u ps=0u b=0 m=1
+R$565 \$1293 \$1749 AVSS rppd w=2u l=7u ps=0u b=0 m=1
+R$566 \$1749 \$1750 AVSS rppd w=2u l=15.16u ps=0u b=0 m=1
+R$567 \$46 \$117 AVSS rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$568 \$88 AVSS AVSS rhigh w=0.5u l=15u ps=0u b=0 m=1
+R$569 \$100 \$46 AVSS rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$570 \$80 \$141 AVSS rhigh w=0.5u l=4u ps=0u b=0 m=1
+R$571 \$104 \$6 AVSS rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$572 \$100 VCM AVSS rhigh w=0.5u l=17.84u ps=0u b=0 m=1
+R$573 \$444 \$577 AVSS rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$574 \$494 \$579 AVSS rhigh w=0.5u l=17.84u ps=0u b=0 m=1
+R$575 \$954 \$955 AVSS rhigh w=0.5u l=10.72u ps=0u b=0 m=1
+R$576 \$955 \$956 AVSS rhigh w=0.5u l=5.3u ps=0u b=0 m=1
+R$577 \$956 \$957 AVSS rhigh w=0.5u l=2.6u ps=0u b=0 m=1
+R$578 \$957 \$958 AVSS rhigh w=0.5u l=1.25u ps=0u b=0 m=1
+R$579 \$1298 AVSS AVSS rhigh w=0.5u l=15u ps=0u b=0 m=1
+R$580 \$1269 \$1334 AVSS rhigh w=0.5u l=4u ps=0u b=0 m=1
+R$581 \$579 \$1009 AVSS rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$582 \$1094 \$997 AVSS rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+R$583 \$1009 \$1095 AVSS rhigh w=0.5u l=2u ps=0u b=0 m=1
+R$584 \$1750 \$1751 AVSS rhigh w=0.5u l=1.25u ps=0u b=0 m=1
+R$585 \$1751 \$1735 AVSS rhigh w=0.5u l=2.6u ps=0u b=0 m=1
+R$586 \$1735 \$1736 AVSS rhigh w=0.5u l=5.3u ps=0u b=0 m=1
+R$587 \$1736 \$1737 AVSS rhigh w=0.5u l=10.72u ps=0u b=0 m=1
+R$588 \$1649 \$1738 AVSS rhigh w=0.5u l=1.95u ps=0u b=0 m=1
+C$589 \$6 \$46 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$593 \$85 \$80 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=4
+C$597 \$46 \$6 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+C$602 \$85 \$348 cap_cmomi w=25.56u l=26.16u A=0p P=0u m=1
+C$603 \$444 \$494 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+C$608 \$494 \$444 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$612 \$997 \$1009 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$616 \$1009 \$997 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+C$621 \$1269 \$1293 cap_cmomi w=8.65u l=10.2u A=0p P=0u m=4
+C$625 \$1438 \$1293 cap_cmomi w=25.56u l=26.16u A=0p P=0u m=1
+C$626 \$1738 VOUT cap_cmomi w=16.08u l=14.88u A=0p P=0u m=4
+C$630 VOUT \$1738 cap_cmomi w=16.08u l=14.88u A=0p P=0u m=5
+.ENDS pgia_top

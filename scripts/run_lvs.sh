@@ -13,9 +13,32 @@
 # Steps: xschem LVS netlist -> make it readable for KLayout -> check labels -> run_lvs.py -> readable report.
 # Results: runs/lvs/<cell>/ (git-ignored): <cell>.lvsdb, <cell>_extracted.cir, logs.  Exit: 0 match, 1 mismatch, 2 setup error.
 set -uo pipefail
-cell="${1:?usage: run_lvs.sh <cell> [--gds f] [--top c] [--netlist-only] [--fix-labels] [--view] [-- run_lvs.py args]}"; shift
+
 root="$(cd "$(dirname "$0")/.." && pwd)"
-export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"   # the image default is ihp-sg13g2, which makes devices "IS MISSING"
+export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
+
+# Container Auto-Detection & Forwarding:
+# If klayout is not in PATH or PDK_ROOT is missing on host, forward to docker container if available
+if ! command -v klayout >/dev/null 2>&1 || [ ! -d "$PDK_ROOT/$PDK" ]; then
+  if command -v docker >/dev/null 2>&1 && docker ps --format '{{.Names}}' 2>/dev/null | grep -q '^iic-osic-tools_x11$'; then
+    container_root="/foss/designs$(echo "$root" | sed 's|^/home/ranantalden/Projects/Designs||')"
+    if [[ "$(pwd)" == /home/ranantalden/Projects/Designs* ]]; then
+      container_cwd="/foss/designs$(pwd | sed 's|^/home/ranantalden/Projects/Designs||')"
+    else
+      container_cwd="$container_root"
+    fi
+    args=()
+    for arg in "$@"; do
+      args+=("${arg//\/home\/ranantalden\/Projects\/Designs/\/foss\/designs}")
+    done
+    exec docker exec -i -w "$container_cwd" iic-osic-tools_x11 bash "$container_root/scripts/run_lvs.sh" "${args[@]}"
+  elif ! command -v klayout >/dev/null 2>&1; then
+    echo "run_lvs.sh: ERROR: klayout is not found in PATH and iic-osic-tools_x11 container is not running." >&2
+    exit 2
+  fi
+fi
+
+cell="${1:?usage: run_lvs.sh <cell> [--gds f] [--top c] [--netlist-only] [--fix-labels] [--view] [-- run_lvs.py args]}"; shift
 lvs_py="$PDK_ROOT/$PDK/libs.tech/klayout/tech/lvs/run_lvs.py"
 tools="$root/scripts/lvs_tools.py"
 

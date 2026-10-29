@@ -1,4 +1,4 @@
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sch
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_network/gain_network.sch
 .subckt gain_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
 *.PININFO I_BIAS:I V_IN2:I V_CM:I AVSS:I AVDD:I V_OUT2:O S5:I S4:I S3:I S2:I S1:I S0:I
 RR7 net6 net5 32.01k $SUB=AVSS $[rhigh] w=0.5e-6 l=10.72e-6 b=0
@@ -23,20 +23,9 @@ RR4 net3 net2 4.016k $SUB=AVSS $[rhigh] w=0.5e-6 l=1.25e-6 b=0
 x1 AVDD V_CM net7 V_OUT2 I_BIAS AVSS gain_ota
 .ends
 
-* expanding   symbol:  sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym # of pins=2
-** sym_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/xschem/sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym
-** sch_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/sch/xschem/sg13cmos5l_inv_1.sch
-.subckt sg13cmos5l_inv_1 Y A VDD VSS
-
-*.PININFO Y:O A:I
-MM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1
-MM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1
-.ends
-
-
 * expanding   symbol:  tgate.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sch
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sch
 .subckt tgate IN AVSS AVDD EN ENB OUT  l=0.13e-6 wn=1e-6 wp=3e-6
 *.PININFO AVDD:B AVSS:B IN:B OUT:B EN:I ENB:I
 MM1 IN EN OUT AVSS sg13_lv_nmos w=wn l=l ng=1
@@ -45,8 +34,8 @@ MM2 OUT ENB IN AVDD sg13_lv_pmos w=wp l=l ng=1
 
 
 * expanding   symbol:  gain_ota.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sch
+** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_ota/gain_ota.sym
+** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_ota/gain_ota.sch
 .subckt gain_ota VDD V_inp V_inn V_out I_bias VSS
 *.PININFO V_inn:I VDD:I VSS:I V_out:O I_bias:I V_inp:I
 MM1 F1 V_inn net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4
@@ -86,5 +75,10 @@ CC4_1 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_2 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_3 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_4 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
+.ends
+
+.subckt sg13cmos5l_inv_1 Y A VDD VSS
+MM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1
+MM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1
 .ends
 

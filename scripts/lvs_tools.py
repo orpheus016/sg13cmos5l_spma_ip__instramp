@@ -13,6 +13,7 @@
 Run with `python3 -I` (needs the `klayout` python module, which ships with the KLayout of the tool image).
 """
 import argparse
+import os
 import re
 import sys
 
@@ -164,7 +165,31 @@ def cmd_netlist_fix(args):
             block["params"].append(line)
         elif not low.startswith(".save"):
             block["body"].append(line)
-    open(args.out, "w").write("\n".join(out) + "\n")
+    final_text = "\n".join(out)
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # If gain_decoder_4b is instantiated but not defined, include its subcircuit
+    if "gain_decoder_4b" in final_text and ".subckt gain_decoder_4b" not in final_text.lower():
+        dec_spice_path = os.path.join(root_dir, "gds/gain_decoder_4b/final/spice/gain_decoder_4b.spice")
+        if os.path.exists(dec_spice_path):
+            with open(dec_spice_path, "r") as df:
+                dec_txt = df.read()
+            # Extract from .subckt gain_decoder_4b to .ends
+            idx_start = dec_txt.find(".subckt gain_decoder_4b")
+            if idx_start != -1:
+                idx_end = dec_txt.find(".ends", idx_start) + 5
+                final_text += "\n" + dec_txt[idx_start:idx_end] + "\n"
+
+    # If any standard cells are referenced, include sg13cmos5l_stdcell_lvs.spice
+    std_spice_path = os.path.join(root_dir, "scripts/sg13cmos5l_stdcell_lvs.spice")
+    if os.path.exists(std_spice_path):
+        if "sg13cmos5l_" in final_text:
+            with open(std_spice_path, "r") as sf:
+                std_txt = sf.read()
+            final_text += "\n" + std_txt + "\n"
+    elif "sg13cmos5l_inv_1" in final_text and ".subckt sg13cmos5l_inv_1" not in final_text.lower():
+        final_text += "\n.subckt sg13cmos5l_inv_1 Y A VDD VSS\nMM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1\nMM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1\n.ends\n"
+
+    open(args.out, "w").write(final_text + "\n")
     print(f"netlist-fix: {args.out}  ({nsub} subckt(s), {nparam} .param lines moved inside)")
 
 
