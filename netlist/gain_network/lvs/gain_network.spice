@@ -1,31 +1,43 @@
-** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_network/gain_network.sch
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sch
 .subckt gain_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
 *.PININFO I_BIAS:I V_IN2:I V_CM:I AVSS:I AVDD:I V_OUT2:O S5:I S4:I S3:I S2:I S1:I S0:I
-RR7 net6 net5 32.01k $SUB=AVSS $[rhigh] w=0.5e-6 l=10.72e-6 b=0
-RR3 net2 net1 2k $SUB=AVSS $[rppd] w=2e-6 l=15.16e-6 b=0
-RR2 net1 V_OUT2 942.3 $SUB=AVSS $[rppd] w=2e-6 l=7e-6 b=0
-RR1 net7 V_IN2 2k $SUB=AVSS $[rppd] w=2e-6 l=15.16e-6 b=0
 x13 net8 S5 AVDD AVSS sg13cmos5l_inv_1
 x12 net9 S4 AVDD AVSS sg13cmos5l_inv_1
 x11 net10 S3 AVDD AVSS sg13cmos5l_inv_1
 x10 net11 S2 AVDD AVSS sg13cmos5l_inv_1
 x9 net12 S1 AVDD AVSS sg13cmos5l_inv_1
 x8 net13 S0 AVDD AVSS sg13cmos5l_inv_1
-x7 net7 AVSS AVDD S5 net8 net6 tgate l=0.13e-6 wn=0.9e-6 wp=2.7e-6
-x6 net7 AVSS AVDD S4 net9 net5 tgate l=0.13e-6 wn=1.5e-6 wp=4.5e-6
-x5 net7 AVSS AVDD S3 net10 net4 tgate l=0.13e-6 wn=2.2e-6 wp=6.6e-6
-x4 net7 AVSS AVDD S2 net11 net3 tgate l=0.13e-6 wn=2.6e-6 wp=7.8e-6
-x3 net7 AVSS AVDD S1 net12 net2 tgate l=0.13e-6 wn=2.9e-6 wp=8.7e-6
-x2 net7 AVSS AVDD S0 net13 net1 tgate l=0.13e-6 wn=3e-6 wp=9e-6
-RR6 net5 net4 15.99k $SUB=AVSS $[rhigh] w=0.5e-6 l=5.3e-6 b=0
-RR5 net4 net3 8.007k $SUB=AVSS $[rhigh] w=0.5e-6 l=2.6e-6 b=0
-RR4 net3 net2 4.016k $SUB=AVSS $[rhigh] w=0.5e-6 l=1.25e-6 b=0
+x7 net7 AVSS AVDD S5 net8 net6 tgate l=0.13e-6 wn=0.18e-6 wp=0.54e-6
+x6 net7 AVSS AVDD S4 net9 net5 tgate l=0.13e-6 wn=0.18e-6 wp=0.54e-6
+x5 net7 AVSS AVDD S3 net10 net4 tgate l=0.13e-6 wn=0.18e-6 wp=0.54e-6
+x4 net7 AVSS AVDD S2 net11 net3 tgate l=0.13e-6 wn=0.2e-6 wp=0.6e-6
+x3 net7 AVSS AVDD S1 net12 net2 tgate l=0.13e-6 wn=0.3e-6 wp=0.9e-6
+x2 net7 AVSS AVDD S0 net13 net1 tgate l=0.13e-6 wn=0.4e-6 wp=1.2e-6
+RR6 net5 net4 160k $SUB=AVSS $[rhigh] w=0.5e-6 l=54e-6 b=0
+RR5 net4 net3 80k $SUB=AVSS $[rhigh] w=0.5e-6 l=26.95e-6 b=0
 x1 AVDD V_CM net7 V_OUT2 I_BIAS AVSS gain_ota
+RR1 net7 V_IN2 20.01k $SUB=AVSS $[rhigh] w=0.5e-6 l=6.66e-6 b=0
+RR2 V_OUT2 net1 9.781k $SUB=AVSS $[rhigh] w=0.5e-6 l=3.2e-6 b=0
+RR3 net1 net2 20.01k $SUB=AVSS $[rhigh] w=0.5e-6 l=6.66e-6 b=0
+RR4 net2 net3 40k $SUB=AVSS $[rhigh] w=0.5e-6 l=13.42e-6 b=0
+RR7 net14 net5 160k $SUB=AVSS $[rhigh] w=0.5e-6 l=54e-6 b=0
+RR8 net6 net14 160k $SUB=AVSS $[rhigh] w=0.5e-6 l=54e-6 b=0
 .ends
 
+* expanding   symbol:  sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym # of pins=2
+** sym_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/xschem/sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym
+** sch_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/sch/xschem/sg13cmos5l_inv_1.sch
+.subckt sg13cmos5l_inv_1 Y A VDD VSS
+
+*.PININFO Y:O A:I
+MM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1
+MM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1
+.ends
+
+
 * expanding   symbol:  tgate.sym # of pins=6
-** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sym
-** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/tgate/tgate.sch
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sch
 .subckt tgate IN AVSS AVDD EN ENB OUT  l=0.13e-6 wn=1e-6 wp=3e-6
 *.PININFO AVDD:B AVSS:B IN:B OUT:B EN:I ENB:I
 MM1 IN EN OUT AVSS sg13_lv_nmos w=wn l=l ng=1
@@ -34,8 +46,8 @@ MM2 OUT ENB IN AVDD sg13_lv_pmos w=wp l=l ng=1
 
 
 * expanding   symbol:  gain_ota.sym # of pins=6
-** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_ota/gain_ota.sym
-** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/gain_ota/gain_ota.sch
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sch
 .subckt gain_ota VDD V_inp V_inn V_out I_bias VSS
 *.PININFO V_inn:I VDD:I VSS:I V_out:O I_bias:I V_inp:I
 MM1 F1 V_inn net6 VDD sg13_lv_pmos w=26.56u l=2u ng=4
@@ -75,10 +87,5 @@ CC4_1 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_2 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_3 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_4 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
-.ends
-
-.subckt sg13cmos5l_inv_1 Y A VDD VSS
-MM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1
-MM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1
 .ends
 

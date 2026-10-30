@@ -179,13 +179,20 @@ def cmd_netlist_fix(args):
                 idx_end = dec_txt.find(".ends", idx_start) + 5
                 final_text += "\n" + dec_txt[idx_start:idx_end] + "\n"
 
-    # If any standard cells are referenced, include sg13cmos5l_stdcell_lvs.spice
+    # If any standard cells are referenced and not yet defined, include them from sg13cmos5l_stdcell_lvs.spice
     std_spice_path = os.path.join(root_dir, "scripts/sg13cmos5l_stdcell_lvs.spice")
-    if os.path.exists(std_spice_path):
-        if "sg13cmos5l_" in final_text:
-            with open(std_spice_path, "r") as sf:
-                std_txt = sf.read()
-            final_text += "\n" + std_txt + "\n"
+    if os.path.exists(std_spice_path) and "sg13cmos5l_" in final_text:
+        existing_subckts = {m.lower() for m in re.findall(r"(?i)^\s*\.subckt\s+(\w+)", final_text, re.MULTILINE)}
+        with open(std_spice_path, "r") as sf:
+            std_txt = sf.read()
+        blocks_to_add = []
+        for match in re.finditer(r"(?i)(\.subckt\s+(\w+)[\s\S]*?\.ends)", std_txt):
+            block, cell_name = match.group(1), match.group(2)
+            if cell_name.lower() not in existing_subckts and re.search(rf"\b{re.escape(cell_name)}\b", final_text, re.IGNORECASE):
+                blocks_to_add.append(block)
+                existing_subckts.add(cell_name.lower())
+        if blocks_to_add:
+            final_text += "\n" + "\n\n".join(blocks_to_add) + "\n"
     elif "sg13cmos5l_inv_1" in final_text and ".subckt sg13cmos5l_inv_1" not in final_text.lower():
         final_text += "\n.subckt sg13cmos5l_inv_1 Y A VDD VSS\nMM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1\nMM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1\n.ends\n"
 
