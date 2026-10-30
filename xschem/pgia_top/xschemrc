@@ -19,7 +19,3 @@ append XSCHEM_LIBRARY_PATH :$_here/../gain_stage
 append XSCHEM_LIBRARY_PATH :$_here/../output_buffer
 append XSCHEM_LIBRARY_PATH :$_here/../ota_cmos5l
 append XSCHEM_LIBRARY_PATH :$_here/../tgate
-append XSCHEM_LIBRARY_PATH :$_here/../gain_network
-append XSCHEM_LIBRARY_PATH :$_here/../gain_ota
-append XSCHEM_LIBRARY_PATH ://libs.tech/xschem/sg13cmos5l_stdcells
-append XSCHEM_LIBRARY_PATH ://libs.ref/sg13cmos5l_stdcell/sch/xschem
