@@ -64,4 +64,4 @@ C {lab_wire.sym} 80 -150 0 0 {name=l_g_vin lab=VIN}
 C {lab_wire.sym} 80 -130 0 0 {name=l_g_vcm lab=VCM}
 C {lab_wire.sym} 360 -140 2 0 {name=l_g_vout lab=VOUT}
 C {title.sym} -100 300 0 0 {name=l_title author="SPMA Team"}
-C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym} 250 0 0 0 {name=x1}
+C {/foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym} 250 0 0 0 {name=x1}

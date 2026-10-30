@@ -1,7 +1,7 @@
 # pgia_top - CACE characterisation
 
-- Generated: 2026-10-29 05:13 by `scripts/make_readme.py` from `runs/RUN_2026-10-29_05-02-18`
-- Commit: `48e69ad` (working tree dirty)
+- Generated: 2026-10-30 05:38 by `scripts/make_readme.py` from `runs/RUN_2026-10-30_05-27-03`
+- Commit: `789d8d8` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/pgia_top.yaml`; reproduce with `scripts/run_cace.sh pgia_top`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 
@@ -205,17 +205,17 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 | 0 dB frequency       | ngspice              | F0DB                 |             any | 2368.360 Hz |          any | 2605740.000 Hz |          any | 10000000.000 Hz |   Pass ✅    |
 | Phase @1 kHz         | ngspice              | PH_1K                |             any | -179.899 ° |          any |   -0.398 ° |          any |  179.815 ° |   Pass ✅    |
 | Input pseudo-resistor | ngspice              | R_PSEUDO             |          1 GOhm | 3.803 GOhm |      15 GOhm | 13.656 GOhm |          any | 46.053 GOhm |   Pass ✅    |
-| Output offset voltage | ngspice              | VOS                  |             any |           |      1.08 mV |           |          any |           |   Skip 🟧    |
-| IA output DC voltage | ngspice              | V_IA                 |             any |           |        0.6 V |           |          any |           |   Skip 🟧    |
-| Stage 1 output DC voltage | ngspice              | V_ST1                |             any |           |        0.6 V |           |          any |           |   Skip 🟧    |
-| Stage 2 output DC voltage | ngspice              | V_ST2                |             any |           |        0.6 V |           |          any |           |   Skip 🟧    |
-| DC output voltage    | ngspice              | VOUT                 |             any |           |        0.6 V |           |          any |           |   Skip 🟧    |
-| Analog supply current | ngspice              | I_AVDD               |             any |           |       216 uA |           |       400 uA |           |   Skip 🟧    |
-| Digital supply current | ngspice              | I_VPWR               |             any |           |     0.014 uA |           |       1.0 uA |           |   Skip 🟧    |
-| Total quiescent current | ngspice              | IQ_TOT               |             any |           |       216 uA |           |       400 uA |           |   Skip 🟧    |
-| Total DC power       | ngspice              | PWR                  |             any |           |       260 uW |           |       500 uW |           |   Skip 🟧    |
-| Output peak-to-peak  | ngspice              | VPP_OUT              |             any |           |          any |           |          any |           |   Skip 🟧    |
-| Effective voltage gain | ngspice              | EFF_GAIN             |             any |           |          any |           |          any |           |   Skip 🟧    |
+| Output offset voltage | ngspice              | VOS                  |             any |   0.011 mV |      1.08 mV |  78.923 mV |          any | 587.698 mV |   Pass ✅    |
+| IA output DC voltage | ngspice              | V_IA                 |             any |    0.600 V |        0.6 V |    0.602 V |          any |    0.611 V |   Pass ✅    |
+| Stage 1 output DC voltage | ngspice              | V_ST1                |             any |    0.270 V |        0.6 V |    0.562 V |          any |    0.915 V |   Pass ✅    |
+| Stage 2 output DC voltage | ngspice              | V_ST2                |             any |    0.000 V |        0.6 V |    0.637 V |          any |    1.500 V |   Pass ✅    |
+| DC output voltage    | ngspice              | VOUT                 |             any |    0.012 V |        0.6 V |    0.636 V |          any |    1.090 V |   Pass ✅    |
+| Analog supply current | ngspice              | I_AVDD               |             any | 169.901 uA |       216 uA | 213.755 uA |       400 uA | 254.745 uA |   Pass ✅    |
+| Digital supply current | ngspice              | I_VPWR               |             any |   0.001 uA |     0.014 uA |   0.020 uA |       1.0 uA |   0.478 uA |   Pass ✅    |
+| Total quiescent current | ngspice              | IQ_TOT               |             any | 169.907 uA |       216 uA | 213.774 uA |       400 uA | 254.896 uA |   Pass ✅    |
+| Total DC power       | ngspice              | PWR                  |             any | 183.500 uW |       260 uW | 257.108 uW |       500 uW | 382.344 uW |   Pass ✅    |
+| Output peak-to-peak  | ngspice              | VPP_OUT              |             any |   0.000 mV |          any |   1.962 mV |          any |  72.896 mV |   Pass ✅    |
+| Effective voltage gain | ngspice              | EFF_GAIN             |             any |  0.000 V/V |          any | 49.052 V/V |          any | 1822.400 V/V |   Pass ✅    |
 
 
 
@@ -238,6 +238,26 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 
 ![ac_gain_R_PSEUDO_vs_temperature](./pgia_top/schematic/ac_gain_R_PSEUDO_vs_temperature.png)
 
+#### dc_op_VOS_vs_temperature
+
+![dc_op_VOS_vs_temperature](./pgia_top/schematic/dc_op_VOS_vs_temperature.png)
+
+#### dc_op_PWR_vs_temperature
+
+![dc_op_PWR_vs_temperature](./pgia_top/schematic/dc_op_PWR_vs_temperature.png)
+
+#### dc_op_IQ_TOT_vs_vdd
+
+![dc_op_IQ_TOT_vs_vdd](./pgia_top/schematic/dc_op_IQ_TOT_vs_vdd.png)
+
+#### tran_VPP_OUT_vs_gain_code
+
+![tran_VPP_OUT_vs_gain_code](./pgia_top/schematic/tran_VPP_OUT_vs_gain_code.png)
+
+#### tran_EFF_GAIN_vs_gain_code
+
+![tran_EFF_GAIN_vs_gain_code](./pgia_top/schematic/tran_EFF_GAIN_vs_gain_code.png)
+
 ## PVT worst-case conditions
 
 Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the display unit of the yaml.
@@ -257,6 +277,31 @@ Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the dis
 | R_PSEUDO [GOhm] | 3.803 | ff, 1.08 V, 85 C | 46.05 | ss, 1.5 V, -40 C | >= 1 | 0 |
 
 
+### dc_op - DC operating point
+
+495 runs.
+
+| metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
+|---|---|---|---|---|---|---|
+| VOS [mV] | 0.01119 | ff, 1.08 V, 27 C | 587.7 | ss, 1.5 V, -40 C | any | - |
+| V_IA [V] | 0.5997 | ff, 1.5 V, 85 C | 0.611 | ss, 1.08 V, 27 C | any | - |
+| V_ST1 [V] | 0.2705 | fs, 1.08 V, 85 C | 0.9153 | ss, 1.08 V, -40 C | any | - |
+| V_ST2 [V] | 0.0001101 | ss, 1.5 V, -40 C | 1.5 | tt, 1.5 V, -40 C | any | - |
+| VOUT [V] | 0.0123 | ss, 1.5 V, -40 C | 1.09 | ff, 1.5 V, 27 C | any | - |
+| I_AVDD [uA] | 169.9 | fs, 1.08 V, -40 C | 254.7 | ff, 1.5 V, -40 C | <= 400 | 0 |
+| I_VPWR [uA] | 0.001239 | ss, 1.08 V, -40 C | 0.4779 | ff, 1.5 V, 85 C | <= 1 | 0 |
+| IQ_TOT [uA] | 169.9 | fs, 1.08 V, -40 C | 254.9 | ff, 1.5 V, 85 C | <= 400 | 0 |
+| PWR [uW] | 183.5 | fs, 1.08 V, -40 C | 382.3 | ff, 1.5 V, 85 C | <= 500 | 0 |
+
+
+### tran - Dynamic transient response
+
+12 runs.
+
+| metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
+|---|---|---|---|---|---|---|
+| VPP_OUT [mV] | 1.689e-07 | tt, 1.2 V, 27 C | 72.9 | tt, 1.2 V, 27 C | any | - |
+| EFF_GAIN [V/V] | 4.224e-06 | tt, 1.2 V, 27 C | 1822 | tt, 1.2 V, 27 C | any | - |
 
 
 ## Monte Carlo (local mismatch)

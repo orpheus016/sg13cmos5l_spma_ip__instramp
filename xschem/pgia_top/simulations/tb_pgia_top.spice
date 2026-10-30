@@ -1,4 +1,4 @@
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/tb_pgia_top.sch
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/tb_pgia_top.sch
 **.subckt tb_pgia_top
 x1 VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA IBIAS_G1 IBIAS_G2 IBIAS_BUF AVSS VGND
 + pgia_top
@@ -405,8 +405,8 @@ RL VOUT 0 100k
 **.ends
 
 * expanding   symbol:  pgia_top.sym # of pins=16
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sch
+** sym_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sym
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sch
 .subckt pgia_top VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA IBIAS_G1 IBIAS_G2 IBIAS_BUF
 + AVSS VGND
 *.iopin AVDD
@@ -448,8 +448,8 @@ XM4 V_MID_P V_MID_P VCM AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
 
 
 * expanding   symbol:  instramp_cmos5l.sym # of pins=7
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sch
+** sym_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sch
 .subckt instramp_cmos5l VSS VDD IBIAS VINN VOUT VINP CM
 *.iopin VDD
 *.iopin IBIAS
@@ -471,8 +471,8 @@ XR8 net4 net3 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
 
 
 * expanding   symbol:  gain_stage.sym # of pins=11
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sch
+** sym_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sym
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sch
 .subckt gain_stage AVDD AVSS IBIAS VIN VCM VOUT s[0] s[1] s[2] s[3] s[4]
 *.iopin AVDD
 *.iopin AVSS
@@ -493,8 +493,8 @@ x1 s[3] s[4] S0 s[1] s[0] s[2] AVDD VCM VIN VOUT IBIAS AVSS gain_network
 
 
 * expanding   symbol:  output_buffer.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sch
+** sym_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sch
 .subckt output_buffer AVDD IBIAS VOUT VIN_BUF+ VIN_BUF- AVSS
 *.iopin AVDD
 *.iopin AVSS
@@ -507,8 +507,8 @@ x1 AVSS IBIAS AVDD VIN_BUF- VIN_BUF+ VOUT ota_cmos5l
 
 
 * expanding   symbol:  ota_cmos5l.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sch
+** sym_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sym
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sch
 .subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
 *.iopin IBIAS
 *.iopin VDD
@@ -596,9 +596,10 @@ XM6 X net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
 .ends
 
 
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym # of pins=12
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sch
+* expanding   symbol:  /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym # of
+*+ pins=12
+** sym_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sch
 .subckt gain_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
 *.ipin I_BIAS
 *.ipin V_IN2
@@ -649,8 +650,8 @@ XM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
 
 
 * expanding   symbol:  tgate.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sch
+** sym_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym
+** sch_path: /foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sch
 .subckt tgate IN AVSS AVDD EN ENB OUT  l=0.13e-6 wn=1e-6 wp=3e-6
 *.iopin AVDD
 *.iopin AVSS
