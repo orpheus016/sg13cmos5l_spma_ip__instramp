@@ -29,7 +29,7 @@ N 100 0 120 0 {lab=VINP}
 N 100 -50 120 -50 {lab=VCM}
 N 590 -170 590 -150 {lab=AVDD}
 N 630 -170 630 -150 {lab=AVSS}
-N 670 -170 670 -150 {lab=IBIAS_G1}
+N 670 -170 670 -150 {lab=IBIAS_IA}
 N 490 -30 510 -30 {lab=VCM}
 N 790 -50 840 -50 {lab=v_stage1}
 N 570 90 570 110 {lab=s1[0]}
@@ -39,7 +39,7 @@ N 690 90 690 110 {lab=s1[3]}
 N 730 90 730 110 {lab=s1[4]}
 N 990 -170 990 -150 {lab=AVDD}
 N 1030 -170 1030 -150 {lab=AVSS}
-N 1070 -170 1070 -150 {lab=IBIAS_G2}
+N 1070 -170 1070 -150 {lab=IBIAS_IA}
 N 890 -70 910 -70 {lab=v_stage1}
 N 890 -30 910 -30 {lab=VCM}
 N 970 90 970 110 {lab=s2[0]}
@@ -84,6 +84,18 @@ N 480 -70 510 -70 {lab=V_IA}
 N 1190 -50 1230 -50 {lab=v_stage2}
 N 1600 -30 1640 -30 {lab=VOUT}
 N 1260 -10 1340 -10 {lab=v_stage2}
+N -500 -250 -450 -250 {lab=AVDD}
+N -500 -220 -450 -220 {lab=AVSS}
+N -500 -190 -450 -190 {lab=VPWR}
+N -500 -160 -450 -160 {lab=VGND}
+N -450 -100 -380 -100 {lab=VINP}
+N -450 -70 -380 -70 {lab=VINN}
+N -450 -40 -380 -40 {lab=VCM}
+N -450 20 -380 20 {lab=gain_sel[0]}
+N -450 50 -380 50 {lab=gain_sel[1]}
+N -450 80 -380 80 {lab=gain_sel[2]}
+N -450 170 -380 170 {lab=IBIAS_IA}
+N -450 110 -380 110 {lab=gain_sel[3]}
 C {iopin.sym} -450 -250 0 0 {name=p_avdd lab=AVDD}
 C {iopin.sym} -450 -220 0 0 {name=p_avss lab=AVSS}
 C {iopin.sym} -450 -190 0 0 {name=p_vpwr lab=VPWR}
@@ -96,9 +108,6 @@ C {ipin.sym} -450 50 0 0 {name=p_gsel1 lab=gain_sel[1]}
 C {ipin.sym} -450 80 0 0 {name=p_gsel2 lab=gain_sel[2]}
 C {ipin.sym} -450 110 0 0 {name=p_gsel3 lab=gain_sel[3]}
 C {ipin.sym} -450 170 0 0 {name=p_ibia lab=IBIAS_IA}
-C {ipin.sym} -450 200 0 0 {name=p_ibg1 lab=IBIAS_G1}
-C {ipin.sym} -450 230 0 0 {name=p_ibg2 lab=IBIAS_G2}
-C {ipin.sym} -450 260 0 0 {name=p_ibbuf lab=IBIAS_BUF}
 C {opin.sym} 1830 -20 0 0 {name=p_vout lab=VOUT}
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_decoder_4b/gain_decoder_4b.sym} -150 -110 0 0 {name=x_dec}
 C {lab_wire.sym} -240 -150 0 0 {name=l_dec_in0 lab=gain_sel[0]}
@@ -127,7 +136,7 @@ C {lab_wire.sym} 100 -50 0 0 {name=l_ia_vcm lab=VCM}
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sym} 650 -50 0 0 {name=x_stage1}
 C {lab_wire.sym} 590 -170 1 0 {name=l_st1_avdd lab=AVDD}
 C {lab_wire.sym} 630 -170 1 0 {name=l_st1_avss lab=AVSS}
-C {lab_wire.sym} 670 -170 1 0 {name=l_st1_ib lab=IBIAS_G1}
+C {lab_wire.sym} 670 -170 1 0 {name=l_st1_ib lab=IBIAS_IA}
 C {lab_wire.sym} 490 -30 0 0 {name=l_st1_vcm lab=VCM}
 C {lab_wire.sym} 840 -50 0 0 {name=l_st1_vout lab=v_stage1}
 C {lab_wire.sym} 570 110 3 0 {name=l_st1_s0 lab=s1[0]}
@@ -138,7 +147,7 @@ C {lab_wire.sym} 730 110 3 0 {name=l_st1_s4 lab=s1[4]}
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sym} 1050 -50 0 0 {name=x_stage2}
 C {lab_wire.sym} 990 -170 1 0 {name=l_st2_avdd lab=AVDD}
 C {lab_wire.sym} 1030 -170 1 0 {name=l_st2_avss lab=AVSS}
-C {lab_wire.sym} 1070 -170 1 0 {name=l_st2_ib lab=IBIAS_G2}
+C {lab_wire.sym} 1070 -170 1 0 {name=l_st2_ib lab=IBIAS_IA}
 C {lab_wire.sym} 890 -70 0 0 {name=l_st2_vin lab=v_stage1}
 C {lab_wire.sym} 890 -30 0 0 {name=l_st2_vcm lab=VCM}
 C {lab_wire.sym} 970 110 3 0 {name=l_st2_s0 lab=s2[0]}
@@ -149,7 +158,7 @@ C {lab_wire.sym} 1130 110 3 0 {name=l_st2_s4 lab=s2[4]}
 C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym} 1680 -50 0 0 {name=x_buf}
 C {lab_wire.sym} 1400 -150 1 0 {name=l_buf_avdd lab=AVDD}
 C {lab_wire.sym} 1400 90 3 0 {name=l_buf_avss lab=AVSS}
-C {lab_wire.sym} 1450 70 3 0 {name=l_buf_ib lab=IBIAS_BUF}
+C {lab_wire.sym} 1450 70 3 0 {name=l_buf_ib lab=IBIAS_IA}
 C {lab_wire.sym} 1640 -30 2 0 {name=l_buf_vinn lab=VOUT}
 C {lab_wire.sym} 1790 -20 0 0 {name=l_buf_vout lab=VOUT}
 C {title.sym} 100 400 0 0 {name=l_title author="Alden Cimahi"}
@@ -206,3 +215,15 @@ C {lab_wire.sym} 390 -50 0 1 {name=l_st3 lab=V_IA}
 C {lab_wire.sym} 480 -70 0 0 {name=l_st6 lab=V_IA}
 C {lab_wire.sym} 1230 -50 2 0 {name=l_buf_vout1 lab=v_stage2}
 C {lab_wire.sym} 1260 -10 2 0 {name=l_buf_vout2 lab=v_stage2}
+C {lab_wire.sym} -500 -250 0 0 {name=l_ia_vdd2 lab=AVDD}
+C {lab_wire.sym} -500 -220 0 0 {name=l_ia_vdd3 lab=AVSS}
+C {lab_wire.sym} -500 -190 0 0 {name=l_ia_vdd4 lab=VPWR}
+C {lab_wire.sym} -500 -160 0 0 {name=l_ia_vdd5 lab=VGND}
+C {lab_wire.sym} -380 -100 0 1 {name=l_ia_vcm3 lab=VINP}
+C {lab_wire.sym} -380 -70 0 1 {name=l_ia_vcm4 lab=VINN}
+C {lab_wire.sym} -380 -40 0 1 {name=l_ia_vcm5 lab=VCM}
+C {lab_wire.sym} -380 20 0 1 {name=l_ia_vcm6 lab=gain_sel[0]}
+C {lab_wire.sym} -380 50 0 1 {name=l_ia_vcm7 lab=gain_sel[1]}
+C {lab_wire.sym} -380 80 0 1 {name=l_ia_vcm8 lab=gain_sel[2]}
+C {lab_wire.sym} -380 170 0 1 {name=l_ia_vcm9 lab=IBIAS_IA}
+C {lab_wire.sym} -380 110 0 1 {name=l_ia_vcm12 lab=gain_sel[3]}
