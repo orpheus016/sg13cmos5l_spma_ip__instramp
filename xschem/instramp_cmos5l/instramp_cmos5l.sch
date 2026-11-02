@@ -27,7 +27,6 @@ N 1120 -940 1220 -940 {lab=#net5}
 N 1280 -940 1640 -940 {lab=VOUT}
 N 1560 -610 1640 -610 {lab=VOUT}
 N 1640 -610 1820 -610 {lab=VOUT}
-N 500 -410 640 -410 {lab=VINP}
 N 720 -620 720 -500 {lab=VDD}
 N 720 -1090 720 -970 {lab=VDD}
 N 1400 -860 1400 -740 {lab=VDD}
@@ -36,12 +35,8 @@ N 1640 -940 1640 -610 {lab=VOUT}
 N 760 -1090 760 -970 {lab=VSS}
 N 760 -620 760 -500 {lab=VSS}
 N 1440 -860 1440 -740 {lab=VSS}
-N 500 -880 640 -880 {lab=VINN}
-N 500 -880 500 -800 {lab=VINN}
-N 460 -880 500 -880 {lab=VINN}
-N 500 -490 500 -410 {lab=VINP}
-N 500 -740 500 -550 {lab=CM}
-N 460 -410 500 -410 {lab=VINP}
+N 460 -880 640 -880 {lab=VINN}
+N 460 -410 640 -410 {lab=VINP}
 N 600 -680 920 -680 {lab=#net1}
 N 920 -700 920 -680 {lab=#net1}
 N 920 -230 920 -210 {lab=#net3}
@@ -113,19 +108,6 @@ C {iopin.sym} 1280 -210 0 0 {name=p13 lab=CM}
 C {iopin.sym} 1820 -610 0 0 {name=p14 lab=VOUT}
 C {iopin.sym} 460 -880 2 0 {name=p15 lab=VINN}
 C {iopin.sym} 460 -410 2 0 {name=p16 lab=VINP}
-C {res.sym} 500 -770 0 0 {name=R5
-value=10MEG
-footprint=1206
-device=resistor
-m=1
-lvs_ignore=true}
-C {res.sym} 500 -520 0 0 {name=R6
-value=10MEG
-footprint=1206
-device=resistor
-m=1
-lvs_ignore=true}
-C {lab_wire.sym} 500 -630 2 0 {name=p17 sig_type=std_logic lab=CM}
 C {lab_wire.sym} 1220 -210 2 0 {name=p18 sig_type=std_logic lab=CM}
 C {sg13cmos5l_pr/rhigh.sym} 920 -730 0 0 {name=R7
 w=0.5e-6
