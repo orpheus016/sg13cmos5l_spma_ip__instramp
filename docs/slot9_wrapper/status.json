@@ -1,0 +1,24 @@
+{
+ "cell": "slot9_wrapper",
+ "generated": "2026-11-03T15:13:52",
+ "commit": "b8227c1",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/slot9_wrapper/slot9_wrapper.gds",
+  "sha1": "ef891daf844e"
+ },
+ "schematic": {
+  "path": "xschem/slot9_wrapper/slot9_wrapper.sch",
+  "sha1": "3408a0a99211"
+ },
+ "stages": [
+  {
+   "name": "lvs",
+   "status": "fail",
+   "seconds": 11,
+   "detail": "RESULT: MISMATCH",
+   "at": "2026-11-03T15:13:52"
+  }
+ ],
+ "postlayout": {}
+}

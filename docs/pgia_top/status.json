@@ -1,0 +1,24 @@
+{
+ "cell": "pgia_top",
+ "generated": "2026-11-03T15:13:40",
+ "commit": "b8227c1",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/pgia_top/pgia_top.gds",
+  "sha1": "b4e7553fe4dc"
+ },
+ "schematic": {
+  "path": "xschem/pgia_top/pgia_top.sch",
+  "sha1": "e5b4f1fb68ef"
+ },
+ "stages": [
+  {
+   "name": "lvs",
+   "status": "fail",
+   "seconds": 16,
+   "detail": "RESULT: MISMATCH",
+   "at": "2026-11-03T15:13:40"
+  }
+ ],
+ "postlayout": {}
+}

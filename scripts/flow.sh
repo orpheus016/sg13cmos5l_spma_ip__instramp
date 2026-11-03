@@ -19,6 +19,7 @@ cell="${1:?usage: flow.sh <cell> [--profile typ|pvt] [--stages a,b] [--no-mc] [-
 root="$(cd "$(dirname "$0")/.." && pwd)"
 info() { python3 -I "$root/scripts/cellinfo.py" "$cell" "$@" 2>/dev/null; }
 python3 -I "$root/scripts/cellinfo.py" "$cell" stages >/dev/null 2>&1 || [ -n "$(info note)" ] || { echo "flow.sh: $cell is not in cells.yaml"; exit 2; }
+python3 -I "$root/scripts/cellinfo.py" --check "$cell" || { echo "flow.sh: $cell: cells.yaml does not match the files (see above)"; exit 2; }   # gds / top cell / schematic name agree
 
 profile="typ"; stages=""; only=""; nomc=""; netlist="both"; force=""
 while [ $# -gt 0 ]; do

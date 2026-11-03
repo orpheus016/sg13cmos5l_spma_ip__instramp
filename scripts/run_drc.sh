@@ -57,7 +57,9 @@ while [ $# -gt 0 ]; do
     *) echo "run_drc.sh: unknown option $1"; exit 2;;
   esac
 done
-[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml (e.g. slot9_wrapper for pgia_top), else the cell name
+override=""; [ -n "$gds$top" ] && override=1   # --gds / --top given: the registry is not what is being run
+[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml, else the cell name
+[ -n "$override" ] || python3 -I "$root/scripts/cellinfo.py" --check "$cell" || exit 2   # gds / top cell / schematic name agree
 if [ -z "$gds" ]; then
   mapfile -t found < <(python3 -I "$root/scripts/cellinfo.py" "$cell" gds 2>/dev/null || ls "$root"/gds/*/"$cell.gds" 2>/dev/null)
   [ "${#found[@]}" -eq 1 ] || { echo "run_drc.sh: pass --gds (found ${#found[@]} candidates: ${found[*]:-none})"; exit 2; }
