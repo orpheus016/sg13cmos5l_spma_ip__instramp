@@ -22,9 +22,7 @@ N -100 -480 -40 -480 {lab=#net4}
 N -150 -480 -100 -480 {lab=#net4}
 N -270 -480 -270 -330 {lab=#net5}
 N -270 -480 -210 -480 {lab=#net5}
-N -320 -480 -270 -480 {lab=#net5}
 N -460 -480 -460 -330 {lab=#net6}
-N -460 -480 -380 -480 {lab=#net6}
 N 260 -160 450 -160 {lab=#net7}
 N 450 -190 450 -160 {lab=#net7}
 N 260 -190 260 -160 {lab=#net7}
@@ -160,20 +158,12 @@ N -210 -150 -40 -150 {lab=AVSS}
 N 510 -150 510 100 {lab=AVSS}
 N -0 -170 -0 -80 {lab=AVDD}
 N -160 -170 -0 -170 {lab=AVDD}
+N -290 -480 -270 -480 {lab=#net5}
+N -370 -480 -350 -480 {lab=#net14}
+N -460 -480 -430 -480 {lab=#net6}
 C {ipin.sym} -100 30 0 0 {name=p1 lab=I_BIAS}
 C {ipin.sym} -270 10 0 0 {name=p2 lab=V_IN2}
 C {ipin.sym} -100 -10 0 0 {name=p3 lab=V_CM}
-C {sg13cmos5l_pr/rhigh.sym} -350 -480 3 0 {name=R7
-w=0.5e-6
-l=10.72e-6
-model=rhigh
-body=AVSS
-spiceprefix=X
-b=0
- m=1
-  mm_ok=1
-value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
-}
 C {ipin.sym} -90 100 0 0 {name=p4 lab=AVSS}
 C {ipin.sym} -110 -80 0 0 {name=p5 lab=AVDD}
 C {opin.sym} 150 30 0 0 {name=p6 lab=V_OUT2}
@@ -183,54 +173,21 @@ C {ipin.sym} -250 -410 0 0 {name=p19 lab=S3}
 C {ipin.sym} -90 -410 0 0 {name=p20 lab=S2}
 C {ipin.sym} 100 -410 0 0 {name=p21 lab=S1}
 C {ipin.sym} 290 -410 0 0 {name=p22 lab=S0}
-C {sg13cmos5l_pr/rppd.sym} 370 -480 3 0 {name=R3
-w=2e-6
-l=15.16e-6
-model=rppd
-body=AVSS
-spiceprefix=X
-b=0
- m=1
-  mm_ok=1
-value="expr_eng(  ( 70.0e-6 / @w + 260.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w + 6.0e-9 ) ) / @m  )"
-}
-C {sg13cmos5l_pr/rppd.sym} 540 -480 3 0 {name=R2
-w=2e-6
-l=7e-6
-model=rppd
-body=AVSS
-spiceprefix=X
-b=0
- m=1
-  mm_ok=1
-value="expr_eng(  ( 70.0e-6 / @w + 260.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w + 6.0e-9 ) ) / @m  )"
-}
-C {sg13cmos5l_pr/rppd.sym} -220 10 1 0 {name=R1
-w=2e-6
-l=15.16e-6
-model=rppd
-body=AVSS
-spiceprefix=X
-b=0
- m=1
-  mm_ok=1
-value="expr_eng(  ( 70.0e-6 / @w + 260.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w + 6.0e-9 ) ) / @m  )"
-}
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} -550 -370 0 0 {name=x13 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} -370 -370 0 0 {name=x12 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} -180 -370 0 0 {name=x11 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} -10 -370 0 0 {name=x10 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} 170 -370 0 0 {name=x9 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
 C {sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym} 360 -370 0 0 {name=x8 VDD="AVDD" VSS="AVSS" prefix=sg13cmos5l_ }
-C {tgate.sym} -310 -230 3 0 {name=x7 l=0.13e-6 wn=0.9e-6 wp=2.7e-6}
-C {tgate.sym} -120 -230 3 0 {name=x6 l=0.13e-6 wn=1.5e-6 wp=4.5e-6}
-C {tgate.sym} 50 -230 3 0 {name=x5 l=0.13e-6 wn=2.2e-6 wp=6.6e-6}
-C {tgate.sym} 220 -230 3 0 {name=x4 l=0.13e-6 wn=2.6e-6 wp=7.8e-6}
-C {tgate.sym} 410 -230 3 0 {name=x3 l=0.13e-6 wn=2.9e-6 wp=8.7e-6}
-C {tgate.sym} 600 -230 3 0 {name=x2 l=0.13e-6 wn=3e-6 wp=9e-6}
+C {tgate.sym} -310 -230 3 0 {name=x7 l=0.13e-6 wn=0.18e-6 wp=0.54e-6}
+C {tgate.sym} -120 -230 3 0 {name=x6 l=0.13e-6 wn=0.18e-6 wp=0.54e-6}
+C {tgate.sym} 50 -230 3 0 {name=x5 l=0.13e-6 wn=0.18e-6 wp=0.54e-6}
+C {tgate.sym} 220 -230 3 0 {name=x4 l=0.13e-6 wn=0.2e-6 wp=0.6e-6}
+C {tgate.sym} 410 -230 3 0 {name=x3 l=0.13e-6 wn=0.3e-6 wp=0.9e-6}
+C {tgate.sym} 600 -230 3 0 {name=x2 l=0.13e-6 wn=0.4e-6 wp=1.2e-6}
 C {sg13cmos5l_pr/rhigh.sym} -180 -480 3 0 {name=R6
 w=0.5e-6
-l=5.3e-6
+l=54e-6
 model=rhigh
 body=AVSS
 spiceprefix=X
@@ -241,7 +198,7 @@ value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6
 }
 C {sg13cmos5l_pr/rhigh.sym} -10 -480 3 0 {name=R5
 w=0.5e-6
-l=2.6e-6
+l=26.95e-6
 model=rhigh
 body=AVSS
 spiceprefix=X
@@ -250,9 +207,10 @@ b=0
   mm_ok=1
 value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
 }
-C {sg13cmos5l_pr/rhigh.sym} 180 -480 3 0 {name=R4
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sym} 30 30 0 0 {name=x1}
+C {sg13cmos5l_pr/rhigh.sym} -220 10 1 0 {name=R1
 w=0.5e-6
-l=1.25e-6
+l=6.66e-6
 model=rhigh
 body=AVSS
 spiceprefix=X
@@ -261,4 +219,58 @@ b=0
   mm_ok=1
 value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
 }
-C {gain_ota.sym} 30 30 0 0 {name=x1}
+C {sg13cmos5l_pr/rhigh.sym} 540 -480 1 0 {name=R2
+w=0.5e-6
+l=3.2e-6
+model=rhigh
+body=AVSS
+spiceprefix=X
+b=0
+ m=1
+  mm_ok=1
+value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
+}
+C {sg13cmos5l_pr/rhigh.sym} 370 -480 1 0 {name=R3
+w=0.5e-6
+l=6.66e-6
+model=rhigh
+body=AVSS
+spiceprefix=X
+b=0
+ m=1
+  mm_ok=1
+value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
+}
+C {sg13cmos5l_pr/rhigh.sym} 180 -480 1 0 {name=R4
+w=0.5e-6
+l=13.42e-6
+model=rhigh
+body=AVSS
+spiceprefix=X
+b=0
+ m=1
+  mm_ok=1
+value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
+}
+C {sg13cmos5l_pr/rhigh.sym} -320 -480 3 0 {name=R7
+w=0.5e-6
+l=54e-6
+model=rhigh
+body=AVSS
+spiceprefix=X
+b=0
+ m=1
+  mm_ok=1
+value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
+}
+C {sg13cmos5l_pr/rhigh.sym} -400 -480 3 0 {name=R8
+w=0.5e-6
+l=54e-6
+model=rhigh
+body=AVSS
+spiceprefix=X
+b=0
+ m=1
+  mm_ok=1
+value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
+}
