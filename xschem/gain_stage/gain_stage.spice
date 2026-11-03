@@ -76,6 +76,7 @@ RR3 net1 net2 20.01k $SUB=AVSS $[rhigh] w=0.5e-6 l=6.66e-6 b=0
 RR4 net2 net3 40k $SUB=AVSS $[rhigh] w=0.5e-6 l=13.42e-6 b=0
 RR7 net14 net5 160k $SUB=AVSS $[rhigh] w=0.5e-6 l=54e-6 b=0
 RR8 net6 net14 160k $SUB=AVSS $[rhigh] w=0.5e-6 l=54e-6 b=0
+DD1 AVSS S5 dantenna l=0.78u w=0.78u
 .ends
 
 

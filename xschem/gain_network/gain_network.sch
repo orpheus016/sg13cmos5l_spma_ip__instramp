@@ -48,7 +48,7 @@ N 120 -260 130 -260 {lab=AVSS}
 N 310 -260 320 -260 {lab=AVSS}
 N -0 80 -0 100 {lab=AVSS}
 N -0 100 510 100 {lab=AVSS}
-N -90 100 -0 100 {lab=AVSS}
+N -80 100 -0 100 {lab=AVSS}
 N -110 -80 -0 -80 {lab=AVDD}
 N 500 -260 510 -260 {lab=AVSS}
 N 570 -480 590 -480 {lab=V_OUT2}
@@ -161,6 +161,12 @@ N -160 -170 -0 -170 {lab=AVDD}
 N -290 -480 -270 -480 {lab=#net5}
 N -370 -480 -350 -480 {lab=#net14}
 N -460 -480 -430 -480 {lab=#net6}
+N -600 -230 -600 -220 {lab=S5}
+N -600 -230 -530 -230 {lab=S5}
+N -600 -160 -600 120 {lab=AVSS}
+N -600 120 -80 120 {lab=AVSS}
+N -80 100 -80 120 {lab=AVSS}
+N -90 100 -80 100 {lab=AVSS}
 C {ipin.sym} -100 30 0 0 {name=p1 lab=I_BIAS}
 C {ipin.sym} -270 10 0 0 {name=p2 lab=V_IN2}
 C {ipin.sym} -100 -10 0 0 {name=p3 lab=V_CM}
@@ -273,4 +279,10 @@ b=0
  m=1
   mm_ok=1
 value="expr_eng(  ( 1.6e-4 / @w + 1360.0 * ( (@b + 1)* @l + ( 1.081*@w + 0.18e-6 )*@b ) / ( @w - 0.04e-6 ) ) / @m  )"
+}
+C {sg13cmos5l_pr/dantenna.sym} -600 -190 0 0 {name=D1
+model=dantenna
+l=0.78u
+w=0.78u
+spiceprefix=X
 }
