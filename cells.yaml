@@ -42,15 +42,12 @@ dec2to4:
   stages: [drc]
   note: digital building block
 pgia_top:
-  title: Top-Level PGIA
+  title: Top-Level
   top: slot9_wrapper
   gds: gds/pgia_top/pgia_top.gds
-  sch: xschem/pgia_top/pgia_top.sch
-  cace: cace/pgia_top.yaml
-  stages: [cace, drc, lvs, pex, post]
+  stages: [drc]
   drc_args: [--density]
-  lvs_args: [--disable_tap_extraction]
-  note: Top-level PGIA IP core with 11 gain steps (8x to 8192x)
+  note: chip level, density rules apply
 gain_ota:
   title: Gain Stage OTA
   gds: gds/gain_ota/gain_ota.gds
@@ -67,6 +64,14 @@ gain_network:
   stages: [cace, drc, lvs, pex, post]
   lvs_args: [--disable_tap_extraction]
   note: Gain stage whole circuit with biasing, resistor networks, and switches with transmission gates
+gain_stage:
+  title: Gain Stage Top
+  gds: gds/gain_stage/gain_stage.gds
+  sch: xschem/gain_stage/gain_stage.sch
+  cace: cace/gain_stage.yaml
+  stages: [cace, drc, lvs, pex, post]
+  lvs_args: [--disable_tap_extraction]
+  note: Binary programmable gain stage with standard-cell S0 decoding and 6-tap binary feedback network
 fine_driver_6b:
   sch: xschem/fine_driver_6b/fine_driver_6b.sch
   stages: []

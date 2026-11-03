@@ -15,13 +15,13 @@ N -40 170 -20 170 {lab=nor2_out}
 N -10 90 10 90 {lab=nor3_out}
 N -10 130 10 130 {lab=nor2_out}
 N 110 110 130 110 {lab=S0}
-N 260 -80 260 -60 {lab=S0}
-N 240 -80 240 -60 {lab=s[0]}
-N 220 -80 220 -60 {lab=s[1]}
-N 200 -80 200 -60 {lab=s[2]}
-N 180 -80 180 -60 {lab=s[3]}
-N 160 -80 160 -60 {lab=s[4]}
-N 280 -80 280 -60 {lab=AVSS}
+N 260 -60 260 -40 {lab=S0}
+N 240 -60 240 -40 {lab=s[0]}
+N 220 -60 220 -40 {lab=s[1]}
+N 200 -60 200 -40 {lab=s[2]}
+N 180 -60 180 -40 {lab=s[3]}
+N 160 -60 160 -40 {lab=s[4]}
+N 280 -60 280 -40 {lab=AVSS}
 N 230 -210 230 -190 {lab=AVDD}
 N 210 -210 210 -190 {lab=IBIAS}
 N 80 -150 100 -150 {lab=VIN}
@@ -51,17 +51,17 @@ C {sg13cmos5l_stdcells/sg13cmos5l_and2_1.sym} 50 110 0 0 {name=x_and2 VDD=AVDD V
 C {lab_wire.sym} -10 90 0 0 {name=l_a1 lab=nor3_out}
 C {lab_wire.sym} -10 130 0 0 {name=l_a2 lab=nor2_out}
 C {lab_wire.sym} 130 110 2 0 {name=l_s0_out lab=S0}
-C {lab_wire.sym} 260 -80 1 0 {name=l_g_s0 lab=S0}
-C {lab_wire.sym} 240 -80 1 0 {name=l_g_s1 lab=s[0]}
-C {lab_wire.sym} 220 -80 1 0 {name=l_g_s2 lab=s[1]}
-C {lab_wire.sym} 200 -80 1 0 {name=l_g_s3 lab=s[2]}
-C {lab_wire.sym} 180 -80 1 0 {name=l_g_s4 lab=s[3]}
-C {lab_wire.sym} 160 -80 1 0 {name=l_g_s5 lab=s[4]}
-C {lab_wire.sym} 280 -80 1 0 {name=l_g_avss lab=AVSS}
+C {lab_wire.sym} 260 -40 1 1 {name=l_g_s0 lab=S0}
+C {lab_wire.sym} 240 -40 1 1 {name=l_g_s1 lab=s[0]}
+C {lab_wire.sym} 220 -40 1 1 {name=l_g_s2 lab=s[1]}
+C {lab_wire.sym} 200 -40 1 1 {name=l_g_s3 lab=s[2]}
+C {lab_wire.sym} 180 -40 1 1 {name=l_g_s4 lab=s[3]}
+C {lab_wire.sym} 160 -40 1 1 {name=l_g_s5 lab=s[4]}
+C {lab_wire.sym} 280 -40 1 1 {name=l_g_avss lab=AVSS}
 C {lab_wire.sym} 230 -210 1 0 {name=l_g_avdd lab=AVDD}
 C {lab_wire.sym} 210 -210 1 0 {name=l_g_ibias lab=IBIAS}
 C {lab_wire.sym} 80 -150 0 0 {name=l_g_vin lab=VIN}
 C {lab_wire.sym} 80 -130 0 0 {name=l_g_vcm lab=VCM}
 C {lab_wire.sym} 360 -140 2 0 {name=l_g_vout lab=VOUT}
 C {title.sym} -100 300 0 0 {name=l_title author="SPMA Team"}
-C {/foss/designs/backup_chipalooza/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym} 250 0 0 0 {name=x1}
+C {/foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym} 250 0 0 0 {name=x1}

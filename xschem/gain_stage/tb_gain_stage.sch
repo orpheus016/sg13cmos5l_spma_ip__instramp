@@ -5,83 +5,82 @@ V {}
 S {}
 F {}
 E {}
-C {gain_stage.sym} 0 0 0 0 {name=x1}
 N -60 -120 -60 -80 {lab=AVDD}
-C {lab_wire.sym} -60 -120 1 0 {name=l_avdd lab=AVDD}
 N -20 -120 -20 -80 {lab=AVSS}
-C {lab_wire.sym} -20 -120 1 0 {name=l_avss lab=AVSS}
 N 20 -120 20 -80 {lab=IBIAS}
-C {lab_wire.sym} 20 -120 1 0 {name=l_ibias lab=IBIAS}
 N -160 -20 -120 -20 {lab=VIN}
-C {lab_wire.sym} -160 -20 0 0 {name=l_vin lab=VIN}
 N -160 20 -120 20 {lab=VCM}
-C {lab_wire.sym} -160 20 0 0 {name=l_vcm lab=VCM}
-N 120 0 160 0 {lab=VOUT}
-C {lab_wire.sym} 160 0 2 0 {name=l_vout lab=VOUT}
+N 120 0 200 0 {lab=VOUT}
 N -80 120 -80 160 {lab=s[0]}
-C {lab_wire.sym} -80 160 3 0 {name=l_s_0 lab=s[0]}
 N -40 120 -40 160 {lab=s[1]}
-C {lab_wire.sym} -40 160 3 0 {name=l_s_1 lab=s[1]}
 N 0 120 0 160 {lab=s[2]}
-C {lab_wire.sym} 0 160 3 0 {name=l_s_2 lab=s[2]}
 N 40 120 40 160 {lab=s[3]}
-C {lab_wire.sym} 40 160 3 0 {name=l_s_3 lab=s[3]}
 N 80 120 80 160 {lab=s[4]}
+N -300 -230 -300 -210 {lab=AVDD}
+N -300 -170 -300 -150 {lab=0}
+N -220 -230 -220 -210 {lab=AVSS}
+N -220 -170 -220 -150 {lab=0}
+N -140 -230 -140 -210 {lab=VCM}
+N -140 -170 -140 -150 {lab=0}
+N -60 -230 -60 -210 {lab=IBIAS}
+N -60 -170 -60 -150 {lab=0}
+N 20 -230 20 -210 {lab=VIN}
+N 20 -170 20 -150 {lab=0}
+N 200 0 200 20 {lab=VOUT}
+N 200 80 200 100 {lab=0}
+N -300 230 -300 250 {lab=s[0]}
+N -300 290 -300 310 {lab=0}
+N -220 230 -220 250 {lab=s[1]}
+N -220 290 -220 310 {lab=0}
+N -140 230 -140 250 {lab=s[2]}
+N -140 290 -140 310 {lab=0}
+N -60 230 -60 250 {lab=s[3]}
+N -60 290 -60 310 {lab=0}
+N 20 230 20 250 {lab=s[4]}
+N 20 290 20 310 {lab=0}
+C {gain_stage.sym} 0 0 0 0 {name=x1}
+C {lab_wire.sym} -60 -120 1 0 {name=l_avdd lab=AVDD}
+C {lab_wire.sym} -20 -120 1 0 {name=l_avss lab=AVSS}
+C {lab_wire.sym} 20 -120 1 0 {name=l_ibias lab=IBIAS}
+C {lab_wire.sym} -160 -20 0 0 {name=l_vin lab=VIN}
+C {lab_wire.sym} -160 20 0 0 {name=l_vcm lab=VCM}
+C {lab_wire.sym} 160 0 2 0 {name=l_vout lab=VOUT}
+C {lab_wire.sym} -80 160 3 0 {name=l_s_0 lab=s[0]}
+C {lab_wire.sym} -40 160 3 0 {name=l_s_1 lab=s[1]}
+C {lab_wire.sym} 0 160 3 0 {name=l_s_2 lab=s[2]}
+C {lab_wire.sym} 40 160 3 0 {name=l_s_3 lab=s[3]}
 C {lab_wire.sym} 80 160 3 0 {name=l_s_4 lab=s[4]}
 C {vsource.sym} -300 -200 0 0 {name=V_AVDD value=1.2 savecurrent=false}
-N -300 -230 -300 -210 {lab=AVDD}
 C {lab_wire.sym} -300 -230 1 0 {name=l_s_avdd lab=AVDD}
-N -300 -170 -300 -150 {lab=0}
 C {gnd.sym} -300 -150 0 0 {name=g_avdd lab=0}
 C {vsource.sym} -220 -200 0 0 {name=V_AVSS value=0 savecurrent=false}
-N -220 -230 -220 -210 {lab=AVSS}
 C {lab_wire.sym} -220 -230 1 0 {name=l_s_avss lab=AVSS}
-N -220 -170 -220 -150 {lab=0}
 C {gnd.sym} -220 -150 0 0 {name=g_avss lab=0}
 C {vsource.sym} -140 -200 0 0 {name=V_VCM value=0.6 savecurrent=false}
-N -140 -230 -140 -210 {lab=VCM}
 C {lab_wire.sym} -140 -230 1 0 {name=l_s_vcm lab=VCM}
-N -140 -170 -140 -150 {lab=0}
 C {gnd.sym} -140 -150 0 0 {name=g_vcm lab=0}
 C {isource.sym} -60 -200 2 0 {name=I_BIAS value=1.0u}
-N -60 -230 -60 -210 {lab=IBIAS}
 C {lab_wire.sym} -60 -230 1 0 {name=l_s_ib lab=IBIAS}
-N -60 -170 -60 -150 {lab=0}
 C {gnd.sym} -60 -150 0 0 {name=g_ib lab=0}
 C {vsource.sym} 20 -200 0 0 {name=V_IN value="DC 0.6 AC 1m" savecurrent=false}
-N 20 -230 20 -210 {lab=VIN}
 C {lab_wire.sym} 20 -230 1 0 {name=l_s_vin lab=VIN}
-N 20 -170 20 -150 {lab=0}
 C {gnd.sym} 20 -150 0 0 {name=g_vin lab=0}
 C {capa.sym} 200 50 0 0 {name=CL value=2p m=1}
-N 200 0 200 20 {lab=VOUT}
-N 160 0 200 0 {lab=VOUT}
-N 200 80 200 100 {lab=0}
 C {gnd.sym} 200 100 0 0 {name=g_cl lab=0}
 C {vsource.sym} -300 260 0 0 {name=V_S0 value=v_s0 savecurrent=false}
-N -300 230 -300 250 {lab=s[0]}
 C {lab_wire.sym} -300 230 1 0 {name=l_src_s0 lab=s[0]}
-N -300 290 -300 310 {lab=0}
 C {gnd.sym} -300 310 0 0 {name=g_s0 lab=0}
 C {vsource.sym} -220 260 0 0 {name=V_S1 value=v_s1 savecurrent=false}
-N -220 230 -220 250 {lab=s[1]}
 C {lab_wire.sym} -220 230 1 0 {name=l_src_s1 lab=s[1]}
-N -220 290 -220 310 {lab=0}
 C {gnd.sym} -220 310 0 0 {name=g_s1 lab=0}
 C {vsource.sym} -140 260 0 0 {name=V_S2 value=v_s2 savecurrent=false}
-N -140 230 -140 250 {lab=s[2]}
 C {lab_wire.sym} -140 230 1 0 {name=l_src_s2 lab=s[2]}
-N -140 290 -140 310 {lab=0}
 C {gnd.sym} -140 310 0 0 {name=g_s2 lab=0}
 C {vsource.sym} -60 260 0 0 {name=V_S3 value=v_s3 savecurrent=false}
-N -60 230 -60 250 {lab=s[3]}
 C {lab_wire.sym} -60 230 1 0 {name=l_src_s3 lab=s[3]}
-N -60 290 -60 310 {lab=0}
 C {gnd.sym} -60 310 0 0 {name=g_s3 lab=0}
 C {vsource.sym} 20 260 0 0 {name=V_S4 value=v_s4 savecurrent=false}
-N 20 230 20 250 {lab=s[4]}
 C {lab_wire.sym} 20 230 1 0 {name=l_src_s4 lab=s[4]}
-N 20 290 20 310 {lab=0}
 C {gnd.sym} 20 310 0 0 {name=g_s4 lab=0}
 C {code_shown.sym} 300 -200 0 0 {
 name=MODELS
