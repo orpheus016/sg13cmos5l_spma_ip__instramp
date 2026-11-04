@@ -1,7 +1,7 @@
 {
  "cell": "gain_network",
- "generated": "2026-11-04T05:18:03",
- "commit": "0f10340",
+ "generated": "2026-11-04T05:46:09",
+ "commit": "8df9d33",
  "profile": "typ",
  "gds": {
   "path": "gds/gain_network/gain_network.gds",
@@ -22,23 +22,23 @@
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 31,
+   "seconds": 30,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
-   "at": "2026-11-04T05:18:03"
+   "at": "2026-11-04T05:46:09"
   },
   {
    "name": "audit",
    "status": "pass",
    "seconds": 1,
    "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
-   "at": "2026-11-04T05:18:03"
+   "at": "2026-11-04T05:46:09"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 2,
+   "seconds": 5,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-04T05:18:03"
+   "at": "2026-11-04T05:46:09"
   },
   {
    "name": "pex",

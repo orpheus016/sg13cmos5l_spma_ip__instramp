@@ -1,7 +1,7 @@
 {
  "cell": "gain_ota",
- "generated": "2026-11-04T05:17:28",
- "commit": "0f10340",
+ "generated": "2026-11-04T05:45:33",
+ "commit": "8df9d33",
  "profile": "typ",
  "gds": {
   "path": "gds/gain_ota/gain_ota.gds",
@@ -22,23 +22,23 @@
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 32,
+   "seconds": 23,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
-   "at": "2026-11-04T05:17:28"
+   "at": "2026-11-04T05:45:33"
   },
   {
    "name": "audit",
    "status": "pass",
    "seconds": 0,
    "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
-   "at": "2026-11-04T05:17:28"
+   "at": "2026-11-04T05:45:33"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 5,
+   "seconds": 8,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-04T05:17:28"
+   "at": "2026-11-04T05:45:33"
   },
   {
    "name": "pex",
