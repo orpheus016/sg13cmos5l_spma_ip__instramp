@@ -1,0 +1,105 @@
+# Manifest of the CACE parameters of pgia_top.
+# scripts/gen_cace.py turns it into cace/pgia_top.yaml from the line `parameters:` on.
+#
+# Follows tb_pgia_top.sch co-simulation battery:
+#   - Phase A: DC Operating Point & Power Audit (dc_op)
+#   - Phase B: Small-Signal AC Frequency Response (ac_gain)
+#   - Phase C: Dynamic Transient Stepping (tran)
+
+params: |
+  .param temp=CACE{temperature}
+  .param cl=CACE{cl}
+  .param rl=CACE{rl}
+  .param vdd=CACE{vdd}
+  .param vcm=CACE{vcm}
+  .param ib_ia=CACE{ib_ia=4.2u}
+  .param ib_buf=CACE{ib_buf=1.4u}
+  .param ib_g1=CACE{ib_g1=1.0u}
+  .param ib_g2=CACE{ib_g2=1.0u}
+  .param gain_code=CACE{gain_code=0}
+
+conditions:
+  corner:
+    enumerate: [tt, ss, ff, sf, fs]
+  vdd:
+    minimum: 1.08
+    typical: 1.2
+    maximum: 1.5
+  temperature:
+    minimum: -40
+    typical: 27
+    maximum: 85
+
+parameters:
+  ac_gain:
+    template: ac_gain.sch
+    display: Closed-loop AC gain & bandwidth
+    description: Closed-loop AC frequency response, gain @ 1 kHz, -3 dB bandwidth, and 0 dB frequency across gain settings
+    conditions:
+      gain_code:
+        enumerate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.08
+        typical: 1.2
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+    plots: ["A_CL:temperature", "F3DB:temperature", "A_CL:gain_code", "R_PSEUDO:temperature"]
+    spec:
+      A_CL:   {display: Closed-loop gain @1 kHz, unit: dB, typ: 18.06}
+      A_ERR:  {display: Gain step error vs target, unit: dB}
+      F3DB:   {display: -3 dB bandwidth, unit: Hz, min: 1000}
+      F0DB:   {display: 0 dB frequency, unit: Hz}
+      PH_1K:  {display: Phase @1 kHz, unit: "°"}
+      R_PSEUDO: {display: "Input pseudo-resistor", unit: "GOhm", typ: 15, min: 1}
+
+  dc_op:
+    template: dc_op.sch
+    display: DC operating point
+    description: Quiescent DC voltages, output offset, supply currents, and total static power
+    conditions:
+      gain_code:
+        enumerate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.08
+        typical: 1.2
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+    plots: ["VOS:temperature", "PWR:temperature", "IQ_TOT:vdd"]
+    spec:
+      VOS:        {display: Output offset voltage, unit: mV, typ: 1.08}
+      V_IA:       {display: IA output DC voltage, unit: V, typ: 0.600}
+      V_ST1:      {display: Stage 1 output DC voltage, unit: V, typ: 0.600}
+      V_ST2:      {display: Stage 2 output DC voltage, unit: V, typ: 0.600}
+      VOUT:       {display: DC output voltage, unit: V, typ: 0.600}
+      I_AVDD:     {display: Analog supply current, unit: uA, typ: 216, max: 400}
+      I_VPWR:     {display: Digital supply current, unit: uA, typ: 0.014, max: 1.0}
+      IQ_TOT:     {display: Total quiescent current, unit: uA, typ: 216, max: 400}
+      PWR:        {display: Total DC power, unit: uW, typ: 260, max: 500}
+
+  tran:
+    template: tran.sch
+    display: Dynamic transient response
+    description: Transient output peak-to-peak amplitude for 40 uVpp input (10 kHz) and effective gain
+    conditions:
+      gain_code:
+        enumerate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      corner:
+        enumerate: [tt]
+      vdd:
+        typical: 1.2
+      temperature:
+        typical: 27
+    plots: ["VPP_OUT:gain_code", "EFF_GAIN:gain_code"]
+    spec:
+      VPP_OUT:    {display: Output peak-to-peak, unit: mV}
+      EFF_GAIN:   {display: Effective voltage gain, unit: V/V}

@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="565" height="700" viewBox="217.5 0.0 565.0 700.0" version="1.1">
+<style type="text/css">
+.l0{
+  fill: #ffffff;
+  stroke: #ffffff;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l1{
+  fill: #0099cc;
+  stroke: #0099cc;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l2{
+  fill: #aaaaaa; fill-opacity: 0.2;
+  stroke: #aaaaaa;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l3{
+  fill: #222222; fill-opacity: 0.5;
+  stroke: #222222;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l4{
+  fill: #229900;
+  stroke: #229900;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l5{
+  fill: #bb2200;
+  stroke: #bb2200;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l6{
+  fill: #0066cc; fill-opacity: 0.5;
+  stroke: #0066cc;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l7{
+  fill: #ff0000; fill-opacity: 0.5;
+  stroke: #ff0000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l8{
+  fill: #888800; fill-opacity: 0.5;
+  stroke: #888800;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l9{
+  fill: #00aaaa; fill-opacity: 0.5;
+  stroke: #00aaaa;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l10{
+  fill: #880088;
+  stroke: #880088;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l11{
+  fill: #00ff00; fill-opacity: 0.5;
+  stroke: #00ff00;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l12{
+  fill: #0000cc; fill-opacity: 0.5;
+  stroke: #0000cc;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l13{
+  fill: #666600; fill-opacity: 0.5;
+  stroke: #666600;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l14{
+  fill: #557755; fill-opacity: 0.2;
+  stroke: #557755;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l15{
+  fill: #aa2222; fill-opacity: 0.5;
+  stroke: #aa2222;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l16{
+  fill: #7ccc40; fill-opacity: 0.5;
+  stroke: #7ccc40;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l17{
+  fill: #00ffcc; fill-opacity: 0.2;
+  stroke: #00ffcc;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l18{
+  fill: #ce0097; fill-opacity: 0.5;
+  stroke: #ce0097;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l19{
+  fill: #d2d46b; fill-opacity: 0.2;
+  stroke: #d2d46b;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l20{
+  fill: #ef6158; fill-opacity: 0.2;
+  stroke: #ef6158;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+.l21{
+  fill: #fdb200; fill-opacity: 0.2;
+  stroke: #fdb200;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2.38091;
+}
+text {font-family: Sans-Serif;}
+</style>
+<rect class="l0" x="0" y="0" width="1000" height="700"/>
+<path class="l4" d="M270.727 50.1818L270.727 649.818"/>
+<path class="l4" d="M270.727 649.818L729.273 649.818"/>
+<path class="l4" d="M729.273 50.1818L729.273 649.818"/>
+<path class="l4" d="M270.727 50.1818L729.273 50.1818"/>
+<path class="l5" d="M231.045 169.227L239.864 169.227L239.864 178.045L231.045 178.045L231.045 169.227z"/>
+<path class="l5" d="M231.045 239.773L239.864 239.773L239.864 248.591L231.045 248.591L231.045 239.773z"/>
+<path class="l5" d="M231.045 310.318L239.864 310.318L239.864 319.136L231.045 319.136L231.045 310.318z"/>
+<path class="l5" d="M231.045 416.136L239.864 416.136L239.864 424.955L231.045 424.955L231.045 416.136z"/>
+<path class="l5" d="M231.045 469.045L239.864 469.045L239.864 477.864L231.045 477.864L231.045 469.045z"/>
+<path class="l5" d="M231.045 521.955L239.864 521.955L239.864 530.773L231.045 530.773L231.045 521.955z"/>
+<path class="l5" d="M231.045 574.864L239.864 574.864L239.864 583.682L231.045 583.682L231.045 574.864z"/>
+<path class="l5" d="M760.136 239.773L768.955 239.773L768.955 248.591L760.136 248.591L760.136 239.773z"/>
+<path class="l5" d="M354.5 10.5L363.318 10.5L363.318 19.3182L354.5 19.3182L354.5 10.5z"/>
+<path class="l5" d="M425.045 10.5L433.864 10.5L433.864 19.3182L425.045 19.3182L425.045 10.5z"/>
+<path class="l5" d="M495.591 10.5L504.409 10.5L504.409 19.3182L495.591 19.3182L495.591 10.5z"/>
+<path class="l5" d="M548.5 10.5L557.318 10.5L557.318 19.3182L548.5 19.3182L548.5 10.5z"/>
+<path class="l5" d="M601.409 10.5L610.227 10.5L610.227 19.3182L601.409 19.3182L601.409 10.5z"/>
+<path class="l5" d="M654.318 10.5L663.136 10.5L663.136 19.3182L654.318 19.3182L654.318 10.5z"/>
+<path class="l5" d="M389.773 680.682L398.591 680.682L398.591 689.5L389.773 689.5L389.773 680.682z"/>
+<path class="l5" d="M460.318 680.682L469.136 680.682L469.136 689.5L460.318 689.5L460.318 680.682z"/>
+<path class="l7" d="M235.455 173.636L270.727 173.636"/>
+<path class="l7" d="M235.455 244.182L270.727 244.182"/>
+<path class="l7" d="M235.455 314.727L270.727 314.727"/>
+<path class="l7" d="M235.455 420.545L270.727 420.545"/>
+<path class="l7" d="M235.455 473.455L270.727 473.455"/>
+<path class="l7" d="M235.455 526.364L270.727 526.364"/>
+<path class="l7" d="M235.455 579.273L270.727 579.273"/>
+<path class="l7" d="M729.273 244.182L764.545 244.182"/>
+<path class="l7" d="M358.909 14.9091L358.909 50.1818"/>
+<path class="l7" d="M429.455 14.9091L429.455 50.1818"/>
+<path class="l7" d="M500 14.9091L500 50.1818"/>
+<path class="l7" d="M552.909 14.9091L552.909 50.1818"/>
+<path class="l7" d="M605.818 14.9091L605.818 50.1818"/>
+<path class="l7" d="M658.727 14.9091L658.727 50.1818"/>
+<path class="l7" d="M394.182 649.818L394.182 685.091"/>
+<path class="l7" d="M464.727 649.818L464.727 685.091"/>
+<text fill="#222222"  xml:space="preserve" font-size="18.3418" transform="translate(288.364, 181.473)" >VINP</text>
+<text fill="#222222"  xml:space="preserve" font-size="18.3418" transform="translate(288.364, 252.018)" >VINN</text>
+<text fill="#222222"  xml:space="preserve" font-size="18.3418" transform="translate(288.364, 322.563)" >VCM</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(288.364, 426.716)" >gain_sel[0]</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(288.364, 479.625)" >gain_sel[1]</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(288.364, 532.534)" >gain_sel[2]</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(288.364, 585.443)" >gain_sel[3]</text>
+<text fill="#222222"  xml:space="preserve" font-size="18.3418" transform="translate(649.909, 252.018)" >VOUT</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(337.327, 107) rotate(270)" >AVDD</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(407.873, 107) rotate(270)" >VPWR</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(478.418, 125) rotate(270)" >IBIAS_IA</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(531.327, 133) rotate(270)" >IBIAS_G1</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(584.236, 133) rotate(270)" >IBIAS_G2</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(637.146, 141) rotate(270)" >IBIAS_BUF</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(372.6, 647.727) rotate(270)" >AVSS</text>
+<text fill="#222222"  xml:space="preserve" font-size="16.5076" transform="translate(443.146, 654.727) rotate(270)" >VGND</text>
+<text fill="#222222"  xml:space="preserve" font-size="32.0982" transform="translate(429.455, 379.145)" >@symname</text>
+<text fill="#222222"  xml:space="preserve" font-size="22.9273" transform="translate(447.091, 317.909)" >@name</text>
+</svg>
