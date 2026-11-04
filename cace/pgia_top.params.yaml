@@ -13,9 +13,6 @@ params: |
   .param vdd=CACE{vdd}
   .param vcm=CACE{vcm}
   .param ib_ia=CACE{ib_ia=4.2u}
-  .param ib_buf=CACE{ib_buf=1.4u}
-  .param ib_g1=CACE{ib_g1=1.0u}
-  .param ib_g2=CACE{ib_g2=1.0u}
   .param gain_code=CACE{gain_code=0}
 
 conditions:

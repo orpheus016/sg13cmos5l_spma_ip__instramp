@@ -1,7 +1,7 @@
 {
  "cell": "pgia_top",
- "generated": "2026-11-04T05:26:03",
- "commit": "0f10340",
+ "generated": "2026-11-04T05:41:09",
+ "commit": "973f978",
  "profile": "typ",
  "gds": {
   "path": "gds/pgia_top/pgia_top.gds",
@@ -12,6 +12,13 @@
   "sha1": "e5b4f1fb68ef"
  },
  "stages": [
+  {
+   "name": "cace",
+   "status": "fail",
+   "seconds": 415,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-04_05-34-14: 17 rows, 3 failing",
+   "at": "2026-11-04T05:41:09"
+  },
   {
    "name": "drc",
    "status": "pass",
@@ -32,6 +39,13 @@
    "seconds": 11,
    "detail": "RESULT: MATCH",
    "at": "2026-11-04T05:26:03"
+  },
+  {
+   "name": "images",
+   "status": "pass",
+   "seconds": 1,
+   "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
+   "at": "2026-11-04T05:41:09"
   }
  ],
  "postlayout": {}

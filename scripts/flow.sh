@@ -78,11 +78,13 @@ if has_stage cace; then
       n=$(grep -cE '\| *(Pass|Fail)' "$ref/summary.md"); f=$(grep -cE '\| *Fail' "$ref/summary.md")
       record cace "$([ "$f" -eq 0 ] && echo pass || echo fail)" 0 "reused $(basename "$ref"): $n rows, $f failing"
     else
-      skip_mc=(); [ -n "$nomc" ] && skip_mc=(-sp $(info mc-params))
+      skip_mc=(); mcp="$(info mc-params)"; [ -n "$nomc" ] && [ -n "$mcp" ] && skip_mc=(-sp $mcp)   # cace rejects `-sp` without a name (cells without Monte Carlo parameters)
       run cace "$root/scripts/run_cace.sh" "$cell" --no-progress-bar "${skip_mc[@]}"
       ref="$(ls -d "$root"/runs/RUN_* 2>/dev/null | sort | tail -1)"
       n=$(grep -cE '\| *(Pass|Fail)' "$ref/summary.md" 2>/dev/null); f=$(grep -cE '\| *Fail' "$ref/summary.md" 2>/dev/null)
-      case $RC in 0) record cace pass "$SECS" "$ref: $n rows";; 2) record cace fail "$SECS" "$ref: $n rows, $f failing";; *) record cace error "$SECS" "rc=$RC, see $log/cace.log";; esac
+      # run_cace.sh exits 2 both for "spec failed" (summary.md written) and when cace itself broke (no new run): only trust the newest RUN_* if this call made it
+      if grep -q "cace itself failed\|no summary.md" "$log/cace.log"; then record cace error "$SECS" "cace did not run, see $log/cace.log ($(grep -m1 'cace: error\|itself failed' "$log/cace.log" | cut -c1-120))"
+      else case $RC in 0) record cace pass "$SECS" "$ref: $n rows";; 2) record cace fail "$SECS" "$ref: $n rows, $f failing";; *) record cace error "$SECS" "rc=$RC, see $log/cace.log";; esac; fi
     fi
   fi
 fi

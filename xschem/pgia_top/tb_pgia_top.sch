@@ -16,9 +16,6 @@ N 150 -60 190 -60 {lab=VOUT}
 N -80 -220 -80 -190 {lab=AVDD}
 N -40 -220 -40 -190 {lab=VPWR}
 N 0 -220 0 -190 {lab=IBIAS_IA}
-N 30 -220 30 -190 {lab=IBIAS_G1}
-N 60 -220 60 -190 {lab=IBIAS_G2}
-N 90 -220 90 -190 {lab=IBIAS_BUF}
 N -60 190 -60 220 {lab=AVSS}
 N -20 190 -20 220 {lab=VGND}
 N -540 -410 -540 -390 {lab=AVDD}
@@ -31,12 +28,6 @@ N -300 -410 -300 -390 {lab=VGND}
 N -300 -330 -300 -310 {lab=0}
 N -540 -240 -540 -220 {lab=IBIAS_IA}
 N -540 -160 -540 -140 {lab=0}
-N -460 -240 -460 -220 {lab=IBIAS_BUF}
-N -460 -160 -460 -140 {lab=0}
-N -380 -240 -380 -220 {lab=AVDD}
-N -380 -160 -380 -140 {lab=IBIAS_G1}
-N -300 -240 -300 -220 {lab=AVDD}
-N -300 -160 -300 -140 {lab=IBIAS_G2}
 N -500 -60 -500 -40 {lab=VCM}
 N -500 20 -500 40 {lab=0}
 N -420 -60 -420 -40 {lab=VINP}
@@ -67,9 +58,6 @@ C {lab_wire.sym} 190 -60 2 0 {name=l_dut_vout lab=VOUT}
 C {lab_wire.sym} -80 -220 1 0 {name=l_dut_avdd lab=AVDD}
 C {lab_wire.sym} -40 -220 1 0 {name=l_dut_vpwr lab=VPWR}
 C {lab_wire.sym} 0 -220 1 0 {name=l_dut_ibia lab=IBIAS_IA}
-C {lab_wire.sym} 30 -220 1 0 {name=l_dut_ibg1 lab=IBIAS_G1}
-C {lab_wire.sym} 60 -220 1 0 {name=l_dut_ibg2 lab=IBIAS_G2}
-C {lab_wire.sym} 90 -220 1 0 {name=l_dut_ibbuf lab=IBIAS_BUF}
 C {lab_wire.sym} -60 220 3 0 {name=l_dut_avss lab=AVSS}
 C {lab_wire.sym} -20 220 3 0 {name=l_dut_vgnd lab=VGND}
 C {vsource.sym} -540 -360 0 0 {name=V_AVDD value="1.2" savecurrent=false}
@@ -87,15 +75,6 @@ C {gnd.sym} -300 -310 0 0 {name=g_vgnd lab=0}
 C {isource.sym} -540 -190 0 0 {name=I_IA value=4.2u}
 C {lab_wire.sym} -540 -240 1 0 {name=l_src_ibia lab=IBIAS_IA}
 C {gnd.sym} -540 -140 0 0 {name=g_src_ibia lab=0}
-C {isource.sym} -460 -190 0 0 {name=I_BUF value=1.4u}
-C {lab_wire.sym} -460 -240 1 0 {name=l_src_ibbuf lab=IBIAS_BUF}
-C {gnd.sym} -460 -140 0 0 {name=g_src_ibbuf lab=0}
-C {isource.sym} -380 -190 0 0 {name=I_G1 value=1.0u}
-C {lab_wire.sym} -380 -240 1 0 {name=l_src_ibg1_vdd lab=AVDD}
-C {lab_wire.sym} -380 -140 3 0 {name=l_src_ibg1 lab=IBIAS_G1}
-C {isource.sym} -300 -190 0 0 {name=I_G2 value=1.0u}
-C {lab_wire.sym} -300 -240 1 0 {name=l_src_ibg2_vdd lab=AVDD}
-C {lab_wire.sym} -300 -140 3 0 {name=l_src_ibg2 lab=IBIAS_G2}
 C {vsource.sym} -500 -10 0 0 {name=V_CM value="0.6" savecurrent=false}
 C {lab_wire.sym} -500 -60 1 0 {name=l_src_vcm lab=VCM}
 C {gnd.sym} -500 40 0 0 {name=g_src_vcm lab=0}
@@ -130,6 +109,7 @@ value="
 .lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
 .lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
 .lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib dio_tt
 .include /foss/pdks/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/spice/sg13cmos5l_stdcell.spice
 
 .param temp=27

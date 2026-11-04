@@ -53,8 +53,9 @@ pgia_top:
   top: pgia_top
   gds: gds/pgia_top/pgia_top.gds
   sch: xschem/pgia_top/pgia_top.sch
+  cace: cace/pgia_top.yaml
   children: [instramp_cmos5l, gain_stage, output_buffer]
-  stages: [drc, audit, lvs]
+  stages: [cace, drc, audit, lvs, pex, post]
   # density rules are not fatal here: the Chipalooza harness generates and adds the fill (scripts/generate_fill.py) before its final DRC
   # n/p taps are plain connections to the well (with extraction on every PMOS bulk mismatches). The flat chip run also sees the pin labels of
   # the sub-blocks (s[0..4], VIN, VOUT, IBIAS...) as extra top ports; the deck's strict port check would fail on those (scripts/lvs_tools.py labels

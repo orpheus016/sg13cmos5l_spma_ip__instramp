@@ -8,8 +8,8 @@
 ### Physical Spec
 <!-- AUTO:dims:pgia_top -->
 ```bash
-W = 537.15um
-L = 273.00um
+W = 514.60um
+L = 250.00um
 ```
 <!-- /AUTO -->
 

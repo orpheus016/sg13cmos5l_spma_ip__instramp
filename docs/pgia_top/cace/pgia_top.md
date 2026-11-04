@@ -37,18 +37,6 @@
   + Description: Bias current sink for instrumentation amplifier (4.2 uA)
   + Type: signal
   + Direction: input
-- IBIAS_G1
-  + Description: Bias current source for stage 1 gain network (1.0 uA from AVDD)
-  + Type: signal
-  + Direction: input
-- IBIAS_G2
-  + Description: Bias current source for stage 2 gain network (1.0 uA from AVDD)
-  + Type: signal
-  + Direction: input
-- IBIAS_BUF
-  + Description: Bias current sink for output buffer (1.4 uA)
-  + Type: signal
-  + Direction: input
 - VINP
   + Description: Non-inverting differential analog input
   + Type: signal
@@ -95,25 +83,10 @@
   + Unit: V
   + Typical: 0.6
 - ib_ia
-  + Description: Bias current for IA
+  + Description: Bias current of the single bias pin (instrumentation amplifier, both gain stages and the buffer)
   + Display: Ib_ia
   + Unit: uA
   + Typical: 4.2
-- ib_g1
-  + Description: Bias current for Gain Stage 1
-  + Display: Ib_g1
-  + Unit: uA
-  + Typical: 1.0
-- ib_g2
-  + Description: Bias current for Gain Stage 2
-  + Display: Ib_g2
-  + Unit: uA
-  + Typical: 1.0
-- ib_buf
-  + Description: Bias current for Output Buffer
-  + Display: Ib_buf
-  + Unit: uA
-  + Typical: 1.4
 - cl
   + Description: Output load capacitance
   + Display: CLoad
