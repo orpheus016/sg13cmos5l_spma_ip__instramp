@@ -8,18 +8,43 @@
 #   --fix-labels      run on a scratch copy of the GDS where missing /25 net labels are copied from the pin/drawing
 #                     layer. The real GDS is never touched; fix the labels in KLayout afterwards.
 #   --no-taps         disable ntap1 and ptap1 device extraction (--disable_tap_extraction)
+#   --implicit-nets <a,b>  treat all layout nets labelled a / b as one net (KLayout connect_implicit), added to the cell's default
+#                     lvs_args. What-if without routing: put a text label (e.g. VCM) on the open wire, run with --implicit-nets VCM
 #   --view            open KLayout with the GDS and the result database afterwards
 #
 # Steps: xschem LVS netlist -> make it readable for KLayout -> check labels -> run_lvs.py -> readable report.
 # Results: runs/lvs/<cell>/ (git-ignored): <cell>.lvsdb, <cell>_extracted.cir, logs.  Exit: 0 match, 1 mismatch, 2 setup error.
 set -uo pipefail
-cell="${1:?usage: run_lvs.sh <cell> [--gds f] [--top c] [--netlist-only] [--fix-labels] [--view] [-- run_lvs.py args]}"; shift
+
 root="$(cd "$(dirname "$0")/.." && pwd)"
-export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"   # the image default is ihp-sg13g2, which makes devices "IS MISSING"
+export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
+
+# Container Auto-Detection & Forwarding:
+# If klayout is not in PATH or PDK_ROOT is missing on host, forward to docker container if available
+if ! command -v klayout >/dev/null 2>&1 || [ ! -d "$PDK_ROOT/$PDK" ]; then
+  if command -v docker >/dev/null 2>&1 && docker ps --format '{{.Names}}' 2>/dev/null | grep -q '^iic-osic-tools_x11$'; then
+    container_root="/foss/designs$(echo "$root" | sed 's|^/home/ranantalden/Projects/Designs||')"
+    if [[ "$(pwd)" == /home/ranantalden/Projects/Designs* ]]; then
+      container_cwd="/foss/designs$(pwd | sed 's|^/home/ranantalden/Projects/Designs||')"
+    else
+      container_cwd="$container_root"
+    fi
+    args=()
+    for arg in "$@"; do
+      args+=("${arg//\/home\/ranantalden\/Projects\/Designs/\/foss\/designs}")
+    done
+    exec docker exec -i -w "$container_cwd" iic-osic-tools_x11 bash "$container_root/scripts/run_lvs.sh" "${args[@]}"
+  elif ! command -v klayout >/dev/null 2>&1; then
+    echo "run_lvs.sh: ERROR: klayout is not found in PATH and iic-osic-tools_x11 container is not running." >&2
+    exit 2
+  fi
+fi
+
+cell="${1:?usage: run_lvs.sh <cell> [--gds f] [--top c] [--netlist-only] [--fix-labels] [--view] [-- run_lvs.py args]}"; shift
 lvs_py="$PDK_ROOT/$PDK/libs.tech/klayout/tech/lvs/run_lvs.py"
 tools="$root/scripts/lvs_tools.py"
 
-gds=""; top="";  netlist_only=""; fix_labels=""; view=""; extra=()
+gds=""; top="";  netlist_only=""; fix_labels=""; view=""; implicit=""; extra=()
 while [ $# -gt 0 ]; do
   case "$1" in
     --gds) gds="$2"; shift 2;;
@@ -27,16 +52,21 @@ while [ $# -gt 0 ]; do
     --netlist-only) netlist_only=1; shift;;
     --fix-labels) fix_labels=1; shift;;
     --no-taps|--disable-tap-extraction) extra+=(--disable_tap_extraction); shift;;
+    --implicit-nets) implicit="$2"; shift 2;;
     --view) view=1; shift;;
     --) shift; extra+=("$@"); break;;
     *) echo "run_lvs.sh: unknown option $1"; exit 2;;
   esac
 done
+override=""; [ -n "$gds$top" ] && override=1   # --gds / --top given: the registry is not what is being run
 if [ ${#extra[@]} -eq 0 ]; then
   read -ra lvs_extra <<<"$(python3 -I "$root/scripts/cellinfo.py" "$cell" lvs_args 2>/dev/null || true)"
   [ ${#lvs_extra[@]} -gt 0 ] && extra=("${lvs_extra[@]}")
 fi
-[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml (e.g. slot9_wrapper for pgia_top), else the cell name
+[ -n "$implicit" ] && extra+=("--implicit_nets=$implicit")
+[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml, else the cell name
+# registry sanity (gds / top cell / schematic name agree) before anything slow runs
+[ -n "$override" ] || python3 -I "$root/scripts/cellinfo.py" --check "$cell" || exit 2
 
 sch="$root/xschem/$cell/$cell.sch"
 [ -f "$sch" ] || { echo "run_lvs.sh: $sch not found"; exit 2; }
@@ -58,6 +88,10 @@ if grep -q "IS MISSING" "$raw/$cell.spice"; then
 fi
 gds_args=(); [ -n "$gds" ] && gds_args=(--gds "$gds" --top "$top")   # MoM cap orientation is taken from the layout
 python3 -I "$tools" netlist-fix "$raw/$cell.spice" "$nl_dir/$cell.spice" "${gds_args[@]}" || exit 2
+if ! grep -qiE "^\.subckt[[:space:]]+${top}[[:space:]]" "$nl_dir/$cell.spice"; then
+  echo "run_lvs.sh: ERROR: layout top cell '$top' has no .subckt of that name in the schematic netlist of $cell (it has: $(grep -ioE '^\.subckt[[:space:]]+[^[:space:]]+' "$nl_dir/$cell.spice" | awk '{print $2}' | tr '\n' ' '))."
+  echo "             Top cell and schematic name must be the same: fix 'top:' in cells.yaml, or pass --top."; exit 2
+fi
 [ -n "$netlist_only" ] && { echo "run_lvs.sh: use this as 'Netlist Path' in the KLayout LVS options: $nl_dir/$cell.spice"; exit 0; }
 
 # 2. labels
@@ -79,6 +113,10 @@ db="$run/$top.lvsdb"
 
 # 4. report
 python3 -I "$tools" report "$db"; res=$?
+# the .lvsdb records compare's own result only; the deck's extra checks (strict top ports, nothing to compare) fail the run without touching it
+if [ "$res" -eq 0 ] && grep -q "Netlists don't match" "$run/run_lvs.out"; then
+  echo "run_lvs.sh: nets and devices match, but the LVS deck still failed the run (see $run/run_lvs.out; e.g. extra top-level port labels: --ignore_top_ports_mismatch)"; res=1
+fi
 echo "files: $db  $run/${top}_extracted.cir  (layout used: $layout)"
 if [ -n "$view" ]; then
   printf 'lv = RBA::LayoutView.current\nl = RBA::LayoutVsSchematic.new; l.read("%s")\nlv.show_lvsdb(lv.add_lvsdb(l), 0)\n' "$db" >"$run/view.rb"

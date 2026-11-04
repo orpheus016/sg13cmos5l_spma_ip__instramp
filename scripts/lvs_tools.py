@@ -13,6 +13,7 @@
 Run with `python3 -I` (needs the `klayout` python module, which ships with the KLayout of the tool image).
 """
 import argparse
+import os
 import re
 import sys
 
@@ -144,9 +145,14 @@ def cmd_netlist_fix(args):
                  "(a simulation netlist has '**.subckt' commented out).")
     # Walk the file subckt by subckt: `.param` lines (user code block, usually after the devices) move to just
     # below their own `.subckt` line, `.save`/stray `.end` are dropped, MoM caps are expanded per subckt.
-    out, block, nparam, nsub, opened = [], None, 0, 0, False
+    out, block, nparam, nsub, opened, dropped = [], None, 0, 0, False, []
     for line in text.splitlines():
         low = line.lower()
+        # simulation-only `.include` / `.lib` / `.inc` of a user code block (models, the decoder netlist): KLayout's SPICE reader tries to open
+        # the file (and fails on paths like .../ihp-sg13cmos5l/...); the subckts the LVS needs are added below, so they are dropped
+        if low.startswith((".include", ".inc ", ".lib")):
+            dropped.append(line.strip())
+            continue
         if low.startswith(".subckt") and block is None:
             block = {"head": line, "params": [], "body": [], "cell": line.split()[1]}
             nsub += 1
@@ -164,7 +170,40 @@ def cmd_netlist_fix(args):
             block["params"].append(line)
         elif not low.startswith(".save"):
             block["body"].append(line)
-    open(args.out, "w").write("\n".join(out) + "\n")
+    final_text = "\n".join(out)
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # If gain_decoder_4b is instantiated but not defined, include its subcircuit
+    if "gain_decoder_4b" in final_text and ".subckt gain_decoder_4b" not in final_text.lower():
+        dec_spice_path = os.path.join(root_dir, "gds/gain_decoder_4b/final/spice/gain_decoder_4b.spice")
+        if os.path.exists(dec_spice_path):
+            with open(dec_spice_path, "r") as df:
+                dec_txt = df.read()
+            # Extract from .subckt gain_decoder_4b to .ends
+            idx_start = dec_txt.find(".subckt gain_decoder_4b")
+            if idx_start != -1:
+                idx_end = dec_txt.find(".ends", idx_start) + 5
+                final_text += "\n" + dec_txt[idx_start:idx_end] + "\n"
+
+    # If any standard cells are referenced and not yet defined, include them from sg13cmos5l_stdcell_lvs.spice
+    std_spice_path = os.path.join(root_dir, "scripts/sg13cmos5l_stdcell_lvs.spice")
+    if os.path.exists(std_spice_path) and "sg13cmos5l_" in final_text:
+        existing_subckts = {m.lower() for m in re.findall(r"(?i)^\s*\.subckt\s+(\w+)", final_text, re.MULTILINE)}
+        with open(std_spice_path, "r") as sf:
+            std_txt = sf.read()
+        blocks_to_add = []
+        for match in re.finditer(r"(?i)(\.subckt\s+(\w+)[\s\S]*?\.ends)", std_txt):
+            block, cell_name = match.group(1), match.group(2)
+            if cell_name.lower() not in existing_subckts and re.search(rf"\b{re.escape(cell_name)}\b", final_text, re.IGNORECASE):
+                blocks_to_add.append(block)
+                existing_subckts.add(cell_name.lower())
+        if blocks_to_add:
+            final_text += "\n" + "\n\n".join(blocks_to_add) + "\n"
+    elif "sg13cmos5l_inv_1" in final_text and ".subckt sg13cmos5l_inv_1" not in final_text.lower():
+        final_text += "\n.subckt sg13cmos5l_inv_1 Y A VDD VSS\nMM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1\nMM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1\n.ends\n"
+
+    open(args.out, "w").write(final_text + "\n")
+    if dropped:
+        print(f"netlist-fix: dropped {len(dropped)} .include/.lib line(s) (simulation only): " + "; ".join(d.split()[-1] for d in dropped))
     print(f"netlist-fix: {args.out}  ({nsub} subckt(s), {nparam} .param lines moved inside)")
 
 
@@ -176,14 +215,16 @@ TEXT_LAYERS = {8: "Metal1", 10: "Metal2", 30: "Metal3", 50: "Metal4", 67: "Metal
 def cmd_labels(args):
     import klayout.db as db
 
-    _, ports = subckt_ports(open(args.netlist).read(), args.topcell)
-    if not ports:
-        sys.exit("labels: no subckt ports found in " + args.netlist)
     ly = db.Layout()
     ly.read(args.gds)
     top = ly.cell(args.topcell)
     if top is None:
-        sys.exit(f"labels: cell '{args.topcell}' not in {args.gds}")
+        sys.exit(f"labels: cell '{args.topcell}' not in {args.gds}; its top cells are: "
+                 f"{', '.join(c.name for c in ly.top_cells())} (pass --top, or fix `top:` in cells.yaml)")
+    _, ports = subckt_ports(open(args.netlist).read(), args.topcell)
+    if not ports:
+        sys.exit(f"labels: no .subckt {args.topcell} with ports found in {args.netlist} "
+                 "(layout top cell and schematic name must be the same)")
 
     found = {}  # port -> {(layer, dt): [(x_um, y_um)]}
     for layer in TEXT_LAYERS:
@@ -258,6 +299,26 @@ def cmd_report(args):
             all_ok = False
         lp = [p.name() for p in lay.each_pin()]
         sp = [p.name() for p in sch.each_pin()]
+        lnet = l.netlist().circuit_by_name(lay.name) or lay   # the xref's circuit handle does not resolve nets
+        bad_dev = sum(1 for dp in x.each_device_pair(cp) if dp.status() not in good)
+        n_dev = sum(1 for _ in x.each_device_pair(cp))
+        bad_net = [n for n in x.each_net_pair(cp) if n.status() not in good]
+        n_net = sum(1 for _ in x.each_net_pair(cp))
+        print(f"  summary: {bad_dev} of {n_dev} devices and {len(bad_net)} of {n_net} nets mismatched")
+        # SHORTS: one layout net carrying several net labels (e.g. AVDD,VINN,VINP) = those nets are shorted in the layout.
+        # OPENS: schematic net with no layout counterpart (open) - or one that was swallowed by a short, see SHORTS.
+        # (only mismatched ones: a net with two labels that the schematic also has as one net, e.g. VIN,VOUT, is fine)
+        shorts = [lnet.net_by_name(n.first().name) for n in bad_net if n.first() is not None and "," in (n.first().name or "")]
+        shorts = [n for n in shorts if n is not None]
+        if shorts:
+            print("  SHORTS (several labels on one layout net, not joined in the schematic):")
+            for n in shorts:
+                xs = [t.device().trans.disp for t in n.each_terminal()]
+                where = f", devices in x {min(p.x for p in xs):.0f}..{max(p.x for p in xs):.0f} um, y {min(p.y for p in xs):.0f}..{max(p.y for p in xs):.0f} um" if xs else ""
+                print(f"   !! {n.name}  ({n.terminal_count()} device terminals{where})")
+        opens = [n.second().expanded_name() for n in bad_net if n.first() is None and n.second() is not None]
+        if opens:
+            print(f"  OPENS / swallowed by a short ({len(opens)} schematic nets without layout net): {' '.join(opens)}")
         print(f"  ports layout   : {' '.join(lp) or '(none: no label on a /25 text layer?)'}")
         print(f"  ports schematic: {' '.join(sp)}")
         print("  devices (layout <-> schematic):")
@@ -266,7 +327,6 @@ def cmd_report(args):
             tag = "ok " if dp.status() in good else "!! "
             cls = (a or b).device_class().name
             print(f"   {tag}{(a.expanded_name() if a else '-'):6s} {cls:14s} <-> {(b.expanded_name() if b else '-'):6s} {st(dp.status()):16s} {loc(a) if a else ''}")
-        lnet = l.netlist().circuit_by_name(lay.name) or lay   # the xref's circuit handle does not resolve nets
         caps = [d for d in lnet.each_device() if "cmom" in d.device_class().name.lower()]
         if caps:
             tot = sum(d.parameter("m") for d in caps)

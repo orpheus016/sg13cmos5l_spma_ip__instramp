@@ -1,30 +1,23 @@
 {
  "cell": "pgia_top",
- "generated": "2026-10-23T13:04:32",
- "commit": "48e69ad",
+ "generated": "2026-11-03T15:13:40",
+ "commit": "b8227c1",
  "profile": "typ",
  "gds": {
   "path": "gds/pgia_top/pgia_top.gds",
-  "sha1": "491fec7f4fc8"
+  "sha1": "b4e7553fe4dc"
  },
  "schematic": {
   "path": "xschem/pgia_top/pgia_top.sch",
-  "sha1": "762254e89def"
+  "sha1": "e5b4f1fb68ef"
  },
  "stages": [
   {
-   "name": "cace",
+   "name": "lvs",
    "status": "fail",
-   "seconds": 85,
-   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-23_13-03-07: 0 rows, 0 failing",
-   "at": "2026-10-23T13:04:32"
-  },
-  {
-   "name": "images",
-   "status": "pass",
-   "seconds": 1,
-   "detail": "1 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-10-23T13:04:32"
+   "seconds": 16,
+   "detail": "RESULT: MISMATCH",
+   "at": "2026-11-03T15:13:40"
   }
  ],
  "postlayout": {}

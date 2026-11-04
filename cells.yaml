@@ -1,11 +1,14 @@
 # Registry of the cells of this repository: single source of truth for scripts/flow.sh, scripts/cellinfo.py, the CI matrices
 # and the report. Paths are relative to the repository root.
 #   gds      layout (DRC / antenna / LVS / PEX); omit if the cell has no layout yet
-#   top      top cell name in the GDS (default: the cell name; pgia_top.gds has the top cell `slot9_wrapper`)
+#   top      top cell name in the GDS (default: the cell name). Must be a top-level cell of `gds` AND equal the .subckt name of `sch`,
+#            so each hierarchy level has its own GDS: pgia_top.gds -> top `pgia_top`, slot9_wrapper.gds -> top `slot9_wrapper`
+#            (which instantiates pgia_top). `scripts/cellinfo.py --check` verifies this; run_lvs.sh / run_drc.sh / flow.sh call it first.
 #   sch      xschem schematic (LVS, netlist pin order)
 #   cace     CACE datasheet (schematic reference run and post-layout run)
 #   stages   what scripts/flow.sh runs, in order, out of: cace drc lvs pex post
 #   drc_args extra arguments for scripts/run_drc.sh (e.g. --density for a finished chip)
+#   children cells instantiated by this one (hierarchy); scripts/cellinfo.py --order lists cells children-first (leaves -> chip)
 #   note     free text shown in the status page
 #   title    heading of this cell in gds/pgia_top/README.md (scripts/update_images.py puts the layout picture + W/L under it)
 #   schematics  further schematics of the cell to draw (the primary one is `sch`)
@@ -22,6 +25,7 @@ instramp_cmos5l:
   gds: gds/pgia_top/instramp_cmos5l.gds
   sch: xschem/instramp_cmos5l/instramp_cmos5l.sch
   cace: cace/instramp_cmos5l.yaml
+  children: [ota_cmos5l]
   stages: [cace, drc, lvs, pex, post]
   note: three-OTA instrumentation amplifier, closed-loop gain 8 V/V
 output_buffer:
@@ -43,11 +47,26 @@ dec2to4:
   note: digital building block
 pgia_top:
   title: Top-Level
-  top: slot9_wrapper
+  top: pgia_top
   gds: gds/pgia_top/pgia_top.gds
-  stages: [drc]
+  sch: xschem/pgia_top/pgia_top.sch
+  children: [instramp_cmos5l, gain_stage, output_buffer]
+  stages: [drc, lvs]
   drc_args: [--density]
-  note: chip level, density rules apply
+  # n/p taps are plain connections to the well (with extraction on every PMOS bulk mismatches). The flat chip run also sees the pin labels of
+  # the sub-blocks (s[0..4], VIN, VOUT, IBIAS...) as extra top ports; the deck's strict port check would fail on those (scripts/lvs_tools.py labels
+  # already checks that every schematic port has a label)
+  lvs_args: [--disable_tap_extraction, --ignore_top_ports_mismatch]
+  note: PGIA core (gain decoder + instramp + gain stages + buffer), density rules apply
+slot9_wrapper:
+  top: slot9_wrapper
+  gds: gds/slot9_wrapper/slot9_wrapper.gds
+  sch: xschem/slot9_wrapper/slot9_wrapper.sch
+  children: [pgia_top]
+  stages: [drc, lvs]
+  drc_args: [--density]
+  lvs_args: [--disable_tap_extraction, --ignore_top_ports_mismatch]   # see pgia_top
+  note: chip level harness (slot 9 frame) that instantiates pgia_top, density rules apply
 gain_ota:
   title: Gain Stage OTA
   gds: gds/gain_ota/gain_ota.gds
@@ -61,6 +80,7 @@ gain_network:
   gds: gds/gain_network/gain_network.gds
   sch: xschem/gain_network/gain_network.sch
   cace: cace/gain_network.yaml
+  children: [gain_ota]
   stages: [cace, drc, lvs, pex, post]
   lvs_args: [--disable_tap_extraction]
   note: Gain stage whole circuit with biasing, resistor networks, and switches with transmission gates
@@ -69,6 +89,7 @@ gain_stage:
   gds: gds/gain_stage/gain_stage.gds
   sch: xschem/gain_stage/gain_stage.sch
   cace: cace/gain_stage.yaml
+  children: [gain_network]
   stages: [cace, drc, lvs, pex, post]
   lvs_args: [--disable_tap_extraction]
   note: Binary programmable gain stage with standard-cell S0 decoding and 6-tap binary feedback network

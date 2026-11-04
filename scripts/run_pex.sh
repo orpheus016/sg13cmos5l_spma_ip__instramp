@@ -30,7 +30,7 @@ while [ $# -gt 0 ]; do
     *) echo "run_pex.sh: unknown option $1"; exit 2;;
   esac
 done
-[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml (e.g. slot9_wrapper for pgia_top), else the cell name
+[ -n "$top" ] || top="$(python3 -I "$root/scripts/cellinfo.py" "$cell" top 2>/dev/null || echo "$cell")"   # default: top of cells.yaml, else the cell name
 if [ -z "$gds" ]; then
   mapfile -t found < <(python3 -I "$root/scripts/cellinfo.py" "$cell" gds 2>/dev/null || ls "$root"/gds/*/"$cell.gds" 2>/dev/null)
   [ "${#found[@]}" -eq 1 ] || { echo "run_pex.sh: pass --gds (found ${#found[@]} candidates)"; exit 2; }
