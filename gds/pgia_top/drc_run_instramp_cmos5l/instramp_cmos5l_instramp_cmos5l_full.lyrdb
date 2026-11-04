@@ -2,8 +2,13 @@
 <report-database>
  <description>Main DRC Run Report at</description>
  <original-file />
+<<<<<<<< HEAD:gds/gain_stage/drc_run_gain_network/gain_network.klay_gain_network_full.lyrdb
+ <generator>drc: script='/foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc'</generator>
+ <top-cell>gain_network</top-cell>
+========
  <generator>drc: script='/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc'</generator>
  <top-cell>instramp_cmos5l</top-cell>
+>>>>>>>> origin/main:gds/pgia_top/drc_run_instramp_cmos5l/instramp_cmos5l_instramp_cmos5l_full.lyrdb
  <tags>
  </tags>
  <categories>
@@ -243,13 +248,13 @@
   </category>
   <category>
    <name>M1.e</name>
-   <description>5.16. M1.e Min. space of Metal1 lines if, at least one line is wider than 0.15 µm and the parallel run is more than 1.0 µm is 0.22 um</description>
+   <description>5.16. M1.e Min. space of Metal1 lines if, at least one line is wider than 0.3 µm and the parallel run is more than 1.0 µm is 0.22 um</description>
    <categories>
    </categories>
   </category>
   <category>
    <name>M1.f</name>
-   <description>5.16. M1.f Min. space of Metal1 lines if, at least one line is wider than 5.0 µm and the parallel run is more than 10.0 µm is 0.6 um</description>
+   <description>5.16. M1.f Min. space of Metal1 lines if, at least one line is wider than 10.0 µm and the parallel run is more than 10.0 µm is 0.6 um</description>
    <categories>
    </categories>
   </category>
@@ -3292,7 +3297,11 @@
  </categories>
  <cells>
   <cell>
+<<<<<<<< HEAD:gds/gain_stage/drc_run_gain_network/gain_network.klay_gain_network_full.lyrdb
+   <name>gain_network</name>
+========
    <name>instramp_cmos5l</name>
+>>>>>>>> origin/main:gds/pgia_top/drc_run_instramp_cmos5l/instramp_cmos5l_instramp_cmos5l_full.lyrdb
    <variant />
    <layout-name />
    <references>

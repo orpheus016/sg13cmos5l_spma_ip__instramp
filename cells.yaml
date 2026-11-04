@@ -27,12 +27,14 @@ instramp_cmos5l:
   cace: cace/instramp_cmos5l.yaml
   children: [ota_cmos5l]
   stages: [cace, drc, lvs, pex, post]
+  lvs_args: [--ignore_top_ports_mismatch]   # sub-cell pin labels appear as extra aliases on internal nets; nets/devices are compared in full
   note: three-OTA instrumentation amplifier, closed-loop gain 8 V/V
 output_buffer:
   title: Buffer
   gds: gds/pgia_top/output_buffer.gds
   sch: xschem/output_buffer/output_buffer.sch
   stages: [drc, lvs]
+  lvs_args: [--ignore_top_ports_mismatch]   # sub-cell pin labels appear as extra aliases on internal nets; nets/devices are compared in full
   note: no CACE datasheet yet (python3 scripts/new_cell.py output_buffer)
 decoder_top_10b:
   title: Decoder

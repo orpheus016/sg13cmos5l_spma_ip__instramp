@@ -37,6 +37,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 -m pip install --quiet pyyaml || true
+      - name: Registry matches the files (top cell name = schematic name)
+        # without klayout here only the static part runs; the top cell inside the GDS is checked by flow.sh in the verify job
+        run: python3 scripts/cellinfo.py --check
       - id: m
         # cells.yaml is the registry: a cell is in this matrix when its `stages` contain drc or lvs
         run: echo "cells=$(python3 scripts/cellinfo.py --matrix verify)" >> "$GITHUB_OUTPUT"
