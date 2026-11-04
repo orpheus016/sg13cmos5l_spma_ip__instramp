@@ -1,0 +1,17 @@
+{
+ "layout": "gds/gain_network/gain_network.gds",
+ "top": "gain_network",
+ "limit_um": 20.0,
+ "violations": {},
+ "warnings": {},
+ "counts": {
+  "ntie": 27,
+  "ptie": 27,
+  "p_activ_in_nwell": 41,
+  "n_activ_in_substrate": 28,
+  "nwell": 7
+ },
+ "abut_sites": [],
+ "abut_total_sites": 0,
+ "abut_baseline": null
+}

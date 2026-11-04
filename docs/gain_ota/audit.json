@@ -1,0 +1,17 @@
+{
+ "layout": "gds/gain_ota/gain_ota.gds",
+ "top": "gain_ota",
+ "limit_um": 20.0,
+ "violations": {},
+ "warnings": {},
+ "counts": {
+  "ntie": 15,
+  "ptie": 15,
+  "p_activ_in_nwell": 29,
+  "n_activ_in_substrate": 15,
+  "nwell": 1
+ },
+ "abut_sites": [],
+ "abut_total_sites": 0,
+ "abut_baseline": null
+}

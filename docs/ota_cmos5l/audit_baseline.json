@@ -1,0 +1,51 @@
+{
+ "layout": "gds/pgia_top/ota_cmos5l.gds",
+ "top": "ota_cmos5l",
+ "abut_sites": [
+  [
+   8,
+   32
+  ],
+  [
+   11,
+   13
+  ],
+  [
+   11,
+   32
+  ],
+  [
+   12,
+   32
+  ],
+  [
+   19,
+   32
+  ],
+  [
+   20,
+   13
+  ],
+  [
+   20,
+   32
+  ],
+  [
+   21,
+   32
+  ],
+  [
+   22,
+   32
+  ],
+  [
+   23,
+   32
+  ],
+  [
+   34,
+   13
+  ]
+ ],
+ "note": "accepted p+/n+ Activ abutments (deliberate abutted ties); written by scripts/tap_audit.py --accept-abut"
+}
