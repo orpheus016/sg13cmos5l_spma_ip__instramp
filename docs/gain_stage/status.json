@@ -1,0 +1,38 @@
+{
+ "cell": "gain_stage",
+ "generated": "2026-11-04T05:18:53",
+ "commit": "0f10340",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/gain_stage/gain_stage.gds",
+  "sha1": "123812104b49"
+ },
+ "schematic": {
+  "path": "xschem/gain_stage/gain_stage.sch",
+  "sha1": "b53a5c981835"
+ },
+ "stages": [
+  {
+   "name": "drc",
+   "status": "pass",
+   "seconds": 39,
+   "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
+   "at": "2026-11-04T05:18:53"
+  },
+  {
+   "name": "audit",
+   "status": "pass",
+   "seconds": 0,
+   "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
+   "at": "2026-11-04T05:18:53"
+  },
+  {
+   "name": "lvs",
+   "status": "pass",
+   "seconds": 5,
+   "detail": "RESULT: MATCH",
+   "at": "2026-11-04T05:18:53"
+  }
+ ],
+ "postlayout": {}
+}

@@ -78,7 +78,7 @@ jobs:
         # stages and layout path come from cells.yaml; a cell without schematic or layout gets SKIP, not a failure
         id: flow
         continue-on-error: true
-        run: scripts/flow.sh ${{ matrix.cell }} --only drc,lvs
+        run: scripts/flow.sh ${{ matrix.cell }} --only drc,lvs,audit
 
       - name: Pictures up to date? (non-blocking)
         # schematic/layout pictures in docs/<cell>/media and the README blocks; fix with scripts/update_images.py (or the pre-commit hook)

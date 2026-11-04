@@ -182,6 +182,21 @@ def main():
             for p in problems:
                 print("  - " + p, file=sys.stderr)
             return 1
+        # KLayout stamps the write date into the GDS header: rewriting an unchanged file would put a 4 MB binary diff into every commit
+        if os.path.isfile(args.out) and not ren:
+            try:
+                cur = load(args.out)
+                ct = top_of(cur, rel(args.out))
+                if ct.name == args.cell and not xor_differences(src_regions, layer_regions(cur, ct)) and src_labels == labels(cur, ct):
+                    print(f"export_slot_gds: {rel(args.out)} is already current, not rewritten")
+                    extra = other_candidates(args.out)
+                    if extra:
+                        print("export_slot_gds: FAILED - more than one slot_9.gds* in the repository: " + ", ".join(extra), file=sys.stderr)
+                        return 1
+                    print("export_slot_gds: OK")
+                    return 0
+            except Exception:  # noqa: BLE001
+                pass  # unreadable output: write it again
         st.name = args.cell
         for ci, new in ren.items():
             src.rename_cell(ci, new)

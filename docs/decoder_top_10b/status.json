@@ -1,0 +1,24 @@
+{
+ "cell": "decoder_top_10b",
+ "generated": "2026-11-04T05:16:50",
+ "commit": "0f10340",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/pgia_top/decoder_top_10b.gds",
+  "sha1": "d3e6cf2b74d4"
+ },
+ "schematic": {
+  "path": "xschem/decoder_top_10b/decoder_top_10b.sch",
+  "sha1": null
+ },
+ "stages": [
+  {
+   "name": "drc",
+   "status": "fail",
+   "seconds": 27,
+   "detail": "main : 19 items [fail];antenna : 0 items [ok];density : 6 items [info, chip-level];",
+   "at": "2026-11-04T05:16:50"
+  }
+ ],
+ "postlayout": {}
+}

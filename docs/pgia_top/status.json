@@ -1,11 +1,11 @@
 {
  "cell": "pgia_top",
- "generated": "2026-11-03T15:13:40",
- "commit": "b8227c1",
+ "generated": "2026-11-04T05:26:03",
+ "commit": "0f10340",
  "profile": "typ",
  "gds": {
   "path": "gds/pgia_top/pgia_top.gds",
-  "sha1": "b4e7553fe4dc"
+  "sha1": "69e6d0956167"
  },
  "schematic": {
   "path": "xschem/pgia_top/pgia_top.sch",
@@ -13,11 +13,25 @@
  },
  "stages": [
   {
+   "name": "drc",
+   "status": "pass",
+   "seconds": 77,
+   "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
+   "at": "2026-11-04T05:26:03"
+  },
+  {
+   "name": "audit",
+   "status": "pass",
+   "seconds": 0,
+   "detail": " all device Activ within the tie distance, every NWell tied; 44 p+/n+ abutment site(s), all in the accepted baseline;",
+   "at": "2026-11-04T05:26:03"
+  },
+  {
    "name": "lvs",
-   "status": "fail",
-   "seconds": 16,
-   "detail": "RESULT: MISMATCH",
-   "at": "2026-11-03T15:13:40"
+   "status": "pass",
+   "seconds": 11,
+   "detail": "RESULT: MATCH",
+   "at": "2026-11-04T05:26:03"
   }
  ],
  "postlayout": {}

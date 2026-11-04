@@ -1,0 +1,66 @@
+{
+ "generated": "2026-11-04T05:28:08",
+ "mode": "fast",
+ "profile": "typ",
+ "branch": "phase2",
+ "commit": "0f10340",
+ "seconds": 214,
+ "steps": [
+  {
+   "name": "registry",
+   "status": "ok",
+   "seconds": "0",
+   "detail": "cellinfo: note: dec2to4: gds xschem/dec2to4/dec2to4.gds does not exist yet"
+  },
+  {
+   "name": "export",
+   "status": "skip",
+   "seconds": "0",
+   "detail": "skipped"
+  },
+  {
+   "name": "flow:pgia_top",
+   "status": "ok",
+   "seconds": "89",
+   "detail": "flow: docs/pgia_top/status.md"
+  },
+  {
+   "name": "flow:slot9_wrapper",
+   "status": "ok",
+   "seconds": "125",
+   "detail": "flow: docs/slot9_wrapper/status.md"
+  },
+  {
+   "name": "canary",
+   "status": "skip",
+   "seconds": "0",
+   "detail": "skipped"
+  },
+  {
+   "name": "images",
+   "status": "skip",
+   "seconds": "0",
+   "detail": "--fast"
+  },
+  {
+   "name": "reports",
+   "status": "skip",
+   "seconds": "0",
+   "detail": "--fast"
+  }
+ ],
+ "matrix": {
+  "pgia_top": {
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass"
+  },
+  "slot9_wrapper": {
+   "drc": "pass",
+   "audit": "pass",
+   "drc_harness": "pass",
+   "lvs": "pass",
+   "deliver": "pass"
+  }
+ }
+}

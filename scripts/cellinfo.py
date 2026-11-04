@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read the cell registry cells.yaml.
 
-  cellinfo.py <cell> <key>          value of a key (gds/sch/cace/top are printed as absolute paths; lists space separated)
+  cellinfo.py <cell> <key>          value of a key (gds/sch/cace/harness_gds are printed as absolute paths; top and harness_top as names; lists space separated)
   cellinfo.py --list                all cell names
   cellinfo.py --matrix cace|verify  JSON list of cell names for a GitHub Actions matrix (cells having the stage cace / drc|lvs)
   cellinfo.py <cell> mc-params      names of the CACE parameters that are Monte Carlo runs (for run_cace.sh -sp)
@@ -18,7 +18,7 @@ import sys
 import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PATHS = ("gds", "sch", "cace")
+PATHS = ("gds", "sch", "cace", "harness_gds")
 
 
 def load():

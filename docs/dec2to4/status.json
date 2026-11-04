@@ -1,0 +1,24 @@
+{
+ "cell": "dec2to4",
+ "generated": "2026-11-04T05:16:51",
+ "commit": "0f10340",
+ "profile": "typ",
+ "gds": {
+  "path": "xschem/dec2to4/dec2to4.gds",
+  "sha1": null
+ },
+ "schematic": {
+  "path": "xschem/dec2to4/dec2to4.sch",
+  "sha1": null
+ },
+ "stages": [
+  {
+   "name": "drc",
+   "status": "skip",
+   "seconds": 0,
+   "detail": "no layout",
+   "at": "2026-11-04T05:16:51"
+  }
+ ],
+ "postlayout": {}
+}

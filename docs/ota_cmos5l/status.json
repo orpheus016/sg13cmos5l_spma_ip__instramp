@@ -1,7 +1,7 @@
 {
  "cell": "ota_cmos5l",
- "generated": "2026-10-21T10:02:43",
- "commit": "2bf6127",
+ "generated": "2026-11-04T05:15:03",
+ "commit": "0f10340",
  "profile": "typ",
  "gds": {
   "path": "gds/pgia_top/ota_cmos5l.gds",
@@ -22,16 +22,23 @@
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 24,
+   "seconds": 26,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level];",
-   "at": "2026-10-21T10:02:43"
+   "at": "2026-11-04T05:15:03"
+  },
+  {
+   "name": "audit",
+   "status": "pass",
+   "seconds": 0,
+   "detail": " all device Activ within the tie distance, every NWell tied; 11 p+/n+ abutment site(s), all in the accepted baseline;",
+   "at": "2026-11-04T05:15:03"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 5,
+   "seconds": 6,
    "detail": "RESULT: MATCH",
-   "at": "2026-10-21T10:02:43"
+   "at": "2026-11-04T05:15:03"
   },
   {
    "name": "pex",
