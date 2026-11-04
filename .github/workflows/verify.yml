@@ -36,10 +36,14 @@ jobs:
       cells: ${{ steps.m.outputs.cells }}
     steps:
       - uses: actions/checkout@v4
-      - run: python3 -m pip install --quiet pyyaml || true
+      - run: python3 -m pip install --quiet pyyaml klayout || true
       - name: Registry matches the files (top cell name = schematic name)
-        # without klayout here only the static part runs; the top cell inside the GDS is checked by flow.sh in the verify job
+        # with the klayout python module (pip) the top cell inside every GDS is checked here too
         run: python3 scripts/cellinfo.py --check
+      - name: gds/slot_9.gds (the file the Chipalooza harness takes) is current
+        # the harness clones this repository and reads slot_9.gds (top cell slot_9); it must equal gds/slot9_wrapper/slot9_wrapper.gds.
+        # Fix: python3 scripts/export_slot_gds.py. Exactly one slot_9.gds* may exist in the repository.
+        run: python3 scripts/export_slot_gds.py --check
       - id: m
         # cells.yaml is the registry: a cell is in this matrix when its `stages` contain drc or lvs
         run: echo "cells=$(python3 scripts/cellinfo.py --matrix verify)" >> "$GITHUB_OUTPUT"
