@@ -1,0 +1,83 @@
+{
+ "cell": "gain_stage",
+ "generated": "2026-11-05T18:53:47",
+ "commit": "b495d99",
+ "profile": "typ",
+ "gds": {
+  "path": "gds/gain_stage/gain_stage.gds",
+  "sha1": "123812104b49"
+ },
+ "schematic": {
+  "path": "xschem/gain_stage/gain_stage.sch",
+  "sha1": "b53a5c981835"
+ },
+ "stages": [
+  {
+   "name": "cace",
+   "status": "fail",
+   "seconds": 69,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_18-52-08: 34 rows, 1 failing",
+   "at": "2026-11-05T18:53:47"
+  },
+  {
+   "name": "drc",
+   "status": "pass",
+   "seconds": 22,
+   "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
+   "at": "2026-11-05T18:53:47"
+  },
+  {
+   "name": "audit",
+   "status": "pass",
+   "seconds": 0,
+   "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
+   "at": "2026-11-05T18:53:47"
+  },
+  {
+   "name": "lvs",
+   "status": "pass",
+   "seconds": 8,
+   "detail": "RESULT: MATCH",
+   "at": "2026-11-05T18:53:47"
+  },
+  {
+   "name": "pex",
+   "status": "pass",
+   "seconds": 24,
+   "detail": "gain_stage.c.spice: ports AVDD AVSS IBIAS VIN VCM VOUT s[0] s[1] s[2] s[3] s[4]; M=97, Rpoly=10, Rext=0, Cdev=5, Cext=378, D=1;gain_stage.rc.spice: ports AVDD AVSS IBIAS VIN VCM VOUT s[0] s[1] s[2] s[",
+   "at": "2026-11-05T17:40:04"
+  },
+  {
+   "name": "post_c",
+   "status": "pass",
+   "seconds": 11,
+   "detail": "33 parameters with a % delta, 29 flagged",
+   "at": "2026-11-05T17:40:04"
+  },
+  {
+   "name": "post_rc",
+   "status": "pass",
+   "seconds": 24,
+   "detail": "33 parameters with a % delta, 30 flagged",
+   "at": "2026-11-05T17:40:04"
+  },
+  {
+   "name": "images",
+   "status": "pass",
+   "seconds": 1,
+   "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
+   "at": "2026-11-05T18:53:47"
+  },
+  {
+   "name": "post",
+   "status": "blocked",
+   "seconds": 0,
+   "detail": "pex stage: error",
+   "at": "2026-11-05T16:01:50"
+  }
+ ],
+ "postlayout": {
+  "c": "docs/gain_stage/cace/postlayout.json",
+  "rc": "docs/gain_stage/cace/postlayout_rc.json"
+ }
+}

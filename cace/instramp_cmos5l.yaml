@@ -73,6 +73,11 @@ default_conditions:
     display: Fin
     unit: kHz
     typical: 1
+  rs:
+    description: Source impedance in front of each input (input_network parameter only)
+    display: Rs
+    unit: kOhm
+    typical: 100
   vin_amp:
     description: Differential input sine amplitude (peak) for THD
     display: Vin amp
@@ -242,6 +247,97 @@ parameters:
         type: xyplot
         xaxis: temperature
         yaxis: THD_DB
+        limits: auto
+    conditions:
+      corner:
+        enumerate: [tt, ss, ff, sf, fs]
+      vdd:
+        minimum: 1.2
+        typical: 1.35
+        maximum: 1.5
+      temperature:
+        minimum: -40
+        typical: 27
+        maximum: 85
+
+  input_network:
+    display: "Input network (pseudo-resistors of pgia_top)"
+    description: "The other parameters drive the inputs with ideal sources. Here the four PMOS pseudo-resistors that pgia_top places on VINN/VINP (taken from the LVS netlist of pgia_top) and a source impedance Rs are in front of the amplifier"
+    spec:
+      R_IN:
+        display: "Input resistance of one input (Rs removed)"
+        unit: "GOhm"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      A_NET:
+        display: "Closed-loop gain at 1 kHz with the network"
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      IRN_100:
+        display: "Input noise @100 Hz incl. Rs and network"
+        unit: "nV/rtHz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      IRN_1K:
+        display: "Input noise @1 kHz incl. Rs and network"
+        unit: "nV/rtHz"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      VOS_NET:
+        display: "Output DC level minus Vcm with the network"
+        unit: "mV"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      THD_DB:
+        display: "THD with Rs and network"
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      HD3_DB:
+        display: "3rd harmonic with Rs and network"
+        unit: "dB"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: inbias.sch
+        format: ascii
+        suffix: .data
+        variables: [R_IN, A_NET, IRN_100, IRN_1K, VOS_NET, THD_DB, HD3_DB]
+    plot:
+      input_network_R_IN_vs_temperature:
+        type: xyplot
+        xaxis: temperature
+        yaxis: R_IN
         limits: auto
     conditions:
       corner:

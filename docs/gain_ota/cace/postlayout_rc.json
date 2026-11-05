@@ -1,6 +1,6 @@
 {
- "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_07-18-34",
- "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/gain_ota/RUN_2026-10-21_20-35-02",
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_17-29-30",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/gain_ota/RUN_2026-11-05_17-33-55",
  "schematic_source": "schematic",
  "postlayout_source": "pex",
  "threshold_pct": 5.0,
@@ -36,13 +36,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 8095.07,
-    "typ": 8095.07,
-    "max": 8095.07,
+    "min": 8095.08,
+    "typ": 8095.08,
+    "max": 8095.08,
     "status": "Pass"
    },
-   "delta": -1048.0699999999997,
-   "delta_pct": -11.462910991191208,
+   "delta": -1048.0599999999995,
+   "delta_pct": -11.462801619574888,
    "flag": "\u0394"
   },
   {
@@ -256,13 +256,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 487.087,
-    "typ": 487.087,
-    "max": 487.087,
+    "min": 487.086,
+    "typ": 487.086,
+    "max": 487.086,
     "status": "Pass"
    },
-   "delta": -81.90700000000004,
-   "delta_pct": -14.395055132391562,
+   "delta": -81.90800000000002,
+   "delta_pct": -14.395230881169223,
    "flag": "\u0394"
   },
   {
@@ -296,13 +296,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 73.773,
-    "typ": 73.773,
-    "max": 73.773,
+    "min": 73.772,
+    "typ": 73.772,
+    "max": 73.772,
     "status": "Pass"
    },
-   "delta": -0.17799999999999727,
-   "delta_pct": -0.24069992292193113,
+   "delta": -0.17899999999998784,
+   "delta_pct": -0.24205216967990675,
    "flag": ""
   },
   {
@@ -396,13 +396,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 18.235,
-    "typ": 18.235,
-    "max": 18.235,
+    "min": 18.234,
+    "typ": 18.234,
+    "max": 18.234,
     "status": "Pass"
    },
-   "delta": 4.144,
-   "delta_pct": 29.408842523596626,
+   "delta": 4.1430000000000025,
+   "delta_pct": 29.401745795188436,
    "flag": "\u0394"
   },
   {
@@ -436,13 +436,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 67.753,
-    "typ": 67.753,
-    "max": 67.753,
+    "min": 67.751,
+    "typ": 67.751,
+    "max": 67.751,
     "status": "Pass"
    },
-   "delta": 5.521000000000001,
-   "delta_pct": 8.871641599177275,
+   "delta": 5.5190000000000055,
+   "delta_pct": 8.868427818485676,
    "flag": "\u0394"
   },
   {
@@ -616,13 +616,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 15.241,
-    "typ": 15.241,
-    "max": 15.241,
+    "min": 15.242,
+    "typ": 15.242,
+    "max": 15.242,
     "status": "Pass"
    },
-   "delta": 1.238999999999999,
-   "delta_pct": 8.848735894872153,
+   "delta": 1.2400000000000002,
+   "delta_pct": 8.855877731752608,
    "flag": "\u0394"
   },
   {
@@ -636,13 +636,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 15.962,
-    "typ": 15.962,
-    "max": 15.962,
+    "min": 15.958,
+    "typ": 15.958,
+    "max": 15.958,
     "status": "Pass"
    },
-   "delta": -1.6350000000000016,
-   "delta_pct": -9.291356481218399,
+   "delta": -1.6390000000000011,
+   "delta_pct": -9.31408762857306,
    "flag": "\u0394"
   },
   {
@@ -656,13 +656,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 140.02,
-    "typ": 140.02,
-    "max": 140.02,
+    "min": 140.03,
+    "typ": 140.03,
+    "max": 140.03,
     "status": "Pass"
    },
-   "delta": -54.66,
-   "delta_pct": -28.076844051777275,
+   "delta": -54.650000000000006,
+   "delta_pct": -28.07170741730019,
    "flag": "\u0394"
   },
   {
@@ -676,13 +676,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 50.363,
-    "typ": 50.363,
-    "max": 50.363,
+    "min": 50.365,
+    "typ": 50.365,
+    "max": 50.365,
     "status": "Pass"
    },
-   "delta": 5.2109999999999985,
-   "delta_pct": 11.541017009213322,
+   "delta": 5.213000000000001,
+   "delta_pct": 11.545446491849754,
    "flag": "\u0394"
   },
   {
@@ -696,13 +696,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 54.129,
-    "typ": 54.129,
-    "max": 54.129,
+    "min": 54.131,
+    "typ": 54.131,
+    "max": 54.131,
     "status": "Pass"
    },
-   "delta": -3.969000000000001,
-   "delta_pct": -6.831560466797482,
+   "delta": -3.9669999999999987,
+   "delta_pct": -6.8281180075045596,
    "flag": "\u0394"
   },
   {

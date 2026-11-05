@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 
-TEMPLATES_DIR = "/home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/cace/templates/gain_network"
+TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "cace", "templates", "gain_network")
 
 LIBS_BLOCK = r"""C {simulator_commands_shown.sym} 1070 -990 0 0 {name=Libs_Ngspice
 simulator=ngspice
@@ -15,6 +15,8 @@ value="
 .lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
 
 .include CACE\{DUT_path\}
+* std cells at top level (an include inside the DUT netlist is nested in the subckt and invisible to the sub-blocks)
+.include CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.ref/sg13cmos5l_stdcell/spice/sg13cmos5l_stdcell.spice
 
 .temp CACE\{temperature\}
 

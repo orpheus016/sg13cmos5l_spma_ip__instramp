@@ -1,0 +1,4 @@
+# Project xschemrc for central_bias
+if {![info exists PDK]} {
+    source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
+}

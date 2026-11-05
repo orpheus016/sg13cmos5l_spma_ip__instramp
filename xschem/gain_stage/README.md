@@ -37,7 +37,9 @@ AVSS ─┼─►│ AVSS                                           S4 (16x)◄�
       └─────────────────────────────────────────────────────────────────┘
 ```
 
-![coarse_gain schematic](../../docs/coarse_gain/media/coarse_gain_schematic.png)
+<!-- AUTO:schematic:gain_stage -->
+![gain_stage schematic](../../docs/gain_stage/media/gain_stage_schematic.png)
+<!-- /AUTO -->
 *Coarse Gain Schematic*
 
 ![coarse_gain cg_network](../../docs/coarse_gain/media/coarse_gain_cg_network_schematic.png)

@@ -2,9 +2,9 @@
  "cell": "gain_network",
  "gds": "gds/gain_network/gain_network.gds",
  "layout": {
-  "L": 74.61,
+  "L": 76.13,
   "W": 97.45,
-  "area": 7270.7,
+  "area": 7418.9,
   "top": "gain_network"
  },
  "params": [],

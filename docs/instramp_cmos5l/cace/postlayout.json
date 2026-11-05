@@ -1,6 +1,6 @@
 {
- "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_10-03-50",
- "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace/instramp_cmos5l/RUN_2026-10-21_10-05-47",
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_17-27-15",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace/instramp_cmos5l/RUN_2026-11-05_17-28-35",
  "schematic_source": "schematic",
  "postlayout_source": "pex",
  "threshold_pct": 5.0,
@@ -56,13 +56,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 284609.0,
-    "typ": 284609.0,
-    "max": 284609.0,
+    "min": 284821.0,
+    "typ": 284821.0,
+    "max": 284821.0,
     "status": "Pass"
    },
-   "delta": 5355.0,
-   "delta_pct": 1.917609058419933,
+   "delta": 5567.0,
+   "delta_pct": 1.9935256075114411,
    "flag": ""
   },
   {
@@ -76,13 +76,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 2041800.0,
-    "typ": 2041800.0,
-    "max": 2041800.0,
+    "min": 2043250.0,
+    "typ": 2043250.0,
+    "max": 2043250.0,
     "status": "Pass"
    },
-   "delta": 54210.0,
-   "delta_pct": 2.7274236638340907,
+   "delta": 55660.0,
+   "delta_pct": 2.8003763351596658,
    "flag": ""
   },
   {
@@ -96,13 +96,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": -142.714,
-    "typ": -142.714,
-    "max": -142.714,
+    "min": -142.706,
+    "typ": -142.706,
+    "max": -142.706,
     "status": "Pass"
    },
-   "delta": -2.884999999999991,
-   "delta_pct": -2.063234379134508,
+   "delta": -2.876999999999981,
+   "delta_pct": -2.05751310529288,
    "flag": ""
   },
   {
@@ -206,6 +206,146 @@
    "flag": ""
   },
   {
+   "var": "R_IN",
+   "name": "Input resistance of one input (Rs removed)",
+   "unit": "GOhm",
+   "schematic": {
+    "min": 5.115,
+    "typ": 17.548,
+    "max": 46.93,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 19.919,
+    "typ": 19.919,
+    "max": 19.919,
+    "status": "Pass"
+   },
+   "delta": 2.371000000000002,
+   "delta_pct": 13.511511283337146,
+   "flag": "\u0394"
+  },
+  {
+   "var": "A_NET",
+   "name": "Closed-loop gain at 1 kHz with the network",
+   "unit": "dB",
+   "schematic": {
+    "min": 17.765,
+    "typ": 18.061,
+    "max": 18.262,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 18.06,
+    "typ": 18.06,
+    "max": 18.06,
+    "status": "Pass"
+   },
+   "delta": -0.0010000000000012221,
+   "delta_pct": -0.005536791982731976,
+   "flag": ""
+  },
+  {
+   "var": "IRN_100",
+   "name": "Input noise @100 Hz incl. Rs and network",
+   "unit": "nV/rtHz",
+   "schematic": {
+    "min": 907.753,
+    "typ": 1096.46,
+    "max": 1274.41,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 1086.51,
+    "typ": 1086.51,
+    "max": 1086.51,
+    "status": "Pass"
+   },
+   "delta": -9.950000000000045,
+   "delta_pct": -0.9074658446272591,
+   "flag": ""
+  },
+  {
+   "var": "IRN_1K",
+   "name": "Input noise @1 kHz incl. Rs and network",
+   "unit": "nV/rtHz",
+   "schematic": {
+    "min": 297.673,
+    "typ": 359.139,
+    "max": 415.991,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 355.516,
+    "typ": 355.516,
+    "max": 355.516,
+    "status": "Pass"
+   },
+   "delta": -3.6229999999999905,
+   "delta_pct": -1.0088016060633878,
+   "flag": ""
+  },
+  {
+   "var": "VOS_NET",
+   "name": "Output DC level minus Vcm with the network",
+   "unit": "mV",
+   "schematic": {
+    "min": 0.436,
+    "typ": 1.933,
+    "max": 4.87,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 6.597,
+    "typ": 6.597,
+    "max": 6.597,
+    "status": "Pass"
+   },
+   "delta": 4.664000000000001,
+   "delta_pct": 241.28297982410763,
+   "flag": "\u0394"
+  },
+  {
+   "var": "THD_DB#2",
+   "name": "THD with Rs and network",
+   "unit": "dB",
+   "schematic": {
+    "min": -72.492,
+    "typ": -63.522,
+    "max": -46.172,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -62.619,
+    "typ": -62.619,
+    "max": -62.619,
+    "status": "Pass"
+   },
+   "delta": 0.9029999999999987,
+   "delta_pct": 1.42155473694153,
+   "flag": ""
+  },
+  {
+   "var": "HD3_DB#2",
+   "name": "3rd harmonic with Rs and network",
+   "unit": "dB",
+   "schematic": {
+    "min": -76.241,
+    "typ": -69.23,
+    "max": -50.352,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -69.281,
+    "typ": -69.281,
+    "max": -69.281,
+    "status": "Pass"
+   },
+   "delta": -0.05100000000000193,
+   "delta_pct": -0.07366748519428272,
+   "flag": ""
+  },
+  {
    "var": "ADM_DC",
    "name": "Differential gain @10 Hz",
    "unit": "dB",
@@ -256,13 +396,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 44.836,
-    "typ": 44.836,
-    "max": 44.836,
+    "min": 44.854,
+    "typ": 44.854,
+    "max": 44.854,
     "status": "Pass"
    },
-   "delta": 0.4799999999999969,
-   "delta_pct": 1.0821534854360106,
+   "delta": 0.49799999999999756,
+   "delta_pct": 1.1227342411398629,
    "flag": ""
   },
   {
@@ -276,13 +416,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 27.357,
-    "typ": 27.357,
-    "max": 27.357,
+    "min": 27.391,
+    "typ": 27.391,
+    "max": 27.391,
     "status": "Pass"
    },
-   "delta": 0.07900000000000063,
-   "delta_pct": 0.2896106752694502,
+   "delta": 0.11299999999999955,
+   "delta_pct": 0.41425324437275296,
    "flag": ""
   },
   {
@@ -336,14 +476,14 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 66.067,
-    "typ": 66.067,
-    "max": 66.067,
+    "min": 64.595,
+    "typ": 64.595,
+    "max": 64.595,
     "status": "Pass"
    },
-   "delta": 4.010999999999996,
-   "delta_pct": 6.463516823514238,
-   "flag": "\u0394"
+   "delta": 2.5390000000000015,
+   "delta_pct": 4.091465772850332,
+   "flag": ""
   },
   {
    "var": "PSRR_1M",
@@ -356,13 +496,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 46.236,
-    "typ": 46.236,
-    "max": 46.236,
+    "min": 44.684,
+    "typ": 44.684,
+    "max": 44.684,
     "status": "Pass"
    },
-   "delta": 1.992999999999995,
-   "delta_pct": 4.504667405013211,
+   "delta": 0.4409999999999954,
+   "delta_pct": 0.99676785028139,
    "flag": ""
   },
   {
@@ -386,7 +526,7 @@
    "flag": ""
   },
   {
-   "var": "IRN_100",
+   "var": "IRN_100#2",
    "name": "Input noise @100 Hz",
    "unit": "nV/rtHz",
    "schematic": {
@@ -406,7 +546,7 @@
    "flag": ""
   },
   {
-   "var": "IRN_1K",
+   "var": "IRN_1K#2",
    "name": "Input noise @1 kHz",
    "unit": "nV/rtHz",
    "schematic": {
@@ -436,13 +576,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 133.045,
-    "typ": 133.045,
-    "max": 133.045,
+    "min": 133.044,
+    "typ": 133.044,
+    "max": 133.044,
     "status": "Pass"
    },
-   "delta": -1.636000000000024,
-   "delta_pct": -1.2147221954099123,
+   "delta": -1.6370000000000005,
+   "delta_pct": -1.215464690639363,
    "flag": ""
   },
   {
@@ -476,13 +616,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 543.461,
-    "typ": 543.461,
-    "max": 543.461,
+    "min": 543.41,
+    "typ": 543.41,
+    "max": 543.41,
     "status": "Pass"
    },
-   "delta": -0.7340000000000373,
-   "delta_pct": -0.1348781227317482,
+   "delta": -0.7850000000000819,
+   "delta_pct": -0.14424976341202728,
    "flag": ""
   },
   {
@@ -496,13 +636,13 @@
     "status": "Pass"
    },
    "postlayout": {
-    "min": 67.945,
-    "typ": 67.945,
-    "max": 67.945,
+    "min": 67.939,
+    "typ": 67.939,
+    "max": 67.939,
     "status": "Pass"
    },
-   "delta": 0.04599999999999227,
-   "delta_pct": 0.06774768406013677,
+   "delta": 0.03999999999999204,
+   "delta_pct": 0.058911029617508416,
    "flag": ""
   },
   {
@@ -590,19 +730,19 @@
    "name": "Small-signal gain (transient)",
    "unit": "",
    "schematic": {
-    "min": 7.73179,
-    "typ": 7.99988,
-    "max": 8.18719,
+    "min": 7.73174,
+    "typ": 7.99991,
+    "max": 8.18701,
     "status": "Pass"
    },
    "postlayout": {
-    "min": 7.99874,
-    "typ": 7.99874,
-    "max": 7.99874,
+    "min": 7.99869,
+    "typ": 7.99869,
+    "max": 7.99869,
     "status": "Pass"
    },
-   "delta": -0.001140000000000363,
-   "delta_pct": -0.014250213753210835,
+   "delta": -0.0012199999999999989,
+   "delta_pct": -0.015250171564430086,
    "flag": ""
   },
   {

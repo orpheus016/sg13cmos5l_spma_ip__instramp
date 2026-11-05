@@ -8,8 +8,6 @@ XR1 net4 net6 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
 XR2 net2 net5 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
 XR3 net6 CM VSS rhigh w=0.5e-6 l=8*2.23e-6 m=1 b=0 mm_ok=1
 XR4 net5 VOUT VSS rhigh w=0.5e-6 l=8*2.23e-6 m=1 b=0 mm_ok=1
-R5 VINN CM 10MEG
-R6 CM VINP 10MEG
 XR7 net2 net1 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
 XR8 net4 net3 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
 .ends

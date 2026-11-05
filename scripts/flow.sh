@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 # One command from schematic to post-layout comparison for one cell:
-#   scripts/flow.sh <cell> [--profile typ|pvt] [--stages cace,drc,lvs,pex,post | --only drc,lvs] [--no-mc] [--netlist c|rc|both] [--force] [--keep-going]
+#   scripts/flow.sh <cell> [--profile typ|pvt] [--stages cace,drc,audit,lvs,pex,post | --only drc,lvs] [--no-mc] [--netlist c|rc|both] [--force] [--keep-going]
 #
 # The stages come from cells.yaml (`stages:` of the cell); --stages overrides them, --only intersects with them (CI). Stages, in this order:
 #   cace   schematic CACE run = the reference (scripts/run_cace.sh). Reused when newer than the schematic, yaml, manifest and templates (--force: rerun).
 #          For cells with cace/<cell>.params.yaml, scripts/gen_cace.py first rebuilds templates + yaml parameters from xschem/<cell>/tb/*
 #   drc    KLayout DRC + antenna (+ density info)               scripts/run_drc.sh
+#   audit  latch-up / tap audit (LU.a, LU.b, wells, p+/n+ abutment vs baseline)   scripts/tap_audit.py
+#   drc_harness  DRC with the Chipalooza harness deck and flags (on `harness_gds` of the cell if set)   scripts/run_drc_harness.sh
 #   lvs    layout versus schematic                              scripts/run_lvs.sh
+#   deliver  harness deliverable: gds/slot_9.gds current + the harness's own scripts accept it   scripts/export_slot_gds.py --check, scripts/harness_trial.sh
 #   pex    parasitic extraction: kpex C and Magic R+C           scripts/run_pex.sh   (needs lvs MATCH and the cace run)
 #   post   CACE on the extracted netlist(s) + comparison        scripts/run_postlayout.sh   (--netlist, default both c and rc)
 #   images schematic + layout pictures, README blocks           scripts/update_images.py   (always last; not with --only)
@@ -58,6 +61,10 @@ if has_stage cace; then
   else
     # templates and the parameters of the datasheet are generated from the xschem testbenches (cace/<cell>.params.yaml); only a real
     # change of the generated files makes the reference stale below
+    # cells with an extra template generator (scripts/make_<cell>_inbias_template.py: instramp input network from pgia_top) run it first
+    [ -f "$root/scripts/make_${cell}_inbias_template.py" ] && python3 -I "$root/scripts/make_${cell}_inbias_template.py" >"$log/inbias_template.log" 2>&1
+    # cells whose templates are written by a script (make_<cell>_templates.py: central_bias, pgia_top, gain_stage, gain_network) get them refreshed first
+    [ -f "$root/scripts/make_${cell}_templates.py" ] && python3 -I "$root/scripts/make_${cell}_templates.py" >"$log/templates.log" 2>&1
     python3 -I "$root/scripts/gen_cace.py" "$cell" >"$log/gen_cace.log" 2>&1 || { cat "$log/gen_cace.log"; force=1; }   # run_cace.sh then fails with the same message (error row), never a silent old reference
     ref=""
     for d in $(ls -d "$root"/runs/RUN_* 2>/dev/null | sort -r); do
@@ -75,11 +82,13 @@ if has_stage cace; then
       n=$(grep -cE '\| *(Pass|Fail)' "$ref/summary.md"); f=$(grep -cE '\| *Fail' "$ref/summary.md")
       record cace "$([ "$f" -eq 0 ] && echo pass || echo fail)" 0 "reused $(basename "$ref"): $n rows, $f failing"
     else
-      skip_mc=(); [ -n "$nomc" ] && skip_mc=(-sp $(info mc-params))
+      skip_mc=(); mcp="$(info mc-params)"; [ -n "$nomc" ] && [ -n "$mcp" ] && skip_mc=(-sp $mcp)   # cace rejects `-sp` without a name (cells without Monte Carlo parameters)
       run cace "$root/scripts/run_cace.sh" "$cell" --no-progress-bar "${skip_mc[@]}"
       ref="$(ls -d "$root"/runs/RUN_* 2>/dev/null | sort | tail -1)"
       n=$(grep -cE '\| *(Pass|Fail)' "$ref/summary.md" 2>/dev/null); f=$(grep -cE '\| *Fail' "$ref/summary.md" 2>/dev/null)
-      case $RC in 0) record cace pass "$SECS" "$ref: $n rows";; 2) record cace fail "$SECS" "$ref: $n rows, $f failing";; *) record cace error "$SECS" "rc=$RC, see $log/cace.log";; esac
+      # run_cace.sh exits 2 both for "spec failed" (summary.md written) and when cace itself broke (no new run): only trust the newest RUN_* if this call made it
+      if grep -q "cace itself failed\|no summary.md" "$log/cace.log"; then record cace error "$SECS" "cace did not run, see $log/cace.log ($(grep -m1 'cace: error\|itself failed' "$log/cace.log" | cut -c1-120))"
+      else case $RC in 0) record cace pass "$SECS" "$ref: $n rows";; 2) record cace fail "$SECS" "$ref: $n rows, $f failing";; *) record cace error "$SECS" "rc=$RC, see $log/cace.log";; esac; fi
     fi
   fi
 fi
@@ -94,6 +103,30 @@ if has_stage drc; then
   fi
 fi
 
+# ---- audit (tap / latch-up)
+if has_stage audit; then
+  if [ -z "$gds" ] || [ ! -f "$gds" ]; then record audit skip 0 "no layout"
+  else
+    run audit python3 -I "$root/scripts/tap_audit.py" "$cell"
+    d=$(grep -E '^  (FAIL|WARN|all device)' "$log/audit.log" | head -3 | sed 's/  */ /g' | tr '\n' ';' | cut -c1-220)
+    case $RC in 0) record audit pass "$SECS" "${d:-clean}";; 1) record audit fail "$SECS" "$d";; *) record audit error "$SECS" "rc=$RC, see $log/audit.log";; esac
+  fi
+fi
+
+# ---- drc_harness (deck + flags of the Chipalooza harness)
+if has_stage drc_harness; then
+  hg="$(info harness_gds)"; ht="$(info harness_top)"
+  if [ -n "$hg" ] && [ -f "$hg" ]; then hargs=(--gds "$hg" --top "${ht:-$top}")
+  elif [ -n "$gds" ] && [ -f "$gds" ]; then hargs=("$cell")
+  else hargs=(); fi
+  if [ ${#hargs[@]} -eq 0 ]; then record drc_harness skip 0 "no layout"
+  else
+    run drc_harness "$root/scripts/run_drc_harness.sh" "${hargs[@]}"
+    d=$(grep -E 'violations' "$log/drc_harness.log" | tail -1 | sed 's/^ *//')
+    case $RC in 0) record drc_harness pass "$SECS" "${d:-0 violations}";; 1) record drc_harness fail "$SECS" "$d";; *) record drc_harness error "$SECS" "rc=$RC, see $log/drc_harness.log";; esac
+  fi
+fi
+
 # ---- lvs
 if has_stage lvs; then
   if [ -z "$gds" ] || [ ! -f "$gds" ]; then record lvs skip 0 "no layout"
@@ -103,6 +136,13 @@ if has_stage lvs; then
     d=$(grep -E 'RESULT|MATCH|MISMATCH' "$log/lvs.log" | head -1 | sed 's/  */ /g')
     case $RC in 0) record lvs pass "$SECS" "${d:-MATCH}";; 1) record lvs fail "$SECS" "${d:-mismatch}";; *) record lvs error "$SECS" "rc=$RC, see $log/lvs.log";; esac
   fi
+fi
+
+# ---- deliver (harness deliverable gds/slot_9.gds)
+if has_stage deliver; then
+  run deliver bash -c "'$root/scripts/export_slot_gds.py' --check && '$root/scripts/harness_trial.sh'"
+  d=$(grep -E 'harness_trial.sh: |CHECK FAILED|FAILED|- ' "$log/deliver.log" | tail -2 | sed 's/^ *//' | tr '\n' ';' | cut -c1-200)
+  case $RC in 0) record deliver pass "$SECS" "${d:-slot_9.gds ok}";; 1) record deliver fail "$SECS" "$d";; *) record deliver error "$SECS" "rc=$RC, see $log/deliver.log";; esac
 fi
 
 # ---- pex
@@ -161,7 +201,7 @@ if os.path.isfile(old_f):
         prev = {s["name"]: s for s in json.load(open(old_f)).get("stages", [])}
         ran = {s["name"] for s in stages}
         stages = [prev[n] for n in prev if n not in ran] + stages
-        order = ["cace", "drc", "lvs", "pex", "post_c", "post_rc", "images"]
+        order = ["cace", "drc", "audit", "drc_harness", "lvs", "deliver", "pex", "post_c", "post_rc", "images"]
         stages.sort(key=lambda s: order.index(s["name"]) if s["name"] in order else 99)
     except Exception:
         pass

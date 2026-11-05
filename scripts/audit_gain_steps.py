@@ -15,7 +15,7 @@ Adapts dynamically to the active PDK environment (.designinit_IHPdev or
 ===============================================================================
 
 Usage:
-  python3 scripts/audit_gain_steps.py [--run] [--env IHPdev|osic] [--no-sim] [--log <path>] [--md <output.md>] [--csv <output.csv>]
+  python3 scripts/audit_gain_steps.py [--run] [--env IHPdev|osic] [--no-sim] [--allow-baseline] [--log <path>] [--md <output.md>] [--csv <output.csv>]
 """
 
 import sys
@@ -118,7 +118,9 @@ def detect_pdk_environment(root_dir, target_env=None):
                     env_vars[k] = v
 
     # 1. PDK Name
-    pdk = os.environ.get("PDK", env_vars.get("PDK", "ihp-sg13cmos5l"))
+    # This repository is SG13CMOS5L only. The container exports PDK=ihp-sg13g2 / PDKPATH / STD_CELL_LIBRARY of the OTHER PDK as defaults; taking those
+    # rewrote the testbench to the sg13g2 model libraries and gave a dead circuit (all zeros). Like every script here, pin it; override with PGIA_PDK=...
+    pdk = os.environ.get("PGIA_PDK", "ihp-sg13cmos5l")
 
     # 2. PDK Root Directory
     pdk_root = os.environ.get("PDK_ROOT", env_vars.get("PDK_ROOT"))
@@ -131,12 +133,10 @@ def detect_pdk_environment(root_dir, target_env=None):
             pdk_root = "/foss/pdks"
 
     # 3. PDK Full Path
-    pdk_path = os.environ.get("PDKPATH", env_vars.get("PDKPATH"))
-    if not pdk_path:
-        pdk_path = os.path.join(pdk_root, pdk)
+    pdk_path = os.path.join(pdk_root, pdk)
 
     # 4. Standard Cell Library
-    std_cell_lib = os.environ.get("STD_CELL_LIBRARY", env_vars.get("STD_CELL_LIBRARY", "sg13cmos5l_stdcell"))
+    std_cell_lib = "sg13cmos5l_stdcell" if pdk == "ihp-sg13cmos5l" else os.environ.get("STD_CELL_LIBRARY", env_vars.get("STD_CELL_LIBRARY", "sg13cmos5l_stdcell"))
     if os.path.isabs(std_cell_lib):
         std_cell_dir = std_cell_lib
     else:
@@ -528,7 +528,8 @@ def main():
     parser = argparse.ArgumentParser(description="Audit PGIA gain steps, percentage errors, and step deltas.")
     parser.add_argument("--run", action="store_true", help="Netlist from tb_pgia_top.sch / pgia_top.sch and simulate.")
     parser.add_argument("--env", type=str, choices=["IHPdev", "osic"], help="Force specific PDK environment profile (IHPdev or osic).")
-    parser.add_argument("--no-sim", action="store_true", help="Skip simulation execution and display baseline audit table.")
+    parser.add_argument("--no-sim", action="store_true", help="Skip simulation execution and display the stored baseline table (BASELINE_MEASURED_DB, an OLD result: implies --allow-baseline).")
+    parser.add_argument("--allow-baseline", action="store_true", help="If no simulation result is available, print the stored baseline table instead of failing. It is old data, not a measurement of the current design.")
     parser.add_argument("--log", type=str, help="Parse results from existing Ngspice log file.")
     parser.add_argument("--md", type=str, help="Save Markdown table to file.")
     parser.add_argument("--csv", type=str, help="Save CSV table to file.")
@@ -568,10 +569,15 @@ def main():
         except Exception as e:
             print(f"[!] Simulation pipeline notice: {e}")
 
-    # Fallback to verified baseline co-simulation data if no measured data was extracted
+    # No measurement: do NOT silently show old numbers as if they were a result of the current design
     if not measured:
-        print("[*] Using verified co-simulation baseline characterization data.")
-        measured = BASELINE_MEASURED_DB
+        if args.allow_baseline or args.no_sim:
+            print("[!] NO MEASUREMENT of the current design - the table below is the STORED BASELINE (old result), not a simulation.")
+            measured = BASELINE_MEASURED_DB
+        else:
+            print("[!] No gain data could be extracted from the simulation. Not falling back to the stored baseline "
+                  "(use --allow-baseline to print it explicitly).", file=sys.stderr)
+            sys.exit(2)
 
     records = analyze_gains(measured)
     table_text = format_terminal_table(records)

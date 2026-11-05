@@ -25,17 +25,6 @@ RR8 net6 net14 160k $SUB=AVSS $[rhigh] w=0.5e-6 l=54e-6 b=0
 DD1 AVSS S5 dantenna l=0.78u w=0.78u
 .ends
 
-* expanding   symbol:  sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym # of pins=2
-** sym_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/xschem/sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym
-** sch_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/sch/xschem/sg13cmos5l_inv_1.sch
-.subckt sg13cmos5l_inv_1 Y A VDD VSS
-
-*.PININFO Y:O A:I
-MM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1
-MM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1
-.ends
-
-
 * expanding   symbol:  tgate.sym # of pins=6
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/tgate/tgate.sch
@@ -88,5 +77,10 @@ CC4_1 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_2 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_3 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
 CC4_4 net7 V_out cap_cmomi w=8.5e-6 l=8.5e-6 m=1
+.ends
+
+.subckt sg13cmos5l_inv_1 Y A VDD VSS
+MN0 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 ad=2.516e-13 as=2.516e-13 pd=2.16e-06 ps=2.16e-06 m=1
+MP0 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 ad=3.808e-13 as=3.808e-13 pd=2.92e-06 ps=2.92e-06 m=1
 .ends
 

@@ -1,7 +1,7 @@
 {
  "cell": "gain_ota",
- "generated": "2026-10-21T20:35:41",
- "commit": "be66ad2",
+ "generated": "2026-11-05T18:50:11",
+ "commit": "b495d99",
  "profile": "typ",
  "gds": {
   "path": "gds/gain_ota/gain_ota.gds",
@@ -16,50 +16,57 @@
    "name": "cace",
    "status": "pass",
    "seconds": 0,
-   "detail": "reused RUN_2026-10-21_07-18-34: 44 rows, 0 failing",
-   "at": "2026-10-21T20:35:41"
+   "detail": "reused RUN_2026-11-05_17-29-30: 44 rows, 0 failing",
+   "at": "2026-11-05T18:50:11"
   },
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 20,
+   "seconds": 23,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
-   "at": "2026-10-21T20:35:41"
+   "at": "2026-11-05T18:50:11"
+  },
+  {
+   "name": "audit",
+   "status": "pass",
+   "seconds": 0,
+   "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
+   "at": "2026-11-05T18:50:11"
   },
   {
    "name": "lvs",
    "status": "pass",
    "seconds": 4,
    "detail": "RESULT: MATCH",
-   "at": "2026-10-21T20:35:41"
+   "at": "2026-11-05T18:50:11"
   },
   {
    "name": "pex",
    "status": "pass",
    "seconds": 14,
-   "detail": "gain_ota.c.spice: ports VDD V_inp V_inn V_out I_bias VSS; M=57, Rpoly=2, Rext=0, Cdev=5, Cext=182;gain_ota.rc.spice: ports VDD V_inp V_inn V_out I_bias VSS; X=59, R=2414, C=582, Cdev=5;",
-   "at": "2026-10-21T20:35:41"
+   "detail": "gain_ota.c.spice: ports VDD V_inp V_inn V_out I_bias VSS; M=57, Rpoly=2, Rext=0, Cdev=5, Cext=182, D=0;gain_ota.rc.spice: ports VDD V_inp V_inn V_out I_bias VSS; X=59, R=2397, C=585, Cdev=5;",
+   "at": "2026-11-05T17:34:31"
   },
   {
    "name": "post_c",
    "status": "pass",
-   "seconds": 15,
+   "seconds": 18,
    "detail": "41 parameters with a % delta, 27 flagged",
-   "at": "2026-10-21T20:35:41"
+   "at": "2026-11-05T17:34:31"
   },
   {
    "name": "post_rc",
    "status": "pass",
-   "seconds": 39,
+   "seconds": 36,
    "detail": "41 parameters with a % delta, 22 flagged",
-   "at": "2026-10-21T20:35:41"
+   "at": "2026-11-05T17:34:31"
   },
   {
    "name": "images",
    "status": "pass",
    "seconds": 1,
    "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-10-21T20:35:41"
+   "at": "2026-11-05T18:50:11"
   },
   {
    "name": "post",

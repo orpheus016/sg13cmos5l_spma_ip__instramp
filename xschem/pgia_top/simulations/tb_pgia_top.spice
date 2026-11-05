@@ -1,15 +1,11 @@
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/tb_pgia_top.sch
 **.subckt tb_pgia_top
-x1 VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA IBIAS_G1 IBIAS_G2 IBIAS_BUF AVSS VGND
-+ pgia_top
+x1 VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA AVSS VGND pgia_top
 V_AVDD AVDD 0 1.2
 V_AVSS AVSS 0 0
 V_VPWR VPWR 0 1.2
 V_VGND VGND 0 0
-I_IA IBIAS_IA 0 4.2u
-I_BUF IBIAS_BUF 0 1.4u
-I_G1 AVDD IBIAS_G1 1.0u
-I_G2 AVDD IBIAS_G2 1.0u
+I_IA IBIAS_IA 0 -1.0u
 V_CM VCM 0 0.6
 V_INP VINP VCM -334.7u AC 0.5 SIN(-334.7u 20u 10k 0 0 0)
 V_INN VINN VCM 0 AC -0.5 SIN(0 20u 10k 0 0 180)
@@ -25,6 +21,7 @@ RL VOUT 0 100k
 .lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
 .lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerRES.lib res_typ
 .lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/cornerDIO.lib dio_tt
 .include /foss/pdks/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/spice/sg13cmos5l_stdcell.spice
 
 .param temp=27
@@ -404,11 +401,10 @@ RL VOUT 0 100k
 **** end user architecture code
 **.ends
 
-* expanding   symbol:  pgia_top.sym # of pins=16
+* expanding   symbol:  pgia_top.sym # of pins=13
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/pgia_top/pgia_top.sch
-.subckt pgia_top VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA IBIAS_G1 IBIAS_G2 IBIAS_BUF
-+ AVSS VGND
+.subckt pgia_top VINP VINN VCM gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] VOUT AVDD VPWR IBIAS_IA AVSS VGND
 *.iopin AVDD
 *.iopin AVSS
 *.iopin VPWR
@@ -421,16 +417,13 @@ RL VOUT 0 100k
 *.ipin gain_sel[2]
 *.ipin gain_sel[3]
 *.ipin IBIAS_IA
-*.ipin IBIAS_G1
-*.ipin IBIAS_G2
-*.ipin IBIAS_BUF
 *.opin VOUT
-x_dec VGND VPWR gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] s1[0] s1[1] s1[2] s1[3] s1[4] net1 net2 net3 net4 net5 s2[0] s2[1]
-+ s2[2] s2[3] s2[4] net6 net7 net8 net9 net10 gain_decoder_4b
+x_dec VGND VPWR gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] s1[0] s1[1] s1[2] s1[3] s1[4] net3 net4 net5 net6 net7 s2[0] s2[1]
++ s2[2] s2[3] s2[4] net8 net9 net10 net11 net12 gain_decoder_4b
 x_ia AVSS AVDD IBIAS_IA VINN V_IA VINP VCM instramp_cmos5l
-x_stage1 AVDD AVSS IBIAS_G1 V_IA VCM v_stage1 s1[0] s1[1] s1[2] s1[3] s1[4] gain_stage
-x_stage2 AVDD AVSS IBIAS_G2 v_stage1 VCM v_stage2 s2[0] s2[1] s2[2] s2[3] s2[4] gain_stage
-x_buf AVDD IBIAS_BUF VOUT v_stage2 VOUT AVSS output_buffer
+x_stage1 AVDD AVSS IBIAS_IA V_IA VCM v_stage1 s1[0] s1[1] s1[2] s1[3] s1[4] gain_stage
+x_stage2 AVDD AVSS IBIAS_IA v_stage1 VCM v_stage2 s2[0] s2[1] s2[2] s2[3] s2[4] gain_stage
+x_buf AVDD AVSS IBIAS_IA v_stage2 VOUT output_buffer
 **** begin user architecture code
 
 
@@ -440,14 +433,14 @@ x_buf AVDD IBIAS_BUF VOUT v_stage2 VOUT AVSS output_buffer
 
 
 **** end user architecture code
-XM1 V_MID_N V_MID_N VCM AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
-XM2 V_MID_N V_MID_N VINN AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
-XM3 V_MID_P V_MID_P VINP AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
-XM4 V_MID_P V_MID_P VCM AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
+XM1 net1 net1 VCM AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
+XM2 net1 net1 VINN AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
+XM3 net2 net2 VINP AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
+XM4 net2 net2 VCM AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
 .ends
 
 
-* expanding   symbol:  instramp_cmos5l.sym # of pins=7
+* expanding   symbol:  instramp_cmos5l/instramp_cmos5l.sym # of pins=7
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/instramp_cmos5l/instramp_cmos5l.sch
 .subckt instramp_cmos5l VSS VDD IBIAS VINN VOUT VINP CM
@@ -470,7 +463,7 @@ XR8 net4 net3 VSS rhigh w=0.5e-6 l=2e-6 m=1 b=0 mm_ok=1
 .ends
 
 
-* expanding   symbol:  gain_stage.sym # of pins=11
+* expanding   symbol:  gain_stage/gain_stage.sym # of pins=11
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_stage/gain_stage.sch
 .subckt gain_stage AVDD AVSS IBIAS VIN VCM VOUT s[0] s[1] s[2] s[3] s[4]
@@ -492,23 +485,22 @@ x1 s[3] s[4] S0 s[1] s[0] s[2] AVDD VCM VIN VOUT IBIAS AVSS gain_network
 .ends
 
 
-* expanding   symbol:  output_buffer.sym # of pins=6
+* expanding   symbol:  output_buffer/output_buffer.sym # of pins=5
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sch
-.subckt output_buffer AVDD IBIAS VOUT VIN_BUF+ VIN_BUF- AVSS
-*.iopin AVDD
-*.iopin AVSS
+.subckt output_buffer VDD VSS IBIAS VINN VOUT
+*.iopin VDD
+*.iopin VSS
 *.iopin IBIAS
-*.iopin VIN_BUF+
-*.iopin VIN_BUF-
+*.iopin VINN
 *.iopin VOUT
-x1 AVSS IBIAS AVDD VIN_BUF- VIN_BUF+ VOUT ota_cmos5l
+x1 VSS IBIAS VDD VOUT VINN VOUT ota_cmos5l
 .ends
 
 
-* expanding   symbol:  ota_cmos5l.sym # of pins=6
-** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sym
-** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sch
+* expanding   symbol:  ota_cmos5l/ota_cmos5l.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/ota_cmos5l/ota_cmos5l.sch
 .subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
 *.iopin IBIAS
 *.iopin VDD
@@ -546,57 +538,7 @@ XC1 VOUT net4 cap_cmomi w=15e-6 l=15e-6 mmin=1 mmax=4 feed=double subblock=0 m=4
 .ends
 
 
-* expanding   symbol:  sg13cmos5l_stdcells/sg13cmos5l_nor3_1.sym # of pins=4
-** sym_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/xschem/sg13cmos5l_stdcells/sg13cmos5l_nor3_1.sym
-** sch_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/sch/xschem/sg13cmos5l_nor3_1.sch
-.subckt sg13cmos5l_nor3_1 Y A B C VDD VSS
-
-*.ipin B
-*.opin Y
-*.ipin A
-*.ipin C
-XM1 Y A VSS VSS sg13_lv_nmos w=770.00n l=130.00n ng=1 m=1 mm_ok=1
-XM2 Y B VSS VSS sg13_lv_nmos w=770.00n l=130.00n ng=1 m=1 mm_ok=1
-XM3 Y C VSS VSS sg13_lv_nmos w=770.00n l=130.00n ng=1 m=1 mm_ok=1
-XM4 net1 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
-XM5 net2 B net1 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
-XM6 Y C net2 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
-.ends
-
-
-* expanding   symbol:  sg13cmos5l_stdcells/sg13cmos5l_nor2_1.sym # of pins=3
-** sym_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/xschem/sg13cmos5l_stdcells/sg13cmos5l_nor2_1.sym
-** sch_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/sch/xschem/sg13cmos5l_nor2_1.sch
-.subckt sg13cmos5l_nor2_1 Y A B VDD VSS
-
-*.opin Y
-*.ipin B
-*.ipin A
-XM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 m=1 mm_ok=1
-XM2 Y B VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 m=1 mm_ok=1
-XM3 net1 A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
-XM4 Y B net1 VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
-.ends
-
-
-* expanding   symbol:  sg13cmos5l_stdcells/sg13cmos5l_and2_1.sym # of pins=3
-** sym_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/xschem/sg13cmos5l_stdcells/sg13cmos5l_and2_1.sym
-** sch_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/sch/xschem/sg13cmos5l_and2_1.sch
-.subckt sg13cmos5l_and2_1 X A B VDD VSS
-
-*.ipin A
-*.ipin B
-*.opin X
-XM1 net1 A net2 VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 m=1 mm_ok=1
-XM2 net2 B VSS VSS sg13_lv_nmos w=640.00n l=130.00n ng=1 m=1 mm_ok=1
-XM3 X net1 VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 m=1 mm_ok=1
-XM4 net1 B VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 m=1 mm_ok=1
-XM5 net1 A VDD VDD sg13_lv_pmos w=840.00n l=130.00n ng=1 m=1 mm_ok=1
-XM6 X net1 VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
-.ends
-
-
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym # of pins=12
+* expanding   symbol:  gain_network/gain_network.sym # of pins=12
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_network/gain_network.sch
 .subckt gain_network S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS
@@ -633,18 +575,7 @@ XR3 net1 net2 AVSS rhigh w=0.5e-6 l=6.66e-6 m=1 b=0 mm_ok=1
 XR4 net2 net3 AVSS rhigh w=0.5e-6 l=13.42e-6 m=1 b=0 mm_ok=1
 XR7 net14 net5 AVSS rhigh w=0.5e-6 l=54e-6 m=1 b=0 mm_ok=1
 XR8 net6 net14 AVSS rhigh w=0.5e-6 l=54e-6 m=1 b=0 mm_ok=1
-.ends
-
-
-* expanding   symbol:  sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym # of pins=2
-** sym_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/xschem/sg13cmos5l_stdcells/sg13cmos5l_inv_1.sym
-** sch_path: /foss/designs/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/sch/xschem/sg13cmos5l_inv_1.sch
-.subckt sg13cmos5l_inv_1 Y A VDD VSS
-
-*.opin Y
-*.ipin A
-XM1 Y A VSS VSS sg13_lv_nmos w=740.00n l=130.00n ng=1 m=1 mm_ok=1
-XM2 Y A VDD VDD sg13_lv_pmos w=1.12u l=130.00n ng=1 m=1 mm_ok=1
+XD1 AVSS S5 dantenna l=0.78u w=0.78u
 .ends
 
 
@@ -663,7 +594,7 @@ XM2 OUT ENB IN AVDD sg13_lv_pmos w=wp l=l ng=1 m=1 mm_ok=1
 .ends
 
 
-* expanding   symbol:  /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sym # of pins=6
+* expanding   symbol:  gain_ota/gain_ota.sym # of pins=6
 ** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sym
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/gain_ota/gain_ota.sch
 .subckt gain_ota VDD V_inp V_inn V_out I_bias VSS

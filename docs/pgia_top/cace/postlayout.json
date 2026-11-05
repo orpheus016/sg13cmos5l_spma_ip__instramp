@@ -1,0 +1,169 @@
+{
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_17-41-44",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace/pgia_top/RUN_2026-11-05_18-39-19",
+ "schematic_source": "schematic",
+ "postlayout_source": "pex",
+ "threshold_pct": 5.0,
+ "rows": [
+  {
+   "var": "A_CL",
+   "name": "Closed-loop gain @1 kHz",
+   "unit": "dB",
+   "schematic": {
+    "min": -157.273,
+    "typ": 26.91,
+    "max": 77.375,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -81.275,
+    "typ": 20.909,
+    "max": 45.018,
+    "status": "Pass"
+   },
+   "delta": -6.001000000000001,
+   "delta_pct": -22.300260126347087,
+   "flag": "\u0394"
+  },
+  {
+   "var": "A_ERR",
+   "name": "Gain step error vs target",
+   "unit": "dB",
+   "schematic": {
+    "min": -235.541,
+    "typ": -3.527,
+    "max": 21.937,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -159.348,
+    "typ": -2.409,
+    "max": 0.129,
+    "status": "Pass"
+   },
+   "delta": 1.1180000000000003,
+   "delta_pct": 31.69832719024668,
+   "flag": "\u0394"
+  },
+  {
+   "var": "F3DB",
+   "name": "-3 dB bandwidth",
+   "unit": "Hz",
+   "schematic": {
+    "min": 1421.28,
+    "typ": 220131.0,
+    "max": 44479600.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 7657.3,
+    "typ": 231354.0,
+    "max": 4157860.0,
+    "status": "Pass"
+   },
+   "delta": 11223.0,
+   "delta_pct": 5.098327813892636,
+   "flag": "\u0394"
+  },
+  {
+   "var": "F0DB",
+   "name": "0 dB frequency",
+   "unit": "Hz",
+   "schematic": {
+    "min": 27614.5,
+    "typ": 2838315.0,
+    "max": 10000000.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 393066.0,
+    "typ": 2501000.0,
+    "max": 10000000.0,
+    "status": "Pass"
+   },
+   "delta": -337315.0,
+   "delta_pct": -11.884339828384094,
+   "flag": "\u0394"
+  },
+  {
+   "var": "PH_1K",
+   "name": "Phase @1 kHz",
+   "unit": "\u00b0",
+   "schematic": {
+    "min": -179.244,
+    "typ": -0.377,
+    "max": 179.812,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -93.593,
+    "typ": -0.439,
+    "max": -0.326,
+    "status": "Pass"
+   },
+   "delta": -0.062,
+   "delta_pct": -16.445623342175068,
+   "flag": "\u0394"
+  },
+  {
+   "var": "R_PSEUDO",
+   "name": "Input pseudo-resistor",
+   "unit": "GOhm",
+   "schematic": {
+    "min": 3.563,
+    "typ": 13.559,
+    "max": 43.789,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 16.935,
+    "typ": 16.935,
+    "max": 16.935,
+    "status": "Pass"
+   },
+   "delta": 3.3759999999999994,
+   "delta_pct": 24.89859134154436,
+   "flag": "\u0394"
+  },
+  {
+   "var": "VPP_OUT",
+   "name": "Output peak-to-peak",
+   "unit": "mV",
+   "schematic": {
+    "min": 0.0,
+    "typ": 1.969,
+    "max": 73.973,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.0,
+    "typ": 0.952,
+    "max": 14.237,
+    "status": "Pass"
+   },
+   "delta": -1.0170000000000001,
+   "delta_pct": -51.650584052818694,
+   "flag": "\u0394"
+  },
+  {
+   "var": "EFF_GAIN",
+   "name": "Effective voltage gain",
+   "unit": "V/V",
+   "schematic": {
+    "min": 0.0,
+    "typ": 49.237,
+    "max": 1849.33,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.002,
+    "typ": 23.799,
+    "max": 355.924,
+    "status": "Pass"
+   },
+   "delta": -25.438000000000002,
+   "delta_pct": -51.664398724536426,
+   "flag": "\u0394"
+  }
+ ]
+}

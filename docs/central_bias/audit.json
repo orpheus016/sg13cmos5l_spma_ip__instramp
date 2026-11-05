@@ -1,0 +1,17 @@
+{
+ "layout": "gds/central_bias/central_bias.gds",
+ "top": "central_bias",
+ "limit_um": 20.0,
+ "violations": {},
+ "warnings": {},
+ "counts": {
+  "ntie": 8,
+  "ptie": 16,
+  "p_activ_in_nwell": 28,
+  "n_activ_in_substrate": 62,
+  "nwell": 1
+ },
+ "abut_sites": [],
+ "abut_total_sites": 0,
+ "abut_baseline": null
+}

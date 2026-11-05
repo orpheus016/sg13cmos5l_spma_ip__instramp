@@ -9,6 +9,7 @@
 | [cace_ci/00_overview.md](cace_ci/00_overview.md) | CACE / CI architecture overview |
 | [LVS guide](#lvs-guide-klayout) (below) | Layout vs schematic with KLayout: GUI loop, `scripts/run_lvs.sh`, pitfalls |
 | [lvs_upstream_issues.md](lvs_upstream_issues.md) | Draft IHP-Open-PDK issues for the MoM-cap LVS limitations (not posted) |
+| [Build everything](#build-everything-one-command-for-the-whole-repository) (below) | `scripts/build_all.sh`: registry, `slot_9.gds` for the Chipalooza harness, every cell's flow, LVS canary, pictures, HTML reports, one summary |
 | [Flow guide](#flow-guide-one-command-per-cell) (below) | `scripts/flow.sh <cell>`: schematic CACE -> DRC/antenna -> LVS -> PEX -> post-layout CACE -> comparison for every cell, manual steps, new cells, interactive report |
 | [Pictures](#f5-pictures-schematic-and-layout-of-every-cell) (Flow guide F5) | `scripts/update_images.py`: circuit-only schematics and layout renderings, auto-updated in the READMEs and `report.html` |
 | [roadmap.md](roadmap.md) | Optimisation (C/ID), ALIGN, ANN and topology-recommendation: feasibility and order of work |
@@ -394,6 +395,40 @@ Keep a gap between neighbouring caps: touching `recog_mom` markers merge and the
 - [ ] `scripts/run_lvs.sh <cell>` ends with `RESULT: MATCH` (or the GUI browser is all green)
 - [ ] `runs/lvs/<cell>/<cell>.lvsdb` kept until the layout is signed off; DRC (*SG13CMOS5L PDK → DRC*) is clean as well
 - [ ] if the layout was changed to pass LVS, rerun DRC and, if devices changed, the CACE report
+
+---
+
+# Build everything (one command for the whole repository)
+
+```bash
+scripts/build_all.sh --fast            # minutes: registry, slot_9.gds, DRC + tap audit + LVS of every layout cell, harness checks, LVS canary
+scripts/build_all.sh --no-mc           # everything: + CACE / PEX / post-layout, pictures + READMEs, HTML reports (no Monte Carlo in the schematic CACE runs)
+scripts/build_all.sh --cells pgia_top,slot9_wrapper --skip canary    # subset; --skip takes step or flow-stage names (cace, pex, images, reports, ...)
+scripts/build_all.sh --open            # open docs/index.html afterwards
+```
+
+What it runs, leaves first and the chip last (a failing step never stops the others; exit 0 all ok / 1 a check failed / 2 a step could not run):
+
+| Step | Script | What it proves |
+|---|---|---|
+| `registry` | `scripts/cellinfo.py --check` | `cells.yaml` agrees with the files: layout and schematic exist, the top cell of the GDS is the schematic name |
+| `export` | `scripts/export_slot_gds.py` | writes `gds/slot_9.gds` (= `slot9_wrapper.gds`, top cell renamed `slot_9`): **the file the Chipalooza harness takes** |
+| `flow:<cell>` | `scripts/flow.sh <cell>` | the cell's stages from `cells.yaml`: `cace` `drc` `audit` `drc_harness` `lvs` `deliver` `pex` `post`, then the pictures; results in `docs/<cell>/status.{md,json}` |
+| `canary` | `scripts/lvs_canary.py pgia_top` | LVS still fails on a wrong W, a wrong resistor L, a missing well tap and a short (scratch copies, nothing is modified) |
+| `images` | `scripts/update_images.py all` | schematic / symbol / layout pictures and the README blocks of every cell |
+| `reports:cace`, `reports:chip` | `scripts/build_report.sh all`, `scripts/build_chip_report.py` | `docs/<cell>/report.html` for every cell and `docs/index.html` |
+
+Result: `docs/build_summary.md` (steps and a cells x stages matrix), `docs/index.html`, logs in `runs/build_all/<timestamp>/`.
+
+**New stages** (listed per cell in `cells.yaml`, also usable on their own with `scripts/flow.sh <cell> --only audit`):
+
+- `audit` (`scripts/tap_audit.py`): latch-up checks the PDK does not make. `LU.a`/`LU.b` (every p+ / n+ device Activ within 20 um of an n-/p-tie; the PDK deck names `LU.b` but implements nothing), every NWell with p+ has a tie, and p+/n+ Activ abutment outside standard cells compared with `docs/<cell>/audit_baseline.json`. A new abutment fails; `--accept-abut` writes the baseline after a person has looked at the list. This audit flags exactly the bug that once shorted VINP, VINN and AVDD at the pseudo-resistor.
+- `drc_harness` (`scripts/run_drc_harness.sh`): DRC with the deck and flags of the harness (`ihp-sg13cmos5l.drc`, feol beol conn_drc wedge, deep) on `gds/slot_9.gds`.
+- `deliver` (`scripts/export_slot_gds.py --check`, `scripts/harness_trial.sh`): `slot_9.gds` is current, and the harness's own `get_project_gds.sh` finds it, Magic reads it read-only, places it at the slot and writes the identical geometry back.
+
+**What the harness does with this repository** (`../sg13cmos5l_ocd_chipalooza`): `config.txt` names this repo as `s9_source`; `make projects` clones it as `dependencies/slot_9`; `make projects-gds` takes `gds/slot_9.gds` (error if none, if `.gds` and `.gds.gz` both exist, or several candidates outside `gds/` and `final/gds/`) and needs a top cell named `slot_9`. Keep exactly one `slot_9.gds*` in the repository (the backups folders must not contain one). `s9_version` in the harness `config.txt` is `- -` (tip of the default branch): the harness maintainer pins a commit when the chip is frozen. The harness adds fill and runs its final DRC and top-level LVS itself.
+
+After changing the layout of `slot9_wrapper`: `scripts/export_slot_gds.py` (CI fails with "slot_9.gds is stale" otherwise).
 
 ---
 

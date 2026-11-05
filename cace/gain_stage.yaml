@@ -48,23 +48,23 @@ pins:
     type: signal
     direction: output
   s[0]:
-    description: Gain select bit 0 (Tap 1: +6.02 dB / 2x)
+    description: "Gain select bit 0 (Tap 1: +6.02 dB / 2x)"
     type: signal
     direction: input
   s[1]:
-    description: Gain select bit 1 (Tap 2: +12.04 dB / 4x)
+    description: "Gain select bit 1 (Tap 2: +12.04 dB / 4x)"
     type: signal
     direction: input
   s[2]:
-    description: Gain select bit 2 (Tap 3: +18.06 dB / 8x)
+    description: "Gain select bit 2 (Tap 3: +18.06 dB / 8x)"
     type: signal
     direction: input
   s[3]:
-    description: Gain select bit 3 (Tap 4: +24.08 dB / 16x)
+    description: "Gain select bit 3 (Tap 4: +24.08 dB / 16x)"
     type: signal
     direction: input
   s[4]:
-    description: Gain select bit 4 (Tap 5: +30.10 dB / 32x)
+    description: "Gain select bit 4 (Tap 5: +30.10 dB / 32x)"
     type: signal
     direction: input
 

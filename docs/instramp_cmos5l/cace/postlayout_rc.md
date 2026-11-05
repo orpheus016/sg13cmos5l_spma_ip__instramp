@@ -1,7 +1,7 @@
 # Schematic vs post-layout
 
-* schematic run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_10-03-50` (netlist source: schematic)
-* post-layout run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/instramp_cmos5l/RUN_2026-10-21_10-06-04` (netlist source: pex)
+* schematic run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_17-27-15` (netlist source: schematic)
+* post-layout run: `/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/instramp_cmos5l/RUN_2026-11-05_17-28-48` (netlist source: pex)
 * flag threshold: 5 % on the typical value; units as in the CACE summary
 
 | Parameter | Var | Unit | Schematic min / typ / max | Post-layout min / typ / max | Δ typ | Δ typ % | Status | Flag |
@@ -16,6 +16,13 @@
 | 2nd harmonic | HD2_DB | dB | -80.791 / -64.979 / -48.314 | -63.725 / -63.725 / -63.725 | +1.254 | +1.93 | Pass → Pass |  |
 | 3rd harmonic | HD3_DB | dB | -76.241 / -69.23 / -50.352 | -69.469 / -69.469 / -69.469 | -0.239 | -0.35 | Pass → Pass |  |
 | Output fundamental amplitude | VO1 | V | 0.192 / 0.2 / 0.204 | 0.199 / 0.199 / 0.199 | -0.001 | -0.50 | Pass → Pass |  |
+| Input resistance of one input (Rs removed) | R_IN | GOhm | 5.115 / 17.548 / 46.93 | 19.86 / 19.86 / 19.86 | +2.312 | +13.18 | Pass → Pass | Δ |
+| Closed-loop gain at 1 kHz with the network | A_NET | dB | 17.765 / 18.061 / 18.262 | 18.008 / 18.008 / 18.008 | -0.053 | -0.29 | Pass → Pass |  |
+| Input noise @100 Hz incl. Rs and network | IRN_100 | nV/rtHz | 907.75 / 1096.5 / 1274.4 | 1086.2 / 1086.2 / 1086.2 | -10.31 | -0.94 | Pass → Pass |  |
+| Input noise @1 kHz incl. Rs and network | IRN_1K | nV/rtHz | 297.67 / 359.14 / 415.99 | 355.43 / 355.43 / 355.43 | -3.707 | -1.03 | Pass → Pass |  |
+| Output DC level minus Vcm with the network | VOS_NET | mV | 0.436 / 1.933 / 4.87 | 6.617 / 6.617 / 6.617 | +4.684 | +242.32 | Pass → Pass | Δ |
+| THD with Rs and network | THD_DB#2 | dB | -72.492 / -63.522 / -46.172 | -62.697 / -62.697 / -62.697 | +0.825 | +1.30 | Pass → Pass |  |
+| 3rd harmonic with Rs and network | HD3_DB#2 | dB | -76.241 / -69.23 / -50.352 | -69.469 / -69.469 / -69.469 | -0.239 | -0.35 | Pass → Pass |  |
 | Differential gain @10 Hz | ADM_DC | dB | 17.735 / 18.039 / 18.241 | 17.994 / 17.994 / 17.994 | -0.045 | -0.25 | Pass → Pass |  |
 | CMRR @10 Hz | CMRR_DC | dB | 41.798 / 47.694 / 52.303 | 49.579 / 49.579 / 49.579 | +1.885 | +3.95 | Pass → Pass |  |
 | CMRR @100 kHz | CMRR_100K | dB | 38.52 / 44.356 / 49.51 | 44.98 / 44.98 / 44.98 | +0.624 | +1.41 | Pass → Pass |  |
@@ -25,8 +32,8 @@
 | PSRR @100 kHz | PSRR_100K | dB | 50.344 / 62.056 / 66.067 | 63.606 / 63.606 / 63.606 | +1.55 | +2.50 | Pass → Pass |  |
 | PSRR @1 MHz | PSRR_1M | dB | 41.461 / 44.243 / 50.529 | 43.381 / 43.381 / 43.381 | -0.862 | -1.95 | Pass → Pass |  |
 | Input noise @10 Hz | IRN_10 | nV/rtHz | 2859.5 / 3453.6 / 4016.5 | 3414.4 / 3414.4 / 3414.4 | -39.17 | -1.13 | Pass → Pass |  |
-| Input noise @100 Hz | IRN_100 | nV/rtHz | 906.4 / 1095 / 1272.9 | 1082.2 / 1082.2 / 1082.2 | -12.75 | -1.16 | Pass → Pass |  |
-| Input noise @1 kHz | IRN_1K | nV/rtHz | 293.35 / 354.55 / 411.25 | 350.01 / 350.01 / 350.01 | -4.546 | -1.28 | Pass → Pass |  |
+| Input noise @100 Hz | IRN_100#2 | nV/rtHz | 906.4 / 1095 / 1272.9 | 1082.2 / 1082.2 / 1082.2 | -12.75 | -1.16 | Pass → Pass |  |
+| Input noise @1 kHz | IRN_1K#2 | nV/rtHz | 293.35 / 354.55 / 411.25 | 350.01 / 350.01 / 350.01 | -4.546 | -1.28 | Pass → Pass |  |
 | Input noise @10 kHz | IRN_10K | nV/rtHz | 111.85 / 134.68 / 155.09 | 132.89 / 132.89 / 132.89 | -1.787 | -1.33 | Pass → Pass |  |
 | Output noise @1 kHz | ORN_1K | nV/rtHz | 2392.1 / 2837.7 / 3213.4 | 2782.8 / 2782.8 / 2782.8 | -54.91 | -1.94 | Pass → Pass |  |
 | Integrated output noise | ONOISE_TOT | uV-rms | 482.78 / 544.2 / 593.5 | 524.24 / 524.24 / 524.24 | -19.96 | -3.67 | Pass → Pass |  |
@@ -35,9 +42,9 @@
 | Output voltage | VOUT | V | 0.6 / 0.602 / 0.605 | 0.607 / 0.607 / 0.607 | +0.005 | +0.83 | Pass → Pass |  |
 | Quiescent current | IQ | uA | 48.004 / 54.873 / 59.75 | 73.811 / 73.811 / 73.811 | +18.94 | +34.51 | Pass → Pass | Δ |
 | Quiescent power | PWR | uW | 57.605 / 74.078 / 89.625 | 99.645 / 99.645 / 99.645 | +25.57 | +34.51 | Pass → Pass | Δ |
-| Small-signal gain (transient) | TR_GAIN |  | 7.7318 / 7.9999 / 8.1872 | 7.9513 / 7.9513 / 7.9513 | -0.04857 | -0.61 | Pass → Pass |  |
+| Small-signal gain (transient) | TR_GAIN |  | 7.7317 / 7.9999 / 8.187 | 7.9512 / 7.9512 / 7.9512 | -0.04873 | -0.61 | Pass → Pass |  |
 | Mean output level | TR_VOUT_AVG | V | 0.6 / 0.602 / 0.605 | 0.607 / 0.607 / 0.607 | +0.005 | +0.83 | Pass → Pass |  |
 
-7 row(s) flagged.
+9 row(s) flagged.
 
 ![deltas](postlayout_rc.png)

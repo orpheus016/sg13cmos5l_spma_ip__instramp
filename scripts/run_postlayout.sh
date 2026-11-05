@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Post-layout CACE run and comparison with the schematic:  scripts/run_postlayout.sh <cell> [options] [-- cace args, e.g. -p dc_op ac_response]
 #
-#   --profile typ|pvt   typ (default): corner tt, typical vdd / temperature only, no Monte Carlo  -> a handful of runs
+#   --profile typ|pvt   typ (default): corner tt, typical vdd / temperature only (all gain codes), no Monte Carlo  -> a handful of runs
 #                       pvt: the full PVT grid of the datasheet, no Monte Carlo (extraction has no random part)
 #   --against <run>     schematic run to compare with (default: newest runs/RUN_* whose summary says "netlist source: schematic")
 #   --netlist c|rc      c (default): kpex wire capacitance only;  rc: Magic wire resistance + capacitance (scripts/run_pex.sh)
@@ -70,7 +70,7 @@ for name in list(d["parameters"]):
         continue
     if profile == "typ":
         for cn, c in cond.items():
-            if "enumerate" in c:
+            if "enumerate" in c and cn != "gain_code":      # gain_code stays fully enumerated (the 11 gain steps are the point of pgia_top)
                 c["enumerate"] = [c["enumerate"][0]]
             if cn in ("vdd", "temperature"):
                 c.pop("minimum", None); c.pop("maximum", None)

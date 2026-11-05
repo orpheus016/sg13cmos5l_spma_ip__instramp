@@ -1,0 +1,5 @@
+# xschemrc for central_bias CACE templates
+set _here [file dirname [file normalize [info script]]]
+source [file normalize "$_here/../xschemrc"]
+append XSCHEM_LIBRARY_PATH :$_here
+append XSCHEM_LIBRARY_PATH :$_here/../../xschem/central_bias

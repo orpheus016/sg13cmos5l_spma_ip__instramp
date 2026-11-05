@@ -213,32 +213,6 @@ text {font-family: Sans-Serif;}
 <path class="l4" d="M557.835 181.886L561.084 172.138"/>
 <path class="l4" d="M556.211 177.012L557.835 181.886"/>
 <path class="l4" d="M549.712 177.012L556.211 177.012"/>
-<path class="l4" d="M81.8315 300.481L81.8315 306.979"/>
-<path class="l4" d="M81.8315 300.481L86.7052 298.856"/>
-<path class="l4" d="M76.9577 295.607L86.7052 298.856"/>
-<path class="l4" d="M76.9577 295.607L86.7052 292.358"/>
-<path class="l4" d="M76.9577 289.108L86.7052 292.358"/>
-<path class="l4" d="M76.9577 289.108L86.7052 285.859"/>
-<path class="l4" d="M76.9577 282.61L86.7052 285.859"/>
-<path class="l4" d="M76.9577 282.61L86.7052 279.361"/>
-<path class="l4" d="M76.9577 276.112L86.7052 279.361"/>
-<path class="l4" d="M76.9577 276.112L81.8315 274.487"/>
-<path class="l4" d="M81.8315 267.989L81.8315 274.487"/>
-<path class="l4" d="M83.456 272.863L86.7052 272.863"/>
-<path class="l4" d="M85.0806 271.238L85.0806 274.487"/>
-<path class="l4" d="M81.8315 462.939L81.8315 469.438"/>
-<path class="l4" d="M81.8315 462.939L86.7052 461.315"/>
-<path class="l4" d="M76.9577 458.065L86.7052 461.315"/>
-<path class="l4" d="M76.9577 458.065L86.7052 454.816"/>
-<path class="l4" d="M76.9577 451.567L86.7052 454.816"/>
-<path class="l4" d="M76.9577 451.567L86.7052 448.318"/>
-<path class="l4" d="M76.9577 445.069L86.7052 448.318"/>
-<path class="l4" d="M76.9577 445.069L86.7052 441.82"/>
-<path class="l4" d="M76.9577 438.57L86.7052 441.82"/>
-<path class="l4" d="M76.9577 438.57L81.8315 436.946"/>
-<path class="l4" d="M81.8315 430.448L81.8315 436.946"/>
-<path class="l4" d="M83.456 435.321L86.7052 435.321"/>
-<path class="l4" d="M85.0806 433.697L85.0806 436.946"/>
 <path class="l4" d="M354.762 326.474L354.762 332.972"/>
 <path class="l4" d="M354.762 326.474L359.636 324.849"/>
 <path class="l4" d="M349.888 321.6L359.636 324.849"/>
@@ -317,11 +291,6 @@ text {font-family: Sans-Serif;}
 <path class="l5" d="M53.8073 521.424L55.8381 521.424"/>
 <path class="l5" d="M46.9028 518.175L44.466 521.424L46.9028 524.674L51.3705 524.674L53.8073 521.424L51.3705 518.175L46.9028 518.175"/>
 <path class="l5" d="M55.0258 520.612L56.6504 520.612L56.6504 522.237L55.0258 522.237L55.0258 520.612z"/>
-<path class="l5" d="M80.2069 266.364L83.456 266.364L83.456 269.613L80.2069 269.613L80.2069 266.364z"/>
-<path class="l5" d="M80.2069 305.354L83.456 305.354L83.456 308.604L80.2069 308.604L80.2069 305.354z"/>
-<path class="l5" d="M80.2069 428.823L83.456 428.823L83.456 432.072L80.2069 432.072L80.2069 428.823z"/>
-<path class="l5" d="M80.2069 467.813L83.456 467.813L83.456 471.062L80.2069 471.062L80.2069 467.813z"/>
-<path class="l5" d="M81.0192 377.648L82.6437 377.648L82.6437 379.273L81.0192 379.273L81.0192 377.648z"/>
 <path class="l5" d="M548.9 650.579L550.525 650.579L550.525 652.204L548.9 652.204L548.9 650.579z"/>
 <path class="l5" d="M353.137 292.358L356.387 292.358L356.387 295.607L353.137 295.607L353.137 292.358z"/>
 <path class="l5" d="M353.137 331.348L356.387 331.348L356.387 334.597L353.137 334.597L353.137 331.348z"/>
@@ -413,17 +382,6 @@ text {font-family: Sans-Serif;}
 <text fill="#0099cc"  xml:space="preserve" font-size="11.1512" transform="translate(952.508, 395.49)" >VOUT</text>
 <text fill="#0099cc"  xml:space="preserve" font-size="11.1512" transform="translate(15.9429, 219.429)" >VINN</text>
 <text fill="#0099cc"  xml:space="preserve" font-size="11.1512" transform="translate(16.9429, 524.851)" >VINP</text>
-<text fill="#666600"  xml:space="preserve" font-size="6.75828" transform="translate(71.3331, 276.562)" >1</text>
-<text fill="#666600"  xml:space="preserve" font-size="6.75828" transform="translate(71.3331, 304.18)" >2</text>
-<text fill="#222222"  xml:space="preserve" font-size="6.75828" transform="translate(91.579, 281.436)" >R5</text>
-<text fill="#222222"  xml:space="preserve" font-size="6.75828" transform="translate(91.579, 289.559)" >10MEG</text>
-<text fill="#222222"  xml:space="preserve" font-size="6.75828" transform="translate(91.579, 297.682)" >m=1</text>
-<text fill="#666600"  xml:space="preserve" font-size="6.75828" transform="translate(71.3331, 439.021)" >1</text>
-<text fill="#666600"  xml:space="preserve" font-size="6.75828" transform="translate(71.3331, 466.639)" >2</text>
-<text fill="#222222"  xml:space="preserve" font-size="6.75828" transform="translate(91.579, 443.895)" >R6</text>
-<text fill="#222222"  xml:space="preserve" font-size="6.75828" transform="translate(91.579, 452.018)" >10MEG</text>
-<text fill="#222222"  xml:space="preserve" font-size="6.75828" transform="translate(91.579, 460.141)" >m=1</text>
-<text fill="#0099cc"  xml:space="preserve" font-size="9.12368" transform="translate(83.456, 387.557)" >CM</text>
 <text fill="#0099cc"  xml:space="preserve" font-size="9.12368" transform="translate(551.337, 660.488)" >CM</text>
 <text fill="#666600"  xml:space="preserve" font-size="6.75828" transform="translate(364.509, 317.177)" >w/l = 0.5e-6 / 2e-6</text>
 <text fill="#222222"  xml:space="preserve" font-size="6.75828" transform="translate(364.509, 309.054)" >rhigh</text>
@@ -461,7 +419,6 @@ text {font-family: Sans-Serif;}
 <path class="l1" d="M588.702 177.012L822.643 177.012"/>
 <path class="l1" d="M770.656 391.457L822.643 391.457"/>
 <path class="l1" d="M822.643 391.457L939.613 391.457"/>
-<path class="l1" d="M81.8315 521.424L172.808 521.424"/>
 <path class="l1" d="M224.795 384.959L224.795 462.939"/>
 <path class="l1" d="M224.795 79.5368L224.795 157.517"/>
 <path class="l1" d="M666.683 228.999L666.683 306.979"/>
@@ -470,12 +427,8 @@ text {font-family: Sans-Serif;}
 <path class="l1" d="M250.788 79.5368L250.788 157.517"/>
 <path class="l1" d="M250.788 384.959L250.788 462.939"/>
 <path class="l1" d="M692.676 228.999L692.676 306.979"/>
-<path class="l1" d="M81.8315 216.002L172.808 216.002"/>
-<path class="l1" d="M81.8315 216.002L81.8315 267.989"/>
-<path class="l1" d="M55.8381 216.002L81.8315 216.002"/>
-<path class="l1" d="M81.8315 469.438L81.8315 521.424"/>
-<path class="l1" d="M81.8315 306.979L81.8315 430.448"/>
-<path class="l1" d="M55.8381 521.424L81.8315 521.424"/>
+<path class="l1" d="M55.8381 216.002L172.808 216.002"/>
+<path class="l1" d="M55.8381 521.424L172.808 521.424"/>
 <path class="l1" d="M146.815 345.969L354.762 345.969"/>
 <path class="l1" d="M354.762 332.972L354.762 345.969"/>
 <path class="l1" d="M354.762 638.395L354.762 651.391"/>
@@ -484,12 +437,6 @@ text {font-family: Sans-Serif;}
 <path class="l1" d="M276.782 384.959L276.782 462.939"/>
 <path class="l1" d="M718.669 228.999L718.669 306.979"/>
 <path class="l1" d="M276.782 79.5368L276.782 157.517"/>
-<circle class="l1" cx="81.8315" cy="216.002" r="2.40439"/>
-<circle class="l1" cx="81.8315" cy="216.002" r="2.40439"/>
-<circle class="l1" cx="81.8315" cy="216.002" r="2.40439"/>
-<circle class="l1" cx="81.8315" cy="521.424" r="2.40439"/>
-<circle class="l1" cx="81.8315" cy="521.424" r="2.40439"/>
-<circle class="l1" cx="81.8315" cy="521.424" r="2.40439"/>
 <circle class="l1" cx="484.729" cy="241.995" r="2.40439"/>
 <circle class="l1" cx="484.729" cy="241.995" r="2.40439"/>
 <circle class="l1" cx="484.729" cy="241.995" r="2.40439"/>
