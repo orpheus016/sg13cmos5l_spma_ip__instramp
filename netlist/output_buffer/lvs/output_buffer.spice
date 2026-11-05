@@ -1,12 +1,12 @@
-** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/output_buffer.sch
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sch
 .subckt output_buffer VDD VSS IBIAS VINN VOUT
 *.PININFO VDD:B VSS:B IBIAS:B VINN:B VOUT:B
-x1 VSS IBIAS VDD VINN VOUT VOUT ota_cmos5l
+x1 VSS IBIAS VDD VOUT VINN VOUT ota_cmos5l
 .ends
 
 * expanding   symbol:  ota_cmos5l.sym # of pins=6
-** sym_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/ota_cmos5l.sym
-** sch_path: /foss/designs/Chipalooza/Programmable-Instrumentation-Amplifier-IP/xschem/output_buffer/ota_cmos5l.sch
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/ota_cmos5l.sch
 .subckt ota_cmos5l VSS IBIAS VDD VINN VINP VOUT
 .param temp=27
 .param lbias=0.15u wbias=0.15u

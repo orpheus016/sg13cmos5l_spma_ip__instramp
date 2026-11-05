@@ -65,7 +65,7 @@ x1 s[3] s[4] S0 s[1] s[0] s[2] AVDD VCM VIN VOUT IBIAS AVSS gain_network
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sch
 .subckt output_buffer VDD VSS IBIAS VINN VOUT
 *.PININFO VDD:B VSS:B IBIAS:B VINN:B VOUT:B
-x1 VSS IBIAS VDD VINN VOUT VOUT ota_cmos5l
+x1 VSS IBIAS VDD VOUT VINN VOUT ota_cmos5l
 .ends
 
 

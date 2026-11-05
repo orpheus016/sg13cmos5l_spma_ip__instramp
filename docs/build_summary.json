@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-04T05:51:14",
+ "generated": "2026-11-05T12:49:30",
  "mode": "fast",
  "profile": "typ",
  "branch": "phase2",
- "commit": "8df9d33",
- "seconds": 479,
+ "commit": "b2b1d75",
+ "seconds": 315,
  "steps": [
   {
    "name": "registry",
@@ -19,63 +19,27 @@
    "detail": "export_slot_gds: OK"
   },
   {
-   "name": "flow:ota_cmos5l",
-   "status": "ok",
-   "seconds": "34",
-   "detail": "flow: docs/ota_cmos5l/status.md"
-  },
-  {
-   "name": "flow:instramp_cmos5l",
-   "status": "ok",
-   "seconds": "38",
-   "detail": "flow: docs/instramp_cmos5l/status.md"
-  },
-  {
    "name": "flow:output_buffer",
    "status": "ok",
-   "seconds": "30",
+   "seconds": "32",
    "detail": "flow: docs/output_buffer/status.md"
-  },
-  {
-   "name": "flow:dec2to4",
-   "status": "ok",
-   "seconds": "1",
-   "detail": "flow: docs/dec2to4/status.md"
-  },
-  {
-   "name": "flow:gain_ota",
-   "status": "ok",
-   "seconds": "31",
-   "detail": "flow: docs/gain_ota/status.md"
-  },
-  {
-   "name": "flow:gain_network",
-   "status": "ok",
-   "seconds": "36",
-   "detail": "flow: docs/gain_network/status.md"
-  },
-  {
-   "name": "flow:gain_stage",
-   "status": "ok",
-   "seconds": "38",
-   "detail": "flow: docs/gain_stage/status.md"
   },
   {
    "name": "flow:pgia_top",
    "status": "ok",
-   "seconds": "93",
+   "seconds": "85",
    "detail": "flow: docs/pgia_top/status.md"
   },
   {
    "name": "flow:slot9_wrapper",
    "status": "ok",
-   "seconds": "123",
+   "seconds": "142",
    "detail": "flow: docs/slot9_wrapper/status.md"
   },
   {
    "name": "canary",
    "status": "ok",
-   "seconds": "51",
+   "seconds": "53",
    "detail": "lvs_canary: OK, 4/4 mutations detected"
   },
   {
@@ -92,57 +56,7 @@
   }
  ],
  "matrix": {
-  "ota_cmos5l": {
-   "cace": "pass",
-   "drc": "pass",
-   "audit": "pass",
-   "lvs": "pass",
-   "pex": "pass",
-   "post_c": "pass",
-   "post_rc": "pass",
-   "images": "pass"
-  },
-  "instramp_cmos5l": {
-   "cace": "pass",
-   "drc": "pass",
-   "audit": "pass",
-   "lvs": "pass",
-   "pex": "pass",
-   "post_c": "pass",
-   "post_rc": "pass",
-   "images": "pass"
-  },
   "output_buffer": {
-   "drc": "pass",
-   "audit": "pass",
-   "lvs": "pass"
-  },
-  "dec2to4": {
-   "drc": "skip"
-  },
-  "gain_ota": {
-   "cace": "pass",
-   "drc": "pass",
-   "audit": "pass",
-   "lvs": "pass",
-   "pex": "pass",
-   "post_c": "pass",
-   "post_rc": "pass",
-   "images": "pass",
-   "post": "skip"
-  },
-  "gain_network": {
-   "cace": "pass",
-   "drc": "pass",
-   "audit": "pass",
-   "lvs": "pass",
-   "pex": "pass",
-   "post_c": "pass",
-   "post_rc": "pass",
-   "images": "pass",
-   "post": "blocked"
-  },
-  "gain_stage": {
    "drc": "pass",
    "audit": "pass",
    "lvs": "pass"
