@@ -1,10 +1,10 @@
 {
- "generated": "2026-11-05T12:49:30",
+ "generated": "2026-11-05T15:50:31",
  "mode": "fast",
  "profile": "typ",
  "branch": "phase2",
- "commit": "b2b1d75",
- "seconds": 315,
+ "commit": "73a60b6",
+ "seconds": 296,
  "steps": [
   {
    "name": "registry",
@@ -19,28 +19,34 @@
    "detail": "export_slot_gds: OK"
   },
   {
-   "name": "flow:output_buffer",
-   "status": "ok",
-   "seconds": "32",
-   "detail": "flow: docs/output_buffer/status.md"
-  },
-  {
    "name": "flow:pgia_top",
    "status": "ok",
-   "seconds": "85",
+   "seconds": "83",
    "detail": "flow: docs/pgia_top/status.md"
   },
   {
    "name": "flow:slot9_wrapper",
    "status": "ok",
-   "seconds": "142",
+   "seconds": "115",
    "detail": "flow: docs/slot9_wrapper/status.md"
+  },
+  {
+   "name": "flow:central_bias",
+   "status": "ok",
+   "seconds": "18",
+   "detail": "flow: docs/central_bias/status.md"
   },
   {
    "name": "canary",
    "status": "ok",
-   "seconds": "53",
+   "seconds": "51",
    "detail": "lvs_canary: OK, 4/4 mutations detected"
+  },
+  {
+   "name": "bias",
+   "status": "ok",
+   "seconds": "27",
+   "detail": "verify_central_bias: OK"
   },
   {
    "name": "images",
@@ -56,11 +62,6 @@
   }
  ],
  "matrix": {
-  "output_buffer": {
-   "drc": "pass",
-   "audit": "pass",
-   "lvs": "pass"
-  },
   "pgia_top": {
    "cace": "fail",
    "drc": "pass",
@@ -74,6 +75,12 @@
    "drc_harness": "pass",
    "lvs": "pass",
    "deliver": "pass"
+  },
+  "central_bias": {
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "images": "pass"
   }
  }
 }

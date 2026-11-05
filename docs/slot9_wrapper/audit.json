@@ -5,11 +5,11 @@
  "violations": {},
  "warnings": {},
  "counts": {
-  "ntie": 132,
-  "ptie": 77,
-  "p_activ_in_nwell": 222,
-  "n_activ_in_substrate": 154,
-  "nwell": 25
+  "ntie": 140,
+  "ptie": 93,
+  "p_activ_in_nwell": 250,
+  "n_activ_in_substrate": 216,
+  "nwell": 26
  },
  "abut_sites": [
   [

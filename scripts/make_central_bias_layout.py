@@ -29,6 +29,11 @@ ACT, POLY, CONT, M1, V1, M2, V2, M3, V3, M4, NWELL = (1, 0), (5, 0), (6, 0), (8,
 LAB3, LAB4 = (30, 25), (50, 25)
 PITCH = 3000          # nm between unit starts of one row (unit is 2680 wide)
 TAP_EVERY = 4         # one tap per this many columns (12 um)
+X0 = 6000             # first unit of the NMOS block (nm); the PMOS block is right-aligned with it
+PIN_LEFT = {("N", "R"), ("P", "G2")}   # IB_IN and IB_G2 leave on the left (towards the bias trunk of pgia_top), the others on the right
+PINL_DX = 2800        # left pins sit this far left of the first unit
+AVSS_X = 84700        # x of the AVSS pad stack (nm in cell coordinates, the NMOS block bus): placed 300.0 um in pgia_top, below a TopMetal1 AVSS landing
+AVDD_TAB_X = 100780 - 4780   # AVDD pad stack stays at the right end of the PMOS bus; an M4 tab runs from it to this x (the AVDD M4 line of pgia_top)
 
 NMOS_GROUPS = [("R", 10), ("IA", 33), ("BUF", 11), ("P", 8)]      # first = reference/diode group
 PMOS_GROUPS = [("R", 10), ("G1", 9), ("G2", 9)]
@@ -77,7 +82,7 @@ class Builder:
             self.rect(V3, x - 95, y - 95, x + 95, y + 95)
             self.rect(M4, x - 300, y - 300, x + 300, y + 300)
 
-    def block(self, kind, groups, y0, x0):
+    def block(self, kind, groups, y0, x0, supply_x=None, tab_to=None):
         """kind 'N' | 'P'. Returns dict with track ys, x extents, strap/pin positions."""
         H = 1000 if kind == "N" else 2000
         T = len(groups)
@@ -127,16 +132,24 @@ class Builder:
         self.rect(V1, gx - 15, ry - 95, gx + 175, ry + 95)
         # tracks (Metal2): from the gate strip (R) / first unit to the pin column
         pinx = xend + 2200
-        info = {"tracks": {}, "xend": xend, "x0": x0, "y0": y0, "Yb": Yb, "gx": gx, "pinx": pinx}
+        pinl = X0 - PINL_DX
+        info = {"tracks": {}, "xend": xend, "x0": x0, "y0": y0, "Yb": Yb, "gx": gx, "pinx": pinx, "pins": {}}
         for g in names:
             ty = tr_y[g]
-            xl = gx - 50 if g == "R" else x0 + 2400
-            self.rect(M2, xl, ty - 150, pinx + 250, ty + 150)
-            info["tracks"][g] = ty
             net = NET[(kind, g)]
+            left = (kind, g) in PIN_LEFT
+            xl = gx - 50 if g == "R" else x0 + 2400
+            if left:
+                self.rect(M2, pinl - 250, ty - 150, xend + 100, ty + 150)      # left pin, track runs over all units of the group
+                px = pinl
+            else:
+                self.rect(M2, xl, ty - 150, pinx + 250, ty + 150)
+                px = pinx
+            info["tracks"][g] = ty
             if net != "n_pref":
-                self.via_stack_pad(pinx, ty, 3)
-                self.label(LAB3, net, pinx, ty)
+                self.via_stack_pad(px, ty, 3)
+                self.label(LAB3, net, px, ty)
+                info["pins"][net] = (px, ty)
         # right strap on Metal1 joining the source buses of both rows, with a supply pad stack at the bottom
         sx = xend + 600
         self.rect(M1, sx, y0 - 1900, sx + 160, Yb + 1900)
@@ -144,31 +157,39 @@ class Builder:
             yb_ = (y0 - 1900, y0 - 1550) if rr == 0 else (Yb + 1550, Yb + 1900)
             self.rect(M1, xs + 70, yb_[0], sx + 160, yb_[1])
         py = y0 - 1725
-        self.rect(M1, sx - 120, py - 250, sx + 280, py + 250)
-        self.rect(V1, sx + 80 - 95, py - 95, sx + 80 + 95, py + 95)
-        self.rect(M2, sx + 80 - 250, py - 250, sx + 80 + 250, py + 250)
-        self.via_stack_pad(sx + 80, py, 4)
+        qx = sx + 80 if supply_x is None else supply_x
+        self.rect(M1, qx - 200, py - 250, qx + 200, py + 250)
+        self.rect(V1, qx - 95, py - 95, qx + 95, py + 95)
+        self.rect(M2, qx - 250, py - 250, qx + 250, py + 250)
+        self.via_stack_pad(qx, py, 4)
         supply = "AVSS" if kind == "N" else "AVDD"
-        self.label(LAB4, supply, sx + 80, py)
+        self.label(LAB4, supply, qx, py)
+        if tab_to is not None:
+            self.rect(M4, min(tab_to - 300, qx), py - 300, max(tab_to + 300, qx), py + 300)
         info["sx"] = sx
+        info["supply"] = (supply, qx, py)
         info["ymax"] = Yb + 2200
         return info
 
 
 def build():
     b = Builder()
-    x0 = 3000
-    nb = b.block("N", NMOS_GROUPS, 3000, x0)
+    x0 = X0
+    nb = b.block("N", NMOS_GROUPS, 3000, x0, supply_x=AVSS_X)
     gap = 5000
     py0 = nb["ymax"] + gap + 2300
-    pb = b.block("P", PMOS_GROUPS, py0, x0)
+    n_p = sum(c for _, c in PMOS_GROUPS)
+    n_n = sum(c for _, c in NMOS_GROUPS)
+    x0p = x0 + (n_n - n_p) * (PITCH // 2)          # right-aligned with the NMOS block
+    pb = b.block("P", PMOS_GROUPS, py0, x0p, tab_to=AVDD_TAB_X)
     # n_pref: M2 strap on the left joins the NMOS P track and the PMOS R track
     sx = x0 - 2400
     b.rect(M2, sx, nb["tracks"]["P"] - 150, nb["x0"] + 2400, nb["tracks"]["P"] + 150)
-    b.rect(M2, sx, pb["tracks"]["R"] - 150, pb["gx"] + 210, pb["tracks"]["R"] + 150)
+    b.rect(M2, sx, pb["tracks"]["R"] - 150, pb["gx"] + 210, pb["tracks"]["R"] + 150)   # long track across the empty left half of the PMOS row
     b.rect(M2, sx, nb["tracks"]["P"] - 150, sx + 300, pb["tracks"]["R"] + 150)
     # one NWell over the whole PMOS block (rows, buses, taps, strap)
     b.rect(NWELL, pb["gx"] - 400, pb["y0"] - 2500, pb["sx"] + 700, pb["Yb"] + 2500)
+    b.info = {"N": nb, "P": pb}
     top = b.top
     top.flatten(True)
     # drop the pcell marker texts
@@ -178,7 +199,7 @@ def build():
             for s in list(top.shapes(li).each()):
                 if s.is_text():
                     s.delete()
-    return b.ly, b.top
+    return b.ly, b.top, b.info
 
 
 def same_layout(ly, top, path):
@@ -209,9 +230,11 @@ def main():
     ap.add_argument("--out", default=os.path.join(ROOT, "gds", "central_bias", "central_bias.gds"))
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
-    ly, top = build()
+    ly, top, info = build()
     rel = os.path.relpath(a.out, ROOT)
-    print("central_bias layout: %.1f x %.1f um" % (top.bbox().width() / 1000, top.bbox().height() / 1000))
+    print("central_bias layout: %.1f x %.1f um, bbox %s" % (top.bbox().width() / 1000, top.bbox().height() / 1000, top.bbox()))
+    for blk in ("N", "P"):
+        print("  block", blk, "pins", {k: (round(v[0] / 1000, 3), round(v[1] / 1000, 3)) for k, v in info[blk]["pins"].items()}, "supply", info[blk]["supply"])
     cur = same_layout(ly, top, a.out)
     if a.check:
         print("make_central_bias_layout: %s %s" % (rel, "is up to date" if cur else "differs from the generator output (or is missing)"))

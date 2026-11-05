@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build CACE templates for pgia_top in cace/templates/pgia_top/
-(13-pin top level: one bias pin IBIAS_IA; the stage and buffer currents of the former 16-pin version are gone)
+(13-pin top level: one bias pin IBIAS_IA = ibias0 of the harness, 1.0 uA SOURCED into the pin; central_bias makes the four block currents)
 Generated templates (matching tb_pgia_top.sch co-simulation battery):
   - dc_op.sch      (Phase A: DC operating point, offset, power, supply current)
   - ac_gain.sch    (Phase B: AC small-signal gain, bandwidth, 0dB frequency, phase)
@@ -80,7 +80,7 @@ value=".param temp=CACE\{temperature\}
 .param rl=CACE\{rl\}
 .param vdd=CACE\{vdd\}
 .param vcm=CACE\{vcm\}
-.param ib_ia=CACE\{ib_ia=4.2u\}
+.param ib_ia=CACE\{ib_ia=1.0u\}
 .param gain_code=CACE\{gain_code=0\}
 "
       }"""
@@ -154,7 +154,7 @@ C {gnd.sym} -380 -310 0 0 {name=g_vpwr lab=0}
 C {vsource.sym} -300 -360 0 0 {name=V_VGND value=0 savecurrent=false}
 C {lab_wire.sym} -300 -410 1 0 {name=l_p_vgnd lab=VGND}
 C {gnd.sym} -300 -310 0 0 {name=g_vgnd lab=0}
-C {isource.sym} -540 -190 0 0 {name=I_IA value=\{ib_ia\}}
+C {isource.sym} -540 -190 0 0 {name=I_IA value=\{-ib_ia\}}
 C {lab_wire.sym} -540 -240 1 0 {name=l_src_ibia lab=IBIAS_IA}
 C {gnd.sym} -540 -140 0 0 {name=g_src_ibia lab=0}
 C {vsource.sym} -500 -10 0 0 {name=V_CM value=\{vcm\} savecurrent=false}

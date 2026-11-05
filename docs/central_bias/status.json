@@ -1,11 +1,11 @@
 {
  "cell": "central_bias",
- "generated": "2026-11-05T15:25:36",
- "commit": "9690cad",
+ "generated": "2026-11-05T15:49:13",
+ "commit": "73a60b6",
  "profile": "typ",
  "gds": {
   "path": "gds/central_bias/central_bias.gds",
-  "sha1": "e4f39b64e0fc"
+  "sha1": "383b9226c237"
  },
  "schematic": {
   "path": "xschem/central_bias/central_bias.sch",
@@ -15,23 +15,23 @@
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 17,
+   "seconds": 13,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level];",
-   "at": "2026-11-05T15:25:36"
+   "at": "2026-11-05T15:49:13"
   },
   {
    "name": "audit",
    "status": "pass",
    "seconds": 0,
    "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
-   "at": "2026-11-05T15:25:36"
+   "at": "2026-11-05T15:49:13"
   },
   {
    "name": "lvs",
    "status": "pass",
    "seconds": 4,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-05T15:25:36"
+   "at": "2026-11-05T15:49:13"
   },
   {
    "name": "images",

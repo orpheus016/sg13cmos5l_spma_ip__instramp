@@ -72,7 +72,7 @@ C {gnd.sym} -380 -310 0 0 {name=g_vpwr lab=0}
 C {vsource.sym} -300 -360 0 0 {name=V_VGND value="0" savecurrent=false}
 C {lab_wire.sym} -300 -410 1 0 {name=l_p_vgnd lab=VGND}
 C {gnd.sym} -300 -310 0 0 {name=g_vgnd lab=0}
-C {isource.sym} -540 -190 0 0 {name=I_IA value=4.2u}
+C {isource.sym} -540 -190 0 0 {name=I_IA value=-1.0u}
 C {lab_wire.sym} -540 -240 1 0 {name=l_src_ibia lab=IBIAS_IA}
 C {gnd.sym} -540 -140 0 0 {name=g_src_ibia lab=0}
 C {vsource.sym} -500 -10 0 0 {name=V_CM value="0.6" savecurrent=false}
