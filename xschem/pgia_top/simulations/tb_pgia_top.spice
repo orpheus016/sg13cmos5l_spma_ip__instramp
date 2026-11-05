@@ -494,7 +494,7 @@ x1 s[3] s[4] S0 s[1] s[0] s[2] AVDD VCM VIN VOUT IBIAS AVSS gain_network
 *.iopin IBIAS
 *.iopin VINN
 *.iopin VOUT
-x1 VSS IBIAS VDD VINN VOUT VOUT ota_cmos5l
+x1 VSS IBIAS VDD VOUT VINN VOUT ota_cmos5l
 .ends
 
 
