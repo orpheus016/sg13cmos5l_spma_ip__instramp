@@ -73,6 +73,10 @@ slot9_wrapper:
   # density rules are not fatal here: the Chipalooza harness generates and adds the fill (scripts/generate_fill.py) before its final DRC
   lvs_args: [--disable_tap_extraction, --ignore_top_ports_mismatch]   # see pgia_top
   note: chip level harness (slot 9 frame) that instantiates pgia_top, density rules apply
+central_bias:
+  sch: xschem/central_bias/central_bias.sch
+  stages: []
+  note: "NOT instantiated yet and no layout yet. One bias input (ibias0, sourced by the harness) -> the four bias currents of pgia_top by ratio (IA 4.2 / buffer 1.4 sunk, stages 1.0 / 1.0 sourced uA). scripts/verify_central_bias.py proves the chip with it (gains within 0.04 dB of the 0777ca0 table). Next: layout, then wire it into pgia_top.sch"
 gain_ota:
   title: Gain Stage OTA
   gds: gds/gain_ota/gain_ota.gds

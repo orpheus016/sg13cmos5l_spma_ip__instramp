@@ -5,7 +5,7 @@
 #                        registry, slot_9.gds, LVS canary. No CACE / extraction / post-layout, no pictures, no reports. Minutes.
 #   --cells a,b          only these cells (default: every cell of cells.yaml that has stages)
 #   --profile typ|pvt    CACE profile (default typ)          --no-mc   leave the Monte Carlo parameters out of the schematic CACE runs
-#   --skip a,b           leave steps out: registry export canary images reports (and any flow stage name, e.g. cace, pex, post, audit)
+#   --skip a,b           leave steps out: registry export canary bias images reports (and any flow stage name, e.g. cace, pex, post, audit)
 #   --open               open docs/index.html when done
 #
 # Order (leaves first, the chip last; a failing step never stops the following ones):
@@ -14,6 +14,7 @@
 #   flow:<cell> scripts/flow.sh <cell>               the stages of the cell in cells.yaml: cace drc audit drc_harness lvs deliver pex post, then
 #                                                    schematic + layout pictures and README blocks (images). Results docs/<cell>/status.{md,json}
 #   canary      scripts/lvs_canary.py pgia_top       proves that LVS still catches a wrong W/L, a missing well tap and a short
+#   bias        scripts/verify_central_bias.py       the chip works from the single harness bias pin (central_bias): currents, VOUT, power, 11 gain codes
 #   images      scripts/update_images.py all         pictures and README blocks of the cells that have no flow
 #   reports     scripts/build_report.sh all          interactive HTML of the CACE cells (docs/<cell>/report.html), then
 #               scripts/build_chip_report.py         static HTML of all other cells + docs/index.html
@@ -93,6 +94,11 @@ done
 if skipped canary; then skip_step canary "skipped"
 elif [ -z "$cells_arg" ] || has_cell pgia_top; then step canary python3 -I scripts/lvs_canary.py pgia_top
 else skip_step canary "pgia_top not selected"; fi
+
+# 4b. bias: the chip works with only the harness bias pin (central_bias)
+if skipped bias; then skip_step bias "skipped"
+elif [ -z "$cells_arg" ] || has_cell pgia_top; then step bias python3 -I scripts/verify_central_bias.py
+else skip_step bias "pgia_top not selected"; fi
 
 # 5. pictures + READMEs of everything (the flow only does its own cell), 6. reports
 if [ -n "$fast" ]; then skip_step images "--fast"; skip_step reports "--fast"
