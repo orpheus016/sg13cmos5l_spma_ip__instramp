@@ -82,6 +82,7 @@ value=".param temp=CACE\{temperature\}
 .param vcm=CACE\{vcm\}
 .param ib_ia=CACE\{ib_ia=1.0u\}
 .param gain_code=CACE\{gain_code=0\}
+.param vin_off=CACE\{vin_off=0\}
 "
       }"""
 
@@ -302,9 +303,9 @@ def assemble(inputs, ctrl):
     return head + TITLE_BLOCK + "\n" + CIRCUIT_CORE + inputs + LIBS_BLOCK + "\n" + PARAMS_BLOCK + "\n" + make_control(ctrl) + "\n"
 
 templates = {
-    "dc_op.sch": assemble(make_inputs("0", "0"), ctrl_dc_op),
-    "ac_gain.sch": assemble(make_inputs("0 AC 0.5", "0 AC -0.5"), ctrl_ac),
-    "tran.sch": assemble(make_inputs("0 SIN(0 20u 10k 0 0 0)", "0 SIN(0 20u 10k 0 0 180)"), ctrl_tran),
+    "dc_op.sch": assemble(make_inputs(r"\{vin_off\}", "0"), ctrl_dc_op),
+    "ac_gain.sch": assemble(make_inputs(r"\{vin_off\} AC 0.5", "0 AC -0.5"), ctrl_ac),
+    "tran.sch": assemble(make_inputs(r"SIN(\{vin_off\} 20u 10k 0 0 0)", "0 SIN(0 20u 10k 0 0 180)"), ctrl_tran),
 }
 
 # Clean any obsolete templates

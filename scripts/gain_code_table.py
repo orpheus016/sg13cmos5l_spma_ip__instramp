@@ -33,19 +33,19 @@ def newest(pattern, want_source=None):
     return None
 
 
-def collect(run):
-    """{gain_code: [values]} of the ac_gain runs at tt / typ resistor corner / 27 C / 1.2 V"""
+def collect(run, param="ac_gain"):
+    """{(vin_off in uV, gain_code): [values]} of the runs of one parameter at tt / typ resistor corner / 27 C / 1.2 V"""
     out = {}
-    for d in glob.glob(os.path.join(run, "parameters", "ac_gain", "run_*")):
+    for d in glob.glob(os.path.join(run, "parameters", param, "run_*")):
         try:
             c = yaml.safe_load(open(os.path.join(d, "conditions.yaml")))
-            data = glob.glob(os.path.join(d, "ac_gain_*.data"))
+            data = glob.glob(os.path.join(d, f"{param}_*.data"))
             if not data:
                 continue
             if str(c.get("corner")) != "tt" or str(c.get("rcorner", "typ")) != "typ" or float(c["temperature"]) != 27 or abs(float(c["vdd"]) - 1.2) > 1e-6:
                 continue
             vals = [float(x) for x in open(data[0]).read().split()]
-            out[int(c["gain_code"])] = vals
+            out[(round(float(c.get("vin_off", 0)) * 1e6, 1) + 0.0, int(c["gain_code"]))] = vals
         except Exception:
             continue
     return out
@@ -71,18 +71,26 @@ def main():
     if not sch:
         sys.exit("gain_code_table: no schematic run")
     runs = {"schematic": collect(sch), "C": collect(c) if c else {}, "RC": collect(rc) if rc else {}}
-    codes = sorted(set().union(*[set(v) for v in runs.values()]))
+    dcs = {"schematic": collect(sch, "dc_op"), "C": collect(c, "dc_op") if c else {}, "RC": collect(rc, "dc_op") if rc else {}}
+    offs = sorted(set(k[0] for v in runs.values() for k in v), reverse=True)
     rel = lambda p: os.path.relpath(p, ROOT) if p else "-"
-    md = [f"# {a.cell}: gain per code, schematic vs post-layout", "",
-          f"Condition: corner tt, resistor corner typ, 27 C, vdd 1.2 V, ibias0 1.0 uA (single bias pin, central_bias on chip). Differential input 1 V ac, ac gain at 1 kHz.", "",
-          f"* schematic: `{rel(sch)}`", f"* post-layout C (kpex wire capacitance): `{rel(c)}`", f"* post-layout RC (Magic wire R + C): `{rel(rc)}`", "",
-          "| Code | Target dB | A_CL schematic | A_CL C | A_CL RC | Δ C | Δ RC | F3DB schematic kHz | F3DB C kHz | F3DB RC kHz | R_pseudo schematic / C / RC GOhm |",
-          "|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|"]
-    for k in codes:
-        s, cc, r = runs["schematic"].get(k), runs["C"].get(k), runs["RC"].get(k)
-        d = lambda x: "-" if x is None or s is None else "%+.2f" % (x[0] - s[0])
-        tgt = "%.2f" % (18.0618 + 6.0206 * k) if k <= 10 else "clamped"
-        md.append(f"| {k} | {tgt} | {fmt(s,0)} | {fmt(cc,0)} | {fmt(r,0)} | {d(cc)} | {d(r)} | {fmt(s,2)} | {fmt(cc,2)} | {fmt(r,2)} | {fmt(s,5)} / {fmt(cc,5)} / {fmt(r,5)} |")
+    md = [f"# {a.cell}: gain per code, schematic vs post-layout, without and with the intentional input offset", "",
+          "Condition: corner tt, resistor corner typ, 27 C, vdd 1.2 V, ibias0 1.0 uA (single bias pin, central_bias on chip), ac gain at 1 kHz, 1 V differential ac input.", "",
+          "The chip has a systematic input-referred offset of about 0.33 mV. Without compensation it is amplified into the output (x2000 .. x8192 at codes 8 to 10) and stage 2 sits at the rail.",
+          "`vin_off` is a DC offset on VINP relative to VCM: **0 = chip as built**, **-334.7 uV = intentional offset that nulls the schematic (the value of tb_pgia_top)**, **-903.7 uV = intentional offset that nulls the extracted layout** (found by bisection on code 10, identical for the C and the RC netlist).", "",
+          f"* schematic: `{rel(sch)}`", f"* post-layout C (kpex wire capacitance): `{rel(c)}`", f"* post-layout RC (Magic wire R + C): `{rel(rc)}`", ""]
+    for off in offs:
+        label = {0.0: "as built (vin_off = 0)", -334.7: "schematic null: intentional input offset vin_off = -334.7 uV (value of tb_pgia_top)",
+                 -903.7: "extracted-layout null: intentional input offset vin_off = -903.7 uV"}.get(off, f"vin_off = {off:g} uV")
+        md += [f"## {label}", "",
+               "| Code | Target dB | A_CL schematic | A_CL C | A_CL RC | Δ C | Δ RC | VOUT dc schematic V | F3DB sch / C / RC kHz |", "|---:|---:|---:|---:|---:|---:|---:|---:|---|"]
+        for k in sorted(set(k[1] for v in runs.values() for k in v if k[0] == off)):
+            s_, c_, r_ = (runs[n].get((off, k)) for n in ("schematic", "C", "RC"))
+            d = lambda x: "-" if x is None or s_ is None else "%+.2f" % (x[0] - s_[0])
+            tgt = "%.2f" % (18.0618 + 6.0206 * k) if k <= 10 else "clamped"
+            vo = lambda n: (lambda v: "-" if v is None else "%.3f" % v[4])(dcs[n].get((off, k)))
+            md.append(f"| {k} | {tgt} | {fmt(s_,0)} | {fmt(c_,0)} | {fmt(r_,0)} | {d(c_)} | {d(r_)} | {vo('schematic')} | {fmt(s_,2)} / {fmt(c_,2)} / {fmt(r_,2)} |")
+        md.append("")
     out = a.o or os.path.join(ROOT, "docs", a.cell, "cace", "gain_codes.md")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write("\n".join(md) + "\n")

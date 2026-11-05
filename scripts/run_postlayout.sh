@@ -70,7 +70,7 @@ for name in list(d["parameters"]):
         continue
     if profile == "typ":
         for cn, c in cond.items():
-            if "enumerate" in c and cn != "gain_code":      # gain_code stays fully enumerated (the 11 gain steps are the point of pgia_top)
+            if "enumerate" in c and cn not in ("gain_code", "vin_off"):      # gain_code (the 11 gain steps) and vin_off (input offset 0 / nulled) stay fully enumerated (pgia_top)
                 c["enumerate"] = [c["enumerate"][0]]
             if cn in ("vdd", "temperature"):
                 c.pop("minimum", None); c.pop("maximum", None)

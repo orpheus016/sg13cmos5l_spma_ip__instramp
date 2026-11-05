@@ -1,6 +1,6 @@
 {
- "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_17-41-44",
- "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/pgia_top/RUN_2026-11-05_18-40-35",
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_20-16-47",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/pgia_top/RUN_2026-11-05_20-43-08",
  "schematic_source": "schematic",
  "postlayout_source": "pex",
  "threshold_pct": 5.0,
@@ -11,18 +11,18 @@
    "unit": "dB",
    "schematic": {
     "min": -157.273,
-    "typ": 26.91,
+    "typ": 28.225,
     "max": 77.375,
     "status": "Pass"
    },
    "postlayout": {
     "min": -40.065,
-    "typ": 20.922,
-    "max": 44.99,
+    "typ": 30.255,
+    "max": 76.618,
     "status": "Pass"
    },
-   "delta": -5.9879999999999995,
-   "delta_pct": -22.25195094760312,
+   "delta": 2.0299999999999976,
+   "delta_pct": 7.192205491585465,
    "flag": "\u0394"
   },
   {
@@ -31,18 +31,18 @@
    "unit": "dB",
    "schematic": {
     "min": -235.541,
-    "typ": -3.527,
-    "max": 21.937,
+    "typ": -3.185,
+    "max": 23.554,
     "status": "Pass"
    },
    "postlayout": {
     "min": -118.333,
-    "typ": -2.437,
-    "max": 0.115,
+    "typ": -0.912,
+    "max": 0.344,
     "status": "Pass"
    },
-   "delta": 1.0900000000000003,
-   "delta_pct": 30.90445137510633,
+   "delta": 2.273,
+   "delta_pct": 71.3657770800628,
    "flag": "\u0394"
   },
   {
@@ -51,18 +51,18 @@
    "unit": "Hz",
    "schematic": {
     "min": 1421.28,
-    "typ": 220131.0,
+    "typ": 212798.5,
     "max": 44479600.0,
     "status": "Pass"
    },
    "postlayout": {
     "min": 6409.43,
-    "typ": 199159.0,
-    "max": 236052.0,
+    "typ": 194412.5,
+    "max": 484744.0,
     "status": "Pass"
    },
-   "delta": -20972.0,
-   "delta_pct": -9.527054344912802,
+   "delta": -18386.0,
+   "delta_pct": -8.640098496934893,
    "flag": "\u0394"
   },
   {
@@ -70,19 +70,19 @@
    "name": "0 dB frequency",
    "unit": "Hz",
    "schematic": {
-    "min": 27614.5,
-    "typ": 2838315.0,
+    "min": 4883.77,
+    "typ": 2894975.0,
     "max": 10000000.0,
     "status": "Pass"
    },
    "postlayout": {
     "min": 394837.0,
-    "typ": 2420180.0,
+    "typ": 2523080.0,
     "max": 10000000.0,
     "status": "Pass"
    },
-   "delta": -418135.0,
-   "delta_pct": -14.731803904781534,
+   "delta": -371895.0,
+   "delta_pct": -12.846224924222144,
    "flag": "\u0394"
   },
   {
@@ -90,19 +90,19 @@
    "name": "Phase @1 kHz",
    "unit": "\u00b0",
    "schematic": {
-    "min": -179.244,
-    "typ": -0.377,
-    "max": 179.812,
+    "min": -179.92,
+    "typ": -0.378,
+    "max": 179.972,
     "status": "Pass"
    },
    "postlayout": {
     "min": -10.734,
-    "typ": -0.457,
-    "max": -0.356,
+    "typ": -0.453,
+    "max": -0.354,
     "status": "Pass"
    },
-   "delta": -0.08000000000000002,
-   "delta_pct": -21.220159151193638,
+   "delta": -0.07500000000000001,
+   "delta_pct": -19.841269841269842,
    "flag": "\u0394"
   },
   {
@@ -111,18 +111,18 @@
    "unit": "GOhm",
    "schematic": {
     "min": 3.563,
-    "typ": 13.559,
-    "max": 43.789,
+    "typ": 13.573,
+    "max": 43.802,
     "status": "Pass"
    },
    "postlayout": {
     "min": 16.63,
-    "typ": 16.995,
-    "max": 18.407,
+    "typ": 17.058,
+    "max": 20.156,
     "status": "Pass"
    },
-   "delta": 3.4360000000000017,
-   "delta_pct": 25.341101851168983,
+   "delta": 3.4849999999999994,
+   "delta_pct": 25.675974360863474,
    "flag": "\u0394"
   },
   {
@@ -131,18 +131,18 @@
    "unit": "mV",
    "schematic": {
     "min": 0.0,
-    "typ": 1.969,
-    "max": 73.973,
+    "typ": 3.8,
+    "max": 544.773,
     "status": "Pass"
    },
    "postlayout": {
     "min": 0.001,
-    "typ": 0.953,
-    "max": 14.19,
+    "typ": 2.602,
+    "max": 542.13,
     "status": "Pass"
    },
-   "delta": -1.016,
-   "delta_pct": -51.599796851193496,
+   "delta": -1.198,
+   "delta_pct": -31.526315789473685,
    "flag": "\u0394"
   },
   {
@@ -151,18 +151,18 @@
    "unit": "V/V",
    "schematic": {
     "min": 0.0,
-    "typ": 49.237,
-    "max": 1849.33,
+    "typ": 94.99,
+    "max": 13619.3,
     "status": "Pass"
    },
    "postlayout": {
     "min": 0.02,
-    "typ": 23.813,
-    "max": 354.756,
+    "typ": 65.055,
+    "max": 13553.3,
     "status": "Pass"
    },
-   "delta": -25.424000000000003,
-   "delta_pct": -51.635964823202066,
+   "delta": -29.934999999999988,
+   "delta_pct": -31.513843562480247,
    "flag": "\u0394"
   }
  ]

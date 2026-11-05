@@ -1,7 +1,7 @@
 {
  "cell": "pgia_top",
- "generated": "2026-11-05T19:03:14",
- "commit": "b495d99",
+ "generated": "2026-11-05T21:38:54",
+ "commit": "a3285dc",
  "profile": "typ",
  "gds": {
   "path": "gds/pgia_top/pgia_top.gds",
@@ -15,30 +15,30 @@
   {
    "name": "cace",
    "status": "pass",
-   "seconds": 401,
-   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_18-55-13: 17 rows",
-   "at": "2026-11-05T19:03:14"
+   "seconds": 1348,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_21-15-09: 17 rows",
+   "at": "2026-11-05T21:38:54"
   },
   {
    "name": "drc",
    "status": "pass",
    "seconds": 67,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
-   "at": "2026-11-05T19:03:14"
+   "at": "2026-11-05T21:38:54"
   },
   {
    "name": "audit",
    "status": "pass",
    "seconds": 0,
    "detail": " all device Activ within the tie distance, every NWell tied; 44 p+/n+ abutment site(s), all in the accepted baseline;",
-   "at": "2026-11-05T19:03:14"
+   "at": "2026-11-05T21:38:54"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 13,
+   "seconds": 10,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-05T19:03:14"
+   "at": "2026-11-05T21:38:54"
   },
   {
    "name": "pex",
@@ -50,23 +50,23 @@
   {
    "name": "post_c",
    "status": "fail",
-   "seconds": 76,
+   "seconds": 244,
    "detail": "8 parameters with a % delta, 8 flagged; spec failed or errors",
-   "at": "2026-11-05T18:47:51"
+   "at": "2026-11-05T21:06:23"
   },
   {
    "name": "post_rc",
    "status": "fail",
-   "seconds": 436,
+   "seconds": 1398,
    "detail": "8 parameters with a % delta, 8 flagged; spec failed or errors",
-   "at": "2026-11-05T18:47:51"
+   "at": "2026-11-05T21:06:23"
   },
   {
    "name": "images",
    "status": "pass",
    "seconds": 1,
    "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-11-05T19:03:14"
+   "at": "2026-11-05T21:38:54"
   },
   {
    "name": "post",

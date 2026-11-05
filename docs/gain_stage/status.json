@@ -1,7 +1,7 @@
 {
  "cell": "gain_stage",
- "generated": "2026-11-05T18:53:47",
- "commit": "b495d99",
+ "generated": "2026-11-05T21:13:37",
+ "commit": "a3285dc",
  "profile": "typ",
  "gds": {
   "path": "gds/gain_stage/gain_stage.gds",
@@ -15,30 +15,30 @@
   {
    "name": "cace",
    "status": "fail",
-   "seconds": 69,
-   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_18-52-08: 34 rows, 1 failing",
-   "at": "2026-11-05T18:53:47"
+   "seconds": 70,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_21-11-54: 34 rows, 1 failing",
+   "at": "2026-11-05T21:13:37"
   },
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 22,
+   "seconds": 27,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
-   "at": "2026-11-05T18:53:47"
+   "at": "2026-11-05T21:13:37"
   },
   {
    "name": "audit",
    "status": "pass",
    "seconds": 0,
    "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
-   "at": "2026-11-05T18:53:47"
+   "at": "2026-11-05T21:13:37"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 8,
+   "seconds": 5,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-05T18:53:47"
+   "at": "2026-11-05T21:13:37"
   },
   {
    "name": "pex",
@@ -66,7 +66,7 @@
    "status": "pass",
    "seconds": 1,
    "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-11-05T18:53:47"
+   "at": "2026-11-05T21:13:37"
   },
   {
    "name": "post",

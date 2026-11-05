@@ -14,6 +14,7 @@ params: |
   .param vcm=CACE{vcm}
   .param ib_ia=CACE{ib_ia=1.0u}
   .param gain_code=CACE{gain_code=0}
+  .param vin_off=CACE{vin_off=0}
 
 conditions:
   corner:
@@ -35,6 +36,8 @@ parameters:
     conditions:
       gain_code:
         enumerate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      vin_off:
+        enumerate: [0, -334.7, -903.7]
       corner:
         enumerate: [tt, ss, ff, sf, fs]
       vdd:
@@ -61,6 +64,8 @@ parameters:
     conditions:
       gain_code:
         enumerate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      vin_off:
+        enumerate: [0, -334.7, -903.7]
       corner:
         enumerate: [tt, ss, ff, sf, fs]
       vdd:
@@ -90,6 +95,8 @@ parameters:
     conditions:
       gain_code:
         enumerate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      vin_off:
+        enumerate: [0, -334.7, -903.7]
       corner:
         enumerate: [tt]
       vdd:

@@ -1,7 +1,7 @@
 # gain_stage - CACE characterisation
 
-- Generated: 2026-11-05 18:53 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_18-52-08`
-- Commit: `b495d99` (working tree dirty)
+- Generated: 2026-11-05 21:13 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_21-11-54`
+- Commit: `a3285dc` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/gain_stage.yaml`; reproduce with `scripts/run_cace.sh gain_stage`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 

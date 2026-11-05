@@ -97,7 +97,7 @@ C {gnd.sym} 250 40 0 0 {name=g_load_cl lab=0}
 C {res.sym} 330 -10 0 0 {name=RL value=\{rl\} m=1}
 C {lab_wire.sym} 330 -60 1 0 {name=l_load_rl lab=VOUT}
 C {gnd.sym} 330 40 0 0 {name=g_load_rl lab=0}
-C {vsource.sym} -420 -10 0 0 {name=V_INP value="0" savecurrent=false}
+C {vsource.sym} -420 -10 0 0 {name=V_INP value="\{vin_off\}" savecurrent=false}
 C {lab_wire.sym} -420 -60 1 0 {name=l_src_vinp lab=VINP}
 C {lab_wire.sym} -420 40 3 0 {name=l_src_vinp_cm lab=VCM}
 C {vsource.sym} -340 -10 0 0 {name=V_INN value="0" savecurrent=false}
@@ -134,6 +134,7 @@ value=".param temp=CACE\{temperature\}
 .param vcm=CACE\{vcm\}
 .param ib_ia=CACE\{ib_ia=1.0u\}
 .param gain_code=CACE\{gain_code=0\}
+.param vin_off=CACE\{vin_off=0\}
 "
       }
 C {simulator_commands.sym} 1070 -580 0 0 {name=Control

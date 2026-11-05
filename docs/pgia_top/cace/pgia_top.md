@@ -102,6 +102,11 @@
   + Display: Cin
   + Unit: nF
   + Typical: 10
+- vin_off
+  + Description: Intentional DC offset on VINP (relative to VCM) that cancels the systematic input-referred offset of the chip. 0 = chip as built; -334.7 uV = the value of tb_pgia_top, the null of the SCHEMATIC; -903.7 uV = the null of the EXTRACTED LAYOUT (C and RC netlists). With the right null gain codes 8 to 10 (x2000 .. x8192) stay in range, without it they rail
+  + Display: Vin_off
+  + Unit: uV
+  + Typical: 0
 - gain_code
   + Description: Active 4-bit binary gain code (0 to 10 valid, 11 clamped)
   + Display: Code
