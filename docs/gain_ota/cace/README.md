@@ -1,7 +1,7 @@
 # gain_ota - CACE characterisation
 
-- Generated: 2026-10-21 07:22 by `scripts/make_readme.py` from `runs/RUN_2026-10-21_07-18-34`
-- Commit: `2bf6127` (working tree dirty)
+- Generated: 2026-11-05 17:32 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_17-29-30`
+- Commit: `b495d99` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/gain_ota.yaml`; reproduce with `scripts/run_cace.sh gain_ota`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 

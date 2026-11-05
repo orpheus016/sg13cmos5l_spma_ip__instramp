@@ -1,15 +1,15 @@
 {
- "generated": "2026-11-05T15:50:31",
- "mode": "fast",
+ "generated": "2026-11-05T19:06:03",
+ "mode": "full",
  "profile": "typ",
  "branch": "phase2",
- "commit": "73a60b6",
- "seconds": 296,
+ "commit": "b495d99",
+ "seconds": 1070,
  "steps": [
   {
    "name": "registry",
    "status": "ok",
-   "seconds": "0",
+   "seconds": "1",
    "detail": "cellinfo: note: dec2to4: gds xschem/dec2to4/dec2to4.gds does not exist yet"
   },
   {
@@ -19,67 +19,187 @@
    "detail": "export_slot_gds: OK"
   },
   {
+   "name": "flow:ota_cmos5l",
+   "status": "ok",
+   "seconds": "23",
+   "detail": "flow: docs/ota_cmos5l/status.md"
+  },
+  {
+   "name": "flow:instramp_cmos5l",
+   "status": "ok",
+   "seconds": "39",
+   "detail": "flow: docs/instramp_cmos5l/status.md"
+  },
+  {
+   "name": "flow:output_buffer",
+   "status": "ok",
+   "seconds": "24",
+   "detail": "flow: docs/output_buffer/status.md"
+  },
+  {
+   "name": "flow:dec2to4",
+   "status": "ok",
+   "seconds": "0",
+   "detail": "flow: docs/dec2to4/status.md"
+  },
+  {
+   "name": "flow:gain_ota",
+   "status": "ok",
+   "seconds": "28",
+   "detail": "flow: docs/gain_ota/status.md"
+  },
+  {
+   "name": "flow:gain_network",
+   "status": "FAIL",
+   "seconds": "116",
+   "detail": "flow: docs/gain_network/status.md"
+  },
+  {
+   "name": "flow:gain_stage",
+   "status": "FAIL",
+   "seconds": "100",
+   "detail": "flow: docs/gain_stage/status.md"
+  },
+  {
+   "name": "flow:central_bias",
+   "status": "ok",
+   "seconds": "85",
+   "detail": "flow: docs/central_bias/status.md"
+  },
+  {
    "name": "flow:pgia_top",
    "status": "ok",
-   "seconds": "83",
+   "seconds": "482",
    "detail": "flow: docs/pgia_top/status.md"
   },
   {
    "name": "flow:slot9_wrapper",
    "status": "ok",
-   "seconds": "115",
+   "seconds": "103",
    "detail": "flow: docs/slot9_wrapper/status.md"
   },
   {
-   "name": "flow:central_bias",
-   "status": "ok",
-   "seconds": "18",
-   "detail": "flow: docs/central_bias/status.md"
-  },
-  {
    "name": "canary",
-   "status": "ok",
-   "seconds": "51",
-   "detail": "lvs_canary: OK, 4/4 mutations detected"
+   "status": "skip",
+   "seconds": "0",
+   "detail": "skipped"
   },
   {
    "name": "bias",
-   "status": "ok",
-   "seconds": "27",
-   "detail": "verify_central_bias: OK"
+   "status": "skip",
+   "seconds": "0",
+   "detail": "skipped"
   },
   {
    "name": "images",
-   "status": "skip",
-   "seconds": "0",
-   "detail": "--fast"
+   "status": "ok",
+   "seconds": "7",
+   "detail": "images: 0 updated, 49 unchanged, 0 error(s), 0 warning(s)"
   },
   {
-   "name": "reports",
-   "status": "skip",
+   "name": "reports:cace",
+   "status": "ok",
+   "seconds": "59",
+   "detail": "report: docs/index.html"
+  },
+  {
+   "name": "reports:chip",
+   "status": "ok",
    "seconds": "0",
-   "detail": "--fast"
+   "detail": "chip report: docs/index.html"
   }
  ],
  "matrix": {
-  "pgia_top": {
-   "cace": "fail",
+  "ota_cmos5l": {
+   "cace": "pass",
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "pex": "pass",
+   "post_c": "pass",
+   "post_rc": "pass",
+   "images": "pass"
+  },
+  "instramp_cmos5l": {
+   "cace": "pass",
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "pex": "pass",
+   "post_c": "pass",
+   "post_rc": "pass",
+   "images": "pass"
+  },
+  "output_buffer": {
    "drc": "pass",
    "audit": "pass",
    "lvs": "pass",
    "images": "pass"
+  },
+  "dec2to4": {
+   "drc": "skip"
+  },
+  "gain_ota": {
+   "cace": "pass",
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "pex": "pass",
+   "post_c": "pass",
+   "post_rc": "pass",
+   "images": "pass",
+   "post": "skip"
+  },
+  "gain_network": {
+   "cace": "fail",
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "pex": "pass",
+   "post_c": "pass",
+   "post_rc": "pass",
+   "images": "pass",
+   "post": "blocked"
+  },
+  "gain_stage": {
+   "cace": "fail",
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "pex": "pass",
+   "post_c": "pass",
+   "post_rc": "pass",
+   "images": "pass",
+   "post": "blocked"
+  },
+  "central_bias": {
+   "cace": "pass",
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "pex": "pass",
+   "post_c": "pass",
+   "post_rc": "pass",
+   "images": "pass",
+   "post": "blocked"
+  },
+  "pgia_top": {
+   "cace": "pass",
+   "drc": "pass",
+   "audit": "pass",
+   "lvs": "pass",
+   "pex": "pass",
+   "post_c": "fail",
+   "post_rc": "fail",
+   "images": "pass",
+   "post": "blocked"
   },
   "slot9_wrapper": {
    "drc": "pass",
    "audit": "pass",
    "drc_harness": "pass",
    "lvs": "pass",
-   "deliver": "pass"
-  },
-  "central_bias": {
-   "drc": "pass",
-   "audit": "pass",
-   "lvs": "pass",
+   "deliver": "pass",
    "images": "pass"
   }
  }

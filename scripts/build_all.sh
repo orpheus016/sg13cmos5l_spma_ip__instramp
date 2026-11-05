@@ -3,6 +3,7 @@
 #
 #   --fast               only the checks of every layout cell: DRC, tap audit, LVS (+ harness DRC and deliverable check of slot9_wrapper),
 #                        registry, slot_9.gds, LVS canary. No CACE / extraction / post-layout, no pictures, no reports. Minutes.
+#   --force              run CACE again even when a finished run of the same inputs exists (needed once after a --no-mc build to get the Monte Carlo rows)
 #   --cells a,b          only these cells (default: every cell of cells.yaml that has stages)
 #   --profile typ|pvt    CACE profile (default typ)          --no-mc   leave the Monte Carlo parameters out of the schematic CACE runs
 #   --skip a,b           leave steps out: registry export canary bias images reports (and any flow stage name, e.g. cace, pex, post, audit)
@@ -25,16 +26,17 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 export PDK=ihp-sg13cmos5l PDK_ROOT="${PDK_ROOT:-/foss/pdks}"
 
-fast=""; cells_arg=""; profile="typ"; nomc=""; skip=","; open=""
+fast=""; cells_arg=""; profile="typ"; nomc=""; skip=","; open=""; force=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --fast) fast=1; shift;;
     --cells) cells_arg="${2//,/ }"; shift 2;;
     --profile) profile="$2"; shift 2;;
     --no-mc) nomc=1; shift;;
+    --force) force=1; shift;;
     --skip) skip=",$2,"; shift 2;;
     --open) open=1; shift;;
-    -h|--help) sed -n 2,24p "$0" | sed 's/^# \{0,1\}//'; exit 0;;
+    -h|--help) sed -n 2,25p "$0" | sed 's/^# \{0,1\}//'; exit 0;;
     *) echo "build_all.sh: unknown option $1"; exit 2;;
   esac
 done
@@ -87,6 +89,7 @@ for c in $sel; do
   args=("$c" --profile "$profile")
   if [ -n "$fast" ]; then args+=(--only "$stages"); else args+=(--stages "$stages"); fi
   [ -n "$nomc" ] && args+=(--no-mc)
+  [ -n "$force" ] && args+=(--force)
   step "flow:$c" scripts/flow.sh "${args[@]}"
 done
 

@@ -1,0 +1,12 @@
+{
+ "cell": "gain_stage",
+ "gds": "gds/gain_stage/gain_stage.gds",
+ "layout": {
+  "L": 78.81,
+  "W": 98.9,
+  "area": 7794.3,
+  "top": "gain_stage"
+ },
+ "params": [],
+ "schematic": "xschem/gain_stage/gain_stage.sch"
+}

@@ -1,0 +1,189 @@
+{
+ "schematic_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_17-40-05",
+ "postlayout_run": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/pex_cace_rc/central_bias/RUN_2026-11-05_18-12-08",
+ "schematic_source": "schematic",
+ "postlayout_source": "pex",
+ "threshold_pct": 5.0,
+ "rows": [
+  {
+   "var": "I_IA",
+   "name": "Current into the instrumentation amplifier (sink)",
+   "unit": "uA",
+   "schematic": {
+    "min": 2.611,
+    "typ": 4.444,
+    "max": 6.782,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 3.189,
+    "typ": 4.396,
+    "max": 5.555,
+    "status": "Pass"
+   },
+   "delta": -0.04800000000000004,
+   "delta_pct": -1.080108010801081,
+   "flag": ""
+  },
+  {
+   "var": "I_BUF",
+   "name": "Current into the output buffer (sink)",
+   "unit": "uA",
+   "schematic": {
+    "min": 0.87,
+    "typ": 1.481,
+    "max": 2.261,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 1.063,
+    "typ": 1.465,
+    "max": 1.852,
+    "status": "Pass"
+   },
+   "delta": -0.016000000000000014,
+   "delta_pct": -1.0803511141120874,
+   "flag": ""
+  },
+  {
+   "var": "I_G1",
+   "name": "Current into gain stage 1 (source)",
+   "unit": "uA",
+   "schematic": {
+    "min": 0.664,
+    "typ": 1.08,
+    "max": 1.618,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.779,
+    "typ": 1.08,
+    "max": 1.369,
+    "status": "Pass"
+   },
+   "delta": 0.0,
+   "delta_pct": 0.0,
+   "flag": ""
+  },
+  {
+   "var": "I_G2",
+   "name": "Current into gain stage 2 (source)",
+   "unit": "uA",
+   "schematic": {
+    "min": 0.664,
+    "typ": 1.08,
+    "max": 1.618,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 0.779,
+    "typ": 1.08,
+    "max": 1.369,
+    "status": "Pass"
+   },
+   "delta": 0.0,
+   "delta_pct": 0.0,
+   "flag": ""
+  },
+  {
+   "var": "R_IA",
+   "name": "Ratio I_IA / ibias0",
+   "unit": "A/A",
+   "schematic": {
+    "min": 3.547,
+    "typ": 4.461,
+    "max": 5.678,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 4.273,
+    "typ": 4.396,
+    "max": 4.556,
+    "status": "Pass"
+   },
+   "delta": -0.06500000000000039,
+   "delta_pct": -1.4570724052903024,
+   "flag": ""
+  },
+  {
+   "var": "R_BUF",
+   "name": "Ratio I_BUF / ibias0",
+   "unit": "A/A",
+   "schematic": {
+    "min": 1.182,
+    "typ": 1.487,
+    "max": 1.893,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 1.424,
+    "typ": 1.465,
+    "max": 1.519,
+    "status": "Pass"
+   },
+   "delta": -0.02200000000000002,
+   "delta_pct": -1.4794889038332224,
+   "flag": ""
+  },
+  {
+   "var": "R_G",
+   "name": "Ratio I_G / ibias0 (mean of the two stages)",
+   "unit": "A/A",
+   "schematic": {
+    "min": 0.908,
+    "typ": 1.096,
+    "max": 1.344,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 1.053,
+    "typ": 1.08,
+    "max": 1.113,
+    "status": "Pass"
+   },
+   "delta": -0.016000000000000014,
+   "delta_pct": -1.4598540145985412,
+   "flag": ""
+  },
+  {
+   "var": "ERR_G",
+   "name": "Stage 1 / stage 2 current difference",
+   "unit": "%",
+   "schematic": {
+    "min": -0.0,
+    "typ": 0.0,
+    "max": 0.0,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": -0.216,
+    "typ": -0.181,
+    "max": -0.141,
+    "status": "Pass"
+   },
+   "delta": -0.181,
+   "delta_pct": null,
+   "flag": ""
+  },
+  {
+   "var": "PWR",
+   "name": "Supply power of the block (with the loads)",
+   "unit": "uW",
+   "schematic": {
+    "min": 5.979,
+    "typ": 11.391,
+    "max": 21.038,
+    "status": "Pass"
+   },
+   "postlayout": {
+    "min": 7.992,
+    "typ": 11.034,
+    "max": 13.961,
+    "status": "Pass"
+   },
+   "delta": -0.3569999999999993,
+   "delta_pct": -3.1340531998946477,
+   "flag": ""
+  }
+ ]
+}

@@ -65,7 +65,7 @@ L = 75.00um
 Dimension:
 <!-- AUTO:dims:output_buffer -->
 ```bash
-W = 113.55um
+W = 113.70um
 L = 37.41um
 ```
 <!-- /AUTO -->

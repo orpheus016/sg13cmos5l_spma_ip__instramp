@@ -1,7 +1,7 @@
 {
  "cell": "slot9_wrapper",
- "generated": "2026-11-05T15:48:55",
- "commit": "73a60b6",
+ "generated": "2026-11-05T19:04:57",
+ "commit": "b495d99",
  "profile": "typ",
  "gds": {
   "path": "gds/slot9_wrapper/slot9_wrapper.gds",
@@ -15,37 +15,44 @@
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 77,
+   "seconds": 65,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
-   "at": "2026-11-05T15:48:55"
+   "at": "2026-11-05T19:04:57"
   },
   {
    "name": "audit",
    "status": "pass",
    "seconds": 0,
    "detail": " all device Activ within the tie distance, every NWell tied; 44 p+/n+ abutment site(s), all in the accepted baseline;",
-   "at": "2026-11-05T15:48:55"
+   "at": "2026-11-05T19:04:57"
   },
   {
    "name": "drc_harness",
    "status": "pass",
    "seconds": 13,
    "detail": "0 violations",
-   "at": "2026-11-05T15:48:55"
+   "at": "2026-11-05T19:04:57"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 10,
+   "seconds": 9,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-05T15:48:55"
+   "at": "2026-11-05T19:04:57"
   },
   {
    "name": "deliver",
    "status": "pass",
    "seconds": 14,
    "detail": "harness_trial.sh: OK (the harness finds, accepts, places and writes back slot_9.gds);",
-   "at": "2026-11-05T15:48:55"
+   "at": "2026-11-05T19:04:57"
+  },
+  {
+   "name": "images",
+   "status": "pass",
+   "seconds": 1,
+   "detail": "0 updated, 4 unchanged, 0 error(s), 0 warning(s)",
+   "at": "2026-11-05T19:04:57"
   }
  ],
  "postlayout": {}

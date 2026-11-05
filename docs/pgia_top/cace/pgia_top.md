@@ -34,7 +34,7 @@
   + Type: ground
   + Direction: inout
 - IBIAS_IA
-  + Description: Bias current sink for instrumentation amplifier (4.2 uA)
+  + Description: Bias current input = ibias0 of the harness (1.0 uA sourced into the pin; central_bias makes the IA 4.4 / buffer 1.5 / stage 1.1 uA currents)
   + Type: signal
   + Direction: input
 - VINP
@@ -83,10 +83,10 @@
   + Unit: V
   + Typical: 0.6
 - ib_ia
-  + Description: Bias current of the single bias pin (instrumentation amplifier, both gain stages and the buffer)
+  + Description: Current sourced into the single bias pin IBIAS_IA (ibias0); 0.7 .. 1.3 uA is the working window (xschem/central_bias/README.md)
   + Display: Ib_ia
   + Unit: uA
-  + Typical: 4.2
+  + Typical: 1.0
 - cl
   + Description: Output load capacitance
   + Display: CLoad

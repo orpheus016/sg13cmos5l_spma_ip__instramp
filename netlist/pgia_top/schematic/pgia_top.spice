@@ -4,10 +4,11 @@
 *+ VOUT:O
 x_dec VGND VPWR gain_sel[0] gain_sel[1] gain_sel[2] gain_sel[3] s1[0] s1[1] s1[2] s1[3] s1[4] net3 net4 net5 net6 net7 s2[0] s2[1]
 + s2[2] s2[3] s2[4] net8 net9 net10 net11 net12 gain_decoder_4b
-x_ia AVSS AVDD IBIAS_IA VINN V_IA VINP VCM instramp_cmos5l
-x_stage1 AVDD AVSS IBIAS_IA V_IA VCM v_stage1 s1[0] s1[1] s1[2] s1[3] s1[4] gain_stage
-x_stage2 AVDD AVSS IBIAS_IA v_stage1 VCM v_stage2 s2[0] s2[1] s2[2] s2[3] s2[4] gain_stage
-x_buf AVDD AVSS IBIAS_IA v_stage2 VOUT output_buffer
+x_ia AVSS AVDD ib_ia VINN V_IA VINP VCM instramp_cmos5l
+x_stage1 AVDD AVSS ib_g1 V_IA VCM v_stage1 s1[0] s1[1] s1[2] s1[3] s1[4] gain_stage
+x_stage2 AVDD AVSS ib_g2 v_stage1 VCM v_stage2 s2[0] s2[1] s2[2] s2[3] s2[4] gain_stage
+x_buf AVDD AVSS ib_buf v_stage2 VOUT output_buffer
+x_bias IBIAS_IA ib_ia ib_buf ib_g1 ib_g2 AVDD AVSS central_bias
 XM1 net1 net1 VCM AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
 XM2 net1 net1 VINN AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
 XM3 net2 net2 VINP AVDD sg13_lv_pmos w=0.2u l=2u ng=1 m=1 mm_ok=1
@@ -57,7 +58,22 @@ x1 s[3] s[4] S0 s[1] s[0] s[2] AVDD VCM VIN VOUT IBIAS AVSS gain_network
 ** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/output_buffer/output_buffer.sch
 .subckt output_buffer VDD VSS IBIAS VINN VOUT
 *.PININFO VDD:B VSS:B IBIAS:B VINN:B VOUT:B
-x1 VSS IBIAS VDD VINN VOUT VOUT ota_cmos5l
+x1 VSS IBIAS VDD VOUT VINN VOUT ota_cmos5l
+.ends
+
+
+* expanding   symbol:  central_bias/central_bias.sym # of pins=7
+** sym_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/central_bias/central_bias.sym
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/central_bias/central_bias.sch
+.subckt central_bias IB_IN IB_IA IB_BUF IB_G1 IB_G2 AVDD AVSS
+*.PININFO IB_IN:B IB_IA:B IB_BUF:B IB_G1:B IB_G2:B AVDD:B AVSS:B
+XMN_R IB_IN IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=10 mm_ok=1
+XMN_IA IB_IA IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=33 mm_ok=1
+XMN_BUF IB_BUF IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=11 mm_ok=1
+XMN_P n_pref IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=8 mm_ok=1
+XMP_R n_pref n_pref AVDD AVDD sg13_lv_pmos w=2u l=2u ng=1 m=10 mm_ok=1
+XMP_G1 IB_G1 n_pref AVDD AVDD sg13_lv_pmos w=2u l=2u ng=1 m=9 mm_ok=1
+XMP_G2 IB_G2 n_pref AVDD AVDD sg13_lv_pmos w=2u l=2u ng=1 m=9 mm_ok=1
 .ends
 
 

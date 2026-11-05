@@ -27,6 +27,7 @@ sys.path[:0] = [PDK_PY, PDK_PY + "/pycell4klayout-api/source/python"]
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ACT, POLY, CONT, M1, V1, M2, V2, M3, V3, M4, NWELL = (1, 0), (5, 0), (6, 0), (8, 0), (19, 0), (10, 0), (29, 0), (30, 0), (49, 0), (50, 0), (31, 0)
 LAB3, LAB4 = (30, 25), (50, 25)
+PIN3, PIN4 = (30, 2), (50, 2)         # pin-purpose shapes under the labels: Magic (RC extraction) only makes ports from labels on a pin shape
 PITCH = 3000          # nm between unit starts of one row (unit is 2680 wide)
 TAP_EVERY = 4         # one tap per this many columns (12 um)
 X0 = 6000             # first unit of the NMOS block (nm); the PMOS block is right-aligned with it
@@ -78,9 +79,11 @@ class Builder:
         self.rect(V2, x - 95, y - 95, x + 95, y + 95)
         h = 190 if up_to == 3 else 250        # signal pads sit on the 600 nm track pitch: keep 220 nm to the next pad
         self.rect(M3, x - h, y - h, x + h, y + h)
+        self.rect(PIN3 if up_to == 3 else PIN4, x - h, y - h, x + h, y + h) if up_to == 3 else None
         if up_to == 4:
             self.rect(V3, x - 95, y - 95, x + 95, y + 95)
             self.rect(M4, x - 300, y - 300, x + 300, y + 300)
+            self.rect(PIN4, x - 300, y - 300, x + 300, y + 300)
 
     def block(self, kind, groups, y0, x0, supply_x=None, tab_to=None):
         """kind 'N' | 'P'. Returns dict with track ys, x extents, strap/pin positions."""

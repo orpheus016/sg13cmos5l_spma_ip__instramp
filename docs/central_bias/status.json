@@ -1,11 +1,11 @@
 {
  "cell": "central_bias",
- "generated": "2026-11-05T17:20:12",
- "commit": "5309681",
+ "generated": "2026-11-05T18:55:12",
+ "commit": "b495d99",
  "profile": "typ",
  "gds": {
   "path": "gds/central_bias/central_bias.gds",
-  "sha1": "383b9226c237"
+  "sha1": "88df2e3b647e"
  },
  "schematic": {
   "path": "xschem/central_bias/central_bias.sch",
@@ -15,38 +15,69 @@
   {
    "name": "cace",
    "status": "pass",
-   "seconds": 15,
-   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_17-19-57: 9 rows",
-   "at": "2026-11-05T17:20:12"
+   "seconds": 67,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_18-53-48: 17 rows",
+   "at": "2026-11-05T18:55:12"
   },
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 16,
+   "seconds": 13,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level];",
-   "at": "2026-11-05T16:02:13"
+   "at": "2026-11-05T18:55:12"
   },
   {
    "name": "audit",
    "status": "pass",
    "seconds": 0,
    "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
-   "at": "2026-11-05T16:02:13"
+   "at": "2026-11-05T18:55:12"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 5,
+   "seconds": 4,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-05T16:02:13"
+   "at": "2026-11-05T18:55:12"
+  },
+  {
+   "name": "pex",
+   "status": "pass",
+   "seconds": 13,
+   "detail": "central_bias.c.spice: ports IB_IN IB_IA IB_BUF IB_G1 IB_G2 AVDD AVSS; M=90, Rpoly=0, Rext=0, Cdev=0, Cext=27, D=0;central_bias.rc.spice: ports IB_IN IB_IA IB_BUF IB_G1 IB_G2 AVDD AVSS; X=90, R=488, C=",
+   "at": "2026-11-05T18:12:13"
+  },
+  {
+   "name": "post_c",
+   "status": "pass",
+   "seconds": 8,
+   "detail": "8 parameters with a % delta, 0 flagged",
+   "at": "2026-11-05T18:12:13"
+  },
+  {
+   "name": "post_rc",
+   "status": "pass",
+   "seconds": 5,
+   "detail": "8 parameters with a % delta, 0 flagged",
+   "at": "2026-11-05T18:12:13"
   },
   {
    "name": "images",
    "status": "pass",
    "seconds": 1,
    "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-11-05T17:20:12"
+   "at": "2026-11-05T18:55:12"
+  },
+  {
+   "name": "post",
+   "status": "blocked",
+   "seconds": 0,
+   "detail": "pex stage: error",
+   "at": "2026-11-05T17:41:43"
   }
  ],
- "postlayout": {}
+ "postlayout": {
+  "c": "docs/central_bias/cace/postlayout.json",
+  "rc": "docs/central_bias/cace/postlayout_rc.json"
+ }
 }

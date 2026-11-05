@@ -55,11 +55,20 @@ def schematic_info(path):
     return cell, ports, cap
 
 
+def substrate_node(ports):
+    """The substrate (VSUBS) is ground. Cells with a VSS port keep VSS; a cell without one (pgia_top: AVSS / VGND) ties it to its analog ground,
+    otherwise the node would carry only capacitors and make the DC matrix singular."""
+    for cand in ("VSS", "AVSS", "VSSA", "GND", "VGND"):
+        if cand in ports:
+            return cand
+    return "VSS"
+
+
 def node(n, ports):
     if n in ports:
         return n
     if n.upper() == "VSUBS":
-        return "VSS"
+        return substrate_node(ports)
     n = n.replace("\\$", "n").replace("\\", "").replace("$", "_").replace(".", "_")
     return n
 
@@ -87,6 +96,23 @@ def diode_wl(params):
 def um(v):
     """kpex prints the poly resistor geometry in um without unit"""
     return f"{float(v)}u"
+
+
+def tie_floating(res, ports, sub):
+    """Metal islands that carry only coupling capacitors (unconnected fill, dummies) have no DC path: ngspice reports a singular matrix at
+    them and the operating point fails. Give each one a 1 TOhm leak to the substrate/ground node; nothing else changes."""
+    touched, capnodes = set(), []
+    for ln in res:
+        t = ln.split()
+        if not t:
+            continue
+        if t[0][0].upper() == "C" and not t[0].lower().startswith("xc"):
+            capnodes += t[1:3]
+        else:
+            touched.update(x for x in t[1:] if "=" not in x)
+    floating = sorted({n for n in capnodes if n not in touched and n not in ports and n != "0"})
+    res.extend(f"Rfl_{n} {n} {sub} 1T" for n in floating)
+    return len(floating)
 
 
 def convert(src, sch, out, cell=None):
@@ -153,6 +179,7 @@ def convert(src, sch, out, cell=None):
     missing = set(ports) ^ set(top_ports)
     if missing:
         sys.exit(f"pex_netlist: port mismatch between schematic {ports} and kpex {top_ports}")
+    nconv["floating"] = tie_floating(res, ports, substrate_node(ports))
     with open(out, "w") as f:
         f.write(f"** post-layout netlist of {cell}: kpex -> ngspice by scripts/pex_netlist.py (source: {src})\n")
         f.write(f".subckt {cell} {' '.join(ports)}\n")
@@ -259,6 +286,7 @@ def convert_magic(src, sch, out, cell=None, capnodes=None):
                 continue
         clean_res.append(line)
     res = clean_res
+    n["floating"] = tie_floating(res, ports, substrate_node(ports))
     with open(out, "w") as f:
         f.write(f"** post-layout RC netlist of {cell}: Magic extresist -> ngspice by scripts/pex_netlist.py --magic (source: {src})\n")
         f.write(f".subckt {cell} {' '.join(ports)}\n")

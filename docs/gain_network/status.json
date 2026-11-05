@@ -1,7 +1,7 @@
 {
  "cell": "gain_network",
- "generated": "2026-11-04T05:46:09",
- "commit": "8df9d33",
+ "generated": "2026-11-05T18:52:07",
+ "commit": "b495d99",
  "profile": "typ",
  "gds": {
   "path": "gds/gain_network/gain_network.gds",
@@ -14,66 +14,66 @@
  "stages": [
   {
    "name": "cace",
-   "status": "pass",
-   "seconds": 142,
-   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-22_12-19-21: 35 rows",
-   "at": "2026-10-22T12:24:59"
+   "status": "fail",
+   "seconds": 84,
+   "detail": "/foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_18-50-13: 35 rows, 1 failing",
+   "at": "2026-11-05T18:52:07"
   },
   {
    "name": "drc",
    "status": "pass",
-   "seconds": 30,
+   "seconds": 22,
    "detail": "main : 0 items [ok];antenna : 0 items [ok];density : 7 items [info, chip-level];",
-   "at": "2026-11-04T05:46:09"
+   "at": "2026-11-05T18:52:07"
   },
   {
    "name": "audit",
    "status": "pass",
-   "seconds": 1,
+   "seconds": 0,
    "detail": " all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells;",
-   "at": "2026-11-04T05:46:09"
+   "at": "2026-11-05T18:52:07"
   },
   {
    "name": "lvs",
    "status": "pass",
-   "seconds": 5,
+   "seconds": 8,
    "detail": "RESULT: MATCH",
-   "at": "2026-11-04T05:46:09"
+   "at": "2026-11-05T18:52:07"
   },
   {
    "name": "pex",
    "status": "pass",
-   "seconds": 35,
-   "detail": "gain_network.c.spice: ports S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS; M=81, Rpoly=9, Rext=0, Cdev=5, Cext=343;gain_network.rc.spice: ports S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS A",
-   "at": "2026-10-22T12:24:59"
+   "seconds": 22,
+   "detail": "gain_network.c.spice: ports S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_BIAS AVSS; M=81, Rpoly=10, Rext=0, Cdev=5, Cext=350, D=1;gain_network.rc.spice: ports S4 S5 S0 S2 S1 S3 AVDD V_CM V_IN2 V_OUT2 I_",
+   "at": "2026-11-05T17:37:23"
   },
   {
    "name": "post_c",
    "status": "pass",
-   "seconds": 23,
-   "detail": "34 parameters with a % delta, 28 flagged",
-   "at": "2026-10-22T12:24:59"
+   "seconds": 12,
+   "detail": "34 parameters with a % delta, 29 flagged",
+   "at": "2026-11-05T17:37:23"
   },
   {
    "name": "post_rc",
    "status": "pass",
-   "seconds": 60,
-   "detail": "34 parameters with a % delta, 31 flagged",
-   "at": "2026-10-22T12:24:59"
+   "seconds": 22,
+   "detail": "34 parameters with a % delta, 32 flagged",
+   "at": "2026-11-05T17:37:23"
   },
   {
    "name": "images",
    "status": "pass",
-   "seconds": 2,
+   "seconds": 1,
    "detail": "0 updated, 5 unchanged, 0 error(s), 0 warning(s)",
-   "at": "2026-10-22T12:24:59"
+   "at": "2026-11-05T18:52:07"
   },
   {
    "name": "post",
    "status": "blocked",
    "seconds": 0,
-   "detail": "pex stage: blocked",
-   "at": "2026-10-22T10:53:35"
+   "detail": "pex stage: error",
+   "at": "2026-11-05T16:00:36"
   }
  ],
  "postlayout": {
