@@ -61,6 +61,8 @@ if has_stage cace; then
   else
     # templates and the parameters of the datasheet are generated from the xschem testbenches (cace/<cell>.params.yaml); only a real
     # change of the generated files makes the reference stale below
+    # cells with an extra template generator (scripts/make_<cell>_inbias_template.py: instramp input network from pgia_top) run it first
+    [ -f "$root/scripts/make_${cell}_inbias_template.py" ] && python3 -I "$root/scripts/make_${cell}_inbias_template.py" >"$log/inbias_template.log" 2>&1
     python3 -I "$root/scripts/gen_cace.py" "$cell" >"$log/gen_cace.log" 2>&1 || { cat "$log/gen_cace.log"; force=1; }   # run_cace.sh then fails with the same message (error row), never a silent old reference
     ref=""
     for d in $(ls -d "$root"/runs/RUN_* 2>/dev/null | sort -r); do

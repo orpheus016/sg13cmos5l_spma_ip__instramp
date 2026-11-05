@@ -1,12 +1,12 @@
 # instramp_cmos5l: flow status
 
-`scripts/flow.sh instramp_cmos5l` at 2026-11-04T05:44:31 (commit 8df9d33, profile typ)
+`scripts/flow.sh instramp_cmos5l` at 2026-11-05T12:36:22 (commit a5faaf2, profile typ)
 
 layout `gds/pgia_top/instramp_cmos5l.gds` sha1 `50fa4fd017b1`, schematic `xschem/instramp_cmos5l/instramp_cmos5l.sch` sha1 `ce9e7cf4d16b`
 
 | Stage | Result | Time | Detail |
 |---|---|---:|---|
-| cace | ✅ pass | 48 s | /foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-10-21_10-03-50: 31 rows |
+| cace | ✅ pass | 49 s | /foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_12-35-34: 38 rows |
 | drc | ✅ pass | 26 s | main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level]; |
 | audit | ✅ pass | 5 s |  all device Activ within the tie distance, every NWell tied; 33 p+/n+ abutment site(s), all in the accepted baseline; |
 | lvs | ✅ pass | 7 s | RESULT: MATCH |

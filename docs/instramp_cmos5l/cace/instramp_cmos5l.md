@@ -66,6 +66,11 @@
   + Display: Fin
   + Unit: kHz
   + Typical: 1
+- rs
+  + Description: Source impedance in front of each input (input_network parameter only)
+  + Display: Rs
+  + Unit: kOhm
+  + Typical: 100
 - vin_amp
   + Description: Differential input sine amplitude (peak) for THD
   + Display: Vin amp

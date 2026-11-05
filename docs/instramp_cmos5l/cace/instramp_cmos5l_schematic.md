@@ -15,6 +15,13 @@
 | 2nd harmonic         | ngspice              | HD2_DB               |             any | -80.791 dB |          any | -64.979 dB |          any | -48.314 dB |   Pass ✅    |
 | 3rd harmonic         | ngspice              | HD3_DB               |             any | -76.241 dB |          any | -69.230 dB |          any | -50.352 dB |   Pass ✅    |
 | Output fundamental amplitude | ngspice              | VO1                  |             any |    0.192 V |          any |    0.200 V |          any |    0.204 V |   Pass ✅    |
+| Input resistance of one input (Rs removed) | ngspice              | R_IN                 |             any | 5.115 GOhm |          any | 17.548 GOhm |          any | 46.930 GOhm |   Pass ✅    |
+| Closed-loop gain at 1 kHz with the network | ngspice              | A_NET                |             any |  17.765 dB |          any |  18.061 dB |          any |  18.262 dB |   Pass ✅    |
+| Input noise @100 Hz incl. Rs and network | ngspice              | IRN_100              |             any | 907.753 nV/rtHz |          any | 1096.460 nV/rtHz |          any | 1274.410 nV/rtHz |   Pass ✅    |
+| Input noise @1 kHz incl. Rs and network | ngspice              | IRN_1K               |             any | 297.673 nV/rtHz |          any | 359.139 nV/rtHz |          any | 415.991 nV/rtHz |   Pass ✅    |
+| Output DC level minus Vcm with the network | ngspice              | VOS_NET              |             any |   0.436 mV |          any |   1.933 mV |          any |   4.870 mV |   Pass ✅    |
+| THD with Rs and network | ngspice              | THD_DB               |             any | -72.492 dB |          any | -63.522 dB |          any | -46.172 dB |   Pass ✅    |
+| 3rd harmonic with Rs and network | ngspice              | HD3_DB               |             any | -76.241 dB |          any | -69.230 dB |          any | -50.352 dB |   Pass ✅    |
 | Differential gain @10 Hz | ngspice              | ADM_DC               |             any |  17.735 dB |          any |  18.039 dB |          any |  18.241 dB |   Pass ✅    |
 | CMRR @10 Hz          | ngspice              | CMRR_DC              |             any |  41.798 dB |          any |  47.694 dB |          any |  52.303 dB |   Pass ✅    |
 | CMRR @100 kHz        | ngspice              | CMRR_100K            |             any |  38.520 dB |          any |  44.356 dB |          any |  49.510 dB |   Pass ✅    |
@@ -34,7 +41,7 @@
 | Output voltage       | ngspice              | VOUT                 |             any |    0.600 V |          any |    0.602 V |          any |    0.605 V |   Pass ✅    |
 | Quiescent current    | ngspice              | IQ                   |             any |  48.004 uA |          any |  54.873 uA |          any |  59.750 uA |   Pass ✅    |
 | Quiescent power      | ngspice              | PWR                  |             any |  57.605 uW |          any |  74.078 uW |          any |  89.625 uW |   Pass ✅    |
-| Small-signal gain (transient) | ngspice              | TR_GAIN              |             any |    7.73179 |          any |    7.99988 |          any |    8.18719 |   Pass ✅    |
+| Small-signal gain (transient) | ngspice              | TR_GAIN              |             any |    7.73174 |          any |    7.99991 |          any |    8.18701 |   Pass ✅    |
 | Mean output level    | ngspice              | TR_VOUT_AVG          |             any |    0.600 V |          any |    0.602 V |          any |    0.605 V |   Pass ✅    |
 
 
@@ -55,6 +62,10 @@
 ## thd_THD_DB_vs_temperature
 
 ![thd_THD_DB_vs_temperature](./instramp_cmos5l/schematic/thd_THD_DB_vs_temperature.png)
+
+## input_network_R_IN_vs_temperature
+
+![input_network_R_IN_vs_temperature](./instramp_cmos5l/schematic/input_network_R_IN_vs_temperature.png)
 
 ## cmrr_ADM_DC_vs_temperature
 
