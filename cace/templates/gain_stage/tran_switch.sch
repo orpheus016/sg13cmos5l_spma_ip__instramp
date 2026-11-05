@@ -95,6 +95,8 @@ value="
 .lib CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.tech/ngspice/models/cornerMOSCAP.lib moscap_tt
 
 .include CACE\{DUT_path\}
+* std cells at top level (an include inside the DUT netlist is nested in the subckt and invisible to the sub-blocks)
+.include CACE\{PDK_ROOT\}/CACE\{PDK\}/libs.ref/sg13cmos5l_stdcell/spice/sg13cmos5l_stdcell.spice
 
 .temp CACE\{temperature\}
 

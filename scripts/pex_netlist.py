@@ -10,6 +10,8 @@ What kpex writes and what ngspice + the PDK models need:
   C$30 a b 14.88 cap_cmomi A=0 P=0 m=1         (w/l lost by the writer)    ->  XC_30 a b cap_cmomi w= l= ... taken
                                                                              from the schematic cap line
   Rext_1 a b 9 R                               (stray trailing "R")        ->  Rext_1 a b 9
+  D$98 AVSS s[4] dantenna A=0.6084P P=3.12U m=1 (antenna diode, area/perimeter) ->  XD_98 AVSS s[4] dantenna w=0.78u l=0.78u
+                                               (w, l solved from w*l = A, 2(w+l) = P; the PDK model is a .subckt with w, l)
   nodes such as \\$12.$0.17                     (backslash, $, .)           ->  n12_0_17
   VSUBS                                        (substrate)                 ->  VSS
   .SUBCKT cell IBIAS VDD ...                   (alphabetical ports)        ->  ports in the order of the schematic
@@ -62,6 +64,26 @@ def node(n, ports):
     return n
 
 
+def si(v):
+    """kpex number with SI suffix (0.6084P, 3.12U) -> float"""
+    m = re.match(r"^([-+0-9.eE]+?)([FPNUMKG]|MEG)?$", v.strip().upper())
+    if not m:
+        sys.exit(f"pex_netlist: cannot read the number {v!r}")
+    return float(m.group(1)) * {None: 1.0, "F": 1e-15, "P": 1e-12, "N": 1e-9, "U": 1e-6, "M": 1e-3, "K": 1e3, "MEG": 1e6, "G": 1e9}[m.group(2)]
+
+
+def diode_wl(params):
+    """antenna diode: w, l in um from the area A (m^2) and the perimeter P (m) kpex prints"""
+    kv = {x.split("=", 1)[0].upper(): x.split("=", 1)[1] for x in params if "=" in x}
+    a, p = si(kv["A"]), si(kv["P"])
+    half = p / 2.0
+    disc = half * half - 4.0 * a
+    if disc < -1e-24:
+        sys.exit(f"pex_netlist: inconsistent diode geometry A={kv['A']} P={kv['P']}")
+    r = max(disc, 0.0) ** 0.5
+    return (half + r) / 2.0 * 1e6, (half - r) / 2.0 * 1e6
+
+
 def um(v):
     """kpex prints the poly resistor geometry in um without unit"""
     return f"{float(v)}u"
@@ -74,7 +96,7 @@ def convert(src, sch, out, cell=None):
     cell = cell or scell
     ports = list(sports)
     lines = read_logical_lines(src)
-    res, nconv = [], {"M": 0, "Rpoly": 0, "Rext": 0, "Cdev": 0, "Cext": 0}
+    res, nconv = [], {"M": 0, "Rpoly": 0, "Rext": 0, "Cdev": 0, "Cext": 0, "D": 0}
     in_top = False
     top_ports = []
     for line in lines:
@@ -120,6 +142,10 @@ def convert(src, sch, out, cell=None):
                          "(needed for w/l: the kpex writer drops them)")
             res.append(f"X{nm} {node(t[1], ports)} {node(t[2], ports)} {cap['model']} " + " ".join(cap["params"]) + " m=1")
             nconv["Cdev"] += 1
+        elif kind == "D" and len(t) > 3 and t[3].lower() == "dantenna":
+            w, l = diode_wl(t[4:])
+            res.append(f"X{nm} {node(t[1], ports)} {node(t[2], ports)} dantenna w={w:.4g}u l={l:.4g}u")
+            nconv["D"] += 1
         else:
             sys.exit(f"pex_netlist: unhandled line: {s[:100]}")
     if not top_ports:
