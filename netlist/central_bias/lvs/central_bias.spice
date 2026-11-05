@@ -1,0 +1,11 @@
+** sch_path: /foss/designs/sg13cmos5l_spma_ip__instramp/xschem/central_bias/central_bias.sch
+.subckt central_bias IB_IN IB_IA IB_BUF IB_G1 IB_G2 AVDD AVSS
+*.PININFO IB_IN:B IB_IA:B IB_BUF:B IB_G1:B IB_G2:B AVDD:B AVSS:B
+MMN_R IB_IN IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=10
+MMN_IA IB_IA IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=33
+MMN_BUF IB_BUF IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=11
+MMN_P n_pref IB_IN AVSS AVSS sg13_lv_nmos w=1u l=2u ng=1 m=8
+MMP_R n_pref n_pref AVDD AVDD sg13_lv_pmos w=2u l=2u ng=1 m=10
+MMP_G1 IB_G1 n_pref AVDD AVDD sg13_lv_pmos w=2u l=2u ng=1 m=9
+MMP_G2 IB_G2 n_pref AVDD AVDD sg13_lv_pmos w=2u l=2u ng=1 m=9
+.ends

@@ -16,6 +16,10 @@ The harness gives the slot `ibias0` / `ibias1`, driven by iDACs through `idac1_s
 
 ## Circuit (7 transistors)
 
+<!-- AUTO:schematic:central_bias -->
+![central_bias schematic](../../docs/central_bias/media/central_bias_schematic.png)
+<!-- /AUTO -->
+
 ```
 ibias0 (sourced) -> IB_IN = NMOS diode MN_R (m=10, W=1u L=2u)           reference
                     MN_IA  m=33  drain IB_IA   (sinks into the IA bias pin)

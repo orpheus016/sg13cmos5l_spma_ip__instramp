@@ -1,0 +1,12 @@
+{
+ "cell": "central_bias",
+ "gds": "gds/central_bias/central_bias.gds",
+ "layout": {
+  "L": 26.34,
+  "W": 99.03,
+  "area": 2608.5,
+  "top": "central_bias"
+ },
+ "params": [],
+ "schematic": "xschem/central_bias/central_bias.sch"
+}
