@@ -16,6 +16,12 @@ Post-Layout vs Simulation:
   - [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/postlayout.md)
   - [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/postlayout.md)
 
+Real usage (EEG / EMG / ECG through the chip, schematic and post-layout):
+- [Biosignal demo, results and method](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/biosignal/README.md)
+- [Interactive report](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/biosignal/report.html) (download and open locally; self-contained)
+- [Recorded input data and attribution](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/docs/biosignal/data)
+- [Testbenches and raw results](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/tree/main/sim/biosignal)
+
 Circuit CACE:
 - [Two-Stage Miller-Compensated OTA](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/ota_cmos5l/cace/README.md)
 - [Instrumentation Amplifier](https://github.com/orpheus016/sg13cmos5l_spma_ip__instramp/blob/main/docs/instramp_cmos5l/cace/README.md)
