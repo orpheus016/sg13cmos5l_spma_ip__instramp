@@ -1,0 +1,41 @@
+{
+  "eeg": {
+    "dataset": "EEG Motor Movement/Imagery Dataset (eegmmidb) 1.0.0",
+    "doi": "10.13026/C28G6P",
+    "record": "S001/S001R02.edf",
+    "note": "subject S001, run 2 = eyes closed baseline, channel Oz (alpha rhythm)",
+    "url": "https://physionet.org/files/eegmmidb/1.0.0/S001/S001R02.edf",
+    "out": "eeg_oz.csv",
+    "sha256": "31a95e0a880e6c3d89960d9d62c144f24cc4e9f5d7e93c7f864ef61cd49e847e",
+    "fs_hz": 160.0,
+    "t0_s": 10.0,
+    "dur_s": 4.0,
+    "pp_V": 0.00037699999999999995
+  },
+  "emg": {
+    "dataset": "Examples of Electromyograms (emgdb) 1.0.0",
+    "doi": "10.13026/C2K03V",
+    "record": "emg_healthy",
+    "note": "healthy 44 y male, needle EMG, tibialis anterior, gentle dorsiflexion",
+    "url": "https://physionet.org/files/emgdb/1.0.0/emg_healthy.dat",
+    "out": "emg_tibialis.csv",
+    "sha256": "4990f34f0ffb314f6ce70c1d2089b7ce41fa96d19fcd9fb334815ca5033966fd",
+    "fs_hz": 4000.0,
+    "t0_s": 3.5,
+    "dur_s": 1.0,
+    "pp_V": 0.0016216
+  },
+  "ecg": {
+    "dataset": "MIT-BIH Arrhythmia Database 1.0.0",
+    "doi": "10.13026/C2F305",
+    "record": "100",
+    "note": "record 100, lead MLII",
+    "url": "https://physionet.org/files/mitdb/1.0.0/100.dat",
+    "out": "ecg_mitdb100.csv",
+    "sha256": "b2ea3c250e56e48f4b7b90697832b8ecd1afa1e0bb31f2dcfea4ed6e1075a639",
+    "fs_hz": 360.0,
+    "t0_s": 5.0,
+    "dur_s": 4.0,
+    "pp_V": 0.0015300000000000001
+  }
+}
