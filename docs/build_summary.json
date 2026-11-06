@@ -1,15 +1,15 @@
 {
- "generated": "2026-11-05T19:06:03",
+ "generated": "2026-11-05T21:41:52",
  "mode": "full",
  "profile": "typ",
- "branch": "phase2",
- "commit": "b495d99",
- "seconds": 1070,
+ "branch": "main",
+ "commit": "a3285dc",
+ "seconds": 2084,
  "steps": [
   {
    "name": "registry",
    "status": "ok",
-   "seconds": "1",
+   "seconds": "0",
    "detail": "cellinfo: note: dec2to4: gds xschem/dec2to4/dec2to4.gds does not exist yet"
   },
   {
@@ -21,19 +21,19 @@
   {
    "name": "flow:ota_cmos5l",
    "status": "ok",
-   "seconds": "23",
+   "seconds": "29",
    "detail": "flow: docs/ota_cmos5l/status.md"
   },
   {
    "name": "flow:instramp_cmos5l",
    "status": "ok",
-   "seconds": "39",
+   "seconds": "74",
    "detail": "flow: docs/instramp_cmos5l/status.md"
   },
   {
    "name": "flow:output_buffer",
    "status": "ok",
-   "seconds": "24",
+   "seconds": "29",
    "detail": "flow: docs/output_buffer/status.md"
   },
   {
@@ -51,31 +51,31 @@
   {
    "name": "flow:gain_network",
    "status": "FAIL",
-   "seconds": "116",
+   "seconds": "122",
    "detail": "flow: docs/gain_network/status.md"
   },
   {
    "name": "flow:gain_stage",
    "status": "FAIL",
-   "seconds": "100",
+   "seconds": "104",
    "detail": "flow: docs/gain_stage/status.md"
   },
   {
    "name": "flow:central_bias",
    "status": "ok",
-   "seconds": "85",
+   "seconds": "91",
    "detail": "flow: docs/central_bias/status.md"
   },
   {
    "name": "flow:pgia_top",
    "status": "ok",
-   "seconds": "482",
+   "seconds": "1426",
    "detail": "flow: docs/pgia_top/status.md"
   },
   {
    "name": "flow:slot9_wrapper",
    "status": "ok",
-   "seconds": "103",
+   "seconds": "105",
    "detail": "flow: docs/slot9_wrapper/status.md"
   },
   {
@@ -99,7 +99,7 @@
   {
    "name": "reports:cace",
    "status": "ok",
-   "seconds": "59",
+   "seconds": "65",
    "detail": "report: docs/index.html"
   },
   {

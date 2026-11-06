@@ -1,7 +1,7 @@
 # instramp_cmos5l - CACE characterisation
 
-- Generated: 2026-11-05 17:27 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_17-27-15`
-- Commit: `b495d99` (working tree dirty)
+- Generated: 2026-11-05 21:08 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_21-07-40`
+- Commit: `a3285dc` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/instramp_cmos5l.yaml`; reproduce with `scripts/run_cace.sh instramp_cmos5l`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 

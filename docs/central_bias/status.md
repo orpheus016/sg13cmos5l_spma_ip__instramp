@@ -1,12 +1,12 @@
 # central_bias: flow status
 
-`scripts/flow.sh central_bias` at 2026-11-05T18:55:12 (commit b495d99, profile typ)
+`scripts/flow.sh central_bias` at 2026-11-05T21:15:08 (commit a3285dc, profile typ)
 
 layout `gds/central_bias/central_bias.gds` sha1 `88df2e3b647e`, schematic `xschem/central_bias/central_bias.sch` sha1 `3440a6dc3269`
 
 | Stage | Result | Time | Detail |
 |---|---|---:|---|
-| cace | ✅ pass | 67 s | /foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_18-53-48: 17 rows |
+| cace | ✅ pass | 73 s | /foss/designs/sg13cmos5l_spma_ip__instramp/runs/RUN_2026-11-05_21-13-38: 17 rows |
 | drc | ✅ pass | 13 s | main : 0 items [ok];antenna : 0 items [ok];density : 6 items [info, chip-level]; |
 | audit | ✅ pass | 0 s |  all device Activ within the tie distance, every NWell tied; no p+/n+ abutment outside standard cells; |
 | lvs | ✅ pass | 4 s | RESULT: MATCH |

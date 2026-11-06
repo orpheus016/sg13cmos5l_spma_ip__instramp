@@ -12,6 +12,10 @@ directory), puts central_bias between ibias0 and the four blocks in the chip tes
   - VOUT at gain code 0 within 15 mV of Vcm (0.6 V), static power below 500 uW
   - the gain of the 11 codes within 0.6 dB of the verified result of commit 0777ca0 (scripts/audit_gain_steps.py BASELINE_MEASURED_DB)
 
+NOTE on the input offset: the chip testbench tb_pgia_top applies a DC offset of -334.7 uV on VINP (V_INP). That cancels the systematic input-referred offset of
+the chip (about 0.33 mV); without it the output of gain codes >= 8 (x2000 .. x8192) rails at DC. The gains checked here are therefore "with the offset null
+applied", which is the intentional operating condition for codes 8 to 10. The CACE datasheet of pgia_top runs both cases (condition vin_off = 0 / -334.7 uV).
+
 Exit: 0 all met, 1 something is outside the limits, 2 a tool step failed.
 """
 import argparse
@@ -113,6 +117,7 @@ def main():
     ib = float(a.ibias0.replace("u", "e-6").replace("n", "e-9").replace("m", "e-3")) * 1e6
     ok = True
     print(f"central_bias with ibias0 = {a.ibias0} sourced (ratios drawn for 1.0 uA; scale = {ib:.2f}):")
+    print("  (chip testbench with the intentional input offset of -334.7 uV on VINP, see the docstring)")
     if integrated:
         print("  (central_bias is instantiated in pgia_top.sch: bias currents are not probed, the chip result below is the proof)")
     for name in ("IA", "BUF", "G1", "G2") if cur else ():

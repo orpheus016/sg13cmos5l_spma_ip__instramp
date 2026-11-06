@@ -1,7 +1,7 @@
 # pgia_top - CACE characterisation
 
-- Generated: 2026-11-05 19:01 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_18-55-13`
-- Commit: `b495d99` (working tree dirty)
+- Generated: 2026-11-05 21:37 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_21-15-09`
+- Commit: `a3285dc` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/pgia_top.yaml`; reproduce with `scripts/run_cace.sh pgia_top`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 
@@ -109,6 +109,11 @@
   + Display: Cin
   + Unit: nF
   + Typical: 10
+- vin_off
+  + Description: Intentional DC offset on VINP (relative to VCM) that cancels the systematic input-referred offset of the chip. 0 = chip as built; -334.7 uV = the value of tb_pgia_top, the null of the SCHEMATIC; -903.7 uV = the null of the EXTRACTED LAYOUT (C and RC netlists). With the right null gain codes 8 to 10 (x2000 .. x8192) stay in range, without it they rail
+  + Display: Vin_off
+  + Unit: uV
+  + Typical: 0
 - gain_code
   + Description: Active 4-bit binary gain code (0 to 10 valid, 11 clamped)
   + Display: Code
@@ -172,23 +177,23 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 
 |      Parameter       |         Tool         |     Result      | Min Limit  |  Min Value   | Typ Target |  Typ Value   | Max Limit  |  Max Value   |  Status  |
 | :------------------- | :------------------- | :-------------- | ---------: | -----------: | ---------: | -----------: | ---------: | -----------: | :------: |
-| Closed-loop gain @1 kHz | ngspice              | A_CL                 |             any | -157.273 dB |     18.06 dB |  26.910 dB |          any |  77.375 dB |   Pass ✅    |
-| Gain step error vs target | ngspice              | A_ERR                |             any | -235.541 dB |          any |  -3.527 dB |          any |  21.937 dB |   Pass ✅    |
-| -3 dB bandwidth      | ngspice              | F3DB                 |         1000 Hz | 1421.280 Hz |          any | 220131.000 Hz |          any | 44479600.000 Hz |   Pass ✅    |
-| 0 dB frequency       | ngspice              | F0DB                 |             any | 27614.500 Hz |          any | 2838315.000 Hz |          any | 10000000.000 Hz |   Pass ✅    |
-| Phase @1 kHz         | ngspice              | PH_1K                |             any | -179.244 ° |          any |   -0.377 ° |          any |  179.812 ° |   Pass ✅    |
-| Input pseudo-resistor | ngspice              | R_PSEUDO             |          1 GOhm | 3.563 GOhm |      15 GOhm | 13.559 GOhm |          any | 43.789 GOhm |   Pass ✅    |
-| Output offset voltage | ngspice              | VOS                  |             any |   0.026 mV |      1.08 mV |  81.581 mV |          any | 661.207 mV |   Pass ✅    |
-| IA output DC voltage | ngspice              | V_IA                 |             any |    0.600 V |        0.6 V |    0.603 V |          any |    0.610 V |   Pass ✅    |
-| Stage 1 output DC voltage | ngspice              | V_ST1                |             any |    0.273 V |        0.6 V |    0.565 V |          any |    0.916 V |   Pass ✅    |
-| Stage 2 output DC voltage | ngspice              | V_ST2                |             any |    0.000 V |        0.6 V |    0.634 V |          any |    1.500 V |   Pass ✅    |
-| DC output voltage    | ngspice              | VOUT                 |             any |    0.012 V |        0.6 V |    0.633 V |          any |    1.261 V |   Pass ✅    |
-| Analog supply current | ngspice              | I_AVDD               |             any | 167.053 uA |       216 uA | 225.907 uA |       400 uA | 315.963 uA |   Pass ✅    |
+| Closed-loop gain @1 kHz | ngspice              | A_CL                 |             any | -157.273 dB |     18.06 dB |  28.225 dB |          any |  77.375 dB |   Pass ✅    |
+| Gain step error vs target | ngspice              | A_ERR                |             any | -235.541 dB |          any |  -3.185 dB |          any |  23.554 dB |   Pass ✅    |
+| -3 dB bandwidth      | ngspice              | F3DB                 |         1000 Hz | 1421.280 Hz |          any | 212798.500 Hz |          any | 44479600.000 Hz |   Pass ✅    |
+| 0 dB frequency       | ngspice              | F0DB                 |             any | 4883.770 Hz |          any | 2894975.000 Hz |          any | 10000000.000 Hz |   Pass ✅    |
+| Phase @1 kHz         | ngspice              | PH_1K                |             any | -179.920 ° |          any |   -0.378 ° |          any |  179.972 ° |   Pass ✅    |
+| Input pseudo-resistor | ngspice              | R_PSEUDO             |          1 GOhm | 3.563 GOhm |      15 GOhm | 13.573 GOhm |          any | 43.802 GOhm |   Pass ✅    |
+| Output offset voltage | ngspice              | VOS                  |             any |   0.026 mV |      1.08 mV |  80.184 mV |          any | 661.207 mV |   Pass ✅    |
+| IA output DC voltage | ngspice              | V_IA                 |             any |    0.593 V |        0.6 V |    0.601 V |          any |    0.610 V |   Pass ✅    |
+| Stage 1 output DC voltage | ngspice              | V_ST1                |             any |    0.273 V |        0.6 V |    0.597 V |          any |    1.070 V |   Pass ✅    |
+| Stage 2 output DC voltage | ngspice              | V_ST2                |             any |    0.000 V |        0.6 V |    0.601 V |          any |    1.500 V |   Pass ✅    |
+| DC output voltage    | ngspice              | VOUT                 |             any |    0.011 V |        0.6 V |    0.600 V |          any |    1.261 V |   Pass ✅    |
+| Analog supply current | ngspice              | I_AVDD               |             any | 166.433 uA |       216 uA | 229.546 uA |       400 uA | 315.963 uA |   Pass ✅    |
 | Digital supply current | ngspice              | I_VPWR               |             any |   0.001 uA |     0.014 uA |   0.021 uA |       1.0 uA |   0.478 uA |   Pass ✅    |
-| Total quiescent current | ngspice              | IQ_TOT               |             any | 167.059 uA |       216 uA | 225.949 uA |       400 uA | 316.416 uA |   Pass ✅    |
-| Total DC power       | ngspice              | PWR                  |             any | 180.424 uW |       260 uW | 269.308 uW |       500 uW | 474.624 uW |   Pass ✅    |
-| Output peak-to-peak  | ngspice              | VPP_OUT              |             any |   0.000 mV |          any |   1.969 mV |          any |  73.973 mV |   Pass ✅    |
-| Effective voltage gain | ngspice              | EFF_GAIN             |             any |  0.000 V/V |          any | 49.237 V/V |          any | 1849.330 V/V |   Pass ✅    |
+| Total quiescent current | ngspice              | IQ_TOT               |             any | 166.434 uA |       216 uA | 229.565 uA |       400 uA | 316.416 uA |   Pass ✅    |
+| Total DC power       | ngspice              | PWR                  |             any | 179.749 uW |       260 uW | 272.885 uW |       500 uW | 474.624 uW |   Pass ✅    |
+| Output peak-to-peak  | ngspice              | VPP_OUT              |             any |   0.000 mV |          any |   3.800 mV |          any | 544.773 mV |   Pass ✅    |
+| Effective voltage gain | ngspice              | EFF_GAIN             |             any |  0.000 V/V |          any | 94.990 V/V |          any | 13619.300 V/V |   Pass ✅    |
 
 
 
@@ -238,43 +243,43 @@ Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the dis
 
 ### ac_gain - Closed-loop AC gain & bandwidth
 
-540 runs.
+1620 runs.
 
 | metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
 |---|---|---|---|---|---|---|
 | A_CL [dB] | -157.3 | fs, 1.5 V, -40 C | 77.38 | tt, 1.08 V, -40 C | any | - |
-| A_ERR [dB] | -235.5 | fs, 1.5 V, -40 C | 21.94 | ss, 1.08 V, -40 C | any | - |
+| A_ERR [dB] | -235.5 | fs, 1.5 V, -40 C | 23.55 | ss, 1.08 V, -40 C | any | - |
 | F3DB [Hz] | 1421 | fs, 1.08 V, -40 C | 4.448e+07 | ss, 1.5 V, 85 C | >= 1000 | 0 |
-| F0DB [Hz] | 2.761e+04 | tt, 1.2 V, 85 C | 1e+07 | ss, 1.08 V, -40 C | any | - |
-| PH_1K [°] | -179.2 | ss, 1.5 V, 27 C | 179.8 | sf, 1.2 V, -40 C | any | - |
-| R_PSEUDO [GOhm] | 3.563 | ff, 1.08 V, 85 C | 43.79 | ss, 1.5 V, -40 C | >= 1 | 0 |
+| F0DB [Hz] | 4884 | ff, 1.08 V, 27 C | 1e+07 | ss, 1.08 V, -40 C | any | - |
+| PH_1K [°] | -179.9 | ss, 1.5 V, 85 C | 180 | sf, 1.2 V, 27 C | any | - |
+| R_PSEUDO [GOhm] | 3.563 | ff, 1.08 V, 85 C | 43.8 | ss, 1.5 V, -40 C | >= 1 | 0 |
 
 
 ### dc_op - DC operating point
 
-495 runs.
+1485 runs.
 
 | metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
 |---|---|---|---|---|---|---|
 | VOS [mV] | 0.02615 | sf, 1.5 V, 27 C | 661.2 | ff, 1.5 V, 85 C | any | - |
-| V_IA [V] | 0.6005 | ff, 1.5 V, -40 C | 0.61 | ss, 1.08 V, 27 C | any | - |
-| V_ST1 [V] | 0.2733 | fs, 1.08 V, 85 C | 0.9158 | ss, 1.08 V, -40 C | any | - |
-| V_ST2 [V] | 0.0001108 | ss, 1.5 V, -40 C | 1.5 | tt, 1.5 V, -40 C | any | - |
-| VOUT [V] | 0.01166 | ss, 1.08 V, -40 C | 1.261 | ff, 1.5 V, 85 C | any | - |
-| I_AVDD [uA] | 167.1 | fs, 1.08 V, -40 C | 316 | ff, 1.5 V, 85 C | <= 400 | 0 |
+| V_IA [V] | 0.5934 | ff, 1.5 V, -40 C | 0.61 | ss, 1.08 V, 27 C | any | - |
+| V_ST1 [V] | 0.2733 | fs, 1.08 V, 85 C | 1.07 | ss, 1.08 V, -40 C | any | - |
+| V_ST2 [V] | 0.0001096 | ff, 1.5 V, -40 C | 1.5 | ff, 1.5 V, -40 C | any | - |
+| VOUT [V] | 0.01084 | fs, 1.08 V, -40 C | 1.261 | ff, 1.5 V, 85 C | any | - |
+| I_AVDD [uA] | 166.4 | ss, 1.08 V, -40 C | 316 | ff, 1.5 V, 85 C | <= 400 | 0 |
 | I_VPWR [uA] | 0.001241 | ss, 1.08 V, -40 C | 0.4783 | ff, 1.5 V, 85 C | <= 1 | 0 |
-| IQ_TOT [uA] | 167.1 | fs, 1.08 V, -40 C | 316.4 | ff, 1.5 V, 85 C | <= 400 | 0 |
-| PWR [uW] | 180.4 | fs, 1.08 V, -40 C | 474.6 | ff, 1.5 V, 85 C | <= 500 | 0 |
+| IQ_TOT [uA] | 166.4 | ss, 1.08 V, -40 C | 316.4 | ff, 1.5 V, 85 C | <= 400 | 0 |
+| PWR [uW] | 179.7 | ss, 1.08 V, -40 C | 474.6 | ff, 1.5 V, 85 C | <= 500 | 0 |
 
 
 ### tran - Dynamic transient response
 
-12 runs.
+36 runs.
 
 | metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
 |---|---|---|---|---|---|---|
-| VPP_OUT [mV] | 1.543e-06 | tt, 1.2 V, 27 C | 73.97 | tt, 1.2 V, 27 C | any | - |
-| EFF_GAIN [V/V] | 3.857e-05 | tt, 1.2 V, 27 C | 1849 | tt, 1.2 V, 27 C | any | - |
+| VPP_OUT [mV] | 1.543e-06 | tt, 1.2 V, 27 C | 544.8 | tt, 1.2 V, 27 C | any | - |
+| EFF_GAIN [V/V] | 3.857e-05 | tt, 1.2 V, 27 C | 1.362e+04 | tt, 1.2 V, 27 C | any | - |
 
 
 ## Monte Carlo (local mismatch)
