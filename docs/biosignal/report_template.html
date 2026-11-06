@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PGIA biosignal demo</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface-1:#fcfcfb; --surface-2:#f3f2ef; --border:#dcdad4; --grid:#e8e6e1;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#74726c;
+  --series-1:#2a78d6; --series-2:#eb6834;
+  --ok:#0f7b45; --warn:#9a6700; --bad:#c42b2b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface-1:#1a1a19; --surface-2:#242422; --border:#3a3935; --grid:#2c2b28;
+    --text-primary:#f0efec; --text-secondary:#c3c2b7; --text-muted:#9a988f;
+    --series-1:#3987e5; --series-2:#d95926;
+    --ok:#4cc98a; --warn:#e0a93a; --bad:#ef7070;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-1:#1a1a19; --surface-2:#242422; --border:#3a3935; --grid:#2c2b28;
+  --text-primary:#f0efec; --text-secondary:#c3c2b7; --text-muted:#9a988f;
+  --series-1:#3987e5; --series-2:#d95926;
+  --ok:#4cc98a; --warn:#e0a93a; --bad:#ef7070;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--surface-1); color:var(--text-primary);
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:24px 16px 64px; }
+h1 { font-size:1.6rem; margin:0 0 4px; }
+h2 { font-size:1.1rem; margin:28px 0 8px; }
+p.lead { color:var(--text-secondary); margin:0 0 16px; max-width:70ch; }
+a { color:var(--series-1); }
+.controls { display:flex; flex-wrap:wrap; gap:12px 20px; align-items:flex-end; margin:16px 0; }
+.ctl label.t { display:block; font-size:.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px; }
+.seg { display:inline-flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.seg button { background:var(--surface-1); color:var(--text-secondary); border:0; padding:7px 12px; font:inherit; cursor:pointer; border-right:1px solid var(--border); }
+.seg button:last-child { border-right:0; }
+.seg button[aria-pressed="true"] { background:var(--series-1); color:#fff; }
+.seg button:focus-visible, select:focus-visible, .btn:focus-visible { outline:2px solid var(--series-1); outline-offset:2px; }
+select, .btn { background:var(--surface-1); color:var(--text-primary); border:1px solid var(--border); border-radius:8px; padding:7px 10px; font:inherit; }
+.btn { cursor:pointer; }
+.hint { font-size:.8rem; color:var(--text-muted); }
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0; }
+.card { background:var(--surface-2); border-radius:10px; padding:10px 12px; }
+.card .k { font-size:.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.04em; }
+.card .v { font-size:1.35rem; font-variant-numeric:tabular-nums; }
+.card .s { font-size:.78rem; color:var(--text-secondary); }
+.badge { display:inline-block; border-radius:999px; padding:1px 9px; font-size:.78rem; border:1px solid currentColor; white-space:nowrap; }
+.ok { color:var(--ok); } .warn { color:var(--warn); } .bad { color:var(--bad); }
+.chartbox { position:relative; background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:8px; }
+svg { display:block; width:100%; height:auto; touch-action:pan-y; }
+svg text { fill:var(--text-secondary); font-size:11px; font-family:inherit; }
+svg .grid { stroke:var(--grid); stroke-width:1; }
+svg .axis { stroke:var(--border); }
+svg .ref { stroke:var(--text-muted); stroke-dasharray:4 4; stroke-width:1; }
+.legend { display:flex; gap:16px; flex-wrap:wrap; font-size:.85rem; color:var(--text-secondary); margin:6px 4px 0; }
+.legend i { display:inline-block; width:18px; height:3px; border-radius:2px; vertical-align:middle; margin-right:6px; }
+.tip { position:absolute; pointer-events:none; background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:6px 9px; font-size:.8rem; display:none; white-space:nowrap; font-variant-numeric:tabular-nums; z-index:2; }
+.note { background:var(--surface-2); border-left:3px solid var(--series-2); border-radius:6px; padding:10px 14px; margin:14px 0; color:var(--text-secondary); font-size:.9rem; }
+.tablewrap { overflow-x:auto; border:1px solid var(--border); border-radius:10px; }
+table { border-collapse:collapse; width:100%; font-size:.85rem; font-variant-numeric:tabular-nums; }
+th, td { padding:6px 10px; text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align:left; }
+th { color:var(--text-muted); font-weight:600; background:var(--surface-2); }
+tbody tr { cursor:pointer; } tbody tr:hover { background:var(--surface-2); }
+tbody tr.sel { outline:2px solid var(--series-1); outline-offset:-2px; }
+footer { margin-top:32px; font-size:.8rem; color:var(--text-muted); }
+@media (max-width:560px) { main { padding:16px; } }
+</style>
+</head>
+<body>
+<main>
+<h1>PGIA on real biosignals</h1>
+<p class="lead">Recorded EEG, EMG and ECG driven through <code>slot9_wrapper</code> (the chip as seen from the Chipalooza harness):
+schematic netlist and extracted layout (kpex C-only, Magic R+C). 1.2&nbsp;V supply, VCM&nbsp;=&nbsp;0.6&nbsp;V, 1&nbsp;&micro;A bias, typical corner, 27&nbsp;&deg;C.
+Transient simulation, no noise sources.</p>
+<div class="note" style="margin-top:0"><b>Scope of this run.</b> Only the <b>ideal input-offset null</b> is simulated (vin_off&nbsp;=&nbsp;&minus;334.7&nbsp;&micro;V for the schematic, &minus;903.7&nbsp;&micro;V for the extracted layout), at the typical corner, and only for
+<b>short windows</b> (EEG and ECG 4&nbsp;s, EMG 1&nbsp;s) because of the extracted-layout simulation time (about 20&ndash;30&nbsp;min per run). The unnulled case, corners/temperature and longer recordings are scheduled for a later, more complete run.</div>
+
+<div class="controls" role="group" aria-label="Simulation selection">
+  <div class="ctl"><label class="t">Signal</label><div class="seg" id="sig"></div></div>
+  <div class="ctl"><label class="t">Netlist</label><div class="seg" id="net"></div></div>
+  <div class="ctl" id="offctl"><label class="t">Input offset (vin_off)</label><div class="seg" id="off"></div></div>
+  <div class="ctl"><label class="t" for="code">Gain code</label><select id="code"></select></div>
+  <div class="ctl"><label class="t">View</label><div class="seg" id="view"></div></div>
+  <div class="ctl"><label class="t">&nbsp;</label><button class="btn" id="reset">Reset zoom</button></div>
+</div>
+<div class="hint" id="offhint"></div>
+
+<div class="chartbox" id="chartbox">
+  <svg id="chart" role="img" aria-label="Input and output waveforms"></svg>
+  <div class="tip" id="tip"></div>
+</div>
+<div class="legend" id="legend"></div>
+<div class="hint">Drag on the chart to zoom into a time range; hover for values. The table below holds the same numbers.</div>
+
+<div class="cards" id="cards"></div>
+<div class="note" id="note"></div>
+
+<h2>All simulated cases for this signal</h2>
+<div class="tablewrap"><table id="tbl"><thead><tr>
+<th>Netlist</th><th>vin_off</th><th>Code</th><th>Ideal gain</th><th>Fitted gain</th><th>Error</th><th>Corr.</th><th>NRMSE</th><th>Out range (V)</th><th>Clipped</th><th>State</th>
+</tr></thead><tbody></tbody></table></div>
+
+<footer>Data: PhysioNet (ODC-By 1.0) &ndash; see <code>docs/biosignal/data/ATTRIBUTION.md</code>. Generated by <code>docs/biosignal/build_report.py</code> from <code>sim/biosignal/results/</code>.</footer>
+</main>
+
+<script>
+const D = /*__DATA__*/null;
+const NETS = {schematic:"Schematic", pex_c:"Layout C", pex_rc:"Layout RC"};
+const NULLS = {schematic:-334.7, pex_c:-903.7, pex_rc:-903.7};
+const S = {sig:"ecg", net:"schematic", off:"null", code:null, view:"split", zoom:null};
+try { new URLSearchParams(location.hash.slice(1)).forEach((v,k) => { if (k in S && D.signals[v] !== undefined || ["net","off","view"].includes(k) || k==="code") S[k] = k==="code" ? +v : v; }); } catch(e) {}
+const $ = id => document.getElementById(id);
+const key = (sig,net,off,code) => `${sig}_${net}_${off}_c${code}`;
+const runOf = k => D.runs.find(r => r.case === k);
+const fmt = (v,d=2) => Number(v).toFixed(d);
+
+function seg(el, items, get, set) {
+  el.innerHTML = "";
+  items.forEach(([v,label]) => {
+    const b = document.createElement("button");
+    b.textContent = label; b.type = "button";
+    b.setAttribute("aria-pressed", String(get() === v));
+    b.onclick = () => { set(v); render(); };
+    el.appendChild(b);
+  });
+}
+function availableCodes() {
+  return D.runs.filter(r => r.signal===S.sig && r.net===S.net && r.offset===S.off).map(r => r.code).sort((a,b)=>a-b);
+}
+function state(r) {
+  if (r.clipped_frac > 0.2) return ["bad","✗ railed"];
+  if (r.clipped_frac > 0.01 || r.corr < 0.95) return ["warn","▲ distorted"];
+  return ["ok","✓ usable"];
+}
+
+function render() {
+  const sigs = Object.keys(D.signals);
+  seg($("sig"), sigs.map(s => [s, s.toUpperCase()]), () => S.sig, v => { S.sig = v; S.zoom = null; S.code = null; });
+  seg($("net"), Object.entries(NETS), () => S.net, v => { S.net = v; S.code = null; });
+  const offs = [...new Set(D.runs.map(r => r.offset))];
+  $("offctl").style.display = offs.length > 1 ? "" : "none";
+  seg($("off"), offs.map(o => [o, o==="null" ? "null" : "none (0)"]), () => S.off, v => { S.off = v; S.code = null; });
+  seg($("view"), [["split","Input / output"],["fit","Output zoomed"],["overlay","Overlay ÷ gain"]], () => S.view, v => { S.view = v; });
+  const codes = availableCodes();
+  if (!codes.length) { S.off = offs[0]; return render(); }
+  if (S.code === null || !codes.includes(S.code)) S.code = codes.includes(D.signals[S.sig].primary) ? D.signals[S.sig].primary : codes[0];
+  const sel = $("code"); sel.innerHTML = "";
+  codes.forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = `${c}  (×${8*2**c}, ${fmt(18.06+6.02*c,1)} dB)`; if (c===S.code) o.selected = true; sel.appendChild(o); });
+  sel.onchange = () => { S.code = +sel.value; render(); };
+  $("offhint").textContent = S.off === "null"
+    ? `vin_off = ${NULLS[S.net]} µV added to VINP: cancels the systematic input offset of the ${S.net==="schematic"?"schematic":"extracted layout"}.`
+    : "vin_off = 0: the chip as built. The input-referred offset (≈0.33 mV schematic, ≈0.9 mV layout) is amplified by the gain and can rail the output.";
+  const k = key(S.sig,S.net,S.off,S.code), r = runOf(k);
+  drawChart(k, r); drawCards(r); drawTable(k);
+}
+
+/* ---------- chart ---------- */
+function nice(lo, hi, n=4) {
+  const span = hi-lo || 1, raw = span/n, p = 10**Math.floor(Math.log10(raw)), f = raw/p;
+  const step = (f<1.5?1:f<3?2:f<7?5:10)*p, out = [];
+  for (let v=Math.ceil(lo/step)*step; v<=hi+1e-9*span; v+=step) out.push(+v.toPrecision(10));
+  return out;
+}
+function drawChart(k, r) {
+  const svg = $("chart"), W = Math.max(320, $("chartbox").clientWidth-16);
+  const sd = D.signals[S.sig], t = sd.t, x = sd.x, y = sd.cases[k];
+  const mean = y.reduce((a,b)=>a+b,0)/y.length;
+  const g = 8*2**S.code;
+  const [t0,t1] = S.zoom || [t[0], t[t.length-1]];
+  const i0 = Math.max(0, t.findIndex(v => v>=t0)), i1 = t.findLastIndex(v => v<=t1);
+  const ML = 58, MR = 12, MT = 10, MB = 28;
+  const panels = S.view !== "overlay"
+    ? [{h:150, name:"in"}, {h:220, name:"out"}] : [{h:300, name:"ov"}];
+  const H = MT + panels.reduce((a,p)=>a+p.h+MB, 0);
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const px = v => ML + (v-t0)/(t1-t0)*(W-ML-MR);
+  let out = "", top = MT;
+  const tt = nice(t0, t1, W>600?8:5);
+  const slice = a => a.slice(i0, i1+1);
+  const path = (arr, py) => { let d=""; for (let i=i0;i<=i1;i++) d += (i===i0?"M":"L")+px(t[i]).toFixed(1)+" "+py(arr[i]).toFixed(1); return d; };
+  const panel = (p, lo, hi, unit, series, refs=[]) => {
+    const py = v => top + p.h - (v-lo)/(hi-lo)*p.h;
+    let s = `<g data-panel="${p.name}">`;
+    nice(lo,hi,4).forEach(v => { s += `<line class="grid" x1="${ML}" x2="${W-MR}" y1="${py(v)}" y2="${py(v)}"/><text x="${ML-6}" y="${py(v)+4}" text-anchor="end">${+v.toFixed(4)}</text>`; });
+    refs.forEach(([v,l]) => { s += `<line class="ref" x1="${ML}" x2="${W-MR}" y1="${py(v)}" y2="${py(v)}"/><text x="${W-MR-2}" y="${py(v)-3}" text-anchor="end">${l}</text>`; });
+    s += `<line class="axis" x1="${ML}" x2="${W-MR}" y1="${top+p.h}" y2="${top+p.h}"/>`;
+    tt.forEach(v => { s += `<text x="${px(v)}" y="${top+p.h+16}" text-anchor="middle">${+v.toFixed(3)}</text>`; });
+    s += `<text x="12" y="${top+p.h/2}" transform="rotate(-90 12 ${top+p.h/2})" text-anchor="middle">${unit}</text>`;
+    series.forEach(([arr,col]) => { s += `<path d="${path(arr,py)}" fill="none" stroke="var(${col})" stroke-width="1.6" stroke-linejoin="round"/>`; });
+    s += "</g>";
+    const res = {s, py, top, h:p.h}; top += p.h + MB; return res;
+  };
+  const rng = a => { const s = slice(a); let lo=Infinity, hi=-Infinity; s.forEach(v => { if(v<lo)lo=v; if(v>hi)hi=v; }); const pad=(hi-lo)*0.08||1; return [lo-pad, hi+pad]; };
+  const P = [];
+  if (S.view !== "overlay") {
+    const [lo,hi] = rng(x);
+    P.push(panel(panels[0], lo, hi, "input, µV (differential)", [[x,"--series-1"]]));
+    let [ylo,yhi] = S.view === "fit" ? rng(y) : [0, 1.2];
+    const refs = [[0.6,"VCM 0.6 V"]];
+    if (0.05 > ylo) refs.push([0.05,"0.05 V"]);
+    if (0.98 < yhi) refs.push([0.98,"0.98 V (VOUT saturates)"]);
+    P.push(panel(panels[1], ylo, yhi, "output VOUT, V", [[y,"--series-2"]], refs));
+    out = P.map(p => p.s).join("");
+  } else {
+    const yin = y.map(v => (v-mean)/g*1e6);
+    const [lo,hi] = rng([...x, ...yin]);
+    P.push(panel(panels[0], lo, hi, "µV at the input", [[x,"--series-1"],[yin,"--series-2"]]));
+    out = P[0].s;
+  }
+  out += `<line id="cur" y1="${MT}" y2="${H-MB}" stroke="var(--text-muted)" stroke-width="1" style="display:none"/><rect id="brush" y="${MT}" height="${H-MT-MB}" fill="var(--series-1)" opacity=".15" style="display:none"/><rect id="hit" x="${ML}" y="${MT}" width="${W-ML-MR}" height="${H-MT-MB}" fill="transparent" style="cursor:crosshair"/>`;
+  svg.innerHTML = out;
+  $("legend").innerHTML = S.view !== "overlay"
+    ? `<span><i style="background:var(--series-1)"></i>input (electrode, differential)</span><span><i style="background:var(--series-2)"></i>VOUT</span>`
+    : `<span><i style="background:var(--series-1)"></i>recorded input</span><span><i style="background:var(--series-2)"></i>(VOUT − mean) ÷ ideal gain ${g}</span>`;
+  /* interaction */
+  const hit = $("hit"), cur = $("cur"), tip = $("tip"), brush = $("brush");
+  const tAt = ev => { const b = svg.getBoundingClientRect(), sx = W/b.width; return t0 + ((ev.clientX-b.left)*sx-ML)/(W-ML-MR)*(t1-t0); };
+  let drag = null;
+  hit.onpointermove = ev => {
+    const tv = Math.min(t1, Math.max(t0, tAt(ev)));
+    let i = i0; { let lo=i0, hi=i1; while(hi-lo>1){ const m=(lo+hi)>>1; (t[m]<tv)?lo=m:hi=m; } i = (tv-t[lo] < t[hi]-tv) ? lo : hi; }
+    cur.setAttribute("x1", px(t[i])); cur.setAttribute("x2", px(t[i])); cur.style.display = "";
+    const b = svg.getBoundingClientRect();
+    tip.innerHTML = `t = ${fmt(t[i],4)} s<br>input ${fmt(x[i],1)} µV<br>VOUT ${fmt(y[i],3)} V`;
+    tip.style.display = "block";
+    const left = (px(t[i])/W)*b.width + 16;
+    tip.style.left = Math.min(left+10, $("chartbox").clientWidth-150) + "px"; tip.style.top = "14px";
+    if (drag !== null) { const a = Math.min(drag, tv), c = Math.max(drag, tv); brush.setAttribute("x", px(a)); brush.setAttribute("width", px(c)-px(a)); brush.style.display = ""; }
+  };
+  hit.onpointerleave = () => { if (drag===null) { cur.style.display = "none"; tip.style.display = "none"; } };
+  hit.onpointerdown = ev => { drag = tAt(ev); hit.setPointerCapture(ev.pointerId); };
+  hit.onpointerup = ev => {
+    const a = drag, c = tAt(ev); drag = null; brush.style.display = "none";
+    if (a !== null && Math.abs(c-a) > (t1-t0)*0.02) { S.zoom = [Math.min(a,c), Math.max(a,c)]; render(); }
+  };
+  hit.ondblclick = () => { S.zoom = null; render(); };
+}
+
+/* ---------- metrics ---------- */
+function drawCards(r) {
+  const [cls, label] = state(r);
+  const c = (k,v,s="") => `<div class="card"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+  $("cards").innerHTML =
+    c("State", `<span class="badge ${cls}">${label}</span>`, `${fmt(r.clipped_frac*100,1)} % of samples outside 0.05–0.98 V`) +
+    c("Fitted gain", `×${fmt(r.gain_eff,0)}`, `ideal ×${r.gain_ideal} (${fmt(r.gain_err_dB,1)} dB)`) +
+    c("Correlation", fmt(r.corr,4), `NRMSE ${fmt(r.nrmse*100,1)} % of the amplified signal`) +
+    c("Input pk-pk", `${fmt(r.vin_pp_uV,0)} µV`, "at the electrodes") +
+    c("Output pk-pk", `${fmt(r.vout_pp_mV,0)} mV`, `VOUT ${fmt(r.vout_min,2)} … ${fmt(r.vout_max,2)} V`) +
+    c("Supply current", `${fmt(r.idd_uA,0)} µA`, `${fmt(r.idd_uA*1.2,0)} µW at 1.2 V`);
+  const n = $("note");
+  if (cls === "bad") n.textContent = S.off === "none"
+    ? "The uncompensated input offset, multiplied by the gain, pushes the output against a rail: the signal is lost. This is why vin_off has to be applied (switch the offset to ‘null’)."
+    : "Even with the offset null the output leaves the usable range at this gain: lower the gain code.";
+  else if (cls === "warn") n.textContent = "Part of the signal is clipped or the waveform is visibly distorted at this gain / offset.";
+  else n.textContent = "VOUT stays inside the output range and follows the recorded waveform.";
+}
+function drawTable(k) {
+  const rows = D.runs.filter(r => r.signal === S.sig).sort((a,b) => (a.code-b.code) || a.net.localeCompare(b.net) || a.offset.localeCompare(b.offset));
+  const tb = document.querySelector("#tbl tbody"); tb.innerHTML = "";
+  rows.forEach(r => {
+    const [cls,label] = state(r), tr = document.createElement("tr");
+    if (r.case === k) tr.className = "sel";
+    tr.tabIndex = 0;
+    tr.innerHTML = `<td>${NETS[r.net]}</td><td>${r.offset==="null"?fmt(r.vin_off_uV,1)+" µV":"0"}</td><td>${r.code}</td><td>${r.gain_ideal}</td><td>${fmt(r.gain_eff,0)}</td><td>${fmt(r.gain_err_dB,1)} dB</td><td>${fmt(r.corr,3)}</td><td>${fmt(r.nrmse*100,1)} %</td><td>${fmt(r.vout_min,2)}–${fmt(r.vout_max,2)}</td><td>${fmt(r.clipped_frac*100,1)} %</td><td><span class="badge ${cls}">${label}</span></td>`;
+    const go = () => { S.net = r.net; S.off = r.offset; S.code = r.code; render(); };
+    tr.onclick = go; tr.onkeydown = e => { if (e.key==="Enter") go(); };
+    tb.appendChild(tr);
+  });
+}
+$("reset").onclick = () => { S.zoom = null; render(); };
+let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(render, 120); });
+render();
+</script>
+</body>
+</html>
