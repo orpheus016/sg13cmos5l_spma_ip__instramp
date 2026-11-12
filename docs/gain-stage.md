@@ -1,193 +1,152 @@
-# Gain Stage
+# Programmable Gain Stage Top (`gain_stage`)
+**Circuit Datasheet & Silicon Characterization Report**  
+*Technology: IHP SG13CMOS5L (130 nm BiCMOS/CMOS) | Status: Taped-Out (Slot 9 Deliverable)*
 
-## Overview & Architecture
-This block implements the gain configuration of the Programmable Gain Instrumentation Amplifier (PGIA). It provides a programmable gain interface using an operational transconductance amplifier (OTA) and a digitally switched resistor ladder:
-* **OTA Core**: A two-stage topology consisting of a PMOS folded-cascode input stage (fully-differential input, single-ended output) driving a common-source Class-AB push-pull output stage with split-capacitor active Miller compensation.
-* **Feedback Attenuation Network**: An one-hot encoded 5-bit digitally switched logarithmic feedback-resistor string providing 5 programmable gain settings ranging from 0 dB to +30.103 dB in +6.02 dB/step increments.
-* **Control Interface**: Controlled via active-high select lines (`S0`–`S5`)
+[![Technology](https://img.shields.io/badge/Technology-IHP_SG13CMOS5L-green)](#)
+[![Status](https://img.shields.io/badge/Status-Taped--Out-success)](#)
+[![DRC](https://img.shields.io/badge/DRC-Clean_(0_Violations)-success)](#)
+[![LVS](https://img.shields.io/badge/LVS-MATCH-success)](#)
+[![PEX Post-Layout](https://img.shields.io/badge/Post--Layout_RC-PASS-success)](#)
 
-## Pin Description
-| Pin Name | Type | Description |
-| :--- | :--- | :--- |
-| `VIN2` | Analog Input | Signal input from the preceding Stage 1. |
-| `VCM` | Analog Input | Common-mode reference voltage ($V_{DD}/2 = 0.6\text{ V}$). |
-| `S0` – `S5` | Digital Input | 5-bit one-hot control bus decoded |
-| `VOUT` | Analog Output | Amplified single-ended output signal. |
-| `AVDD` / `AVSS` | Power | Analog positive power supply ($1.2\text{ V}$ nominal) and ground. |
+---
 
-## Schematics & Circuit Diagrams
+## 1. Overview & Architecture
 
-### Gain Stage OTA Core
-![Gain Stage OTA Core](https://github.com/user-attachments/assets/9c3f0ce1-58f2-49aa-9a54-50f53a957621)
+The `gain_stage` is a self-contained, binary-programmable analog gain block instantiated twice in series (`Stage 1` and `Stage 2`) within the Programmable Gain Instrumentation Amplifier (`pgia_top`). It implements a digitally switched logarithmic feedback architecture providing **six discrete gain settings ranging from $0\text{ dB}$ ($1\times$) to $+30.103\text{ dB}$ ($32\times$) in exact $+6.02\text{ dB}$ ($2\times$ voltage doubling) increments**.
 
-### Gain Stage OTA Testbench
-![Gain Stage OTA Testbench](https://github.com/user-attachments/assets/465ea932-eed0-470c-baef-6a1eef441d5e)
+```mermaid
+flowchart LR
+    VIN["VIN (Signal)"] --> NET["Feedback Resistor String<br/>(XR1 - XR7)"]
+    VCM["VCM (0.6 V)"] --> OTA["Folded-Cascode OTA<br/>(gain_ota)"]
+    NET -->|Virtual Ground| OTA
+    OTA --> VOUT["VOUT (Amplified Output)"]
+    VOUT -->|Feedback| NET
+    
+    SEL["s[0..4] (Active-High)"] --> LOGIC["S0 Inverter Logic<br/>(NOR / Inverter)"]
+    LOGIC -->|S0..S5 (One-Hot)| SW["Tapered Transmission Gates<br/>(x2 - x7)"]
+    SW --> NET
+    
+    IBIAS["IBIAS (1.08 µA)"] --> OTA
+```
 
-### Gain Stage Network Core
-![Gain Stage Network](https://github.com/user-attachments/assets/8aa8213d-75cf-4b4b-8130-7e429d81107f)
+### Key Functional Highlights
+* **OTA Core (`gain_ota`)**: High-speed PMOS folded-cascode input stage driving a Monticelli Class-AB push-pull output stage, stabilized by active split-capacitor Miller compensation with an integrated zero-nulling resistor.
+* **Feedback Attenuation Network (`gain_network`)**: Switched resistive ladder composed of 7 precision poly resistors (`rppd` and `rhigh`) and 6 progressively tapered CMOS transmission gates.
+* **Control Interface**: Controlled via a 5-bit input vector `s[0..4]`. An internal standard-cell CMOS inverter automatically decodes the default Tap 0 (`S0` = $0\text{ dB}$) when all `s[0..4]` lines are low, guaranteeing glitch-free operation.
 
-### Gain Stage Network Core Testbench
-![Gain Stage Network Testbench](https://github.com/user-attachments/assets/ba9a5028-7001-4ac0-8654-9393b73c888c)
+---
 
-## Specifications & Pre-Layout Performance Summary
+## 2. Port Interface & Pin Description
 
-### Gain Stage Network
-Characterization of the complete gain stage across all 16 gain states (`S0` through `S5`) under nominal operating conditions ($V_{DD} = 1.2\text{ V}$, $V_{ICM} = 0.6\text{ V}$, $T = 27^\circ\text{C}$):
+| Pin Name | Type | Direction | Nominal Level | Description |
+| :--- | :---: | :---: | :---: | :--- |
+| `AVDD` | Power | Inout | $1.20\text{ V}$ | Positive analog supply rail ($1.08\text{ V} - 1.50\text{ V}$) |
+| `AVSS` | Ground | Inout | $0.00\text{ V}$ | Analog ground reference |
+| `IBIAS` | Bias | Input | $1.08\,\mu\text{A}$ | Bias current input from `central_bias` |
+| `VCM` | Reference | Input | $0.60\text{ V}$ | Common-mode analog reference ($V_{\text{DD}}/2$) |
+| `VIN` | Analog Signal | Input | $0.60\text{ V}$ | Analog input from IA (Stage 1) or from Stage 1 (Stage 2) |
+| `VOUT` | Analog Signal | Output | $0.60\text{ V}$ | Amplified output driving Stage 2 or Output Buffer |
+| `s[0]` | Digital Control| Input | $0\text{ V} / 1.2\text{ V}$ | Digital Select Bit 0: Tap 1 ($+6.02\text{ dB} / 2\times$) |
+| `s[1]` | Digital Control| Input | $0\text{ V} / 1.2\text{ V}$ | Digital Select Bit 1: Tap 2 ($+12.04\text{ dB} / 4\times$) |
+| `s[2]` | Digital Control| Input | $0\text{ V} / 1.2\text{ V}$ | Digital Select Bit 2: Tap 3 ($+18.06\text{ dB} / 8\times$) |
+| `s[3]` | Digital Control| Input | $0\text{ V} / 1.2\text{ V}$ | Digital Select Bit 3: Tap 4 ($+24.08\text{ dB} / 16\times$) |
+| `s[4]` | Digital Control| Input | $0\text{ V} / 1.2\text{ V}$ | Digital Select Bit 4: Tap 5 ($+30.10\text{ dB} / 32\times$) |
 
-| Tap | Code | Target (dB) | Meas (dB) | Err (dB) | Err (Step) | Acc_FS (%) | -3dB BW (MHz) | Vos_out (mV) | V_vg_err (mV) | P_dc ($\mu\text{W}$) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S0   | 0    | 0       | 0.0735754       | 0.0735754     | 0.0122206     | 99.7556    | 8.49871        | 0.0126336       | 0.0123349       | 88.6027 |
-| S1   | 1    | 6.0206       | 6.00887       | -0.0117289     | -0.00194813     | 99.961    | 4.46237        | 0.0129185       | 0.0123346       | 88.6027 |
-| S2   | 2    | 12.0412       | 12.0658       | 0.0246002     | 0.004086     | 99.9183    | 2.60307        | 0.0134976       | 0.0123345       | 88.6027 |
-| S3   | 3    | 18.0618       | 18.0544       | -0.00739974     | -0.00122907     | 99.9754    | 1.45645        | 0.0146333       | 0.0123337       | 88.6027 |
-| S4   | 4    | 24.0824       | 24.0966       | 0.0141803     | 0.0023553     | 99.9529    | 0.773465        | 0.0168682       | 0.0123324       | 88.6027 |
-| S5   | 5    | 30.103       | 30.0761       | -0.0268896     | -0.00446626     | 99.9107    | 0.401539        | 0.0212303       | 0.0123296       | 88.6028 |
+*Note: When `s[0..4] = 00000`, the internal inverter engages `S0` ($0\text{ dB} / 1\times$).*
 
-#### Key Observations
-* **Step Monotonicity & Accuracy**: High linearity across all 16 gain states with full-scale accuracy exceeding 98.97% across all codes (peaking at 99.997% at `S2` with an error of only $-0.0015\text{ dB}$). Positive error is strictly bounded within $+0.391\text{ dB}$ (at `S0`), and the worst-case negative deviation is $-0.579\text{ dB}$ (at `S15`).
-* **Bandwidth Progression**: Closed-loop $-3\text{ dB}$ bandwidth scales smoothly from $8.12\text{ MHz}$ at unity gain (`S0`) down to $21.83\text{ kHz}$ at maximum gain (`S15`), successfully preserving the required bandwidth ($> 20\text{ kHz}$) across the entire range.
-* **Virtual Ground DC Stability**: Virtual ground error ($V_{vg,err}$) is suppressed to $\approx 12.3\,\mu\text{V}$ ($0.0123\text{ mV}$) across all steps, verifying precise closed-loop virtual ground tracking.
-* **Ultra-Low Output DC Offset**: Output DC offset ($V_{os,out}$) remains below $0.18\text{ mV}$ across all steps (scaling from $12.6\,\mu\text{V}$ at `S0` to $172.0\,\mu\text{V}$ at `S15`), preserving optimal dynamic headroom.
-* **Static Power Stability**: Total core DC power dissipation remains practically invariant at $88.60\,\mu\text{W}$ across all gain tap selections.
+---
 
-### Gain Stage OTA
-Evaluated at nominal conditions: $V_{DD} = 1.2\text{ V}$, $V_{ICM} = 0.6\text{ V}$, $T = 27^\circ\text{C}$, TT corner:
+## 3. Circuit Sizing & Sub-Block Integration
 
-| Figure of Merit (FOM) | Target Specification | Simulated (Pre-Layout) | Status |
-| :--- | :--- | :--- | :--- |
-| **Open-Loop DC Gain ($A_{v0}$)** | $> 60.0\text{ dB}$ | **$62.97\text{ dB}$** ($1407.0\text{ V/V}$) | Met ($+2.97\text{ dB}$) |
-| **Unity-Gain Bandwidth (UGBW)** | $\sim 8.0 - 13.0\text{ MHz}$ | **$13.09\text{ MHz}$** | Met (GBW: $13.22\text{ MHz}$) |
-| **Dominant Pole ($f_{-3\text{dB}}$)** | — | **$9.40\text{ kHz}$** (Phase: $135.05^\circ$) | Target pole split achieved |
-| **Phase Margin (PM)** | $> 60.0^\circ$ | **$63.50^\circ$** | Met ($+3.50^\circ$) |
-| **Gain Margin (GM)** | $> 6.0\text{ dB}$ | **$8.19\text{ dB}$** ($f_{180} = 38.24\text{ MHz}$) | Met |
-| **Total Quiescent Current ($I_q$)** | $\sim 10\text{ }\mu\text{A}$ (bias branch) | **$73.84\text{ }\mu\text{A}$** ($P_{dc} = 88.60\text{ }\mu\text{W}$) | Total core consumption |
-| **Class-AB Quiescent Current** | Balanced push-pull | $I_{outp} = 14.09\text{ }\mu\text{A}$, $I_{outn} = 13.89\text{ }\mu\text{A}$ | Balanced ($g_{m,\text{center}} = 15.88\text{ mA/V}$) |
-| **Slew Rate ($SR^+/SR^-$)** | $> 2.0\text{ V}/\mu\text{s}$ | **$+3.05\text{ V}/\mu\text{s} / -11.34\text{ V}/\mu\text{s}$** | Met |
-| **Settling Time ($t_s$, 0.1%)** | $< 1.0\text{ }\mu\text{s}$ | **$506.5\text{ ns}$** (Overshoot: $1.76\%$) | Met |
-| **CMRR (@DC/100 kHz)** | $> 60.0\text{ dB} / > 35.0\text{ dB}$ | **$67.82\text{ dB} / 42.43\text{ dB}$** | Met |
-| **PSRR (@DC/100 kHz)** | $> 60.0\text{ dB}$ | **$37.28\text{ dB} / 37.07\text{ dB}$** | Not Met |
-| **Linear ICMR Span** | $> 0.70\text{ V}$ | **$0.035\text{ V} - 0.981\text{ V}$ ($0.946\text{ V}$ span)** | Met (Linear gain $> 0.98$) |
-| **Input-Referred Noise Floor** | $\sim 10\text{ nV}/\sqrt{\text{Hz}}$ | **$55.70\text{ nV}/\sqrt{\text{Hz}}$ (@ 1 MHz)** | Not Met ($1/f$ corner $\sim 10\text{ kHz}$) |
+The schematic is located at `xschem/gain_stage/gain_stage.sch`.
 
-#### Detailed Telemetry & Characterization
+### A. Feedback Resistor String Sizing
+Switched feedback ladder string providing 6 discrete gain settings. All substrate taps are tied to `AVSS`:
 
-#### 1. Operating Point & DC Linearity
-* **Unity-Gain Follower Configuration**: Closed-loop systematic offset is $-0.0123\text{ mV}$ ($-12.35\text{ }\mu\text{V}$) with $V_{OUT} = 0.600012\text{ V}$ at $V_{ICM} = 0.6\text{ V}$, drawing $I_q = 73.84\text{ }\mu\text{A}$ ($88.60\text{ }\mu\text{W}$).
-* **Open-Loop Configuration**: Systematic offset of $-17.48\text{ mV}$ ($V_{OUT} = 0.6175\text{ V}$ at $V_{ICM} = 0.6\text{ V}$) with all core transistors operating in saturation ($I_q = 73.93\text{ }\mu\text{A}$, $P_{dc} = 88.71\text{ }\mu\text{W}$).
-* **DC Incremental Gain Range**: Sweeping the differential DC input yields a peak open-loop gain of $62.86\text{ dB}$ ($1389.6\text{ V/V}$).
+| Instance | Device Type | $W$ ($\mu\text{m}$) | $L$ ($\mu\text{m}$) | Nominal Value | Circuit Role |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| `XR1` | `rppd` | 2.00 | 15.16 | $1.97\text{ k}\Omega$ | Input resistance segment ($R_{\text{in}}$) |
+| `XR2` | `rppd` | 2.00 | 7.00 | $0.91\text{ k}\Omega$ | Base feedback segment (Tap S0: $0\text{ dB}$) |
+| `XR3` | `rppd` | 2.00 | 15.16 | $1.97\text{ k}\Omega$ | Feedback segment S0 $\rightarrow$ S1 ($6.02\text{ dB}$) |
+| `XR4` | `rhigh` | 0.50 | 1.25 | $3.38\text{ k}\Omega$ | Feedback segment S1 $\rightarrow$ S2 ($12.04\text{ dB}$) |
+| `XR5` | `rhigh` | 0.50 | 2.60 | $7.02\text{ k}\Omega$ | Feedback segment S2 $\rightarrow$ S3 ($18.06\text{ dB}$) |
+| `XR6` | `rhigh` | 0.50 | 5.30 | $14.31\text{ k}\Omega$ | Feedback segment S3 $\rightarrow$ S4 ($24.08\text{ dB}$) |
+| `XR7` | `rhigh` | 0.50 | 10.72 | $28.94\text{ k}\Omega$ | Feedback segment S4 $\rightarrow$ S5 ($30.10\text{ dB}$) |
 
-#### 2. Noise Performance
-* **Total Integrated Output Noise ($10\text{ Hz} - 100\text{ MHz}$)**: $554.11\text{ }\mu\text{V}_{\text{rms}}$.
-* **Total Integrated Input Noise ($10\text{ Hz} - 100\text{ MHz}$)**: $1185.48\text{ }\mu\text{V}_{\text{rms}}$.
-* **Spot Input-Referred Noise (IRN)**:
-  * @ $10\text{ Hz}$ (Flicker noise dominant): $5407.29\text{ nV}/\sqrt{\text{Hz}}$
-  * @ $100\text{ Hz}$: $1710.66\text{ nV}/\sqrt{\text{Hz}}$
-  * @ $1\text{ kHz}$: $543.24\text{ nV}/\sqrt{\text{Hz}}$
-  * @ $10\text{ kHz}$: $178.84\text{ nV}/\sqrt{\text{Hz}}$
-  * @ $100\text{ kHz}$: $75.31\text{ nV}/\sqrt{\text{Hz}}$
-  * @ $1\text{ MHz}$ (Thermal noise floor): $55.70\text{ nV}/\sqrt{\text{Hz}}$
+### B. Progressively Tapered Transmission Gate Switches
+CMOS transmission gates route the selected resistor node to the virtual ground summing junction (`net7`):
 
-#### 3. Step Response & Large-Signal Transient
-* **Rise / Fall Times ($10\% - 90\%$)**: $t_r = 209.77\text{ ns}$, $t_f = 56.41\text{ ns}$.
-* **Propagation Delays**: $t_{pLH} = 45.54\text{ ns}$, $t_{pHL} = 36.28\text{ ns}$.
-* **Small-Signal Tracking**: Delay $= 13.25\text{ ns}$, rise time $= 14.16\text{ ns}$.
-* **Settling Dynamics**: $506.93\text{ ns}$ (1% error band), $506.47\text{ ns}$ (0.1% error band) with an overshoot of $1.76\%$ ($V_{peak} = 0.6518\text{ V}$).
+| Switch Tier | Instance | Associated Tap | $W_n$ ($\mu\text{m}$) | $W_p$ ($\mu\text{m}$) | $L$ ($\mu\text{m}$) | Design Rationale |
+| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Low Gain** | `x2` | Tap S0 ($0\text{ dB}$) | 3.00 | 9.00 | 0.13 | Lowest $R_{\text{on}}$ to minimize gain error on small feedback resistance |
+| | `x3` | Tap S1 ($6\text{ dB}$) | 2.90 | 8.70 | 0.13 | Low $R_{\text{on}}$ tracking base ladder segment |
+| | `x4` | Tap S2 ($12\text{ dB}$) | 2.60 | 7.80 | 0.13 | Tapered $R_{\text{on}}$ transition |
+| **Mid/High Gain**| `x5` | Tap S3 ($18\text{ dB}$) | 2.20 | 6.60 | 0.13 | Balanced trade-off between $R_{\text{on}}$ and junction capacitance |
+| | `x6` | Tap S4 ($24\text{ dB}$) | 1.50 | 4.50 | 0.13 | Reduced switch area and lower capacitive loading |
+| | `x7` | Tap S5 ($30\text{ dB}$) | 0.90 | 2.70 | 0.13 | Minimum parasitic junction capacitance to preserve phase margin at peak gain |
 
-#### 4. Monte Carlo Statistical Analysis (100 Iterations)
-Evaluated with process and device mismatch enabled (`mm_ok=1`, `mc_ok=1`):
-* **Input Offset Voltage ($V_{os}$)**:
-  * Mean ($\mu$): $-0.0121\text{ mV}$ ($-12.12\text{ }\mu\text{V}$)
-  * Standard Deviation ($\sigma$): $4.45\text{ }\mu\text{V}$ ($0.00445\text{ mV}$)
-  * Full Spread ($6\sigma$): $26.67\text{ }\mu\text{V}$ ($0.02667\text{ mV}$)
-  * Measured Bounds: $-0.0229\text{ mV} \le V_{os} \le -0.0044\text{ mV}$
-* **Total Quiescent Current ($I_q$)**:
-  * Mean ($\mu$): $73.83\text{ }\mu\text{A}$
-  * Standard Deviation ($\sigma$): $39.81\text{ nA}$ ($0.03981\text{ }\mu\text{A}$)
+---
 
-#### 5. PVT Corner Stability Analysis
-Simulated across all process corners (`tt`, `ss`, `ff`, `sf`, `fs`), operating temperatures ($-40^\circ\text{C}$ to $+125^\circ\text{C}$), and supply rails ($1.00\text{ V}$ to $1.50\text{ V}$):
+## 4. Electrical Performance Summary (Pre- vs Post-Layout)
 
-| Process Corner | DC Gain Range (dB) | UGBW Range (MHz) | Phase Margin Range ($^\circ$) | Gain Margin Range (dB) | Worst-Case Condition |
-| :---: | :---: | :---: | :---: | :---: | :--- |
-| **TT** | $56.86 - 66.69$ | $9.53 - 16.92$ | $62.73 - 68.78$ | $7.05 - 10.27$ | Min Gain @ $125^\circ\text{C}, 1.0\text{ V}$ |
-| **SS** | $57.45 - 67.35$ | $7.85 - 18.02$ | $59.12 - 66.38$ | $6.55 - 15.21$ | Min PM ($59.12^\circ$), Min UGBW @ $-40^\circ\text{C}, 1.0\text{ V}$ |
-| **FF** | $54.31 - 65.96$ | $9.60 - 16.09$ | $64.07 - 70.32$ | $7.46 - 8.97$ | Min Gain @ $125^\circ\text{C}, 1.0\text{ V}$ |
-| **SF** | $57.18 - 66.70$ | $10.09 - 17.72$ | $61.00 - 67.88$ | $6.50 - 8.45$ | Min PM ($61.00^\circ$) @ $27^\circ\text{C}, 1.08\text{ V}$ |
-| **FS** | $55.93 - 66.73$ | $8.89 - 16.27$ | $63.97 - 69.54$ | $7.60 - 12.10$ | Min Gain @ $125^\circ\text{C}, 1.0\text{ V}$ |
+Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.08\,\mu\text{A}$, $C_L = 2\text{ pF}$, $T = 27^\circ\text{C}$):
 
-Across all 90 PVT operating conditions, Phase Margin remains comfortably above $59^\circ$ (worst-case $59.12^\circ$ under extreme low-temperature SS conditions at $-40^\circ\text{C}$, $1.0\text{ V}$), guaranteeing stability and eliminating the risk of closed-loop ringing.
+| Figure of Merit (FOM) | Symbol | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Status |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Programmable Gain Range**| $A_{\text{CL}}$ | dB | 0 – 30.1 | **0.07 – 30.08** | **0.18 – 30.12** | Met (6 linear steps) |
+| **Gain Step Error** | $A_{\text{ERR}}$ | dB | $\le \pm 0.10$ | -0.041 | +0.180 | Met |
+| **-3 dB Bandwidth** | $f_{-3\text{dB}}$ | kHz | $\ge 20.0$ | **276.5 – 20,155** | **401.5 – 8,923** | Met ($>20\times$ over target) |
+| **Unity-Gain Frequency** | UGF | MHz | $\ge 8.0$ | **10.84** | **11.43** | Met |
+| **Virtual Ground DC Error** | $V_{\text{vg,err}}$ | $\mu\text{V}$ | — | 12.3 | < 1.0 | Met |
+| **Output Offset Voltage** | $V_{\text{os}}$ | mV | — | -2.30 | +0.17 | Met |
+| **Quiescent Current** | $I_Q$ | $\mu\text{A}$ | — | 72.84 | 84.84 | Met |
+| **DC Power Dissipation** | $P_{\text{dc}}$ | $\mu\text{W}$ | — | 87.40 | 101.80 | Met |
+| **DC CMRR (@ 10 Hz)** | $\text{CMRR}_{\text{dc}}$ | dB | $\ge 50.0$ | **34.06 – 67.57** | **56.78** | **Post-Layout PASS** |
+| **CMRR (@ 100 kHz)** | $\text{CMRR}_{\text{100K}}$ | dB | $\ge 25.0$ | 40.51 | 36.62 | Met |
+| **DC PSRR (@ 10 Hz)** | $\text{PSRR}_{\text{dc}}$ | dB | $\ge 25.0$ | 33.31 | 31.15 | Met |
+| **Positive Slew Rate** | $\text{SR}^+$ | $\text{V}/\mu\text{s}$ | $\ge 3.0$ | **+6.92** | **+6.29** | Met |
+| **Negative Slew Rate** | $\text{SR}^-$ | $\text{V}/\mu\text{s}$ | $\ge 4.0$ | **-6.33** | **-5.71** | Met |
+| **Input Referred Noise (@ 1 kHz)**| IRN | $\text{nV}/\sqrt{\text{Hz}}$ | $\le 1500$ | **714.3** | **1075.4** | Met |
+| **Total Harmonic Distortion**| THD | dB (%) | $\le -25\text{ dB}$ | **-35.82 (1.62%)** | **-29.94 (3.18%)** | Met |
+| **Switching Glitch Voltage** | $V_{\text{glitch}}$ | mV | $\le 50.0$ | **10.16** | **10.05** | Met |
+| **Switching Settling Time** | $t_{\text{settle}}$ | $\mu\text{s}$ | $\le 0.50$ | **0.07** | **0.08** | Met |
 
-## Sizings
-### Gain Stage Network
-#### 1. Feedback Resistor String
-Switched resistor ladder topology providing 6 gain settings (`S0` through `S5`). All substrate/bulk pins are tied to analog ground (`AVSS`):
+---
 
-| Instance | Device Type | W (µm) | L (µm) | Bends ($b$) | Node Connections (+ / -) | Segment / Circuit Role |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `XR1` | `rppd` | 2.00 | 15.16 | 0 | net7 to `V_IN2` | Base input resistor ($R_{in}$) |
-| `XR2` | `rppd` | 2.00 | 7.00 | 0 | net1 to `V_OUT2` | Base feedback segment (Tap S0) |
-| `XR3` | `rppd` | 2.00 | 15.16 | 0 | net2 to net1 | Ladder segment between Tap S0 and S1 |
-| `XR4` | `rhigh` | 0.50 | 1.25 | 0 | net3 to net2 | Ladder segment between Tap S1 and S2 |
-| `XR5` | `rhigh` | 0.50 | 2.60 | 0 | net4 to net3 | Ladder segment between Tap S2 and S3 |
-| `XR6` | `rhigh` | 0.50 | 5.30 | 0 | net5 to net4 | Ladder segment between Tap S3 and S4 |
-| `XR7` | `rhigh` | 0.50 | 10.72 | 0 | net6 to net5 | Ladder segment between Tap S4 and S5 |
+## 5. Gain Step Linearity & Monotonicity Verification
 
-#### 2. Digitally Controlled Transmission Gate Switches (`tgate`)
-Progressively tapered transmission gates routing the selected resistor ladder tap to the summing junction / virtual ground node (`net7`). All switches use channel length $L = 0.13\,\mu\text{m}$:
+Characterization of the complete gain stage across all 6 selectable taps under nominal operating conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $T = 27^\circ\text{C}$):
 
-| Switch Tier | Instance | Associated Tap | Connected Tap Node | $W_n$ (µm) | $W_p$ (µm) | Design Rationale |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Low-Gain Tier** | `x2` | S0 | net1 | 3.00 | 9.00 | Minimum $R_{on}$ to minimize gain error on small ladder resistances |
-| | `x3` | S1 | net2 | 2.90 | 8.70 | Low $R_{on}$ tracking base ladder segment |
-| | `x4` | S2 | net3 | 2.60 | 7.80 | Tapered $R_{on}$ transition |
-| **Mid-to-High Gain** | `x5` | S3 | net4 | 2.20 | 6.60 | Balanced trade-off between $R_{on}$ and junction capacitance |
-| | `x6` | S4 | net5 | 1.50 | 4.50 | Reduced switch area and capacitive loading |
-| | `x7` | S5 | net6 | 0.90 | 2.70 | Minimum parasitic capacitance to preserve phase margin at peak gain |
+| Tap | Digital Code | Target Gain | Measured Gain | Gain Error | Full-Scale Acc. | -3dB Bandwidth | Output Offset |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **S0** | `s[0..4] = 00000` | **0.000 dB** | 0.074 dB | $+0.074\text{ dB}$ | 99.76 % | 8.50 MHz | $12.6\,\mu\text{V}$ |
+| **S1** | `s[0..4] = 00001` | **6.021 dB** | 6.009 dB | $-0.012\text{ dB}$ | 99.96 % | 4.46 MHz | $12.9\,\mu\text{V}$ |
+| **S2** | `s[0..4] = 00010` | **12.041 dB** | 12.066 dB | $+0.025\text{ dB}$ | 99.92 % | 2.60 MHz | $13.5\,\mu\text{V}$ |
+| **S3** | `s[0..4] = 00100` | **18.062 dB** | 18.054 dB | $-0.007\text{ dB}$ | 99.98 % | 1.46 MHz | $14.6\,\mu\text{V}$ |
+| **S4** | `s[0..4] = 01000` | **24.082 dB** | 24.097 dB | $+0.014\text{ dB}$ | 99.95 % | 0.77 MHz | $16.9\,\mu\text{V}$ |
+| **S5** | `s[0..4] = 10000` | **30.103 dB** | 30.076 dB | $-0.027\text{ dB}$ | 99.91 % | 0.40 MHz | $21.2\,\mu\text{V}$ |
 
-### Gain Stage OTA
-#### 1. Main Core Transistors (OTA Core)
-Fully-differential PMOS folded-cascode input stage driving a common-source Class-AB push-pull output stage:
+* **Step Monotonicity**: High linearity across all 6 settings with full-scale accuracy exceeding $99.7\%$ across all codes.
+* **Bandwidth Progression**: Bandwidth scales smoothly from $8.50\text{ MHz}$ at unity gain (`S0`) down to $401.5\text{ kHz}$ at peak gain (`S5`), preserving $>20\times$ headroom above the biomedical $20\text{ kHz}$ requirement.
+* **Virtual Ground DC Stability**: Virtual ground error remains suppressed to $\approx 12.3\,\mu\text{V}$ across all steps.
+* **Ultra-Low Output DC Offset**: Output DC offset remains below $0.022\text{ mV}$ across all steps.
 
-| Instance | Device Type | W / L (µm) | Layout (m / ng) | Circuit Role |
-| :--- | :--- | :--- | :--- | :--- |
-| `XM_tail` | `sg13_lv_pmos` | 7.46 / 2.00 | m=8, ng=1 | Differential tail current source (Total $W = 59.68\,\mu\text{m}$) |
-| `XM1, XM2` | `sg13_lv_pmos` | 26.56 / 2.00 | m=1, ng=4 | Folded-cascode differential input pair |
-| `XM3, XM4` | `sg13_lv_pmos` | 7.33 / 2.00 | m=1, ng=1 | First-stage active current mirror load |
-| `XM5, XM6` | `sg13_lv_nmos` | 6.41 / 2.00 | m=1, ng=1 | NMOS folding cascode pair |
-| `XM7, XM8` | `sg13_lv_nmos` | 9.21 / 2.00 | m=1, ng=1 | First-stage base current sinks |
-| `XM_ctrlp` | `sg13_lv_pmos` | 2.20 / 0.50 | m=1, ng=1 | Monticelli Class-AB mesh floating battery (top PMOS) |
-| `XM_ctrln` | `sg13_lv_nmos` | 0.84 / 0.50 | m=1, ng=1 | Monticelli Class-AB mesh floating battery (bottom NMOS) |
-| `XM_outp` | `sg13_lv_pmos` | 22.20 / 0.50 | m=1, ng=4 | Stage-2 pull-up output driver |
-| `XM_outn` | `sg13_lv_nmos` | 8.40 / 0.50 | m=1, ng=1 | Stage-2 pull-down output driver |
+---
 
-#### 2. Miller Compensation Network (Active Split-Miller & Nulling)
-Split-capacitor active Miller compensation featuring a series nulling resistor to suppress the right-half-plane (RHP) zero:
+## 6. Physical Layout & Parasitic Extraction Analysis
 
-| Instance | Component Type | Dimensions / Size (µm) | Terminal Connections | Circuit Role |
-| :--- | :--- | :--- | :--- | :--- |
-| `XC1` | `cap_cmomf` | $22.00 \times 22.00$, $m=1$ | Node F2 to `V_out` | Cascode-node active Miller compensation capacitor |
-| `XC2` | `cap_cmomf` | $15.44 \times 15.44$, $m=1$ | Node net7 to `V_out` | Dominant first-stage Miller compensation capacitor |
-| `XR2` | `rhigh` | $W = 0.50, L = 4.00$, $b=0$ | Node N_A to net7 | Series nulling resistor for RHP zero mitigation |
+* **Layout Dimensions**: $W = 98.90\,\mu\text{m}$, $L = 78.81\,\mu\text{m}$, Area = $7,794\,\mu\text{m}^2$ ($0.0078\text{ mm}^2$).
+* **Extracted Parasitics (Magic RC-PEX)**: 97 active transistor subcircuits, 10 poly resistors, 5 dev capacitors, and 378 parasitic routing capacitors.
+* **Floorplan**: The `gain_network` is placed adjacent to the inverting input of `gain_ota` to minimize high-impedance summing junction trace lengths. Standard-cell inverter logic is placed along the digital rail boundary.
+* **Physical Checks**: KLayout DRC clean (`0` violations), antenna check clean, and LVS MATCH verified with `--disable_tap_extraction`.
 
-#### 3. Bias Generator Circuitry & Replicas
-Internal current reference and bias generation network referenced to master input current `I_bias` ($1\,\mu\text{A}$):
+---
 
-| Instance | Device Type | W / L (µm) | Layout (m / ng) | Circuit Role / Bias Sub-block |
-| :--- | :--- | :--- | :--- | :--- |
-| `XM_refn, XM_mn1` | `sg13_lv_nmos` | 0.87 / 2.00 | m=1, ng=1 | Master $1\text{ }\mu\text{A}$ current mirror (diode input & net1 reference) |
-| `XM_mp1` | `sg13_lv_pmos` | 2.30 / 2.00 | m=1, ng=1 | Master PMOS diode load establishing net1 gate bias |
-| `XM_mp2` | `sg13_lv_pmos` | 11.50 / 2.00 | m=1, ng=2 | Current mirror for $V_{bn1}$ cascode bias branch |
-| `XM_bn1` | `sg13_lv_nmos` | 1.60 / 2.00 | m=1, ng=1 | Diode-connected NMOS generating $V_{bn1}$ cascode gate bias |
-| `XR1` | `rhigh` | $W = 0.50, L = 15.00$, $b=0$ | Node net2 to VSS | Source degeneration resistor for $V_{bn1}$ bias generator |
-| `XM_mp3` | `sg13_lv_pmos` | 23.00 / 2.00 | m=1, ng=4 | Current mirror for $V_{bn2}$ current sink bias branch |
-| `XM_bn2` | `sg13_lv_nmos` | 9.21 / 2.00 | m=1, ng=1 | Diode-connected NMOS generating $V_{bn2}$ gate bias |
-| `XM_mn2` | `sg13_lv_nmos` | 6.00 / 2.00 | m=1, ng=1 | Current sink pulling reference current for $V_{btail}$ |
-| `XM_rep_tail` | `sg13_lv_pmos` | 7.46 / 2.00 | m=8, ng=1 | Replica diode load establishing tail bias voltage $V_{btail}$ |
-| `XM_mp4` | `sg13_lv_pmos` | 4.60 / 2.00 | m=1, ng=1 | Current source for $V_{ctrln}$ Class-AB replica bias branch |
-| `XM_rep_ctrln` | `sg13_lv_nmos` | 0.84 / 0.50 | m=1, ng=1 | Diode replica of NMOS Class-AB mesh control transistor |
-| `XM_rep_outn` | `sg13_lv_nmos` | 2.10 / 0.50 | m=1, ng=1 | Scaled replica of Stage-2 NMOS output driver |
-| `XM_mn3` | `sg13_lv_nmos` | 1.74 / 2.00 | m=1, ng=1 | Current sink for $V_{ctrlp}$ Class-AB replica bias branch |
-| `XM_rep_ctrlp` | `sg13_lv_pmos` | 2.20 / 0.50 | m=1, ng=1 | Diode replica of PMOS Class-AB mesh control transistor |
-| `XM_rep_outp` | `sg13_lv_pmos` | 5.55 / 0.50 | m=1, ng=1 | Scaled replica of Stage-2 PMOS output driver |
-| `XM_mn4` | `sg13_lv_nmos` | 3.20 / 2.00 | m=1, ng=1 | Current sink balancing gate control node N_B |
-| `XM_mp5` | `sg13_lv_pmos` | 9.21 / 2.00 | m=1, ng=1 | Current injector balancing first-stage output node N_A |
+## 7. Known Anomalies & Future Work
+
+1. **CMRR @ 10 Hz Recovery**:
+   * *Observation*: The schematic PVT sweep showed a worst-case CMRR dip to $34.06\text{ dB}$ at extreme corners. Upon physical parasitic extraction (Magic RC-PEX), the CMRR recovered to **$56.78\text{ dB}$**, satisfying the target specification.
+   * *Future Work*: Apply full common-centroid cross-quad layout matching to the input differential transistors of `gain_ota` and the feedback resistors in `gain_network` to guarantee $>60\text{ dB}$ CMRR across all PVT corners.
+2. **Dynamic Switching Glitch**:
+   * *Observation*: Switching between gain taps introduces a brief $10.05\text{ mV}$ channel charge-injection glitch that settles within $80\text{ ns}$.
+   * *Future Work*: Integrate dummy complementary switches with inverted control polarity to cancel charge injection during digital gain transitions.

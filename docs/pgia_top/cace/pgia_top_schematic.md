@@ -5,12 +5,12 @@
 
 |      Parameter       |         Tool         |     Result      | Min Limit  |  Min Value   | Typ Target |  Typ Value   | Max Limit  |  Max Value   |  Status  |
 | :------------------- | :------------------- | :-------------- | ---------: | -----------: | ---------: | -----------: | ---------: | -----------: | :------: |
-| Closed-loop gain @1 kHz | ngspice              | A_CL                 |             any | -157.273 dB |     18.06 dB |  28.225 dB |          any |  77.375 dB |   Pass ✅    |
-| Gain step error vs target | ngspice              | A_ERR                |             any | -235.541 dB |          any |  -3.185 dB |          any |  23.554 dB |   Pass ✅    |
-| -3 dB bandwidth      | ngspice              | F3DB                 |         1000 Hz | 1421.280 Hz |          any | 212798.500 Hz |          any | 44479600.000 Hz |   Pass ✅    |
-| 0 dB frequency       | ngspice              | F0DB                 |             any | 4883.770 Hz |          any | 2894975.000 Hz |          any | 10000000.000 Hz |   Pass ✅    |
-| Phase @1 kHz         | ngspice              | PH_1K                |             any | -179.920 ° |          any |   -0.378 ° |          any |  179.972 ° |   Pass ✅    |
-| Input pseudo-resistor | ngspice              | R_PSEUDO             |          1 GOhm | 3.563 GOhm |      15 GOhm | 13.573 GOhm |          any | 43.802 GOhm |   Pass ✅    |
+| Closed-loop gain @1 kHz | ngspice              | A_CL                 |             any |          ​ |     18.06 dB |          ​ |          any |          ​ |  Cancel 🟧   |
+| Gain step error vs target | ngspice              | A_ERR                |             any |          ​ |          any |          ​ |          any |          ​ |  Cancel 🟧   |
+| -3 dB bandwidth      | ngspice              | F3DB                 |         1000 Hz |          ​ |          any |          ​ |          any |          ​ |  Cancel 🟧   |
+| 0 dB frequency       | ngspice              | F0DB                 |             any |          ​ |          any |          ​ |          any |          ​ |  Cancel 🟧   |
+| Phase @1 kHz         | ngspice              | PH_1K                |             any |          ​ |          any |          ​ |          any |          ​ |  Cancel 🟧   |
+| Input pseudo-resistor | ngspice              | R_PSEUDO             |          1 GOhm |          ​ |      15 GOhm |          ​ |          any |          ​ |  Cancel 🟧   |
 | Output offset voltage | ngspice              | VOS                  |             any |   0.026 mV |      1.08 mV |  80.184 mV |          any | 661.207 mV |   Pass ✅    |
 | IA output DC voltage | ngspice              | V_IA                 |             any |    0.593 V |        0.6 V |    0.601 V |          any |    0.610 V |   Pass ✅    |
 | Stage 1 output DC voltage | ngspice              | V_ST1                |             any |    0.273 V |        0.6 V |    0.597 V |          any |    1.070 V |   Pass ✅    |
@@ -25,22 +25,6 @@
 
 
 ## Plots
-
-## ac_gain_A_CL_vs_temperature
-
-![ac_gain_A_CL_vs_temperature](./pgia_top/schematic/ac_gain_A_CL_vs_temperature.png)
-
-## ac_gain_F3DB_vs_temperature
-
-![ac_gain_F3DB_vs_temperature](./pgia_top/schematic/ac_gain_F3DB_vs_temperature.png)
-
-## ac_gain_A_CL_vs_gain_code
-
-![ac_gain_A_CL_vs_gain_code](./pgia_top/schematic/ac_gain_A_CL_vs_gain_code.png)
-
-## ac_gain_R_PSEUDO_vs_temperature
-
-![ac_gain_R_PSEUDO_vs_temperature](./pgia_top/schematic/ac_gain_R_PSEUDO_vs_temperature.png)
 
 ## dc_op_VOS_vs_temperature
 

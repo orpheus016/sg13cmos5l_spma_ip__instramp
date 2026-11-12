@@ -1,7 +1,7 @@
 # pgia_top - CACE characterisation
 
-- Generated: 2026-11-05 21:37 by `scripts/make_readme.py` from `runs/RUN_2026-11-05_21-15-09`
-- Commit: `a3285dc` (working tree dirty)
+- Generated: 2026-11-11 09:44 by `scripts/make_readme.py` from `runs/RUN_2026-11-11_09-15-49`
+- Commit: `67b5a07` (working tree dirty)
 - Netlist source: schematic; datasheet: `cace/pgia_top.yaml`; reproduce with `scripts/run_cace.sh pgia_top`
 - Sections marked *(CACE)* are written by CACE itself, the rest by this script (CACE has no per-corner MC statistics, worst-case conditions or unit-scaled spread plots).
 
@@ -177,12 +177,12 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 
 |      Parameter       |         Tool         |     Result      | Min Limit  |  Min Value   | Typ Target |  Typ Value   | Max Limit  |  Max Value   |  Status  |
 | :------------------- | :------------------- | :-------------- | ---------: | -----------: | ---------: | -----------: | ---------: | -----------: | :------: |
-| Closed-loop gain @1 kHz | ngspice              | A_CL                 |             any | -157.273 dB |     18.06 dB |  28.225 dB |          any |  77.375 dB |   Pass ✅    |
-| Gain step error vs target | ngspice              | A_ERR                |             any | -235.541 dB |          any |  -3.185 dB |          any |  23.554 dB |   Pass ✅    |
-| -3 dB bandwidth      | ngspice              | F3DB                 |         1000 Hz | 1421.280 Hz |          any | 212798.500 Hz |          any | 44479600.000 Hz |   Pass ✅    |
-| 0 dB frequency       | ngspice              | F0DB                 |             any | 4883.770 Hz |          any | 2894975.000 Hz |          any | 10000000.000 Hz |   Pass ✅    |
-| Phase @1 kHz         | ngspice              | PH_1K                |             any | -179.920 ° |          any |   -0.378 ° |          any |  179.972 ° |   Pass ✅    |
-| Input pseudo-resistor | ngspice              | R_PSEUDO             |          1 GOhm | 3.563 GOhm |      15 GOhm | 13.573 GOhm |          any | 43.802 GOhm |   Pass ✅    |
+| Closed-loop gain @1 kHz | ngspice              | A_CL                 |             any |           |     18.06 dB |           |          any |           |  Cancel 🟧   |
+| Gain step error vs target | ngspice              | A_ERR                |             any |           |          any |           |          any |           |  Cancel 🟧   |
+| -3 dB bandwidth      | ngspice              | F3DB                 |         1000 Hz |           |          any |           |          any |           |  Cancel 🟧   |
+| 0 dB frequency       | ngspice              | F0DB                 |             any |           |          any |           |          any |           |  Cancel 🟧   |
+| Phase @1 kHz         | ngspice              | PH_1K                |             any |           |          any |           |          any |           |  Cancel 🟧   |
+| Input pseudo-resistor | ngspice              | R_PSEUDO             |          1 GOhm |           |      15 GOhm |           |          any |           |  Cancel 🟧   |
 | Output offset voltage | ngspice              | VOS                  |             any |   0.026 mV |      1.08 mV |  80.184 mV |          any | 661.207 mV |   Pass ✅    |
 | IA output DC voltage | ngspice              | V_IA                 |             any |    0.593 V |        0.6 V |    0.601 V |          any |    0.610 V |   Pass ✅    |
 | Stage 1 output DC voltage | ngspice              | V_ST1                |             any |    0.273 V |        0.6 V |    0.597 V |          any |    1.070 V |   Pass ✅    |
@@ -199,22 +199,6 @@ min / typ / max over all conditions of a parameter; Monte Carlo parameters (`mc_
 
 ### Plots *(CACE)*
 
-
-#### ac_gain_A_CL_vs_temperature
-
-![ac_gain_A_CL_vs_temperature](./pgia_top/schematic/ac_gain_A_CL_vs_temperature.png)
-
-#### ac_gain_F3DB_vs_temperature
-
-![ac_gain_F3DB_vs_temperature](./pgia_top/schematic/ac_gain_F3DB_vs_temperature.png)
-
-#### ac_gain_A_CL_vs_gain_code
-
-![ac_gain_A_CL_vs_gain_code](./pgia_top/schematic/ac_gain_A_CL_vs_gain_code.png)
-
-#### ac_gain_R_PSEUDO_vs_temperature
-
-![ac_gain_R_PSEUDO_vs_temperature](./pgia_top/schematic/ac_gain_R_PSEUDO_vs_temperature.png)
 
 #### dc_op_VOS_vs_temperature
 
@@ -243,7 +227,7 @@ Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the dis
 
 ### ac_gain - Closed-loop AC gain & bandwidth
 
-1620 runs.
+1423 runs.
 
 | metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
 |---|---|---|---|---|---|---|
@@ -251,7 +235,7 @@ Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the dis
 | A_ERR [dB] | -235.5 | fs, 1.5 V, -40 C | 23.55 | ss, 1.08 V, -40 C | any | - |
 | F3DB [Hz] | 1421 | fs, 1.08 V, -40 C | 4.448e+07 | ss, 1.5 V, 85 C | >= 1000 | 0 |
 | F0DB [Hz] | 4884 | ff, 1.08 V, 27 C | 1e+07 | ss, 1.08 V, -40 C | any | - |
-| PH_1K [°] | -179.9 | ss, 1.5 V, 85 C | 180 | sf, 1.2 V, 27 C | any | - |
+| PH_1K [°] | -179.4 | ff, 1.5 V, 85 C | 180 | sf, 1.2 V, 27 C | any | - |
 | R_PSEUDO [GOhm] | 3.563 | ff, 1.08 V, 85 C | 43.8 | ss, 1.5 V, -40 C | >= 1 | 0 |
 
 
@@ -278,8 +262,8 @@ Corners tt/ss/ff/sf/fs, supply and temperature as in the yaml. Values in the dis
 
 | metric | min | at (corner, vdd, T) | max | at (corner, vdd, T) | spec | fails |
 |---|---|---|---|---|---|---|
-| VPP_OUT [mV] | 1.543e-06 | tt, 1.2 V, 27 C | 544.8 | tt, 1.2 V, 27 C | any | - |
-| EFF_GAIN [V/V] | 3.857e-05 | tt, 1.2 V, 27 C | 1.362e+04 | tt, 1.2 V, 27 C | any | - |
+| VPP_OUT [mV] | 7.253e-07 | tt, 1.2 V, 27 C | 544.8 | tt, 1.2 V, 27 C | any | - |
+| EFF_GAIN [V/V] | 1.813e-05 | tt, 1.2 V, 27 C | 1.362e+04 | tt, 1.2 V, 27 C | any | - |
 
 
 ## Monte Carlo (local mismatch)

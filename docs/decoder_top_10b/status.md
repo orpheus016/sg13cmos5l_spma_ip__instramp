@@ -1,4 +1,6 @@
-# decoder_top_10b: flow status
+# decoder_top_10b: flow status (DEPRECATED)
+
+> **Notice: Deprecated Cell.** This 10-bit standard-cell digital decoder was used in early prototypes and has been superseded by `gain_decoder_4b`. It is not instantiated in `pgia_top`.
 
 `scripts/flow.sh decoder_top_10b` at 2026-11-04T05:16:50 (commit 0f10340, profile typ)
 

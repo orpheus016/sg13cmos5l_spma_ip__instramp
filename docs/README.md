@@ -1,20 +1,61 @@
-# Documentation index
+# Documentation Index & Developer Portal
 
-| Doc | What |
-|---|---|
-| [gain-stage.md](gain-stage.md) | Gain stage notes |
-| [ota_cmos5l/cace/README.md](ota_cmos5l/cace/README.md) | **Generated** CACE report of the OTA (do not edit by hand) |
-| [cace_ci/STATUS.md](cace_ci/STATUS.md) | CACE / CI roadmap: what is done, what is not |
-| [cace_ci/phase-1-ota-local.md](cace_ci/phase-1-ota-local.md) | Notes and gotchas collected while building the OTA flow |
-| [cace_ci/00_overview.md](cace_ci/00_overview.md) | CACE / CI architecture overview |
-| [LVS guide](#lvs-guide-klayout) (below) | Layout vs schematic with KLayout: GUI loop, `scripts/run_lvs.sh`, pitfalls |
-| [lvs_upstream_issues.md](lvs_upstream_issues.md) | Draft IHP-Open-PDK issues for the MoM-cap LVS limitations (not posted) |
-| [Build everything](#build-everything-one-command-for-the-whole-repository) (below) | `scripts/build_all.sh`: registry, `slot_9.gds` for the Chipalooza harness, every cell's flow, LVS canary, pictures, HTML reports, one summary |
-| [Flow guide](#flow-guide-one-command-per-cell) (below) | `scripts/flow.sh <cell>`: schematic CACE -> DRC/antenna -> LVS -> PEX -> post-layout CACE -> comparison for every cell, manual steps, new cells, interactive report |
-| [Pictures](#f5-pictures-schematic-and-layout-of-every-cell) (Flow guide F5) | `scripts/update_images.py`: circuit-only schematics and layout renderings, auto-updated in the READMEs and `report.html` |
-| [roadmap.md](roadmap.md) | Optimisation (C/ID), ALIGN, ANN and topology-recommendation: feasibility and order of work |
-| [Post-layout guide](#post-layout-simulation-guide-pex--cace) (below) | LVS-clean layout -> PEX -> CACE on the extracted netlist -> schematic vs post-layout report |
-| [gain_ota/pex_rc_changelog.md](gain_ota/pex_rc_changelog.md) | Changelog & troubleshooting: PEX RC extraction & post-layout fixes for gain_ota |
+Welcome to the technical documentation and developer reference portal for the **Programmable Gain Instrumentation Amplifier (PGIA)** IP designed on **IHP SG13CMOS5L**.
+
+---
+
+## 1. System & Sub-Block Documentation Map
+
+| Category | Document / Report | Description & Key Results |
+|---|---|---|
+| **System & Tapeout** | [slot9_wrapper Datasheet](slot9_wrapper.md) \| [Status](slot9_wrapper/status.md) | Chipalooza Challenge #2 Slot 9 harness deliverable (`gds/slot_9.gds`). Clean DRC, LVS, and harness trial. |
+| | [pgia_top Datasheet](pgia_top.md) \| [Status](pgia_top/status.md) | Monolithic core PGIA mixed-signal macro datasheet and physical flow status. |
+| | [pgia_top CACE Datasheet](pgia_top/cace/README.md) | Full pre-layout characterization datasheet and pin descriptions. |
+| | [pgia_top Gain Code Table](pgia_top/cace/gain_codes.md) | Comprehensive 11-step gain analysis (18 dB to 78 dB) across schematic, C-PEX, and RC-PEX. |
+| | [Top-Level Post-Layout C](pgia_top/cace/postlayout.md) \| [RC](pgia_top/cace/postlayout_rc.md) | Comparison of typical parameters between schematic and extracted parasitics. |
+| | [Build Summary](build_summary.md) | Automated multi-cell build log and execution summary (`scripts/build_all.sh`). |
+| | [Interactive Dashboard](index.html) | Standalone interactive dashboard rendering status for all repository cells. |
+| **Real Biosignal Demo** | [Biosignal Study README](biosignal/README.md) | Realistic verification with PhysioNet EEG, EMG, and ECG recordings through `slot9_wrapper`. |
+| | [Interactive Biosignal Viewer](biosignal/report.html) | Self-contained HTML interactive report with interactive waveform zooming and code switching. |
+| | [Biosignal Data Attribution](biosignal/data/ATTRIBUTION.md) | Citations, licenses, and preprocessing scripts for physiological datasets. |
+| **Front-End Amplification**| [instramp_cmos5l Datasheet](instramp_cmos5l.md) | Comprehensive circuit datasheet for 3-OTA IA ($8\times$, $18.06\text{ dB}$, $>10\text{ G}\Omega$ pseudo-resistors). |
+| | [instramp_cmos5l CACE](instramp_cmos5l/cace/README.md) \| [RC](instramp_cmos5l/cace/postlayout_rc.md) | CACE automated characterization and post-layout RC comparison. |
+| | [ota_cmos5l Datasheet](ota_cmos5l.md) | Comprehensive circuit datasheet for Two-stage Miller OTA ($A_{v0} \approx 57.8\text{ dB}$, $\text{PM} \approx 60.8^\circ$). |
+| | [ota_cmos5l CACE](ota_cmos5l/cace/README.md) \| [RC](ota_cmos5l/cace/postlayout_rc.md) | CACE automated characterization and post-layout RC comparison. |
+| **Programmable Gain Stages**| [gain-stage.md](gain-stage.md) | Comprehensive engineering whitepaper and datasheet for the binary programmable gain stage (`gain_stage`). |
+| | [gain_stage CACE](gain_stage/cace/README.md) \| [RC](gain_stage/cace/postlayout_rc.md) | Full CACE datasheet for the 6-tap binary gain stage ($0\text{ dB}$ to $+30.1\text{ dB}$ in $6\text{ dB}$ steps). |
+| | [gain_network Datasheet](gain_network.md) | Comprehensive circuit datasheet for switched feedback resistor ladder and tapered CMOS switches. |
+| | [gain_network CACE](gain_network/cace/README.md) \| [RC](gain_network/cace/postlayout_rc.md) | CACE automated characterization and post-layout RC comparison. |
+| | [gain_ota Datasheet](gain_ota.md) | Comprehensive circuit datasheet for PMOS folded-cascode Class-AB push-pull OTA ($A_{v0} \approx 63\text{ dB}$, $\text{PM} \approx 63.5^\circ$, $\text{GBW} \approx 13.1\text{ MHz}$). |
+| | [gain_ota CACE](gain_ota/cace/README.md) \| [RC](gain_ota/cace/postlayout_rc.md) | CACE automated characterization and post-layout RC comparison. |
+| | [gain_ota PEX RC Changelog](gain_ota/pex_rc_changelog.md) | Engineering changelog and troubleshooting notes for `gain_ota` extraction fixes. |
+| **Peripherals & Support** | [central_bias Datasheet](central_bias.md) \| [CACE](central_bias/cace/README.md) | Master bias current distribution (1 pin $1.0\,\mu\text{A}$ in $\rightarrow$ 4 scaled internal currents). |
+| | [gain_decoder_4b Datasheet](gain_decoder_4b.md) | 4-bit static combinational gain decoder mapping 11 gain steps (with safe clamping). |
+| | [output_buffer Datasheet](output_buffer.md) | Comprehensive circuit datasheet for unity-gain buffer follower driving off-chip loads. |
+| | [output_buffer Status](output_buffer/status.md) | Physical verification and flow execution status for `output_buffer`. |
+| **Guides & Infrastructure** | [CACE Guide](#cace-guide) | Workflow for automated analog characterization, PVT corner generation, and Monte Carlo. |
+| | [LVS Guide](#lvs-guide-klayout) | Layout versus schematic validation loop using KLayout and Netgen. |
+| | [Repository Build Guide](#build-everything-one-command-for-the-whole-repository) | Single-command end-to-end repository pipeline (`scripts/build_all.sh`). |
+| | [Cell Flow Guide](#flow-guide-one-command-per-cell) | Per-cell automated flow tool (`scripts/flow.sh <cell>`). |
+| | [Post-Layout Simulation Guide](#post-layout-simulation-guide-pex--cace) | Extraction via kpex/Magic and post-layout verification via ngspice. |
+| | [lvs_upstream_issues.md](lvs_upstream_issues.md) | Draft PDK issue notes regarding MoM capacitor LVS limitations. |
+| | [roadmap.md](roadmap.md) | Optimization (gm/ID), ALIGN, and machine-learning assisted analog sizing roadmap. |
+| **Legacy / Archived** | [decoder_top_10b Status](decoder_top_10b/status.md) | Legacy 10-bit decoder from early prototype (replaced by `gain_decoder_4b`; DRC deprecated). |
+| | [dec2to4 Status](dec2to4/status.md) / [dec4to16](dec4to16/report.html) | Early standalone decoder sub-blocks. |
+| | [coarse_gain](coarse_gain/media/) / [fine_gain](fine_gain/media/) | Legacy architecture building blocks (superseded by cascaded `gain_stage`). |
+
+---
+
+## 2. Technical Notes on Verification & Silicon Quirks
+
+### A. CMRR at 10 Hz on `gain_network` & `gain_stage`
+* In the schematic CACE PVT corner evaluation, the low-frequency CMRR of `gain_network` and `gain_stage` fell below the $50\text{ dB}$ specification limit at extreme corners ($34.06\text{ dB}$ worst-case; typical $58.6\text{ dB}$), resulting in a `FAIL` status in CACE.
+* **Post-Layout Recovery**: Once parasitic extraction (PEX C and RC) was performed, interconnect routing capacitances helped dampen common-mode imbalances, lifting the post-layout CMRR to **$62.7\text{ dB}$ (C)** and **$64.6\text{ dB}$ (RC)** for `gain_network`, and **$63.2\text{ dB}$ (C)** and **$56.8\text{ dB}$ (RC)** for `gain_stage`. Both fully satisfy the design target in actual layout.
+
+### B. Systematic Input Offset and DC Compensation
+* Due to asymmetric loading and layout extraction parasitics, `pgia_top` exhibits an input-referred systematic DC offset ($\approx 0.33\text{ mV}$ in schematic, $\approx 0.90\text{ mV}$ in extracted layout).
+* At the highest gain steps (Codes 8 to 10: $2048\times$ to $8192\times$), this offset is multiplied through Stage 1 and Stage 2, which drives the uncompensated output into rail saturation ($\sim 0.99\text{ V}$).
+* When nulling the offset via an intentional DC stimulus ($v_{\text{in,off}} = -334.7\,\mu\text{V}$ for schematic, $-903.7\,\mu\text{V}$ for extracted layout), the entire gain ladder operates linearly with excellent frequency response and dynamic range. Future silicon revisions will integrate on-chip auto-zeroing or chopping.
 
 ---
 
