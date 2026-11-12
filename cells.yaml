@@ -37,17 +37,6 @@ output_buffer:
   stages: [drc, audit, lvs]
   lvs_args: [--ignore_top_ports_mismatch]   # sub-cell pin labels appear as extra aliases on internal nets; nets/devices are compared in full
   note: no CACE datasheet yet (python3 scripts/new_cell.py output_buffer)
-decoder_top_10b:
-  title: Decoder
-  gds: gds/pgia_top/decoder_top_10b.gds
-  sch: xschem/decoder_top_10b/decoder_top_10b.sch
-  stages: []
-  note: "LEGACY 10-bit decoder, replaced by gain_decoder_4b (not used by pgia_top); its DRC fails (19 items, e.g. FORB.Metal5) so it is not checked. Was digital (standard cells, librelane flow in xschem/decoder_top_10b/librelane); LVS and timing belong to that flow"
-dec2to4:
-  gds: xschem/dec2to4/dec2to4.gds
-  sch: xschem/dec2to4/dec2to4.sch
-  stages: [drc]
-  note: digital building block
 pgia_top:
   title: Top-Level
   top: pgia_top
@@ -107,23 +96,7 @@ gain_stage:
   stages: [cace, drc, audit, lvs, pex, post]
   lvs_args: [--disable_tap_extraction]
   note: Binary programmable gain stage with standard-cell S0 decoding and 6-tap binary feedback network
-fine_driver_6b:
-  sch: xschem/fine_driver_6b/fine_driver_6b.sch
-  stages: []
-  note: schematic only so far
-dec4to16:
-  sch: xschem/dec4to16/dec4to16.sch
-  stages: []
-  note: digital building block (4-to-16 thermometer decoder)
 tgate:
   sch: xschem/tgate/tgate.sch
   stages: []
   note: transmission gate
-inv:
-  sch: xschem/inv/inv.sch
-  stages: []
-  note: inverter
-ota_5t:
-  sch: xschem/ota_5t/ota_5t.sch
-  stages: []
-  note: five-transistor OTA (early experiment)
