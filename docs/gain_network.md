@@ -17,7 +17,7 @@ The `gain_network` is a precision switched feedback attenuation network engineer
 ### Key Architectural Attributes
 * **Switched Resistor String**: A non-inverting resistive feedback ladder comprising 7 precision poly resistors (`XR1` through `XR7`).
 * **Progressively Tapered Transmission Gates**: Six CMOS transmission gates (`x2` through `x7`) controlled by active-high select lines (`S0` to `S5`).
-* **Integrated Biasing Pass-Through**: Forwards the master reference bias current `I_BIAS` ($1.0\,\mu\text{A}$) directly to the internal `gain_ota`.
+* **Integrated Biasing Pass-Through**: Forwards the master reference bias current `I_BIAS` ($1.0\text{ }\mu\text{A}$) directly to the internal `gain_ota`.
 * **Zero DC Static Logic Dissipation**: Switch gate drives are generated directly from the digital domain (`VPWR`/`VGND`) via local inversion.
 
 ---
@@ -28,7 +28,7 @@ The `gain_network` is a precision switched feedback attenuation network engineer
 | :--- | :---: | :---: | :---: | :--- |
 | `AVDD` | Power | Inout | $1.20\text{ V}$ | Positive analog supply rail ($1.08\text{ V} - 1.50\text{ V}$) |
 | `AVSS` | Ground | Inout | $0.00\text{ V}$ | Analog ground reference |
-| `I_BIAS` | Bias | Input | $1.00\,\mu\text{A}$ | Bias current input from `central_bias` |
+| `I_BIAS` | Bias | Input | $1.00\text{ }\mu\text{A}$ | Bias current input from `central_bias` |
 | `V_CM` | Reference | Input | $0.60\text{ V}$ | Common-mode analog voltage reference ($V_{\text{DD}}/2$) |
 | `V_IN2` | Analog Signal | Input | $0.60\text{ V}$ | Signal input from preceding stage (IA or Stage 1) |
 | `V_OUT2` | Analog Signal | Output | $0.60\text{ V}$ | Amplified output driving next stage or output buffer |
@@ -46,7 +46,7 @@ The `gain_network` is a precision switched feedback attenuation network engineer
 The schematic is located at `xschem/gain_network/gain_network.sch`.
 
 ### A. Feedback Resistor String
-The feedback string is partitioned across low-sheet resistance poly (`rppd`, $\rho \approx 260\,\Omega/\square$) for low-noise low-resistance segments and high-sheet resistance poly (`rhigh`, $\rho \approx 1350\,\Omega/\square$) for high-value taps:
+The feedback string is partitioned across low-sheet resistance poly (`rppd`, $\rho \approx 260\text{ }\Omega/\square$) for low-noise low-resistance segments and high-sheet resistance poly (`rhigh`, $\rho \approx 1350\text{ }\Omega/\square$) for high-value taps:
 
 | Instance | Device Type | $W$ ($\mu\text{m}$) | $L$ ($\mu\text{m}$) | Nominal Resistance | Terminals (+ / -) | Functional Role |
 | :--- | :---: | :---: | :---: | :---: | :--- | :--- |
@@ -70,11 +70,24 @@ To balance switch on-resistance ($R_{\text{on}}$) against parasitic junction cap
 | `x6` | `S4` | `net5` (24 dB) | 1.50 | 4.50 | 0.13 | Reduced switch area and lower capacitive loading |
 | `x7` | `S5` | `net6` (30 dB) | 0.90 | 2.70 | 0.13 | Minimum parasitic junction capacitance to preserve phase margin at peak gain |
 
+### C. Standalone Unit Transmission Gate (`tgate`) Characterization
+The analog switches are implemented using the complementary CMOS transmission gate primitive (`tgate.sch` / `tgate.sym`):
+* **Transistor Sizing**:
+  - NMOS switch (`M1`): `sg13_lv_nmos`, $W = 1.0\text{ }\mu\text{m}$, $L = 0.13\text{ }\mu\text{m}$, substrate tied to `AVSS` ($0\text{ V}$).
+  - PMOS switch (`M2`): `sg13_lv_pmos`, $W = 2.5\text{ }\mu\text{m}$, $L = 0.13\text{ }\mu\text{m}$, substrate tied to `AVDD` ($1.2\text{ V}$).
+* **Subcircuit Interface**: `.subckt tgate IN AVSS AVDD EN ENB OUT`
+* **On-Resistance ($R_{\text{on}}$) Profile ($0\text{ V} \dots 1.2\text{ V}$)**:
+  - $R_{\text{on,min}}$ (Low rail, $V_{\text{in}} = 0.0\text{ V}$): $\approx 700\text{ }\Omega$ ($V_{GS} = 1.2\text{ V}$, NMOS fully in triode).
+  - $R_{\text{on,min}}$ (High rail, $V_{\text{in}} = 1.2\text{ V}$): $\approx 800\text{ }\Omega$ ($|V_{GS}| = 1.2\text{ V}$, PMOS fully in triode).
+  - $R_{\text{on,max}}$ (Mid-rail peak, $V_{\text{in}} \approx 0.56\text{ V}$): $\approx 4.6\text{ k}\Omega$ (reduced gate overdrive and body effect on both FETs).
+* **Critical Bulk Bias Rule**:
+  - The transmission gates use $1.2\text{ V}$ thin-oxide devices (`sg13_lv_*`). PMOS bulks must be strictly biased to `AVDD` ($1.2\text{ V}$) rather than higher supply rails ($3.3\text{ V}$), avoiding severe threshold shift ($V_{BS} > 2.5\text{ V}$) and breakdown risks.
+
 ---
 
 ## 4. Electrical Performance Summary (Pre- vs Post-Layout)
 
-Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.0\,\mu\text{A}$, $C_L = 2\text{ pF}$, $T = 27^\circ\text{C}$):
+Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.0\text{ }\mu\text{A}$, $C_L = 2\text{ pF}$, $T = 27^\circ\text{C}$):
 
 | Figure of Merit (FOM) | Symbol | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -101,12 +114,12 @@ Measured across all six discrete states (`S0` through `S5`) at nominal condition
 
 | Tap Line | Digital State | Target (dB) | Measured (dB) | Gain Step Error | Full-Scale Acc. | -3dB Bandwidth | Output Offset |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **`S0`** | `000001` | **0.000 dB** | 0.074 dB | $+0.074\text{ dB}$ | 99.76 % | 8.50 MHz | $12.6\,\mu\text{V}$ |
-| **`S1`** | `000010` | **6.021 dB** | 6.009 dB | $-0.012\text{ dB}$ | 99.96 % | 4.46 MHz | $12.9\,\mu\text{V}$ |
-| **`S2`** | `000100` | **12.041 dB** | 12.066 dB | $+0.025\text{ dB}$ | 99.92 % | 2.60 MHz | $13.5\,\mu\text{V}$ |
-| **`S3`** | `001000` | **18.062 dB** | 18.054 dB | $-0.007\text{ dB}$ | 99.98 % | 1.46 MHz | $14.6\,\mu\text{V}$ |
-| **`S4`** | `010000` | **24.082 dB** | 24.097 dB | $+0.014\text{ dB}$ | 99.95 % | 0.77 MHz | $16.9\,\mu\text{V}$ |
-| **`S5`** | `100000` | **30.103 dB** | 30.076 dB | $-0.027\text{ dB}$ | 99.91 % | 0.40 MHz | $21.2\,\mu\text{V}$ |
+| **`S0`** | `000001` | **0.000 dB** | 0.074 dB | $+0.074\text{ dB}$ | 99.76 % | 8.50 MHz | $12.6\text{ }\mu\text{V}$ |
+| **`S1`** | `000010` | **6.021 dB** | 6.009 dB | $-0.012\text{ dB}$ | 99.96 % | 4.46 MHz | $12.9\text{ }\mu\text{V}$ |
+| **`S2`** | `000100` | **12.041 dB** | 12.066 dB | $+0.025\text{ dB}$ | 99.92 % | 2.60 MHz | $13.5\text{ }\mu\text{V}$ |
+| **`S3`** | `001000` | **18.062 dB** | 18.054 dB | $-0.007\text{ dB}$ | 99.98 % | 1.46 MHz | $14.6\text{ }\mu\text{V}$ |
+| **`S4`** | `010000` | **24.082 dB** | 24.097 dB | $+0.014\text{ dB}$ | 99.95 % | 0.77 MHz | $16.9\text{ }\mu\text{V}$ |
+| **`S5`** | `100000` | **30.103 dB** | 30.076 dB | $-0.027\text{ dB}$ | 99.91 % | 0.40 MHz | $21.2\text{ }\mu\text{V}$ |
 
 * **Accuracy**: Monotonicity is verified across all taps, with worst-case gain deviation strictly bounded within $\pm 0.074\text{ dB}$ (full-scale accuracy $>99.7\%$).
 * **Bandwidth Scaling**: $-3\text{ dB}$ bandwidth scales smoothly from $8.50\text{ MHz}$ at unity gain (`S0`) down to $401.5\text{ kHz}$ at peak gain (`S5`), exceeding the $20\text{ kHz}$ biomedical bandwidth specification by $>20\times$.
@@ -115,7 +128,7 @@ Measured across all six discrete states (`S0` through `S5`) at nominal condition
 
 ## 6. Physical Layout & Parasitic Extraction Analysis
 
-* **Layout Dimensions**: $W = 97.45\,\mu\text{m}$, $L = 76.13\,\mu\text{m}$, Area = $7,419\,\mu\text{m}^2$.
+* **Layout Dimensions**: $W = 97.45\text{ }\mu\text{m}$, $L = 76.13\text{ }\mu\text{m}$, Area = $7,419\text{ }\mu\text{m}^2$.
 * **Extracted Parasitics (Magic RC-PEX)**: 81 active transistor subcircuits, 10 poly resistors, 5 dev capacitors, and 350 parasitic routing capacitors.
 * **Layout Design**: Resistor string is arranged in folded segments with dummy poly strips to prevent edge over-etching. The transmission gates are placed immediately adjacent to the ladder tap nodes to minimize routing capacitance into the summing junction.
 * **Physical Checks**: KLayout DRC clean (`0` violations), antenna check clean, and LVS MATCH verified with `--disable_tap_extraction`.

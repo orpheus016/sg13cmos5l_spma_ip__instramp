@@ -13,7 +13,7 @@
 
 ## 1. Overview & Circuit Function
 
-The `central_bias` block is the dedicated on-chip master current distribution network for `pgia_top`. It receives a single master reference current ($1.00\,\mu\text{A}$ nominal) from the external chip harness pad `ibias0` (`IBIAS_IA`) and mirrors it into four precisely ratioed, independent bias branches tailored to the specific operating points of the sub-blocks.
+The `central_bias` block is the dedicated on-chip master current distribution network for `pgia_top`. It receives a single master reference current ($1.00\text{ }\mu\text{A}$ nominal) from the external chip harness pad `ibias0` (`IBIAS_IA`) and mirrors it into four precisely ratioed, independent bias branches tailored to the specific operating points of the sub-blocks.
 
 ```mermaid
 flowchart LR
@@ -47,17 +47,17 @@ flowchart LR
 | :--- | :---: | :---: | :---: | :--- |
 | `AVDD` | Power | Inout | $1.20\text{ V}$ | Positive analog supply rail ($1.08\text{ V} - 1.50\text{ V}$) |
 | `AVSS` | Ground | Inout | $0.00\text{ V}$ | Analog ground reference |
-| `IB_IN` | Bias Input | Input | $1.00\,\mu\text{A}$ | Master reference current sourced into cell from pad `ibias0` |
-| `IB_IA` | Bias Output | Output (Sink)| $4.40\,\mu\text{A}$ | Current sink output to `instramp_cmos5l` (3 OTAs) |
-| `IB_BUF` | Bias Output | Output (Sink)| $1.47\,\mu\text{A}$ | Current sink output to `output_buffer` (1 OTA) |
-| `IB_G1` | Bias Output | Output (Source)| $1.08\,\mu\text{A}$ | Current source output to Gain Stage 1 (`gain_ota`) |
-| `IB_G2` | Bias Output | Output (Source)| $1.08\,\mu\text{A}$ | Current source output to Gain Stage 2 (`gain_ota`) |
+| `IB_IN` | Bias Input | Input | $1.00\text{ }\mu\text{A}$ | Master reference current sourced into cell from pad `ibias0` |
+| `IB_IA` | Bias Output | Output (Sink)| $4.40\text{ }\mu\text{A}$ | Current sink output to `instramp_cmos5l` (3 OTAs) |
+| `IB_BUF` | Bias Output | Output (Sink)| $1.47\text{ }\mu\text{A}$ | Current sink output to `output_buffer` (1 OTA) |
+| `IB_G1` | Bias Output | Output (Source)| $1.08\text{ }\mu\text{A}$ | Current source output to Gain Stage 1 (`gain_ota`) |
+| `IB_G2` | Bias Output | Output (Source)| $1.08\text{ }\mu\text{A}$ | Current source output to Gain Stage 2 (`gain_ota`) |
 
 ---
 
 ## 3. Circuit Sizing & Transistor Level Architecture
 
-The schematic is located at `xschem/central_bias/central_bias.sch`. All devices use unit transistors with channel length $L = 2.00\,\mu\text{m}$ to ensure high output impedance and immunity to channel-length modulation:
+The schematic is located at `xschem/central_bias/central_bias.sch`. All devices use unit transistors with channel length $L = 2.00\text{ }\mu\text{m}$ to ensure high output impedance and immunity to channel-length modulation:
 
 | Device Instance | Type | $W / L$ ($\mu\text{m}$) | Multiplier ($m$) | Drain Net | Circuit Function |
 | :--- | :---: | :---: | :---: | :---: | :--- |
@@ -73,7 +73,7 @@ The schematic is located at `xschem/central_bias/central_bias.sch`. All devices 
 
 ## 4. Electrical Performance Summary (Pre- vs Post-Layout)
 
-Characterization results across nominal conditions ($V_{\text{AVDD}} = 1.2\text{ V}$, $V_{\text{AVSS}} = 0\text{ V}$, $I_{\text{IN}} = 1.00\,\mu\text{A}$, $T = 27^\circ\text{C}$):
+Characterization results across nominal conditions ($V_{\text{AVDD}} = 1.2\text{ V}$, $V_{\text{AVSS}} = 0\text{ V}$, $I_{\text{IN}} = 1.00\text{ }\mu\text{A}$, $T = 27^\circ\text{C}$):
 
 | Figure of Merit (FOM) | Parameter | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Delta (%) | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -94,19 +94,19 @@ Characterization results across nominal conditions ($V_{\text{AVDD}} = 1.2\text{
 ## 5. Input Dynamic Operating Window
 
 Verified using automated regression script `scripts/verify_central_bias.py`:
-* **Recommended Harness Input Current**: $0.70\,\mu\text{A} \le I_{\text{bias0}} \le 1.30\,\mu\text{A}$ (Nominal $1.00\,\mu\text{A}$).
-* **At $I_{\text{bias0}} = 0.70\,\mu\text{A}$**: Total chip dissipation drops to $208\,\mu\text{W}$, with all 11 PGIA gain codes tracking within $0.25\text{ dB}$.
-* **At $I_{\text{bias0}} = 1.30\,\mu\text{A}$**: Total chip dissipation is $342\,\mu\text{W}$, with all gain codes tracking within $0.35\text{ dB}$.
-* **Upper Bound Constraint**: Above $1.50\,\mu\text{A}$ ($>384\,\mu\text{W}$), the gain stage OTAs encounter output swing headroom limitations at peak gain (Codes 9–10). Hence, $1.00\,\mu\text{A}$ represents the optimal trade-off between noise floor, bandwidth, and linearity.
+* **Recommended Harness Input Current**: $0.70\text{ }\mu\text{A} \le I_{\text{bias0}} \le 1.30\text{ }\mu\text{A}$ (Nominal $1.00\text{ }\mu\text{A}$).
+* **At $I_{\text{bias0}} = 0.70\text{ }\mu\text{A}$**: Total chip dissipation drops to $208\text{ }\mu\text{W}$, with all 11 PGIA gain codes tracking within $0.25\text{ dB}$.
+* **At $I_{\text{bias0}} = 1.30\text{ }\mu\text{A}$**: Total chip dissipation is $342\text{ }\mu\text{W}$, with all gain codes tracking within $0.35\text{ dB}$.
+* **Upper Bound Constraint**: Above $1.50\text{ }\mu\text{A}$ ($>384\text{ }\mu\text{W}$), the gain stage OTAs encounter output swing headroom limitations at peak gain (Codes 9–10). Hence, $1.00\text{ }\mu\text{A}$ represents the optimal trade-off between noise floor, bandwidth, and linearity.
 
 ---
 
 ## 6. Physical Layout & Parasitic Verification
 
-* **Layout Dimensions**: $W = 99.68\,\mu\text{m}$, $L = 26.34\,\mu\text{m}$, Area = $2,626\,\mu\text{m}^2$ ($0.0026\text{ mm}^2$).
+* **Layout Dimensions**: $W = 99.68\text{ }\mu\text{m}$, $L = 26.34\text{ }\mu\text{m}$, Area = $2,626\text{ }\mu\text{m}^2$ ($0.0026\text{ mm}^2$).
 * **Physical Checks**: KLayout DRC clean (`0` violations), antenna check clean, and LVS MATCH verified with `--ignore_top_ports_mismatch`.
 * **Substrate & Well Isolation**: NMOS transistors sit within a continuous p-tap ring tied to `AVSS`; PMOS transistors reside in a dedicated N-well surrounded by an n-tap ring tied to `AVDD`.
-* **Floorplan Placement**: Positioned at coordinates $(x=215.3\,\mu\text{m}, y=110.5\,\mu\text{m})$ in `pgia_top`, physically isolated from the noisy digital routing channels of `gain_decoder_4b`.
+* **Floorplan Placement**: Positioned at coordinates $(x=215.3\text{ }\mu\text{m}, y=110.5\text{ }\mu\text{m})$ in `pgia_top`, physically isolated from the noisy digital routing channels of `gain_decoder_4b`.
 
 ---
 

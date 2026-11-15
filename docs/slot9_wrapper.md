@@ -45,7 +45,7 @@ flowchart TD
         P_VCM -->|VCM| ST2
         
         IA --> ST1 --> ST2 --> BUF -->|VOUT| P_OUT
-        P_DIG -->|gain_sel[3:0]| DEC
+        P_DIG -->|"gain_sel[3:0]"| DEC
         DEC --> ST1
         DEC --> ST2
         
@@ -58,7 +58,7 @@ flowchart TD
 ```
 
 ### Key Integration Highlights
-* **Standardized Slot Frame**: Fits the fixed dimensions of Slot 9 ($W = 537.15\,\mu\text{m}$, $H = 273.00\,\mu\text{m}$, Area $= 146,641.9\,\mu\text{m}^2 = 0.147\text{ mm}^2$).
+* **Standardized Slot Frame**: Fits the fixed dimensions of Slot 9 ($W = 537.15\text{ }\mu\text{m}$, $H = 273.00\text{ }\mu\text{m}$, Area $= 146,641.9\text{ }\mu\text{m}^2 = 0.147\text{ mm}^2$).
 * **Automated Deliverable Generation**: Synthesized and verified through `scripts/export_slot_gds.py`, producing `gds/slot_9.gds` (top cell `slot_9`, 4.01 MB, SHA-1 `2fd1189d348a`).
 * **Clean Physical Verification**: 100% clean under both cell-level and harness-level monolithic DRC (`feol`, `beol`, `conn_drc`, `wedge`), full Netgen LVS MATCH, and successful round-trip placement via Magic in `scripts/harness_trial.sh`.
 * **Complete Real-World Biosignal Provenance**: Validated with recorded PhysioNet human EEG, EMG, and ECG waveforms through post-layout RC parasitics with $>0.999$ correlation.
@@ -74,7 +74,7 @@ The Chipalooza Slot 9 boundary exposes dedicated analog, digital, and power pads
 | `s9_an_0_esd` | `VINP` | Analog | Input | $0.60\text{ V} \pm 20\text{ mV}$ | Non-inverting differential biosignal input. Routed to primary ESD cell. |
 | `s9_an_1_esd` | `VINN` | Analog | Input | $0.60\text{ V} \pm 20\text{ mV}$ | Inverting differential biosignal input. Routed to primary ESD cell. |
 | `vbias` | `VCM` | Analog Ref | Input | $0.60\text{ V}$ | Common-mode input/output reference voltage ($V_{\text{DD}}/2$). |
-| `ibias0` | `IBIAS_IA` | Analog Bias | Input | $1.00\,\mu\text{A}$ (in) | Master reference bias current sourced from chip harness into `central_bias`. |
+| `ibias0` | `IBIAS_IA` | Analog Bias | Input | $1.00\text{ }\mu\text{A}$ (in) | Master reference bias current sourced from chip harness into `central_bias`. |
 | `dig_in[0]` | `gain_sel[0]` | Digital | Input | $0.0\text{ V} / 1.2\text{ V}$ | Digital gain control bit 0 (LSB). Internal CMOS input. |
 | `dig_in[1]` | `gain_sel[1]` | Digital | Input | $0.0\text{ V} / 1.2\text{ V}$ | Digital gain control bit 1. Internal CMOS input. |
 | `dig_in[2]` | `gain_sel[2]` | Digital | Input | $0.0\text{ V} / 1.2\text{ V}$ | Digital gain control bit 2. Internal CMOS input. |
@@ -114,11 +114,11 @@ The physical floorplan is optimized to isolate sensitive low-noise analog input 
 ```
 
 ### Physical Dimensions & Metrics
-* **Total Slot Bounding Box**: $537.15\,\mu\text{m} \times 273.00\,\mu\text{m}$.
-* **Slot Footprint Area**: $146,641.9\,\mu\text{m}^2 \approx 0.147\text{ mm}^2$.
-* **Core Active Area (`pgia_top`)**: $514.60\,\mu\text{m} \times 250.00\,\mu\text{m} = 128,650\,\mu\text{m}^2 \approx 0.129\text{ mm}^2$ (Silicon utilization: $87.7\%$).
+* **Total Slot Bounding Box**: $537.15\text{ }\mu\text{m} \times 273.00\text{ }\mu\text{m}$.
+* **Slot Footprint Area**: $146,641.9\text{ }\mu\text{m}^2 \approx 0.147\text{ mm}^2$.
+* **Core Active Area (`pgia_top`)**: $514.60\text{ }\mu\text{m} \times 250.00\text{ }\mu\text{m} = 128,650\text{ }\mu\text{m}^2 \approx 0.129\text{ mm}^2$ (Silicon utilization: $87.7\%$).
 * **Guard Rings & Isolation**: Dual guard rings (p-tap to `AVSS`, n-well tie to `AVDD`) encircle the analog front-end.
-* **Latch-Up Prevention**: Substrate tap audit (`scripts/tap_audit.py`) confirms that all active diffusion regions lie well within the maximum $20\,\mu\text{m}$ tie distance (140 n-tie and 93 p-tie polygons; 44 baseline-accepted abutment sites; 0 violations).
+* **Latch-Up Prevention**: Substrate tap audit (`scripts/tap_audit.py`) confirms that all active diffusion regions lie well within the maximum $20\text{ }\mu\text{m}$ tie distance (140 n-tie and 93 p-tie polygons; 44 baseline-accepted abutment sites; 0 violations).
 
 ---
 
@@ -129,7 +129,7 @@ The `slot9_wrapper` block was subjected to automated verification checks require
 | Stage | Tool / Script | Execution Time | Criteria / Result | Status |
 | :--- | :--- | :---: | :--- | :---: |
 | **Cell DRC** | KLayout (`run_drc.sh`) | 67 s | Monolithic rule deck: 0 main violations, 0 antenna violations. (7 chip-level density info items deferred to MPW fill). | **PASS** |
-| **Tap & Latchup** | `tap_audit.py` | 1 s | Tie distance $\le 20.0\,\mu\text{m}$; every N-well tied; 44 accepted abutment sites. | **PASS** |
+| **Tap & Latchup** | `tap_audit.py` | 1 s | Tie distance $\le 20.0\text{ }\mu\text{m}$; every N-well tied; 44 accepted abutment sites. | **PASS** |
 | **Harness DRC** | `run_drc_harness.sh` | 12 s | Monolithic IHP SG13CMOS5L deck (`feol`, `beol`, `conn_drc`, `wedge` in deep mode): **0 violations**. | **PASS** |
 | **LVS** | Netgen (`run_lvs.sh`) | 13 s | Layout netlist (674 devices) vs Schematic netlist (144 devices): **RESULT: MATCH**. | **PASS** |
 | **Deliverable Export** | `export_slot_gds.py` | 2 s | Verified golden frame geometry and labels; top cell renamed `slot_9`. | **PASS** |
@@ -141,7 +141,7 @@ The script `scripts/harness_trial.sh` mirrors the exact build execution executed
 2. Invokes `scripts/get_project_gds.sh 9` to auto-discover `gds/slot_9.gds`.
 3. Runs Magic to instantiate `slot_9` into `trial_top.gds` at the assigned placement coordinates $(px, py)$.
 4. Performs hierarchical and flattened KLayout Boolean XOR comparisons between `trial_top.gds` and `gds/slot_9.gds`.
-5. Confirms that the geometry after Magic round-trip is identical across all mask layers ($0.00\,\mu\text{m}^2$ XOR residual).
+5. Confirms that the geometry after Magic round-trip is identical across all mask layers ($0.00\text{ }\mu\text{m}^2$ XOR residual).
 
 ---
 
@@ -172,7 +172,7 @@ PhysioNet Biological Input Waveform
 
 | Biosignal | Source Dataset | Bandwidth | Peak-to-Peak Input | Optimal Gain Code | Nominal Gain | Fitted Post-Layout Gain | Correlation ($\rho$) | NRMSE | Output Dynamic Range |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **EEG** | PhysioNet Motor Movement (Oz) | $8 - 13\text{ Hz}$ | $377\,\mu\text{V}_{\text{pp}}$ | **Code 8** | $2048\times$ ($66.2\text{ dB}$) | $1817\times$ ($-1.0\text{ dB}$) | **1.000** | **0.2%** | $0.24\text{ V} - 0.93\text{ V}$ |
+| **EEG** | PhysioNet Motor Movement (Oz) | $8 - 13\text{ Hz}$ | $377\text{ }\mu\text{V}_{\text{pp}}$ | **Code 8** | $2048\times$ ($66.2\text{ dB}$) | $1817\times$ ($-1.0\text{ dB}$) | **1.000** | **0.2%** | $0.24\text{ V} - 0.93\text{ V}$ |
 | **EMG** | Healthy Tibialis Anterior | $20 - 500\text{ Hz}$ | $1.60\text{ mV}_{\text{pp}}$ | **Code 5** | $256\times$ ($48.2\text{ dB}$) | $214\times$ ($-1.5\text{ dB}$) | **0.999** | **4.8%** | $0.48\text{ V} - 0.81\text{ V}$ |
 | **ECG** | MIT-BIH Arrhythmia (Lead MLII) | $0.05 - 100\text{ Hz}$ | $1.50\text{ mV}_{\text{pp}}$ | **Code 5** | $256\times$ ($48.2\text{ dB}$) | $200\times$ ($-2.1\text{ dB}$) | **0.999** | **5.0%** | $0.54\text{ V} - 0.84\text{ V}$ |
 
@@ -188,11 +188,11 @@ When bringing up `slot_9` on fabricated silicon, test engineers should follow th
 ### 1. Power Supply & Ground Initialization
 * Connect `vss_1v2` to low-noise ground ($0.00\text{ V}$).
 * Ramp `vdd_1v2` to $1.20\text{ V}$ with a current limit set to $5.0\text{ mA}$.
-* Expected quiescent current draw: $I_{\text{DD}} \approx 230\,\mu\text{A}$ ($P_Q \approx 276\,\mu\text{W}$).
+* Expected quiescent current draw: $I_{\text{DD}} \approx 230\text{ }\mu\text{A}$ ($P_Q \approx 276\text{ }\mu\text{W}$).
 
 ### 2. Bias & Common-Mode Setup
 * Provide a stable, low-noise analog voltage source of $V_{\text{CM}} = 0.600\text{ V} \pm 10\text{ mV}$ to `vbias`.
-* Source an external reference current of $I_{\text{BIAS}} = 1.00\,\mu\text{A} \pm 1\%$ into pad `ibias0` (current enters the pin toward ground).
+* Source an external reference current of $I_{\text{BIAS}} = 1.00\text{ }\mu\text{A} \pm 1\%$ into pad `ibias0` (current enters the pin toward ground).
 
 ### 3. Digital Gain Configuration
 * Set digital inputs `dig_in[3:0]` to `0000` ($0.0\text{ V}$) to initialize the PGIA in its lowest gain state ($18.06\text{ dB} = 8\times$).
@@ -202,7 +202,7 @@ When bringing up `slot_9` on fabricated silicon, test engineers should follow th
 * *Notice on High Gain Codes (Codes 7–10)*: The chip exhibits a systematic layout input-referred offset of $\approx 0.90\text{ mV}$. At gains above $1024\times$, this offset will cause the single-ended output on `s9_an[2]` to saturate near the positive rail ($\sim 0.99\text{ V}$).
 * For laboratory evaluation of Codes 7–10, either:
   1. Apply an external DC offset trim ($V_{\text{OS,ext}} \approx -0.90\text{ mV}$) to `s9_an_0_esd` relative to `s9_an_1_esd`.
-  2. AC-couple the input electrodes using an external series capacitor ($C_{\text{in}} \ge 1.0\,\mu\text{F}$) with a $10\text{ M}\Omega$ bias return resistor to $V_{\text{CM}}$.
+  2. AC-couple the input electrodes using an external series capacitor ($C_{\text{in}} \ge 1.0\text{ }\mu\text{F}$) with a $10\text{ M}\Omega$ bias return resistor to $V_{\text{CM}}$.
 
 ---
 
@@ -211,6 +211,6 @@ When bringing up `slot_9` on fabricated silicon, test engineers should follow th
 | Item | Observed Phenomenon | Root Cause | Silicon Bring-Up Workaround | Next Silicon Spin Recommendation |
 | :--- | :--- | :--- | :--- | :--- |
 | **Systematic Input Offset** | Output saturation at Codes 8–10 ($2048\times$ to $8192\times$) | Layout routing asymmetry in the 3-OTA input differential pair drains ($V_{\text{OS,in}} \approx 0.90\text{ mV}$) | External DC offset trim on `s9_an_0_esd` or external AC coupling capacitor | Implement auto-zeroing switched-capacitor front-end or continuous DC servo loop |
-| **External Current Dependency** | Requires external $1.0\,\mu\text{A}$ precision source into `ibias0` | Central bias block relies on an external master current reference | Use precision laboratory source or external $600\text{ k}\Omega$ resistor to $V_{\text{DD}}$ | Integrate on-chip constant-$g_m$ or bandgap-derived PTAT current generator |
+| **External Current Dependency** | Requires external $1.0\text{ }\mu\text{A}$ precision source into `ibias0` | Central bias block relies on an external master current reference | Use precision laboratory source or external $600\text{ k}\Omega$ resistor to $V_{\text{DD}}$ | Integrate on-chip constant-$g_m$ or bandgap-derived PTAT current generator |
 | **Intermediate Node Visibility** | Only final output `s9_an[2]` is routed to an external pad | Pin-count limit of the 16-pin slot frame | Characterize stages implicitly via differential gain steps | Add analog multiplexer to switch intermediate nodes ($V_{\text{IA}}$, $V_{\text{stage1}}$, $V_{\text{stage2}}$) to test pad |
 

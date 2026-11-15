@@ -28,7 +28,7 @@ The `instramp_cmos5l` is the primary analog sensor front-end of the PGIA IP. It 
 | :--- | :---: | :---: | :---: | :--- |
 | `VDD` | Power | Inout | $1.20\text{ V}$ | Positive analog supply rail ($1.08\text{ V} - 1.50\text{ V}$) |
 | `VSS` | Ground | Inout | $0.00\text{ V}$ | Analog ground reference |
-| `IBIAS` | Bias | Input | $4.20\,\mu\text{A}$ | Total current bias input ($3\times 1.40\,\mu\text{A}$ current sinks to `VSS`) |
+| `IBIAS` | Bias | Input | $4.20\text{ }\mu\text{A}$ | Total current bias input ($3\times 1.40\text{ }\mu\text{A}$ current sinks to `VSS`) |
 | `VINP` | Analog Input | Input | $0.60\text{ V}$ | Non-inverting differential sensor input terminal |
 | `VINN` | Analog Input | Input | $0.60\text{ V}$ | Inverting differential sensor input terminal |
 | `CM` | Reference | Input | $0.60\text{ V}$ | Common-mode reference voltage ($V_{\text{DD}}/2$) |
@@ -56,10 +56,10 @@ flowchart LR
 ```
 
 ### Component Details
-1. **Operational Amplifiers (`x1`, `x2`, `x3`)**: Three instances of `ota_cmos5l` ($W = 112.21\,\mu\text{m}, L = 37.41\,\mu\text{m}$).
+1. **Operational Amplifiers (`x1`, `x2`, `x3`)**: Three instances of `ota_cmos5l` ($W = 112.21\text{ }\mu\text{m}, L = 37.41\text{ }\mu\text{m}$).
 2. **Gain Resistors (`R1`, `R2`, `R3`, `R4`)**: High-sheet-resistance precision poly resistors (`rhigh`):
-   * Input Resistors ($R_1, R_3$): $6.233\text{ k}\Omega$ ($W = 0.5\,\mu\text{m}, L = 17.84\,\mu\text{m}$).
-   * Feedback Resistors ($R_2, R_4$): $53.06\text{ k}\Omega$ ($W = 0.5\,\mu\text{m}, L = 151.84\,\mu\text{m}$).
+   * Input Resistors ($R_1, R_3$): $6.233\text{ k}\Omega$ ($W = 0.5\text{ }\mu\text{m}, L = 17.84\text{ }\mu\text{m}$).
+   * Feedback Resistors ($R_2, R_4$): $53.06\text{ k}\Omega$ ($W = 0.5\text{ }\mu\text{m}, L = 151.84\text{ }\mu\text{m}$).
    * Closed-loop ratio: $A_v = R_2 / R_1 = 53.06\text{ k}\Omega / 6.233\text{ k}\Omega = 8.51\text{ V/V}$ theoretical open-circuit, loading into $8.00\text{ V/V}$ ($18.06\text{ dB}$) closed-loop.
 3. **Pseudo-Resistor Bias String**: Anti-parallel diode-connected PMOS devices operating deep in the subthreshold regime to establish a DC bias potential tied to `CM` ($0.6\text{ V}$) without loading the high-impedance input electrode node.
 
@@ -67,7 +67,7 @@ flowchart LR
 
 ## 4. Electrical Performance Summary (Pre- vs Post-Layout)
 
-Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 4.2\,\mu\text{A}$, $C_L = 3\text{ pF}$, $T = 27^\circ\text{C}$):
+Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 4.2\text{ }\mu\text{A}$, $C_L = 3\text{ pF}$, $T = 27^\circ\text{C}$):
 
 | Figure of Merit (FOM) | Symbol | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -100,7 +100,7 @@ Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V
 
 ## 6. Physical Layout & Parasitic Extraction Analysis
 
-* **Layout Dimensions**: $W = 124.25\,\mu\text{m}$, $L = 122.79\,\mu\text{m}$, Area = $15,257\,\mu\text{m}^2$ ($0.0153\text{ mm}^2$).
+* **Layout Dimensions**: $W = 124.25\text{ }\mu\text{m}$, $L = 122.79\text{ }\mu\text{m}$, Area = $15,257\text{ }\mu\text{m}^2$ ($0.0153\text{ mm}^2$).
 * **Extracted Parasitics (Magic RC-PEX)**: 96 active transistor devices, 608 parasitic routing resistors, and 382 parasitic routing capacitors.
 * **Parasitic Impact**:
   * Bandwidth decreased by $8.40\%$ ($279.25\text{ kHz} \rightarrow 255.80\text{ kHz}$) due to metal routing capacitance on the feedback resistors ($R_2, R_4$).

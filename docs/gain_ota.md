@@ -25,7 +25,7 @@ The `gain_ota` is a high-bandwidth, high-slew-rate operational transconductance 
 | :--- | :---: | :---: | :---: | :--- |
 | `VDD` | Power | Inout | $1.20\text{ V}$ | Positive analog supply rail ($1.08\text{ V} - 1.50\text{ V}$) |
 | `VSS` | Ground | Inout | $0.00\text{ V}$ | Analog ground reference |
-| `I_bias` | Bias | Input | $1.00\,\mu\text{A}$ | Master reference current sourced into cell from `central_bias` |
+| `I_bias` | Bias | Input | $1.00\text{ }\mu\text{A}$ | Master reference current sourced into cell from `central_bias` |
 | `V_inp` | Analog Signal | Input | $0.60\text{ V}$ | Non-inverting high-impedance differential input |
 | `V_inn` | Analog Signal | Input | $0.60\text{ V}$ | Inverting virtual ground input terminal |
 | `V_out` | Analog Signal | Output | $0.60\text{ V}$ | Low-impedance Class-AB push-pull analog output |
@@ -39,7 +39,7 @@ The schematic is located at `xschem/gain_ota/gain_ota.sch`. Sizing parameters fo
 ### A. Folded-Cascode Input Stage
 | Instance | Device Type | $W$ ($\mu\text{m}$) | $L$ ($\mu\text{m}$) | Layout ($m$, $ng$) | Circuit Function |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| `XM_tail` | `sg13_lv_pmos` | 7.46 | 2.00 | $m=8, ng=1$ | Differential tail current source ($W_{\text{tot}} = 59.68\,\mu\text{m}$) |
+| `XM_tail` | `sg13_lv_pmos` | 7.46 | 2.00 | $m=8, ng=1$ | Differential tail current source ($W_{\text{tot}} = 59.68\text{ }\mu\text{m}$) |
 | `XM1, XM2` | `sg13_lv_pmos` | 26.56 | 2.00 | $m=1, ng=4$ | Folded-cascode differential input pair |
 | `XM3, XM4` | `sg13_lv_pmos` | 7.33 | 2.00 | $m=1, ng=1$ | First-stage active PMOS current mirror load |
 | `XM5, XM6` | `sg13_lv_nmos` | 6.41 | 2.00 | $m=1, ng=1$ | NMOS folding cascode transistors |
@@ -56,15 +56,15 @@ The schematic is located at `xschem/gain_ota/gain_ota.sch`. Sizing parameters fo
 ### C. Active Miller Compensation Network
 | Instance | Component | Value / Dimensions | Terminals | Circuit Function |
 | :--- | :--- | :---: | :---: | :--- |
-| `XC1` | `cap_cmomf` | $22.00 \times 22.00\,\mu\text{m}$ | Cascode $\rightarrow$ Output | Active cascode-node Miller capacitor |
-| `XC2` | `cap_cmomf` | $15.44 \times 15.44\,\mu\text{m}$ | High-Z node $\rightarrow$ Output | Dominant first-stage Miller capacitor |
-| `XR2` | `rhigh` | $W = 0.50, L = 4.00\,\mu\text{m}$ | Series with `XC2` | RHP zero cancellation nulling resistor |
+| `XC1` | `cap_cmomf` | $22.00 \times 22.00\text{ }\mu\text{m}$ | Cascode $\rightarrow$ Output | Active cascode-node Miller capacitor |
+| `XC2` | `cap_cmomf` | $15.44 \times 15.44\text{ }\mu\text{m}$ | High-Z node $\rightarrow$ Output | Dominant first-stage Miller capacitor |
+| `XR2` | `rhigh` | $W = 0.50, L = 4.00\text{ }\mu\text{m}$ | Series with `XC2` | RHP zero cancellation nulling resistor |
 
 ---
 
 ## 4. Electrical Performance Summary (Pre- vs Post-Layout)
 
-Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.0\,\mu\text{A}$, $C_L = 2\text{ pF}$, $T = 27^\circ\text{C}$):
+Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.0\text{ }\mu\text{A}$, $C_L = 2\text{ pF}$, $T = 27^\circ\text{C}$):
 
 | Figure of Merit (FOM) | Symbol | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -95,21 +95,21 @@ Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V
 Simulated across 90 PVT operating conditions (`tt`, `ss`, `ff`, `sf`, `fs`), operating temperatures ($-40^\circ\text{C}$ to $+125^\circ\text{C}$), and supply rails ($1.00\text{ V}$ to $1.50\text{ V}$):
 * **DC Gain**: Spans from $54.31\text{ dB}$ (worst-case at $+125^\circ\text{C}$, $1.0\text{ V}$, `ff`) to $67.35\text{ dB}$ (best-case at $-40^\circ\text{C}$, `ss`).
 * **Phase Margin**: Remains strictly bounded between $59.12^\circ$ (worst-case at $-40^\circ\text{C}$, $1.0\text{ V}$, `ss`) and $70.32^\circ$. Across all corners, the circuit exhibits zero closed-loop ringing.
-* **Class-AB Quiescent Balance**: Push-pull currents stay matched within $1.4\%$ ($I_{\text{outp}} = 14.09\,\mu\text{A}$, $I_{\text{outn}} = 13.89\,\mu\text{A}$) across supply voltage variations from $1.08\text{ V}$ to $1.32\text{ V}$.
+* **Class-AB Quiescent Balance**: Push-pull currents stay matched within $1.4\%$ ($I_{\text{outp}} = 14.09\text{ }\mu\text{A}$, $I_{\text{outn}} = 13.89\text{ }\mu\text{A}$) across supply voltage variations from $1.08\text{ V}$ to $1.32\text{ V}$.
 
 ---
 
 ## 6. Monte Carlo Statistical Analysis
 
 Evaluated across 100 Monte Carlo runs with local device and threshold mismatch:
-* **Input Offset Voltage ($V_{\text{os}}$)**: Mean $\mu = -12.12\,\mu\text{V}$, standard deviation $\sigma = 4.45\,\mu\text{V}$, $6\sigma$ full spread = $26.67\,\mu\text{V}$. Measured bounds: $-22.9\,\mu\text{V} \le V_{\text{os}} \le -4.4\,\mu\text{V}$.
-* **Quiescent Current ($I_Q$)**: Mean $\mu = 73.83\,\mu\text{A}$ with $\sigma = 39.81\text{ nA}$, demonstrating outstanding bias tracking.
+* **Input Offset Voltage ($V_{\text{os}}$)**: Mean $\mu = -12.12\text{ }\mu\text{V}$, standard deviation $\sigma = 4.45\text{ }\mu\text{V}$, $6\sigma$ full spread = $26.67\text{ }\mu\text{V}$. Measured bounds: $-22.9\text{ }\mu\text{V} \le V_{\text{os}} \le -4.4\text{ }\mu\text{V}$.
+* **Quiescent Current ($I_Q$)**: Mean $\mu = 73.83\text{ }\mu\text{A}$ with $\sigma = 39.81\text{ nA}$, demonstrating outstanding bias tracking.
 
 ---
 
 ## 7. Physical Layout & Parasitic Extraction Analysis
 
-* **Layout Dimensions**: $W = 81.00\,\mu\text{m}$, $L = 59.41\,\mu\text{m}$, Area = $4,812\,\mu\text{m}^2$.
+* **Layout Dimensions**: $W = 81.00\text{ }\mu\text{m}$, $L = 59.41\text{ }\mu\text{m}$, Area = $4,812\text{ }\mu\text{m}^2$.
 * **Extracted Parasitics (Magic RC-PEX)**: 59 active subcircuits, 2,397 parasitic resistors, and 585 parasitic capacitors.
 * **Parasitic Impact**:
   * $f_{-3\text{dB}}$ experienced an $11.46\%$ decrease ($9.14\text{ kHz} \rightarrow 8.10\text{ kHz}$) due to metal routing capacitance on the high-impedance node $N_A$.

@@ -32,7 +32,9 @@ flowchart LR
 ### Key Functional Highlights
 * **OTA Core (`gain_ota`)**: High-speed PMOS folded-cascode input stage driving a Monticelli Class-AB push-pull output stage, stabilized by active split-capacitor Miller compensation with an integrated zero-nulling resistor.
 * **Feedback Attenuation Network (`gain_network`)**: Switched resistive ladder composed of 7 precision poly resistors (`rppd` and `rhigh`) and 6 progressively tapered CMOS transmission gates.
-* **Control Interface**: Controlled via a 5-bit input vector `s[0..4]`. An internal standard-cell CMOS inverter automatically decodes the default Tap 0 (`S0` = $0\text{ dB}$) when all `s[0..4]` lines are low, guaranteeing glitch-free operation.
+* **Control Interface & Default S0 Synthesis**: Controlled via a 5-bit input vector `s[0..4]`. An integrated standard cell interface automatically decodes the default Tap 0 (`S0` = $0\text{ dB}$ / $1\times$ feedback) when all `s[0..4]` are low:
+  $$S_0 = \overline{s[0] \lor s[1] \lor s[2] \lor s[3] \lor s[4]} = \text{AND}\big(\text{NOR3}(s[0], s[1], s[2]),\ \text{NOR2}(s[3], s[4])\big)$$
+  Synthesized using standard cells `sg13cmos5l_nor3_1`, `sg13cmos5l_nor2_1`, and `sg13cmos5l_and2_1`, ensuring glitch-free operation without floating nodes or shoot-through currents.
 
 ---
 
@@ -42,7 +44,7 @@ flowchart LR
 | :--- | :---: | :---: | :---: | :--- |
 | `AVDD` | Power | Inout | $1.20\text{ V}$ | Positive analog supply rail ($1.08\text{ V} - 1.50\text{ V}$) |
 | `AVSS` | Ground | Inout | $0.00\text{ V}$ | Analog ground reference |
-| `IBIAS` | Bias | Input | $1.08\,\mu\text{A}$ | Bias current input from `central_bias` |
+| `IBIAS` | Bias | Input | $1.08\text{ }\mu\text{A}$ | Bias current input from `central_bias` |
 | `VCM` | Reference | Input | $0.60\text{ V}$ | Common-mode analog reference ($V_{\text{DD}}/2$) |
 | `VIN` | Analog Signal | Input | $0.60\text{ V}$ | Analog input from IA (Stage 1) or from Stage 1 (Stage 2) |
 | `VOUT` | Analog Signal | Output | $0.60\text{ V}$ | Amplified output driving Stage 2 or Output Buffer |
@@ -89,7 +91,7 @@ CMOS transmission gates route the selected resistor node to the virtual ground s
 
 ## 4. Electrical Performance Summary (Pre- vs Post-Layout)
 
-Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.08\,\mu\text{A}$, $C_L = 2\text{ pF}$, $T = 27^\circ\text{C}$):
+Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.08\text{ }\mu\text{A}$, $C_L = 2\text{ pF}$, $T = 27^\circ\text{C}$):
 
 | Figure of Merit (FOM) | Symbol | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -119,23 +121,23 @@ Characterization of the complete gain stage across all 6 selectable taps under n
 
 | Tap | Digital Code | Target Gain | Measured Gain | Gain Error | Full-Scale Acc. | -3dB Bandwidth | Output Offset |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **S0** | `s[0..4] = 00000` | **0.000 dB** | 0.074 dB | $+0.074\text{ dB}$ | 99.76 % | 8.50 MHz | $12.6\,\mu\text{V}$ |
-| **S1** | `s[0..4] = 00001` | **6.021 dB** | 6.009 dB | $-0.012\text{ dB}$ | 99.96 % | 4.46 MHz | $12.9\,\mu\text{V}$ |
-| **S2** | `s[0..4] = 00010` | **12.041 dB** | 12.066 dB | $+0.025\text{ dB}$ | 99.92 % | 2.60 MHz | $13.5\,\mu\text{V}$ |
-| **S3** | `s[0..4] = 00100` | **18.062 dB** | 18.054 dB | $-0.007\text{ dB}$ | 99.98 % | 1.46 MHz | $14.6\,\mu\text{V}$ |
-| **S4** | `s[0..4] = 01000` | **24.082 dB** | 24.097 dB | $+0.014\text{ dB}$ | 99.95 % | 0.77 MHz | $16.9\,\mu\text{V}$ |
-| **S5** | `s[0..4] = 10000` | **30.103 dB** | 30.076 dB | $-0.027\text{ dB}$ | 99.91 % | 0.40 MHz | $21.2\,\mu\text{V}$ |
+| **S0** | `s[0..4] = 00000` | **0.000 dB** | 0.074 dB | $+0.074\text{ dB}$ | 99.76 % | 8.50 MHz | $12.6\text{ }\mu\text{V}$ |
+| **S1** | `s[0..4] = 00001` | **6.021 dB** | 6.009 dB | $-0.012\text{ dB}$ | 99.96 % | 4.46 MHz | $12.9\text{ }\mu\text{V}$ |
+| **S2** | `s[0..4] = 00010` | **12.041 dB** | 12.066 dB | $+0.025\text{ dB}$ | 99.92 % | 2.60 MHz | $13.5\text{ }\mu\text{V}$ |
+| **S3** | `s[0..4] = 00100` | **18.062 dB** | 18.054 dB | $-0.007\text{ dB}$ | 99.98 % | 1.46 MHz | $14.6\text{ }\mu\text{V}$ |
+| **S4** | `s[0..4] = 01000` | **24.082 dB** | 24.097 dB | $+0.014\text{ dB}$ | 99.95 % | 0.77 MHz | $16.9\text{ }\mu\text{V}$ |
+| **S5** | `s[0..4] = 10000` | **30.103 dB** | 30.076 dB | $-0.027\text{ dB}$ | 99.91 % | 0.40 MHz | $21.2\text{ }\mu\text{V}$ |
 
 * **Step Monotonicity**: High linearity across all 6 settings with full-scale accuracy exceeding $99.7\%$ across all codes.
 * **Bandwidth Progression**: Bandwidth scales smoothly from $8.50\text{ MHz}$ at unity gain (`S0`) down to $401.5\text{ kHz}$ at peak gain (`S5`), preserving $>20\times$ headroom above the biomedical $20\text{ kHz}$ requirement.
-* **Virtual Ground DC Stability**: Virtual ground error remains suppressed to $\approx 12.3\,\mu\text{V}$ across all steps.
+* **Virtual Ground DC Stability**: Virtual ground error remains suppressed to $\approx 12.3\text{ }\mu\text{V}$ across all steps.
 * **Ultra-Low Output DC Offset**: Output DC offset remains below $0.022\text{ mV}$ across all steps.
 
 ---
 
 ## 6. Physical Layout & Parasitic Extraction Analysis
 
-* **Layout Dimensions**: $W = 98.90\,\mu\text{m}$, $L = 78.81\,\mu\text{m}$, Area = $7,794\,\mu\text{m}^2$ ($0.0078\text{ mm}^2$).
+* **Layout Dimensions**: $W = 98.90\text{ }\mu\text{m}$, $L = 78.81\text{ }\mu\text{m}$, Area = $7,794\text{ }\mu\text{m}^2$ ($0.0078\text{ mm}^2$).
 * **Extracted Parasitics (Magic RC-PEX)**: 97 active transistor subcircuits, 10 poly resistors, 5 dev capacitors, and 378 parasitic routing capacitors.
 * **Floorplan**: The `gain_network` is placed adjacent to the inverting input of `gain_ota` to minimize high-impedance summing junction trace lengths. Standard-cell inverter logic is placed along the digital rail boundary.
 * **Physical Checks**: KLayout DRC clean (`0` violations), antenna check clean, and LVS MATCH verified with `--disable_tap_extraction`.

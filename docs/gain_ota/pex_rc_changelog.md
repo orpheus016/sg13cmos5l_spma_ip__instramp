@@ -47,17 +47,17 @@ Post-layout RC simulation (`gain_ota.rc.spice`) failed critically:
   `R0 pn19 pn19_t0 5440` and `R1 pn18 pn18_t0 20400`.
   Neither terminal of these extracted resistors had any connection to the electrical circuit, leading ngspice to report a *singular matrix* error on node `x2.pn19`.
 
-### C. MoM Capacitor Dimension Clamping to $25\,\mu\text{m}$
+### C. MoM Capacitor Dimension Clamping to $25\text{ }\mu\text{m}$
 - **File**: [scripts/pex_netlist.py](file:///home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/scripts/pex_netlist.py)
 - **Mechanism**:
-  `schematic_info()` only captured the first MoM capacitor line from the schematic netlist (`and not cap:`), which happened to be $XC3$ ($25\,\mu\text{m} \times 25\,\mu\text{m}$).
+  `schematic_info()` only captured the first MoM capacitor line from the schematic netlist (`and not cap:`), which happened to be $XC3$ ($25\text{ }\mu\text{m} \times 25\text{ }\mu\text{m}$).
   When `convert_magic()` reconstructed the capacitors in `gain_ota.rc.spice`, all 5 instances were instantiated with `w=25e-6 l=25e-6`. This artificially inflated $XC4$ (nominally $4 \times 8.5\text{ }\mu\text{m} \approx 540\text{ fF}$) to $4 \times 25\text{ }\mu\text{m} \approx 4.6\text{ pF}$ ($\sim 8.5\times$ too large).
 
 ### D. Incomplete Hierarchy Flattening (`top.flatten(True)`) & Unexpanded Cell Selection
 - **Files**: [scripts/pex_prepare_gds.py](file:///home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/scripts/pex_prepare_gds.py) & [scripts/pex_magic.tcl](file:///home/osotnas/eda/designs/sg13cmos5l_spma_ip__instramp/scripts/pex_magic.tcl)
 - **Mechanism**:
   In KLayout's Python API, `Cell.flatten(levels)` takes an integer representing the hierarchy depth. Passing `True` evaluated to integer `1` (flattening only one hierarchy level).
-  Consequently, subcells remained underneath the terminal coordinates of the $25\,\mu\text{m}$ capacitor. Magic's `select area` command selected the subcell bounding box rather than paint tiles, prompting Magic's `getnode` command to error with:
+  Consequently, subcells remained underneath the terminal coordinates of the $25\text{ }\mu\text{m}$ capacitor. Magic's `select area` command selected the subcell bounding box rather than paint tiles, prompting Magic's `getnode` command to error with:
   `You must select paint (not a cell) to use getnode.` and producing `{}` or tile alias lists `{c_n5135_1663# pn12}`.
 
 ---
@@ -86,7 +86,7 @@ Post-layout RC simulation (`gain_ota.rc.spice`) failed critically:
 
 ### 3. `scripts/pex_netlist.py`
 - **Dynamic MoM Capacitor Parameterization**:
-  Reads $W$ and $L$ per line from `.capnodes`, ensuring $8.5\,\mu\text{m}$ and $25\,\mu\text{m}$ capacitors retain their respective drawn values.
+  Reads $W$ and $L$ per line from `.capnodes`, ensuring $8.5\text{ }\mu\text{m}$ and $25\text{ }\mu\text{m}$ capacitors retain their respective drawn values.
 - **Robust Regex Token Parsing**:
   Tolerates potential curly braces `{...}` in node names from Magic Tcl.
 - **Dangling Resistor Stub Pruning**:

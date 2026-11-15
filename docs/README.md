@@ -29,7 +29,7 @@ Welcome to the technical documentation and developer reference portal for the **
 | | [gain_ota Datasheet](gain_ota.md) | Comprehensive circuit datasheet for PMOS folded-cascode Class-AB push-pull OTA ($A_{v0} \approx 63\text{ dB}$, $\text{PM} \approx 63.5^\circ$, $\text{GBW} \approx 13.1\text{ MHz}$). |
 | | [gain_ota CACE](gain_ota/cace/README.md) \| [RC](gain_ota/cace/postlayout_rc.md) | CACE automated characterization and post-layout RC comparison. |
 | | [gain_ota PEX RC Changelog](gain_ota/pex_rc_changelog.md) | Engineering changelog and troubleshooting notes for `gain_ota` extraction fixes. |
-| **Peripherals & Support** | [central_bias Datasheet](central_bias.md) \| [CACE](central_bias/cace/README.md) | Master bias current distribution (1 pin $1.0\,\mu\text{A}$ in $\rightarrow$ 4 scaled internal currents). |
+| **Peripherals & Support** | [central_bias Datasheet](central_bias.md) \| [CACE](central_bias/cace/README.md) | Master bias current distribution (1 pin $1.0\text{ }\mu\text{A}$ in $\rightarrow$ 4 scaled internal currents). |
 | | [gain_decoder_4b Datasheet](gain_decoder_4b.md) | 4-bit static combinational gain decoder mapping 11 gain steps (with safe clamping). |
 | | [output_buffer Datasheet](output_buffer.md) | Comprehensive circuit datasheet for unity-gain buffer follower driving off-chip loads. |
 | | [output_buffer Status](output_buffer/status.md) | Physical verification and flow execution status for `output_buffer`. |
@@ -55,7 +55,7 @@ Welcome to the technical documentation and developer reference portal for the **
 ### B. Systematic Input Offset and DC Compensation
 * Due to asymmetric loading and layout extraction parasitics, `pgia_top` exhibits an input-referred systematic DC offset ($\approx 0.33\text{ mV}$ in schematic, $\approx 0.90\text{ mV}$ in extracted layout).
 * At the highest gain steps (Codes 8 to 10: $2048\times$ to $8192\times$), this offset is multiplied through Stage 1 and Stage 2, which drives the uncompensated output into rail saturation ($\sim 0.99\text{ V}$).
-* When nulling the offset via an intentional DC stimulus ($v_{\text{in,off}} = -334.7\,\mu\text{V}$ for schematic, $-903.7\,\mu\text{V}$ for extracted layout), the entire gain ladder operates linearly with excellent frequency response and dynamic range. Future silicon revisions will integrate on-chip auto-zeroing or chopping.
+* When nulling the offset via an intentional DC stimulus ($v_{\text{in,off}} = -334.7\text{ }\mu\text{V}$ for schematic, $-903.7\text{ }\mu\text{V}$ for extracted layout), the entire gain ladder operates linearly with excellent frequency response and dynamic range. Future silicon revisions will integrate on-chip auto-zeroing or chopping.
 
 ---
 

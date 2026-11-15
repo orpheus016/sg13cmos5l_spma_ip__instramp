@@ -19,7 +19,7 @@ The `ota_cmos5l` is a high-gain, general-purpose operational transconductance am
 ### Key Features
 * **Topology**: Differential PMOS input pair driving an active NMOS current mirror load (Stage 1), followed by an NMOS common-source amplifier with an active PMOS current source load (Stage 2).
 * **Compensation**: Internal active Miller capacitor ($C_c = 2.0\text{ pF}$) providing dominant pole-splitting for unconditional closed-loop stability ($\text{PM} > 60^\circ$).
-* **Ultra-Low Power**: Quiescent power consumption of $24.7\,\mu\text{W}$ ($18.3\,\mu\text{A}$ at $1.2\text{ V}$ nominal supply).
+* **Ultra-Low Power**: Quiescent power consumption of $24.7\text{ }\mu\text{W}$ ($18.3\text{ }\mu\text{A}$ at $1.2\text{ V}$ nominal supply).
 * **Wide ICMR**: PMOS differential input enables linear common-mode operation down to $78\text{ mV}$ above ground rail ($V_{\text{SS}}$).
 
 ---
@@ -30,7 +30,7 @@ The `ota_cmos5l` is a high-gain, general-purpose operational transconductance am
 | :--- | :---: | :---: | :---: | :--- |
 | `VDD` | Power | Inout | $1.20\text{ V}$ | Positive analog supply rail ($1.08\text{ V} - 1.50\text{ V}$) |
 | `VSS` | Ground | Inout | $0.00\text{ V}$ | Analog substrate ground reference |
-| `IBIAS` | Bias | Input | $1.40\,\mu\text{A}$ | Master current bias input (current sink to ground) |
+| `IBIAS` | Bias | Input | $1.40\text{ }\mu\text{A}$ | Master current bias input (current sink to ground) |
 | `VINP` | Analog Signal | Input | $0.60\text{ V}$ | Non-inverting high-impedance differential input |
 | `VINN` | Analog Signal | Input | $0.60\text{ V}$ | Inverting high-impedance differential input |
 | `VOUT` | Analog Signal | Output | $0.60\text{ V}$ | High-impedance analog output terminal |
@@ -45,7 +45,7 @@ The schematic is parameterized in `xschem/ota_cmos5l/ota_cmos5l.sch`. All transi
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
 | **Input Pair** | `M1`, `M2` | `sg13_lv_pmos` | 20.00 | 3.00 | 1 | Long channel to suppress flicker noise and enhance $g_m/I_d$ matching |
 | **Active Mirror Load** | `M3`, `M4` | `sg13_lv_nmos` | 10.00 | 5.00 | 1 | High output impedance ($r_{o}$) and low threshold mismatch |
-| **Tail Current Source** | `M5` | `sg13_lv_pmos` | 20.00 | 3.00 | 8 (`m8`) | Low saturation voltage, high output impedance ($I_{\text{tail}} \approx 11.2\,\mu\text{A}$) |
+| **Tail Current Source** | `M5` | `sg13_lv_pmos` | 20.00 | 3.00 | 8 (`m8`) | Low saturation voltage, high output impedance ($I_{\text{tail}} \approx 11.2\text{ }\mu\text{A}$) |
 | **Bias Diode / Mirror**| `M6` | `sg13_lv_nmos` | 0.15 | 0.15 | 1 (`m6`) | Master bias reference receiver |
 | **Stage 2 Driver (CS)** | `M7` | `sg13_lv_nmos` | 20.00 | 3.00 | 4 (`m7`) | High transconductance second stage driver |
 | **Stage 2 Active Load** | `M8` | `sg13_lv_pmos` | 20.00 | 3.00 | 8 (`m8`) | Matches tail mirror sizing for symmetrical current scaling |
@@ -55,7 +55,7 @@ The schematic is parameterized in `xschem/ota_cmos5l/ota_cmos5l.sch`. All transi
 
 ## 4. Electrical Performance Summary (Pre- vs Post-Layout)
 
-Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.4\,\mu\text{A}$, $C_L = 3\text{ pF}$, $T = 27^\circ\text{C}$):
+Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{BIAS}} = 1.4\text{ }\mu\text{A}$, $C_L = 3\text{ pF}$, $T = 27^\circ\text{C}$):
 
 | Figure of Merit (FOM) | Symbol | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -99,7 +99,7 @@ Local device mismatch analysis evaluated over 50 Monte Carlo runs ($V_{\text{DD}
 
 ## 7. Physical Layout & Parasitic Impact
 
-* **Layout Dimensions**: $W = 112.21\,\mu\text{m}$, $L = 37.41\,\mu\text{m}$, Area = $4,198\,\mu\text{m}^2$.
+* **Layout Dimensions**: $W = 112.21\text{ }\mu\text{m}$, $L = 37.41\text{ }\mu\text{m}$, Area = $4,198\text{ }\mu\text{m}^2$.
 * **Extracted Parasitics (Magic RC-PEX)**: 30 active subcircuits, 273 parasitic resistors, and 116 parasitic capacitors.
 * **Parasitic Degradation**:
   * Unity-Gain Frequency dropped by $8.01\%$ (from $2.70\text{ MHz}$ to $2.48\text{ MHz}$) due to interconnect capacitance loading the high-impedance inter-stage node.
