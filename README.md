@@ -15,8 +15,6 @@
 [![LVS](https://img.shields.io/badge/LVS-MATCH-success)](#)
 [![Chipalooza Harness](https://img.shields.io/badge/Harness_Deliverable-Verified_(slot__9.gds)-success)](#)
 
----
-
 ## Quick Navigation & Reports
 
 Interactive HTML reports, CACE datasheets, and verification logs are available across the repository:
@@ -44,8 +42,6 @@ Interactive HTML reports, CACE datasheets, and verification logs are available a
   * [Interactive Cell Report Dashboard](docs/index.html)
   * [Repository Build Summary](docs/build_summary.md)
   * [Developer & Flow Guide](docs/README.md)
-
----
 
 ## Executive Overview
 
@@ -98,8 +94,6 @@ flowchart LR
 * **Low-Impedance Line Driver**: [`output_buffer`](docs/output_buffer.md) — Unity-gain voltage follower configured from `ota_cmos5l` to drive off-chip loads ($C_L = 15\text{ pF} \parallel R_L = 100\text{ k}\Omega$).
 * **Support & Infrastructure**: Master current distribution [`central_bias`](docs/central_bias.md) and 4-bit combinational digital decoder [`gain_decoder_4b`](docs/gain_decoder_4b.md).
 * **Integration Macros**: Monolithic core [`pgia_top`](docs/pgia_top.md) housed within the Chipalooza MPW harness frame [`slot9_wrapper`](docs/slot9_wrapper.md).
-
----
 
 ## Building Blocks Description
 
@@ -168,8 +162,6 @@ The PGIA IP is constructed from modular, hierarchically verified building blocks
 * **Role**: Decodes the 4-bit user gain selection word `gain_sel[3:0]` into two sets of 5-bit one-hot control lines (`s1[0..4]` and `s2[0..4]`).
 * **Design**: Standard CMOS combinational logic operating in the digital domain (`VPWR`/`VGND`), guaranteeing zero static power dissipation.
 
----
-
 ## Gain Configuration Table
 
 The 4-bit digital gain code `gain_sel[3:0]` (Code 0 to 10) allocates gain between Stage 1 and Stage 2 in $6.02\text{ dB}$ steps ($2\times$ voltage doubling). Due to the intrinsic systematic input-referred DC offset of the layout ($V_{\text{OS,in}} \approx 0.90\text{ mV}$), the performance is presented under two distinct operational conditions:
@@ -193,7 +185,7 @@ The 4-bit digital gain code `gain_sel[3:0]` (Code 0 to 10) allocates gain betwee
 | **11–15**| `1011`..`1111`| *Clamped* | $8\times$ | 0 dB | 0 dB | 17.62 dB | 17.62 dB | 17.65 dB | 0.602 V | 🔒 Digital safe-clamping (forced to Code 0) |
 
 ### 2. Calibrated Core Capability (With External Offset Nulling)
-*When the input offset is compensated externally ($v_{\text{in,off}} = -903.7\text{ }\mu\text{V}$ for extracted layout, $-334.7\text{ }\mu\text{V}$ for schematic), the analog core operates with full dynamic range across all 11 steps:*
+When the input offset is compensated externally ($v_{\text{in,off}} = -903.7\text{ }\mu\text{V}$ for extracted layout, $-334.7\text{ }\mu\text{V}$ for schematic), the analog core operates with full dynamic range across all 11 steps:
 
 | Code | `gain_sel[3:0]` | Target Gain (dB) | Nominal Ratio | Stage 1 Gain | Stage 2 Gain | Schematic $A_{\text{CL}}$* | Extracted RC $A_{\text{CL}}$** | Typical -3dB BW |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -210,10 +202,8 @@ The 4-bit digital gain code `gain_sel[3:0]` (Code 0 to 10) allocates gain betwee
 | **10** | `1010` | **78.27 dB** | $8192\times$ | 30 dB | 30 dB | 76.67 dB | 76.62 dB | 152 kHz |
 | **11–15**| `1011`..`1111`| *Clamped* | $8\times$ | 0 dB | 0 dB | 17.64 dB | 17.68 dB | 210 kHz |
 
-*\* Evaluated with schematic null $v_{\text{in,off}} = -334.7\text{ }\mu\text{V}$.*  
-*\*\* Evaluated with extracted layout null $v_{\text{in,off}} = -903.7\text{ }\mu\text{V}$. Future silicon revisions will fix this issue.*
-
----
+\* Evaluated with schematic null $v_{\text{in,off}} = -334.7\text{ }\mu\text{V}$.  
+\*\* Evaluated with extracted layout null $v_{\text{in,off}} = -903.7\text{ }\mu\text{V}$. Future silicon revisions will fix this issue.
 
 ## Pinout and Interface Signals
 
@@ -235,8 +225,6 @@ The 4-bit digital gain code `gain_sel[3:0]` (Code 0 to 10) allocates gain betwee
 | `VPWR` | `vdd_1v2` | Digital Supply | In | Positive digital supply for gain decoder ($1.2\text{ V}$) |
 | `VGND` | `vss_1v2` | Digital Ground | In | Digital ground for gain decoder ($0\text{ V}$) |
 
----
-
 ## Target Specifications vs. Simulated Performance
 
 Comparison of target requirements against pre-layout (schematic) and post-layout (extracted RC parasitics) characterization at nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $T = 27^\circ\text{C}$, TT corner):
@@ -256,8 +244,6 @@ Comparison of target requirements against pre-layout (schematic) and post-layout
 | **Total Power Dissipation** | < 10.0 | 0.273 | 0.277 | mW | Met ($>36\times$ lower than target) |
 | **Silicon Area** | < 0.50 | — | 0.129 | $\text{mm}^2$ | Met ($<26\%$ of budget) |
 
----
-
 ## Biosignal Validation Showcase (PhysioNet Real Recordings)
 
 The complete IP was subjected to transient pre-silicon verification using digitized, recorded biological potentials from the [PhysioNet](https://physionet.org/) database applied directly to `slot9_wrapper`:
@@ -268,8 +254,6 @@ The complete IP was subjected to transient pre-silicon verification using digiti
 
 Explore the full methodology and waveform viewer in the [Biosignal Verification Report](docs/biosignal/README.md) or open [`docs/biosignal/report.html`](docs/biosignal/report.html).
 
----
-
 ## Physical Verification & Tapeout Audit
 
 The tapeout package for Chipalooza Challenge #2 has successfully cleared all automated physical verification checks:
@@ -279,8 +263,6 @@ The tapeout package for Chipalooza Challenge #2 has successfully cleared all aut
 * **Tap & Substrate Audit**: Verified using `scripts/tap_audit.py`. All active devices are within PDK tie distance; all N-wells and substrates are properly contacted.
 * **Layout Versus Schematic (LVS)**: Clean `MATCH` across all cells using KLayout / Netgen.
 * **Chipalooza Harness Validation**: `scripts/harness_trial.sh` successfully imports, validates, and places `gds/slot_9.gds` into the multi-project chip frame.
-
----
 
 ## Known Anomalies, Trade-offs & Future Work
 
@@ -295,8 +277,6 @@ While the PGIA successfully meets all top-level biomedical application criteria,
 * **Observed Anomaly**: The circuit exhibits an intrinsic systematic input-referred DC offset ($\approx 0.33\text{ mV}$ in schematic, $\approx 0.90\text{ mV}$ in extracted layout). At extreme gains (Codes 8 to 10: $2048\times$ to $8192\times$), uncompensated offset amplification pushes Stage 2 into output saturation ($V_{\text{OUT}} \approx 0.99\text{ V}$).
 * **Workaround in Silicon**: When operated with an intentional external DC offset null ($v_{\text{in,off}} = -903.7\text{ }\mu\text{V}$), all 11 gain steps operate with linear response.
 * **Future Work**: Integrate an on-chip auto-zeroing circuit, Chopper Stabilization (CHS), or a digitally assisted DC-servo feedback loop to dynamically suppress input offset to $<10\text{ }\mu\text{V}$ without external nulling.
-
----
 
 ## Verification Flow & Reproduction
 
@@ -317,8 +297,6 @@ source .designinit_osic
 ./scripts/run_lvs.sh pgia_top
 ```
 
----
-
 ## Acknowledgments & AI-Assisted Design Methodology
 
 This taped-out open-source mixed-signal IC design leveraged modern **Agentic AI-assisted electronic design automation (EDA)** workflows. Autonomous AI agents powered by **Claude (Anthropic)** and **Gemini (Gemini 3.8 Flash High via Google Antigravity)** operated as an integrated agentic AI engineering suite supporting the design team across key execution phases:
@@ -328,7 +306,9 @@ This taped-out open-source mixed-signal IC design leveraged modern **Agentic AI-
 * **Top-Level Layout Floorplanning**: Macro placement, guard ring isolation routing, substrate tap and latch-up audit automation, boundary pad routing, and physical verification integration into the standardized Chipalooza Slot 9 frame (`slot9_wrapper` / `slot_9.gds`).
 * **Comprehensive Technical Documentation**: Generation of per-cell circuit datasheets, verification logs, silicon anomaly analyses, and developer portal documentation.
 
----
+## Additional Notes
+
+To see detailed documentations per block cells and physical testing and verification procedures, see [docs](docs) for more information.
 
 ## License
 
