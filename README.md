@@ -66,7 +66,9 @@ The IP is fully integrated and packaged for **Slot 9** of the **Chipalooza 2026 
 
 The overall system comprises an analog core domain (`AVDD`/`AVSS` at $1.2\text{ V}$) and a digital domain (`VPWR`/`VGND` at $1.2\text{ V}$) for combinational gain decoding. Total system gain is partitioned across three core amplification stages:
 
-$$\mathbf{G_{\text{total}}(\text{dB}) = G_{\text{IA}} + G_{\text{Stage1}} + G_{\text{Stage2}} + G_{\text{Buffer}}}$$
+$$
+G_{\text{total}}\text{ (dB)} = G_{\text{IA}} + G_{\text{Stage1}} + G_{\text{Stage2}} + G_{\text{Buffer}}
+$$
 
 ```mermaid
 flowchart LR

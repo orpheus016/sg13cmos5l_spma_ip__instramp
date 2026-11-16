@@ -78,7 +78,7 @@ The analog switches are implemented using the complementary CMOS transmission ga
 * **Subcircuit Interface**: `.subckt tgate IN AVSS AVDD EN ENB OUT`
 * **On-Resistance ($R_{\text{on}}$) Profile ($0\text{ V} \dots 1.2\text{ V}$)**:
   - $R_{\text{on,min}}$ (Low rail, $V_{\text{in}} = 0.0\text{ V}$): $\approx 700\text{ }\Omega$ ($V_{GS} = 1.2\text{ V}$, NMOS fully in triode).
-  - $R_{\text{on,min}}$ (High rail, $V_{\text{in}} = 1.2\text{ V}$): $\approx 800\text{ }\Omega$ ($|V_{GS}| = 1.2\text{ V}$, PMOS fully in triode).
+  - $R_{\text{on,min}}$ (High rail, $V_{\text{in}} = 1.2\text{ V}$): $\approx 800\text{ }\Omega$ ($\vert V_{GS} \vert = 1.2\text{ V}$, PMOS fully in triode).
   - $R_{\text{on,max}}$ (Mid-rail peak, $V_{\text{in}} \approx 0.56\text{ V}$): $\approx 4.6\text{ k}\Omega$ (reduced gate overdrive and body effect on both FETs).
 * **Critical Bulk Bias Rule**:
   - The transmission gates use $1.2\text{ V}$ thin-oxide devices (`sg13_lv_*`). PMOS bulks must be strictly biased to `AVDD` ($1.2\text{ V}$) rather than higher supply rails ($3.3\text{ V}$), avoiding severe threshold shift ($V_{BS} > 2.5\text{ V}$) and breakdown risks.

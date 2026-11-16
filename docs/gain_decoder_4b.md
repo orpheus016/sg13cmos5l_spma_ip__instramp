@@ -28,7 +28,11 @@ flowchart LR
 
 ### Architectural Highlights
 * **Noise Optimization Rationale (Friis' Formula)**: By ramping Stage 1 to its maximum gain ($32\times$) first before increasing Stage 2, the input-referred noise contribution of Stage 2 is attenuated by $32$ ($\approx 30\text{ dB}$ suppression):
-  $$F_{\text{total}} = F_1 + \frac{F_2 - 1}{G_1}$$
+
+  $$
+  F_{\text{total}} = F_1 + \frac{F_2 - 1}{G_1}
+  $$
+
   This guarantees optimal noise floor across all active gain levels.
 * **Pin Efficiency**: Replaces legacy 10-bit thermometer bus with a compact 4-bit binary gain selection code (`gain_sel[3:0]`), saving 6 chip pads on the shared digital harness.
 * **Zero Static Power**: Pure static CMOS combinational logic with static leakage power $P_{\text{leakage}} < 1.0\text{ nW}$.
@@ -116,8 +120,8 @@ Transient co-simulation with full extracted layout parasitics:
 * **Load**: $C_L = 10\text{ fF}$ on all 20 output lines.
 * **Timing & Electrical Metrics**:
   - Rail-to-rail voltage levels: $V_{OH} = 1.2000\text{ V}$, $V_{OL} = 0.0163\text{ mV}$.
-  - Propagation delay $t_{pd}(\text{gain\_sel}[0] \rightarrow s_1[0]\text{ rise}) = 576.9\text{ ps}$.
-  - Propagation delay $t_{pd}(\text{gain\_sel}[0] \rightarrow s_{1\_b}[0]\text{ fall}) = 509.4\text{ ps}$.
+  - Propagation delay $t_{\text{pd}}$ (`gain_sel[0]` $\rightarrow$ `s1[0]`, rise) = $576.9\text{ ps}$.
+  - Propagation delay $t_{\text{pd}}$ (`gain_sel[0]` $\rightarrow$ `s1_b[0]`, fall) = $509.4\text{ ps}$.
   - Output transition times: $t_r = 140.5 - 176.3\text{ ps}$, $t_f = 159.7 - 162.0\text{ ps}$.
   - Complementarity: $100\%$ verified across all transitions with zero shoot-through.
 

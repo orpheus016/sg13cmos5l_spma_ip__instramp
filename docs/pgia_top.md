@@ -45,13 +45,28 @@ flowchart LR
 ### Signal Polarity & Dual-Inversion Gain Composition
 The composite analog signal transfer through the cascaded chain operates as follows:
 1. **Frontend Pre-amplifier (`instramp_cmos5l`)**: Non-inverting differential-to-single-ended pre-amplification ($8\times$ fixed):
-   $$v_{ia} = V_{\text{CM}} + 8 \cdot (V_{\text{INP}} - V_{\text{INN}})$$
+   
+   $$
+   v_{ia} = V_{\text{CM}} + 8 \cdot (V_{\text{INP}} - V_{\text{INN}})
+   $$
+
 2. **Gain Stage 1 (`x_stage1`)**: Inverting binary feedback ladder ($1\times \dots 32\times$):
-   $$v_{stage1} = V_{\text{CM}} - A_{G1} \cdot (v_{ia} - V_{\text{CM}})$$
+   
+   $$
+   v_{stage1} = V_{\text{CM}} - A_{G1} \cdot (v_{ia} - V_{\text{CM}})
+   $$
+
 3. **Gain Stage 2 (`x_stage2`)**: Inverting binary feedback ladder ($1\times \dots 32\times$):
-   $$v_{stage2} = V_{\text{CM}} - A_{G2} \cdot (v_{stage1} - V_{\text{CM}}) = V_{\text{CM}} + A_{G1} A_{G2} \cdot (v_{ia} - V_{\text{CM}})$$
+   
+   $$
+   v_{stage2} = V_{\text{CM}} - A_{G2} \cdot (v_{stage1} - V_{\text{CM}}) = V_{\text{CM}} + A_{G1} A_{G2} \cdot (v_{ia} - V_{\text{CM}})
+   $$
+
 4. **Output Buffer (`x_buf`)**: Non-inverting unity-gain voltage follower:
-   $$V_{\text{OUT}} = v_{stage2} = V_{\text{CM}} + 8 \cdot A_{G1} A_{G2} \cdot (V_{\text{INP}} - V_{\text{INN}})$$
+   
+   $$
+   V_{\text{OUT}} = v_{stage2} = V_{\text{CM}} + 8 \cdot A_{G1} A_{G2} \cdot (V_{\text{INP}} - V_{\text{INN}})
+   $$
 
 Because both programmable gain stages are inverting, the two successive $180^\circ$ phase inversions cancel out, rendering the complete composite chain **strictly non-inverting**, delivering 11 monotonic $6.02\text{ dB}$ ($2\times$) gain steps from $18.06\text{ dB}$ ($8\times$) up to $78.27\text{ dB}$ ($8192\times$).
 

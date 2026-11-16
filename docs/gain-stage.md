@@ -33,7 +33,11 @@ flowchart LR
 * **OTA Core (`gain_ota`)**: High-speed PMOS folded-cascode input stage driving a Monticelli Class-AB push-pull output stage, stabilized by active split-capacitor Miller compensation with an integrated zero-nulling resistor.
 * **Feedback Attenuation Network (`gain_network`)**: Switched resistive ladder composed of 7 precision poly resistors (`rppd` and `rhigh`) and 6 progressively tapered CMOS transmission gates.
 * **Control Interface & Default S0 Synthesis**: Controlled via a 5-bit input vector `s[0..4]`. An integrated standard cell interface automatically decodes the default Tap 0 (`S0` = $0\text{ dB}$ / $1\times$ feedback) when all `s[0..4]` are low:
-  $$S_0 = \overline{s[0] \lor s[1] \lor s[2] \lor s[3] \lor s[4]} = \text{AND}\big(\text{NOR3}(s[0], s[1], s[2]),\ \text{NOR2}(s[3], s[4])\big)$$
+
+  $$
+  S_0 = \overline{s[0] \lor s[1] \lor s[2] \lor s[3] \lor s[4]} = \text{AND}\big(\text{NOR3}(s[0], s[1], s[2]),\text{ }\text{NOR2}(s[3], s[4])\big)
+  $$
+
   Synthesized using standard cells `sg13cmos5l_nor3_1`, `sg13cmos5l_nor2_1`, and `sg13cmos5l_and2_1`, ensuring glitch-free operation without floating nodes or shoot-through currents.
 
 ---
