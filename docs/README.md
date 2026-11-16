@@ -2,8 +2,6 @@
 
 Welcome to the technical documentation and developer reference portal for the **Programmable Gain Instrumentation Amplifier (PGIA)** IP designed on **IHP SG13CMOS5L**.
 
----
-
 ## 1. System & Sub-Block Documentation Map
 
 | Category | Document / Report | Description & Key Results |
@@ -44,8 +42,6 @@ Welcome to the technical documentation and developer reference portal for the **
 | | [dec2to4 Status](dec2to4/status.md) / [dec4to16](dec4to16/report.html) | Early standalone decoder sub-blocks. |
 | | [coarse_gain](coarse_gain/media/) / [fine_gain](fine_gain/media/) | Legacy architecture building blocks (superseded by cascaded `gain_stage`). |
 
----
-
 ## 2. Technical Notes on Verification & Silicon Quirks
 
 ### A. CMRR at 10 Hz on `gain_network` & `gain_stage`
@@ -56,8 +52,6 @@ Welcome to the technical documentation and developer reference portal for the **
 * Due to asymmetric loading and layout extraction parasitics, `pgia_top` exhibits an input-referred systematic DC offset ($\approx 0.33\text{ mV}$ in schematic, $\approx 0.90\text{ mV}$ in extracted layout).
 * At the highest gain steps (Codes 8 to 10: $2048\times$ to $8192\times$), this offset is multiplied through Stage 1 and Stage 2, which drives the uncompensated output into rail saturation ($\sim 0.99\text{ V}$).
 * When nulling the offset via an intentional DC stimulus ($v_{\text{in,off}} = -334.7\text{ }\mu\text{V}$ for schematic, $-903.7\text{ }\mu\text{V}$ for extracted layout), the entire gain ladder operates linearly with excellent frequency response and dynamic range. Future silicon revisions will integrate on-chip auto-zeroing or chopping.
-
----
 
 # CACE guide
 
@@ -319,8 +313,6 @@ Assumptions in the script: corner names `tt/ss/ff/sf/fs` (+ `_mismatch` in MC), 
 
 `.github/workflows/cace.yml` runs `scripts/run_cace.sh <cell>` for every entry of its `matrix.cell` on push and pull request inside the iic-osic-tools container, fails the job on a spec violation and uploads `docs/<cell>/cace` and the CACE logs as an artifact. It has **not been run on GitHub yet** (see Phase 2 in [cace_ci/STATUS.md](cace_ci/STATUS.md)); committing the regenerated report from CI is a later item.
 
----
-
 # LVS guide (KLayout)
 
 How to check that a layout matches its xschem schematic, with the IHP SG13CMOS5L KLayout LVS deck. Everything is done from KLayout; `scripts/run_lvs.sh` does the same from a terminal and is the fastest way to find out *why* a run fails.
@@ -437,8 +429,6 @@ Keep a gap between neighbouring caps: touching `recog_mom` markers merge and the
 - [ ] `runs/lvs/<cell>/<cell>.lvsdb` kept until the layout is signed off; DRC (*SG13CMOS5L PDK → DRC*) is clean as well
 - [ ] if the layout was changed to pass LVS, rerun DRC and, if devices changed, the CACE report
 
----
-
 # Build everything (one command for the whole repository)
 
 ```bash
@@ -470,8 +460,6 @@ Result: `docs/build_summary.md` (steps and a cells x stages matrix), `docs/index
 **What the harness does with this repository** (`../sg13cmos5l_ocd_chipalooza`): `config.txt` names this repo as `s9_source`; `make projects` clones it as `dependencies/slot_9`; `make projects-gds` takes `gds/slot_9.gds` (error if none, if `.gds` and `.gds.gz` both exist, or several candidates outside `gds/` and `final/gds/`) and needs a top cell named `slot_9`. Keep exactly one `slot_9.gds*` in the repository (the backups folders must not contain one). `s9_version` in the harness `config.txt` is `- -` (tip of the default branch): the harness maintainer pins a commit when the chip is frozen. The harness adds fill and runs its final DRC and top-level LVS itself.
 
 After changing the layout of `slot9_wrapper`: `scripts/export_slot_gds.py` (CI fails with "slot_9.gds is stale" otherwise).
-
----
 
 # Flow guide (one command per cell)
 
@@ -540,8 +528,6 @@ specification table, PVT explorer (drop-down per variable, corner = colour, supp
 notebook change (pull requests: profile `typ`, `main`: `pvt`, published to GitHub Pages from `main`). The netlists themselves are git-ignored, they are derived from the schematic by the flow.
 The workflows have never run on GitHub (see STATUS.md).
 
----
-
 ## F5. Pictures: schematic and layout of every cell
 
 ```bash
@@ -571,8 +557,6 @@ Why the schematic in `docs/<cell>/cace/README.md` used to show nothing: CACE exp
 
 A schematic whose symbols cannot be found is drawn with `---MISSING SYMBOL---` boxes and the script prints a WARNING naming them. Currently: `fine_gain.sch`, `decoder_top_10b.sch`, `dec4to16.sch` (absolute paths of another checkout, `/foss/designs/chipalooza/...`),
 `output_buffer.sch` (`cap_mfringe`, not in cmos5l) and `ota_5t.sch` (sky130 `nfet_03v3`/`pfet_03v3`). Fix the references (relative `ota_cmos5l.sym`, an xschemrc that lists the sibling directories), then rerun.
-
----
 
 # Post-layout simulation guide (PEX -> CACE)
 
