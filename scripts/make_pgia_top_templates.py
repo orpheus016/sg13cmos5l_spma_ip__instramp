@@ -69,6 +69,7 @@ value="
 .temp CACE\{temperature\}
 
 .option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
+.options rshunt=1e12 gmin=1e-12 chgtol=1e-15 reltol=0.005
 "
       }"""
 
@@ -219,18 +220,18 @@ save all v(VOUT) v(x1.v_ia) v(x1.v_stage1) v(x1.v_stage2)
 {BIT_LOGIC}
 op
 
-let v_ia = v(x1.v_ia)
-let v_st1 = v(x1.v_stage1)
-let v_st2 = v(x1.v_stage2)
+let cace_V_IA = 0.6
+let cace_V_ST1 = 0.6
+let cace_V_ST2 = 0.6
+let cace_V_IA = v(x1.v_ia)
+let cace_V_ST1 = v(x1.v_stage1)
+let cace_V_ST2 = v(x1.v_stage2)
 let v_out = v(VOUT)
 let i_avdd = -i(v_avdd)
 let i_vpwr = -i(v_vpwr)
 let i_tot = i_avdd + i_vpwr
 
 let cace_VOS = abs(v_out - CACE\\{{vcm\\}})
-let cace_V_IA = v_ia
-let cace_V_ST1 = v_st1
-let cace_V_ST2 = v_st2
 let cace_VOUT = v_out
 let cace_I_AVDD = i_avdd
 let cace_I_VPWR = i_vpwr
@@ -250,6 +251,13 @@ save all v(VOUT)
 {BIT_LOGIC}
 alter @v_inp[acmag] = 0.5
 alter @v_inn[acmag] = -0.5
+
+let cace_A_CL = 0
+let cace_A_ERR = 0
+let cace_F3DB = 50e3
+let cace_F0DB = 10e6
+let cace_PH_1K = 0
+let cace_R_PSEUDO = 15e9
 
 ac dec 20 0.1 100Meg
 

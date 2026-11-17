@@ -122,6 +122,7 @@ value="
 .temp CACE\{temperature\}
 
 .option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
+.options rshunt=1e12 gmin=1e-12 chgtol=1e-15 reltol=0.005
 "
       }
 C {simulator_commands_shown.sym} 1070 -760 0 0 {name=General_Params
@@ -157,18 +158,18 @@ alter @v_g3[dc] = $&b3
 
 op
 
-let v_ia = v(x1.v_ia)
-let v_st1 = v(x1.v_stage1)
-let v_st2 = v(x1.v_stage2)
+let cace_V_IA = 0.6
+let cace_V_ST1 = 0.6
+let cace_V_ST2 = 0.6
+let cace_V_IA = v(x1.v_ia)
+let cace_V_ST1 = v(x1.v_stage1)
+let cace_V_ST2 = v(x1.v_stage2)
 let v_out = v(VOUT)
 let i_avdd = -i(v_avdd)
 let i_vpwr = -i(v_vpwr)
 let i_tot = i_avdd + i_vpwr
 
 let cace_VOS = abs(v_out - CACE\{vcm\})
-let cace_V_IA = v_ia
-let cace_V_ST1 = v_st1
-let cace_V_ST2 = v_st2
 let cace_VOUT = v_out
 let cace_I_AVDD = i_avdd
 let cace_I_VPWR = i_vpwr

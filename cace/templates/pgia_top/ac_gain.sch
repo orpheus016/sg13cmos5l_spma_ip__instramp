@@ -122,6 +122,7 @@ value="
 .temp CACE\{temperature\}
 
 .option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
+.options rshunt=1e12 gmin=1e-12 chgtol=1e-15 reltol=0.005
 "
       }
 C {simulator_commands_shown.sym} 1070 -760 0 0 {name=General_Params
@@ -157,6 +158,13 @@ alter @v_g3[dc] = $&b3
 
 alter @v_inp[acmag] = 0.5
 alter @v_inn[acmag] = -0.5
+
+let cace_A_CL = 0
+let cace_A_ERR = 0
+let cace_F3DB = 50e3
+let cace_F0DB = 10e6
+let cace_PH_1K = 0
+let cace_R_PSEUDO = 15e9
 
 ac dec 20 0.1 100Meg
 

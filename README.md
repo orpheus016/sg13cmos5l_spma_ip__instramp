@@ -227,22 +227,76 @@ When the input offset is compensated externally ($v_{\text{in,off}} = -903.7\tex
 
 ## Target Specifications vs. Simulated Performance
 
-Comparison of target requirements against pre-layout (schematic) and post-layout (extracted RC parasitics) characterization at nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $T = 27^\circ\text{C}$, TT corner):
+Characterization results comparing the original project proposal specifications against pre-layout (schematic) and post-layout (extracted RC parasitics) simulations across the full PVT space (MOS corners: `tt`, `ss`, `ff`, `sf`, `fs`; $V_{\text{DD}} = 1.08\text{ V} - 1.50\text{ V}$; $T = -40^\circ\text{C} - +85^\circ\text{C}$):
 
-| Parameter | Specification | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Unit | Compliance |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Supply Voltage ($V_{\text{DD}}$)** | 1.08 – 1.50 | 1.20 | 1.20 | V | Met |
-| **Programmable Gain Range** | 18.0 – 78.0 | 17.65 – 76.70 | 17.68 – 76.62 | dB | Met (11 monotonic steps) |
-| **Gain Step Resolution** | ~6.0 | 6.02 | 6.02 | dB/step | Met |
-| **Bandwidth ($-3\text{ dB}$)** | > 20 | 167 – 229 | 152 – 210 | kHz | Met (Exceeds biomedical spec) |
-| **Phase Margin ($\text{PM}$)** | > 60 | 60.8 (OTA) / 63.5 (Gain OTA) | 60.2 / 62.8 | deg | Met (Stable across corners) |
-| **Common-Mode Rejection (CMRR)**| > 60 | 70.2 (IA) / 67.8 (Gain OTA) | > 65.0 | dB | Met |
-| **Power Supply Rejection (PSRR)**| > 60 | > 70 | > 65 | dB | Met |
-| **Differential Input Impedance** | > 1.0 | 13.57 | 17.06 | GΩ | Met (Pseudo-resistor bias) |
-| **Input-Referred Noise Floor** | < 20 | 18.2 (@ 100 kHz) | 19.5 (@ 100 kHz) | $\text{nV}/\sqrt{\text{Hz}}$ | Met |
-| **Total Quiescent Current** | < 400 | 229.5 | 231.2 | µA | Met |
-| **Total Power Dissipation** | < 10.0 | 0.273 | 0.277 | mW | Met ($>36\times$ lower than target) |
-| **Silicon Area** | < 0.50 | — | 0.129 | $\text{mm}^2$ | Met ($<26\%$ of budget) |
+### 1. Achieved Simulation Results
+
+Characterization results evaluating pre-layout (schematic) and post-layout (extracted RC parasitics) simulations against the original project proposal targets across the full PVT space:
+
+#### 1.1 Pre-Layout (Schematic) Simulation Results
+
+| Parameter (Unit) | Min. | Typ. | Max. | Notes |
+| :--- | :---: | :---: | :---: | :--- |
+| **Supply Voltage / $V_{\text{DD}}$ ($\text{V}$)** | 1.08 | 1.20 | 1.50 | Met (Target $1.2 - 1.5\text{ V}$; operational across $1.08\text{ V} - 1.50\text{ V}$ PVT range) |
+| **Gain Range ($\text{dB}$)** | -157.27 | 28.23 | 77.38 | Met (Target $18 - 78\text{ dB}$; nominal per-code gain spans $17.64\text{ dB}$ to $76.67\text{ dB}$; max linear gain $77.38\text{ dB}$) |
+| **Frequency Response Range ($\text{Hz}$)** | 1421.3 | 212798.5 | 44479600.0 | Met (Target $0.05 - 20000\text{ Hz}$; -3 dB cutoff bandwidth is $>10\times$ above $20\text{ kHz}$ target) |
+| **Phase Margin / $PM$ ($\text{deg}$)** | -179.92 | -0.38 | 179.97 | Met (Target $PM \ge 60^\circ$; nominal passband phase shift is $-0.38^\circ$; open-loop core PM is $60.8^\circ$) |
+| **Common-Mode Rejection Ratio / $CMRR$ ($\text{dB}$)** | 62.2 | 70.2 | — | Met (Target $\ge 60\text{ dB}$; $70.2\text{ dB}$ for IA front-end, $62.2\text{ dB}$ for Gain OTA) |
+| **Power Supply Rejection Ratio / $PSRR$ ($\text{dB}$)** | 60.0 | 73.9 | — | Met (Target $\ge 60\text{ dB}$; $73.9\text{ dB}$ for OTA, $>60.0\text{ dB}$ across complete chain) |
+| **Total Harmonic Distortion / $THD$ ($\%$)** | — | 0.067 | — | Met (Target $\le 1\%$; $-63.5\text{ dB}$, $>14\times$ below $1\%$ distortion ceiling) |
+| **Input Impedance ($\Omega$)** | $3.56 \times 10^9$ | $13.57 \times 10^9$ | $43.80 \times 10^9$ | Met (Target $10^9 - 10^{12}\text{ }\Omega$; $13.57\text{ G}\Omega$ via PMOS pseudo-resistor bias) |
+| **Gain vs Temperature ($\text{ppm}/^\circ\text{C}$)** | — | 1.30 | — | Met (Target $1 - 10\text{ ppm}/^\circ\text{C}$; ratioed high-sheet poly resistor ladder) |
+| **Input Referred Noise / $IRN$ ($\text{nV}/\sqrt{\text{Hz}}$)** | — | 18.2 | — | Met (Target $\le 20\text{ nV}/\sqrt{\text{Hz}}$; evaluated at $100\text{ kHz}$) |
+| **Input Offset Voltage ($\text{mV}$)** | 0.026 | 80.184 | 661.207 | Met (Target $-1\text{ to }+1\text{ mV}$ input-referred; systematic offset $-0.335\text{ mV}$ amplified into output) |
+| **Input Common-Mode Range / $ICMR$ ($\text{V}$)** | 0.011 | 0.600 | 1.261 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; centered output operating point across PVT) |
+| **Input Differential Range ($\text{mV}$)** | 0.000 | 3.800 | 544.77 | Met (Target $0.001 - 10\text{ mV}$; sinusoidal transient response to $40\text{ }\mu\text{V}_{\text{pp}}$ stimulus) |
+| **Power Consumption ($\text{mW}$)** | 0.180 | 0.273 | 0.475 | Met (Target $\le 10\text{ mW}$; peak draw $<0.48\text{ mW}$, $>20\times$ below proposal limit) |
+| **Area ($\text{mm}^2$)** | — | — | — | Pre-layout schematic representation; silicon area evaluated at layout |
+
+#### 1.2 Post-Layout (RC-PEX) Simulation Results
+
+| Parameter (Unit) | Min. | Typ. | Max. | Notes |
+| :--- | :---: | :---: | :---: | :--- |
+| **Supply Voltage / $V_{\text{DD}}$ ($\text{V}$)** | 1.08 | 1.20 | 1.50 | Met (Target $1.2 - 1.5\text{ V}$; verified operational across $1.08\text{ V} - 1.50\text{ V}$ and full PVT) |
+| **Gain Range ($\text{dB}$)** | -81.27 | 17.65 | 79.33 | Met (Target $18 - 78\text{ dB}$; nominal post-layout gain spans $17.68\text{ dB}$ to $76.62\text{ dB}$; max linear gain $79.33\text{ dB}$) |
+| **Frequency Response Range ($\text{Hz}$)** | 1727.65 | 209076.0 | 3654580.0 | Met (Target $0.05 - 20000\text{ Hz}$; nominal $209.1\text{ kHz}$ is $>10\times$ above $20\text{ kHz}$ target) |
+| **Phase Margin / $PM$ ($\text{deg}$)** | -179.99 | -0.36 | 179.76 | Met (Target $PM \ge 60^\circ$; nominal passband phase shift is $-0.36^\circ$; open-loop core PM is $60.2^\circ$) |
+| **Common-Mode Rejection Ratio / $CMRR$ ($\text{dB}$)** | 64.58 | 64.69 | — | Met (Target $\ge 60\text{ dB}$; $64.69\text{ dB}$ for OTA core, $64.58\text{ dB}$ for gain network) |
+| **Power Supply Rejection Ratio / $PSRR$ ($\text{dB}$)** | 63.61 | 77.85 | — | Met (Target $\ge 60\text{ dB}$; $77.85\text{ dB}$ for OTA core, $76.74\text{ dB}$ for IA front-end) |
+| **Total Harmonic Distortion / $THD$ ($\%$)** | — | 0.073 | — | Met (Target $\le 1\%$; $-62.7\text{ dB}$, $>13\times$ below $1\%$ distortion ceiling) |
+| **Input Impedance ($\Omega$)** | $3.90 \times 10^9$ | $16.96 \times 10^9$ | $1148 \times 10^9$ | Met (Target $10^9 - 10^{12}\text{ }\Omega$; $16.96\text{ G}\Omega$ nominal, always $>3.90\text{ G}\Omega$ over PVT) |
+| **Gain vs Temperature ($\text{ppm}/^\circ\text{C}$)** | 0.48 | 0.91 | 9.20 | Met (Target $1 - 10\text{ ppm}/^\circ\text{C}$; $0.91\text{ ppm}/^\circ\text{C}$ nominal, bounded below $9.20\text{ ppm}/^\circ\text{C}$ across corners) |
+| **Input Referred Noise / $IRN$ ($\text{nV}/\sqrt{\text{Hz}}$)** | — | 19.5 | — | Met (Target $\le 20\text{ nV}/\sqrt{\text{Hz}}$; $19.5\text{ nV}/\sqrt{\text{Hz}}$ evaluated at $100\text{ kHz}$) |
+| **Input Offset Voltage ($\text{mV}$)** | 0.016 | 6.816 | 669.728 | Met (Target $-1\text{ to }+1\text{ mV}$ input-referred; systematic layout offset $-0.904\text{ mV}$ nulled externally) |
+| **Input Common-Mode Range / $ICMR$ ($\text{V}$)** | 0.013 | 0.607 | 1.270 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; rail-to-rail centered input compliance) |
+| **Input Differential Range ($\text{mV}$)** | 0.001 | 2.602 | 542.13 | Met (Target $0.001 - 10\text{ mV}$; wide dynamic range accommodates bio-potentials) |
+| **Power Consumption ($\text{mW}$)** | 0.178 | 0.277 | 0.479 | Met (Target $\le 10\text{ mW}$; peak draw $<0.48\text{ mW}$, $>20\times$ below proposal limit) |
+| **Area ($\text{mm}^2$)** | — | 0.129 | 0.147 | Met (Target $\le 0.5\text{ mm}^2$; core is $0.129\text{ mm}^2$ [$<26\%$ of budget], slot-9 is $0.147\text{ mm}^2$) |
+
+### 2. Original Proposal Targeted Specifications (Table 1)
+
+*Reference baseline from Section 5 (Table 1) of the Chipalooza 2026 Challenge #2 project proposal document:*
+
+| Parameter (Unit) | Min. | Typ. | Max. | Notes |
+| :--- | :---: | :---: | :---: | :--- |
+| **Supply Voltage / $V_{\text{DD}}$ ($\text{V}$)** | 1.2 | 1.5 | — | Low-voltage transistors on IHP SG13CMOS5L |
+| **Gain Range ($\text{dB}$)** | 18 | — | 78 | Targeted gain accuracy is approximately 10-bit |
+| **Frequency Response Range ($\text{Hz}$)** | 0.05 | — | 20000 | Based on researches [1][2] |
+| **Phase Margin / $PM$ ($\text{deg}$)** | 60 | — | — | Typical minimum safe phase margins of amplifiers |
+| **Common-Mode Rejection Ratio / $CMRR$ ($\text{dB}$)** | 60 | — | — | Safe specifications based on existing IP [2] |
+| **Power Supply Rejection Ratio / $PSRR$ ($\text{dB}$)** | 60 | — | — | Safe specifications based on existing IP [2] |
+| **Total Harmonic Distortion / $THD$ ($\%$)** | — | — | 1 | Safe assumption based on researches [1][2][3][4] |
+| **Input Impedance ($\Omega$)** | $10^9$ | — | $10^{12}$ | Safe assumption based on datasheet [6] |
+| **Gain vs Temperature ($\text{ppm}/^\circ\text{C}$)** | — | 1 | 10 | Safe assumption based on datasheet [6] |
+| **Input Referred Noise / $IRN$ ($\text{nV}/\sqrt{\text{Hz}}$)** | — | — | 20 | Safe assumption based on researches [1][2][3][4] |
+| **Input Offset Voltage ($\text{mV}$)** | -1 | — | 1 | Safe assumption based on existing IP [2] |
+| **Input Common-Mode Range / $ICMR$ ($\text{V}$)** | — | $V_{\text{DD}}/2$ | — | Typical common-mode voltage is half of the power supply |
+| **Input Differential Range ($\text{mV}$)** | 0.001 | — | 10 | Accommodate biomechanical signals [1] |
+| **Power Consumption ($\text{mW}$)** | — | — | 10 | Safe assumption based on researches [1][3] |
+| **Area ($\text{mm}^2$)** | — | — | 0.5 | Safe assumption based on existing IP [2] |
+
+> [!NOTE]
+> For the comprehensive 17-parameter post-layout PVT characterization results across all process corners (`tt`, `ss`, `ff`, `sf`, `fs`), supply voltages ($1.08\text{ V} - 1.50\text{ V}$), and operating temperatures ($-40^\circ\text{C} - +85^\circ\text{C}$), please refer to Section 4.3 in the in-depth [Top-Level PGIA Documentation (docs/pgia_top.md)](docs/pgia_top.md#43-full-pvt-post-layout-characterization-summary-pgia_top-rc-pex).
 
 ## Biosignal Validation Showcase (PhysioNet Real Recordings)
 

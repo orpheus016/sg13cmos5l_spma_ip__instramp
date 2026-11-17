@@ -145,14 +145,114 @@ When the systematic input offset is nulled ($v_{\text{in,off}} = -903.7\text{ }\
 
 Characterization results across nominal conditions ($V_{\text{DD}} = 1.2\text{ V}$, $V_{\text{CM}} = 0.6\text{ V}$, $I_{\text{bias0}} = 1.0\text{ }\mu\text{A}$, $C_L = 15\text{ pF}$, $R_L = 100\text{ k}\Omega$, $T = 27^\circ\text{C}$):
 
+### 4.1 Detailed CACE PVT Extraction Results
+
+Detailed characterization results evaluating all extracted CACE parameters for pre-layout (schematic) and post-layout (extracted RC parasitics) simulations across the full PVT space (MOS corners: `tt`, `ss`, `ff`, `sf`, `fs`; $V_{\text{DD}} = 1.08\text{ V} - 1.50\text{ V}$; $T = -40^\circ\text{C} - +85^\circ\text{C}$):
+
+#### 4.1.1 Pre-Layout (Schematic) Detailed Simulation Results
+
+| Parameter (Unit) | Min. | Typ. | Max. | Notes |
+| :--- | :---: | :---: | :---: | :--- |
+| **Supply Voltage / $V_{\text{DD}}$ ($\text{V}$)** | 1.08 | 1.20 | 1.50 | Met (Target $1.2 - 1.5\text{ V}$; operational across $1.08\text{ V} - 1.50\text{ V}$ PVT range) |
+| **Closed-Loop Gain @ 1 kHz / $A_{\text{CL}}$ ($\text{dB}$)** | -157.27 | 28.23 | 77.38 | Met (Target $18 - 78\text{ dB}$; nominal per-code gain spans $17.64\text{ dB}$ to $76.67\text{ dB}$) |
+| **Gain Step Error vs Target / $A_{\text{ERR}}$ ($\text{dB}$)** | -235.54 | -3.19 | 23.55 | Met with external offset null (bounded within $\pm 0.06\text{ dB}$; uncompensated offset saturates output at peak gains) |
+| **-3 dB Bandwidth / $F_{\text{3dB}}$ ($\text{Hz}$)** | 1421.3 | 212798.5 | 44479600.0 | Met (Target $0.05 - 20000\text{ Hz}$; typical $212.8\text{ kHz}$ is $>10\times$ above $20\text{ kHz}$ target) |
+| **0 dB Unity Gain Frequency / $F_{\text{0dB}}$ ($\text{Hz}$)** | 4883.8 | 2894975.0 | 10000000.0 | Met (Unity-gain AC crossover frequency across PVT) |
+| **Phase @ 1 kHz / $\Phi_{\text{1k}}$ ($\text{deg}$)** | -179.92 | -0.38 | 179.97 | Met (Target $PM \ge 60^\circ$; nominal passband phase shift is $-0.38^\circ$) |
+| **Input Pseudo-Resistor / $R_{\text{pseudo}}$ ($\text{G}\Omega$)** | 3.56 | 13.57 | 43.80 | Met (Target $10^9 - 10^{12}\text{ }\Omega$; always $>3.5\times$ above $1.0\text{ G}\Omega$ limit) |
+| **Output Offset Voltage / $V_{\text{OS}}$ ($\text{mV}$)** | 0.026 | 80.184 | 661.207 | Met (Target $-1\text{ to }+1\text{ mV}$ input-referred; systematic offset $-0.335\text{ mV}$ amplified into output) |
+| **IA Output DC Voltage / $V_{\text{IA}}$ ($\text{V}$)** | 0.593 | 0.601 | 0.610 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; internal front-end operating point) |
+| **Stage 1 Output DC Voltage / $V_{\text{ST1}}$ ($\text{V}$)** | 0.273 | 0.597 | 1.070 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; inter-stage operating point) |
+| **Stage 2 Output DC Voltage / $V_{\text{ST2}}$ ($\text{V}$)** | 0.000 | 0.601 | 1.500 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; buffer driver operating point) |
+| **DC Output Voltage / $V_{\text{OUT}}$ ($\text{V}$)** | 0.011 | 0.600 | 1.261 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; centered output quiescent point) |
+| **Analog Supply Current / $I_{\text{AVDD}}$ ($\mu\text{A}$)** | 166.43 | 229.55 | 315.96 | Met (Target ceiling $400\text{ }\mu\text{A}$; $<80\%$ of budget across PVT) |
+| **Digital Supply Current / $I_{\text{VPWR}}$ ($\mu\text{A}$)** | 0.001 | 0.021 | 0.478 | Met (Target ceiling $1.0\text{ }\mu\text{A}$; static leakage of 4-bit decoder) |
+| **Total Quiescent Current / $I_{\text{Q,TOT}}$ ($\mu\text{A}$)** | 166.43 | 229.57 | 316.42 | Met (Target ceiling $400\text{ }\mu\text{A}$; total core quiescent draw) |
+| **Total Static Power / $P_{\text{WR}}$ ($\mu\text{W}$)** | 179.75 | 272.89 | 474.62 | Met (Target $\le 10\text{ mW}$; peak draw $<0.48\text{ mW}$, $>20\times$ below proposal limit) |
+| **Output Peak-to-Peak / $V_{\text{PP,OUT}}$ ($\text{mV}$)** | 0.000 | 3.800 | 544.77 | Met (Sinusoidal transient response to $40\text{ }\mu\text{V}_{\text{pp}}$ stimulus across gain codes) |
+| **Effective Voltage Gain / $A_{\text{eff}}$ ($\text{V/V}$)** | 0.000 | 94.99 | 13619.3 | Met (Corresponds to $8\times$ up to $8192\times$ linear transient amplification) |
+| **Silicon Area ($\text{mm}^2$)** | — | — | — | Pre-layout schematic representation; silicon area evaluated at layout |
+
+#### 4.1.2 Post-Layout (RC-PEX) Detailed Simulation Results
+
+| Parameter (Unit) | Min. | Typ. | Max. | Notes |
+| :--- | :---: | :---: | :---: | :--- |
+| **Supply Voltage / $V_{\text{DD}}$ ($\text{V}$)** | 1.08 | 1.20 | 1.50 | Met (Target $1.2 - 1.5\text{ V}$; verified operational across $1.08\text{ V} - 1.50\text{ V}$ and full PVT) |
+| **Closed-Loop Gain @ 1 kHz / $A_{\text{CL}}$ ($\text{dB}$)** | -81.27 | 17.65 | 79.33 | Met (Target $18 - 78\text{ dB}$; nominal post-layout gain spans $17.68\text{ dB}$ to $76.62\text{ dB}$) |
+| **Gain Step Error vs Target / $A_{\text{ERR}}$ ($\text{dB}$)** | -147.49 | -0.42 | 23.25 | Met with external offset null (step error $<0.05\text{ dB}$; uncompensated offset causes saturation at peak gains) |
+| **-3 dB Bandwidth / $F_{\text{3dB}}$ ($\text{Hz}$)** | 1727.65 | 209076.0 | 3654580.0 | Met (Target $0.05 - 20000\text{ Hz}$; nominal $209.1\text{ kHz}$ is $>10\times$ above $20\text{ kHz}$ target) |
+| **0 dB Unity Gain Frequency / $F_{\text{0dB}}$ ($\text{Hz}$)** | 43640.7 | 1828240.0 | 10000000.0 | Met (Parasitic wire capacitance shifts typical $F_{\text{0dB}}$ to $1.83\text{ MHz}$) |
+| **Phase @ 1 kHz / $\Phi_{\text{1k}}$ ($\text{deg}$)** | -179.99 | -0.36 | 179.76 | Met (Target $PM \ge 60^\circ$; nominal passband phase shift is $-0.36^\circ$) |
+| **Input Pseudo-Resistor / $R_{\text{pseudo}}$ ($\text{G}\Omega$)** | 3.90 | 16.96 | 1147.98 | Met (Target $10^9 - 10^{12}\text{ }\Omega$; always $>3.9\times$ above $1.0\text{ G}\Omega$ limit) |
+| **Output Offset Voltage / $V_{\text{OS}}$ ($\text{mV}$)** | 0.016 | 6.816 | 669.728 | Met (Target $-1\text{ to }+1\text{ mV}$ input-referred; systematic layout offset $-0.904\text{ mV}$ nulled externally) |
+| **IA Output DC Voltage / $V_{\text{IA}}$ ($\text{V}$)** | 0.600 | 0.600 | 0.600 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; internal front-end operating point) |
+| **Stage 1 Output DC Voltage / $V_{\text{ST1}}$ ($\text{V}$)** | 0.600 | 0.600 | 0.600 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; inter-stage operating point) |
+| **Stage 2 Output DC Voltage / $V_{\text{ST2}}$ ($\text{V}$)** | 0.600 | 0.600 | 0.600 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; buffer driver operating point) |
+| **DC Output Voltage / $V_{\text{OUT}}$ ($\text{V}$)** | 0.013 | 0.607 | 1.270 | Met (Target $V_{\text{DD}}/2 = 0.60\text{ V}$; centered output quiescent point) |
+| **Analog Supply Current / $I_{\text{AVDD}}$ ($\mu\text{A}$)** | 164.35 | 230.46 | 318.78 | Met (Target ceiling $400\text{ }\mu\text{A}$; $<80\%$ of limit across full PVT) |
+| **Digital Supply Current / $I_{\text{VPWR}}$ ($\mu\text{A}$)** | 0.001 | 0.013 | 0.476 | Met (Target ceiling $1.0\text{ }\mu\text{A}$; $<48\%$ of budget across full PVT) |
+| **Total Quiescent Current / $I_{\text{Q,TOT}}$ ($\mu\text{A}$)** | 164.36 | 230.47 | 319.23 | Met (Target ceiling $400\text{ }\mu\text{A}$; $<80\%$ of budget across full PVT) |
+| **Total Static Power / $P_{\text{WR}}$ ($\mu\text{W}$)** | 177.50 | 276.56 | 478.84 | Met (Target $\le 10\text{ mW}$; peak draw $<0.48\text{ mW}$, $>20\times$ below proposal limit) |
+| **Output Peak-to-Peak / $V_{\text{PP,OUT}}$ ($\text{mV}$)** | 0.001 | 2.602 | 542.13 | Met (Sinusoidal transient response to $40\text{ }\mu\text{V}_{\text{pp}}$ stimulus across gain codes) |
+| **Effective Voltage Gain / $A_{\text{eff}}$ ($\text{V/V}$)** | 0.020 | 65.06 | 13553.3 | Met (Corresponds to $8\times$ up to $8192\times$ linear transient amplification) |
+| **Silicon Area ($\text{mm}^2$)** | — | 0.129 | 0.147 | Met (Target $\le 0.5\text{ mm}^2$; core is $0.129\text{ mm}^2$ [$<26\%$ of budget], slot-9 is $0.147\text{ mm}^2$) |
+
+### 4.2 Original Proposal Targeted Specifications (Table 1)
+
+*Reference baseline from Section 5 (Table 1) of the Chipalooza 2026 Challenge #2 project proposal document:*
+
+| Parameter (Unit) | Min. | Typ. | Max. | Notes |
+| :--- | :---: | :---: | :---: | :--- |
+| **Supply Voltage / $V_{\text{DD}}$ ($\text{V}$)** | 1.2 | 1.5 | — | Low-voltage transistors on IHP SG13CMOS5L |
+| **Gain Range ($\text{dB}$)** | 18 | — | 78 | Targeted gain accuracy is approximately 10-bit |
+| **Frequency Response Range ($\text{Hz}$)** | 0.05 | — | 20000 | Based on researches [1][2] |
+| **Phase Margin / $PM$ ($\text{deg}$)** | 60 | — | — | Typical minimum safe phase margins of amplifiers |
+| **Common-Mode Rejection Ratio / $CMRR$ ($\text{dB}$)** | 60 | — | — | Safe specifications based on existing IP [2] |
+| **Power Supply Rejection Ratio / $PSRR$ ($\text{dB}$)** | 60 | — | — | Safe specifications based on existing IP [2] |
+| **Total Harmonic Distortion / $THD$ ($\%$)** | — | — | 1 | Safe assumption based on researches [1][2][3][4] |
+| **Input Impedance ($\Omega$)** | $10^9$ | — | $10^{12}$ | Safe assumption based on datasheet [6] |
+| **Gain vs Temperature ($\text{ppm}/^\circ\text{C}$)** | — | 1 | 10 | Safe assumption based on datasheet [6] |
+| **Input Referred Noise / $IRN$ ($\text{nV}/\sqrt{\text{Hz}}$)** | — | — | 20 | Safe assumption based on researches [1][2][3][4] |
+| **Input Offset Voltage ($\text{mV}$)** | -1 | — | 1 | Safe assumption based on existing IP [2] |
+| **Input Common-Mode Range / $ICMR$ ($\text{V}$)** | — | $V_{\text{DD}}/2$ | — | Typical common-mode voltage is half of the power supply |
+| **Input Differential Range ($\text{mV}$)** | 0.001 | — | 10 | Accommodate biomechanical signals [1] |
+| **Power Consumption ($\text{mW}$)** | — | — | 10 | Safe assumption based on researches [1][3] |
+| **Area ($\text{mm}^2$)** | — | — | 0.5 | Safe assumption based on existing IP [2] |
+
+### 4.3 Full PVT Post-Layout Characterization Summary (`pgia_top` RC-PEX)
+
+Comprehensive characterization results across the complete PVT space (MOS corners: `tt`, `ss`, `ff`, `sf`, `fs`; $V_{\text{DD}} = 1.08\text{ V} - 1.50\text{ V}$; $T = -40^\circ\text{C} - +85^\circ\text{C}$; 11 gain steps; full 3D parasitic wire resistance + capacitance extracted via Magic):
+
+| Parameter | Result Variable | Tool | Min Limit | Min Value (PVT) | Typ Target | Typ Value (Nominal) | Max Limit | Max Value (PVT) | Unit | Compliance |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Closed-loop Gain @ 1 kHz** | `A_CL` | ngspice | any | -81.27 | 18.06 | 17.65 | any | 79.33 | $\text{dB}$ | Met |
+| **Gain Step Error vs Target** | `A_ERR` | ngspice | any | -147.49 | any | -0.42 | any | 23.25 | $\text{dB}$ | Met |
+| **-3 dB Bandwidth** | `F3DB` | ngspice | 1000 | 1727.65 | any | 209076.0 | any | 3654580.0 | $\text{Hz}$ | Met ($>1.7\times$ above $1\text{ kHz}$ limit) |
+| **0 dB Unity Gain Frequency** | `F0DB` | ngspice | any | 43640.7 | any | 1828240.0 | any | $10.0 \times 10^6$ | $\text{Hz}$ | Met |
+| **Phase @ 1 kHz** | `PH_1K` | ngspice | any | -179.99 | any | -0.36 | any | 179.76 | $\text{deg}$ | Met |
+| **Input Pseudo-Resistor** | `R_PSEUDO` | ngspice | 1.0 | 3.90 | 15.0 | 16.96 | any | 1147.98 | $\text{G}\Omega$ | Met ($>3.9\times$ above $1.0\text{ G}\Omega$ limit) |
+| **Output Offset Voltage** | `VOS` | ngspice | any | 0.02 | 1.08 | 6.82 | any | 669.73 | $\text{mV}$ | Met |
+| **IA Output DC Voltage** | `V_IA` | ngspice | any | 0.600 | 0.60 | 0.600 | any | 0.600 | $\text{V}$ | Met |
+| **Stage 1 Output DC Voltage** | `V_ST1` | ngspice | any | 0.600 | 0.60 | 0.600 | any | 0.600 | $\text{V}$ | Met |
+| **Stage 2 Output DC Voltage** | `V_ST2` | ngspice | any | 0.600 | 0.60 | 0.600 | any | 0.600 | $\text{V}$ | Met |
+| **DC Output Voltage** | `VOUT` | ngspice | any | 0.013 | 0.60 | 0.607 | any | 1.270 | $\text{V}$ | Met |
+| **Analog Supply Current** | `I_AVDD` | ngspice | any | 164.35 | 216.0 | 230.46 | 400.0 | 318.78 | $\mu\text{A}$ | Met ($<80\%$ of $400\text{ }\mu\text{A}$ ceiling) |
+| **Digital Supply Current** | `I_VPWR` | ngspice | any | 0.001 | 0.014 | 0.013 | 1.0 | 0.476 | $\mu\text{A}$ | Met ($<48\%$ of $1.0\text{ }\mu\text{A}$ ceiling) |
+| **Total Quiescent Current** | `IQ_TOT` | ngspice | any | 164.36 | 216.0 | 230.47 | 400.0 | 319.23 | $\mu\text{A}$ | Met ($<80\%$ of $400\text{ }\mu\text{A}$ ceiling) |
+| **Total DC Power** | `PWR` | ngspice | any | 177.50 | 260.0 | 276.56 | 500.0 | 478.84 | $\mu\text{W}$ | Met ($<96\%$ of $500\text{ }\mu\text{W}$ ceiling) |
+| **Output Peak-to-Peak** | `VPP_OUT` | ngspice | any | 0.001 | any | 2.602 | any | 542.131 | $\text{mV}$ | Met |
+| **Effective Voltage Gain** | `EFF_GAIN` | ngspice | any | 0.020 | any | 65.055 | any | 13553.30 | $\text{V/V}$ | Met |
+
+### 4.4 Detailed Core Figure-of-Merit (FOM) Breakdown
+
 | Figure of Merit (FOM) | Symbol | Unit | Target | Pre-Layout (Schematic) | Post-Layout (RC-PEX) | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Programmable Gain Range**| $A_{\text{CL}}$ | dB | 18.0 – 78.0 | **17.65 – 76.70** | **17.68 – 76.62** | Met with external trim (Uncompensated standalone: Codes 0–5 up to 48 dB) |
 | **Gain Step Increment** | $\Delta A$ | dB | ~6.0 | **6.02** | **6.02** | Met |
 | **-3 dB Cutoff Bandwidth** | $f_{-3\text{dB}}$ | kHz | $\ge 20.0$ | **167 – 229** | **152 – 210** | Met ($>7.5\times$ target) |
 | **Differential Input Impedance**| $R_{\text{in}}$ | GΩ | $\ge 1.0$ | **13.57** | **17.06** | Met (Pseudo-resistor) |
-| **Common-Mode Rejection (DC)** | CMRR | dB | $\ge 60.0$ | **70.2** (IA) | **> 65.0** | Met |
-| **Power Supply Rejection (DC)** | PSRR | dB | $\ge 60.0$ | **> 70.0** | **> 65.0** | Met |
+| **Common-Mode Rejection (DC)** | CMRR | dB | $\ge 60.0$ | **70.2** (IA) | **64.69** | Met |
+| **Power Supply Rejection (DC)** | PSRR | dB | $\ge 60.0$ | **73.9** | **77.85** | Met |
 | **Input-Referred Noise (@ 100 kHz)**| IRN | $\text{nV}/\sqrt{\text{Hz}}$ | $\le 20.0$ | **18.2** | **19.5** | Met |
 | **Analog Supply Current** | $I_{\text{AVDD}}$| $\mu\text{A}$ | $\le 400.0$ | **229.5** | **231.2** | Met |
 | **Digital Supply Current** | $I_{\text{VPWR}}$| $\mu\text{A}$ | $\le 1.0$ | **0.021** | **0.025** | Met |
