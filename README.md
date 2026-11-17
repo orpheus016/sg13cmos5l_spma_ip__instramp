@@ -24,6 +24,7 @@ Interactive HTML reports, CACE datasheets, and verification logs are available a
   * [Top-Level Core Macro (`pgia_top`)](docs/pgia_top.md) | [Flow Status](docs/pgia_top/status.md) | [CACE Datasheet](docs/pgia_top/cace/README.md)
   * [Top-Level Gain Code Table & Systematic Offset Analysis](docs/pgia_top/cace/gain_codes.md)
   * [Top-Level Post-Layout Comparison (Wire C)](docs/pgia_top/cace/postlayout.md) | [(Wire R+C)](docs/pgia_top/cace/postlayout_rc.md)
+  * [Post-Silicon Laboratory Testing & Characterization Procedure](docs/testing_procedure.md)
 * **Real Biosignal Verification (EEG / EMG / ECG)**:
   * [Biosignal Demonstration & Methodology](docs/biosignal/README.md)
   * [Interactive Biosignal Viewer](docs/biosignal/report.html) *(Self-contained HTML with waveform overlay and zoom)*
@@ -339,6 +340,7 @@ To reproduce all simulation results, physical verification runs, and datasheets:
 ```bash
 # Initialize PDK environment
 source .designinit_osic
+source .designinit_IHPdev # Use this if you clone IHP-Open-PDK on 'dev' branch on /eda/designs (or /foss/designs) on IIC-OSIC-TOOLS env
 
 # Run complete verification and build all reports across every cell
 ./scripts/build_all.sh
